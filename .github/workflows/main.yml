@@ -2,7 +2,7 @@ name: Generate and Deploy Images
 
 on:
   schedule:
-    - cron: '*/1 * * * *' # 每分钟执行一次
+    - cron: '0 21 * * *' # 每分钟执行一次
   push:
     branches:
       - main
