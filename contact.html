@@ -1,23 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: #3498db;
-        }
-    </style>
+    <meta name="description" content="联系我们获取更多财经市场动量分析与投资策略。">
+    <meta name="keywords" content="联系我们, 财经市场, 投资策略">
+    <meta name="author" content="您的名字">
+    <title>联系我们 - 财经爱好者</title>
 </head>
 <body>
-    <h1>Contact Us</h1>
-    <p>If you have any questions or feedback, please feel free to contact us at info@example.com.</p>
+    <header>
+        <h1>联系我们</h1>
+        <p>有任何问题或建议，欢迎联系我们。我们致力于为您提供最新的市场动量分析与投资策略。</p>
+    </header>
+    <main>
+        <section>
+            <h2>联系方式</h2>
+            <p>电子邮件: <a href="mailto:uu5zn@163.com">uu5zn@163.com</a></p>
+        </section>
+        <section>
+            <h2>联系表单</h2>
+            <form action="/submit_contact_form" method="post">
+                <label for="name">姓名:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="email">电子邮件:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="subject">主题:</label><br>
+                <input type="text" id="subject" name="subject" required><br><br>
+                <label for="message">消息:</label><br>
+                <textarea id="message" name="message" rows="4" required></textarea><br><br>
+                <input type="submit" value="发送">
+            </form>
+        </section>
+        <section>
+            <h2>社交媒体</h2>
+            <ul>
+                <li><a href="https://twitter.com/uu5zn" target="_blank" rel="noopener noreferrer"><img src="Twitter_logo.png" alt="Twitter"></a></li>
+                <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            </ul>
+        </section>
+        <section>
+            <h2>地址</h2>
+            <p>地址: 北京市朝阳区某某街道123号</p>
+        </section>
+        <section>
+            <h2>营业时间</h2>
+            <p>周一至周五: 9:00 - 18:00</p>
+            <p>周六至周日: 10:00 - 16:00</p>
+        </section>
+        <section>
+            <h2>常见问题解答</h2>
+            <p><strong>1. 如何订阅我们的新闻通讯?</strong></p>
+            <p>请点击网站底部的“订阅”按钮并填写您的电子邮件。</p>
+            <p><strong>2. 如何查看我们的最新市场分析?</strong></p>
+            <p>请访问我们的主页，在“最新分析”栏目中查看。</p>
+        </section>
+    </main>
+    <footer>
+        <h2>导航站</h2>
+        <ul>
+            <li><a href="https://www.jisilu.cn" target="_blank" rel="noopener noreferrer"><img src="集思录_logo.png" alt="集思录"></a></li>
+            <li><a href="https://wallstreetcn.com" target="_blank" rel="noopener noreferrer"><img src="华尔街见闻_logo.png" alt="华尔街见闻"></a></li>
+            <li><a href="https://www.jin10.com" target="_blank" rel="noopener noreferrer"><img src="金10_logo.png" alt="金10"></a></li>
+        </ul>
+    </footer>
 </body>
 </html>
