@@ -2,7 +2,7 @@ name: Generate and Deploy Images
 
 on:
   schedule:
-    - cron: '0 21 * * *' # 每天 UTC 时间 21:00 执行 (北京时间 05:00)
+    - cron: '*/1 * * * *' # 每天 UTC 时间 21:00 执行 (北京时间 05:00)
   push:
     branches:
       - main
