@@ -8,7 +8,7 @@ print("昨夜美股流动性、风险偏好表现：")
 # 生成并保存图片的函数
 def generate_and_save_plot(ticker, filename, period="1mo"):
     data = yf.Ticker(ticker).history(period=period)
-    mpf.plot(data, type='candle', figscale=0.4, volume=True, savefig=filename)
+    mpf.plot(data, type='candle', figscale=0.4, volume=True, savefig=filename,datetime_format='%m-%d')
 
 # 生成图片
 generate_and_save_plot("^TNX", "tenbond.png")
@@ -19,7 +19,7 @@ generate_and_save_plot("^RUT", "rs2000.png")
 generate_and_save_plot("VNQ", "vnq.png")
 generate_and_save_plot("^N225", "nikkei225.png")
 generate_and_save_plot("^HSI", "hsi.png")
-#generate_and_save_plot("CNY=X", "rmb.png", volume=False)
+generate_and_save_plot("CNY=X", "rmb.png")
 
 # 计算并打印数据
 tenbond = yf.Ticker("^TNX").history(period="1mo")['Close']
