@@ -1,15 +1,16 @@
+# -*- coding: utf-8 -*-
 import mplfinance as mpf
 import yfinance as yf
 
-# Êı¾İ
-print("×òÒ¹ÃÀ¹ÉÁ÷¶¯ĞÔ¡¢·çÏÕÆ«ºÃ±íÏÖ£º")
+# æ•°æ®
+print("æ˜¨å¤œç¾è‚¡æµåŠ¨æ€§ã€é£é™©åå¥½è¡¨ç°ï¼š")
 
-# Éú³É²¢±£´æÍ¼Æ¬µÄº¯Êı
+# ç”Ÿæˆå¹¶ä¿å­˜å›¾ç‰‡çš„å‡½æ•°
 def generate_and_save_plot(ticker, filename, period="1mo"):
     data = yf.Ticker(ticker).history(period=period)
     mpf.plot(data, type='candle', figscale=0.4, volume=True, savefig=filename)
 
-# Éú³ÉÍ¼Æ¬
+# ç”Ÿæˆå›¾ç‰‡
 generate_and_save_plot("^TNX", "tenbond.png")
 generate_and_save_plot("^VIX", "vix.png", period="2mo")
 generate_and_save_plot("^GSPC", "sp500.png")
@@ -20,7 +21,7 @@ generate_and_save_plot("^N225", "nikkei225.png")
 generate_and_save_plot("^HSI", "hsi.png")
 generate_and_save_plot("CNY=X", "rmb.png", volume=False)
 
-# ¼ÆËã²¢´òÓ¡Êı¾İ
+# è®¡ç®—å¹¶æ‰“å°æ•°æ®
 tenbond = yf.Ticker("^TNX").history(period="1mo")['Close']
 tenbond_change = tenbond.iloc[-1] - tenbond.iloc[-2]
 print("10zhai data:\n", tenbond_change)
@@ -29,4 +30,4 @@ sp500 = yf.Ticker("^GSPC").history(period="1mo")['Close']
 sp500_change = (sp500.iloc[-1] / sp500.iloc[-2] - 1) * 100
 print("S&P 500 data:", sp500_change)
 
-# ÆäËûÊı¾İ¼ÆËãÀàËÆ
+# å…¶ä»–æ•°æ®è®¡ç®—ç±»ä¼¼
