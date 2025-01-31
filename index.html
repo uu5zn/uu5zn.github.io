@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market Data</title>
+    <meta name="description" content="分析全A平均、沪深300、上证50、中证1000、国证2000、港股重仓、基金重仓、高股息、最近多板、不活跃等不同市值和资金风格的指数动量走势。">
+    <meta name="keywords" content="动量走势, 市值指数, 资金风格, 港股重仓, 基金重仓, 高股息, 上证50, 沪深300, 中证1000, 国证2000">
+    <meta name="author" content="您的名字">
+    <title>市场指数动量走势分析</title>
+    <meta name="description" content="Get the latest market data and insights. Explore our comprehensive analysis and charts.">
     <style>
         body {
             display: flex;
@@ -55,6 +59,22 @@
         .footer a:hover {
             text-decoration: underline;
         }
+        .arrow {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .arrow::before {
+            content: '↓';
+            font-size: 24px;
+            color: #3498db;
+        }
+        .explanation {
+            text-align: center;
+            font-size: 14px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -72,11 +92,42 @@
             <img src="rmb.png" alt="RMB">
         </div>
         <div class="content">
-            <h2>Other Images</h2>
+            <h2>A股资金/动量分析</h2>
+            <div class="arrow"></div>
+            <div class="explanation">
+                The synchronized trends of A-share equity, exchange rate fluctuations, China-US interest rate differentials, and financing balance changes <br>
+                A股权A等权与汇率变化、中美利差波动及融资余额变化的同步趋势。
+            </div>
+            <img src="zonglan.png" alt="zonglan">
+            <div class="arrow"></div>
+            <div class="explanation">
+                The synchronized trends of financing balance changes with large-cap indices (CSI 300) and small-cap indices (CSI 2000) <br>
+                融资余额变化与大市值股指（沪深300）和小市值股指（中证2000）的同步趋势。
+            </div>
             <img src="rongziyue.png" alt="Rongziyue">
-            <img src="scale.png" alt="Scale">
+           <div class="arrow"></div>
+            <div class="explanation">
+                Analysis of Momentum Trends for Different Market Cap Indices: All A Average, CSI 300, SSE 50, CSI 1000, CNX 2000. <br>
+                全A平均、沪深300、上证50、中证1000、国证2000等不同市值指数动量走势分析。
+            </div>
+            <img src="images/scale.png" alt="Scale">
+            <div class="arrow"></div>
+            <div class="explanation">
+                Analysis of Momentum Trends for Different Investment Styles: Heavy Hong Kong Stocks, Heavy Fund Holdings, High Dividend, Recently Multi-Listed, Inactive. <br>
+                “港股重仓、基金重仓、高股息、最近多板、不活跃等不同资金风格的指数动量走势分析。
+            </div>
             <img src="style.png" alt="Style">
+            <div class="arrow"></div>
+            <div class="explanation">
+                Momentum Analysis of Market Indicators for Various Industry ETFs, Highlighting Outliers. Typically, the Highest Value is Selected. <br>
+                各种行业ETF市场指标的动量分析，彩色部分表示游离于密集区的ETF种类。通常选择最高值进行分析。
+            </div>
             <img src="Outliers.png" alt="Outliers">
+            <div class="arrow"></div>
+            <div class="explanation">
+                Detailed Analysis of the Gray Areas (Concentrated Zones) in the Chart, with Colored Sections Highlighting the Top Gaining or Highest Potential Stocks that Could Break Through. <br>
+                上图灰色部分（密集区）的细分分析，其中彩色表示涨幅较大或最高的品种，具备突破密集区的潜力。
+            </div>
             <img src="Inliers.png" alt="Inliers">
         </div>
     </div>
