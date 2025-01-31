@@ -19,7 +19,7 @@ generate_and_save_plot("^RUT", "rs2000.png")
 generate_and_save_plot("VNQ", "vnq.png")
 generate_and_save_plot("^N225", "nikkei225.png")
 generate_and_save_plot("^HSI", "hsi.png")
-generate_and_save_plot("CNY=X", "rmb.png", volume=False)
+#generate_and_save_plot("CNY=X", "rmb.png", volume=False)
 
 # 计算并打印数据
 tenbond = yf.Ticker("^TNX").history(period="1mo")['Close']
