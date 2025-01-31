@@ -7,10 +7,15 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+        }
+        .main-content {
+            display: flex;
+            flex: 1;
         }
         .sidebar {
             width: 30%;
@@ -33,31 +38,52 @@
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+        .footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>GLOBAL Market Data</h2>
-        <img src="tenbond.png" alt="10-Year Bond">
-        <img src="vix.png" alt="VIX">
-        <img src="sp500.png" alt="S&P 500">
-        <img src="nasdaq.png" alt="Nasdaq">
-        <img src="rs2000.png" alt="Russell 2000">
-        <img src="vnq.png" alt="VNQ">
-        <img src="nikkei225.png" alt="Nikkei 225">
-        <img src="hsi.png" alt="HSI">
-        <img src="rmb.png" alt="RMB">
+    <div class="main-content">
+        <div class="sidebar">
+            <h2>Market Data</h2>
+            <img src="tenbond.png" alt="10-Year Bond">
+            <img src="vix.png" alt="VIX">
+            <img src="sp500.png" alt="S&P 500">
+            <img src="nasdaq.png" alt="Nasdaq">
+            <img src="rs2000.png" alt="Russell 2000">
+            <img src="vnq.png" alt="VNQ">
+            <img src="nikkei225.png" alt="Nikkei 225">
+            <img src="hsi.png" alt="HSI">
+            <img src="rmb.png" alt="RMB">
+        </div>
+        <div class="content">
+            <h2>Other Images</h2>
+            <img src="rongziyue.png" alt="Rongziyue">
+            <img src="scale.png" alt="Scale">
+            <img src="style.png" alt="Style">
+            <img src="Outliers.png" alt="Outliers">
+            <img src="Inliers.png" alt="Inliers">
+        </div>
     </div>
-    <div class="content">
-        <h2>A股市场</h2>
-        <img src="zonglan.png" alt="zonglan">
-        <img src="rongziyue.png" alt="Rongziyue">
-        <img src="scale.png" alt="Scale">
-        <img src="style.png" alt="Style">
-        <img src="Outliers.png" alt="Outliers">
-        <img src="Inliers.png" alt="Inliers">
+    <div class="footer">
+        <a href="about.html">About Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="contact.html">Contact Us</a>
     </div>
 </body>
 </html>
-
-  
