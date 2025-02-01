@@ -3,132 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="分析全A平均、沪深300、上证50、中证1000、国证2000、港股重仓、基金重仓、高股息、最近多板、不活跃等不同市值和资金风格的指数动量走势。">
-    <meta name="keywords" content="动量走势, 市值指数, 资金风格, 港股重仓, 基金重仓, 高股息, 上证50, 沪深300, 中证1000, 国证2000">
-    <meta name="author" content="您的名字">
-    <title>市场指数动量走势分析</title>
-    <meta name="description" content="Get the latest market data and insights. Explore our comprehensive analysis and charts.">
-  <style>
-    body {
-        display: flex;
-        flex-direction: column;
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
-    .main-content {
-        display: flex;
-        flex: 1;
-    }
-    .sidebar {
-        width: 30%;
-        padding: 20px;
-        background-color: #2c3e50;
-        color: #ecf0f1;
-        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    }
-    .content {
-        width: 70%;
-        padding: 20px;
-    }
-    h2 {
-        color: #3498db;
-    }
-    img {
-        width: 100%;
-        height: auto;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .footer {
-        background-color: #2c3e50;
-        color: #ecf0f1;
-        text-align: center;
-        padding: 10px;
-        position: relative;
-        bottom: 0;
-        width: 100%;
-    }
-    .footer a {
-        color: #ecf0f1;
-        text-decoration: none;
-        margin: 0 10px;
-    }
-    .footer a:hover {
-        text-decoration: underline;
-    }
-    .arrow-explanation {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    .arrow {
-        margin-right: 10px;
-    }
-    .arrow::before {
-        content: '↓';
-        font-size: 18px;
-        color: #3498db;
-    }
-    .explanation {
-        font-size: 14px;
-        color: #2c3e50;
-    }
-    .explanation .chinese {
-        font-size: 18px;
-        color: #e53935; /* 红色 */
-    }
-</style>
-
+    <meta name="description" content="深入分析A股市场动量走势，包括沪深300、上证50、中证1000、国证2000等指数的动量趋势及投资策略。获取最新市场数据和洞察，探索全面分析和图表。">
+    <meta name="keywords" content="动量走势, 市值指数, 资金风格, 港股重仓, 基金重仓, 高股息, 上证50, 沪深300, 中证1000, 国证2000, A股, 股票分析, 股票动量, 中国股票市场, 投资策略, 股票趋势">
+    <meta name="author" content="uu5zn">
+    <title>市场指数动量走势分析 | A股 | 沪深300 | 上证50 | 中证1000 | 国证2000</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+        .sidebar {
+            width: 30%;
+            padding: 20px;
+            background-color: #34495e; /* 深蓝色 */
+            color: #ecf0f1;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .content {
+            width: 70%;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        h1, h2 {
+            color: #3498db;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .img-title {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+        .footer {
+            background-color: #34495e; /* 深蓝色 */
+            color: #ecf0f1;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .arrow-explanation {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .arrow {
+            margin-right: 10px;
+        }
+        .arrow::before {
+            content: '↓';
+            font-size: 18px;
+            color: #3498db;
+        }
+        .explanation {
+            font-size: 14px;
+            color: #34495e;
+        }
+        .explanation .chinese {
+            font-size: 18px;
+            color: #e74c3c; /* 红色 */
+        }
+        .btn-collect {
+            display: block;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn-collect:hover {
+            background-color: #2980b9;
+        }
+        .wechat-qr {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .wechat-qr img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+        }
+        @media only screen and (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .sidebar, .content {
+                width: 100%;
+            }
+            .footer {
+                position: static;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="main-content">
         <div class="sidebar">
             <h2>Market Data</h2>
-            <img src="tenbond.png" alt="10-Year Bond">
-            <img src="vix.png" alt="VIX">
-            <img src="sp500.png" alt="S&P 500">
-            <img src="nasdaq.png" alt="Nasdaq">
-            <img src="rs2000.png" alt="Russell 2000">
-            <img src="vnq.png" alt="VNQ">
-            <img src="nikkei225.png" alt="Nikkei 225">
-            <img src="hsi.png" alt="HSI">
-            <img src="rmb.png" alt="RMB">
+            <div class="img-title">十年期债券</div>
+            <img src="tenbond.png" alt="十年期债券走势">
+            <div class="img-title">波动率指数</div>
+            <img src="vix.png" alt="波动率指数走势">
+            <div class="img-title">标普500指数</div>
+            <img src="sp500.png" alt="标普500指数走势">
+            <div class="img-title">纳斯达克指数</div>
+            <img src="nasdaq.png" alt="纳斯达克指数走势">
+            <div class="img-title">罗素2000指数</div>
+            <img src="rs2000.png" alt="罗素2000指数走势">
+            <div class="img-title">房地产信托</div>
+            <img src="vnq.png" alt="房地产信托走势">
+            <div class="img-title">日经225指数</div>
+            <img src="nikkei225.png" alt="日经225指数走势">
+            <div class="img-title">恒生指数</div>
+            <img src="hsi.png" alt="恒生指数走势">
+            <div class="img-title">人民币</div>
+            <img src="rmb.png" alt="人民币走势">
         </div>
         <div class="content">
-            <h2>A股资金/动量分析</h2>
+            <h1>市场指数动量走势分析</h1>
+<h2 style="text-align: center;">择时</h2>
             <div class="explanation">
                 The synchronized trends of A-share equity, exchange rate fluctuations, China-US interest rate differentials, and financing balance changes <br>
-               <span class=".arrow::before">↓</span> <span class="chinese">A股全A等权与汇率变化、中美利差波动及融资余额变化的同步趋势。(下图)</span>
+                <span class="arrow"></span><span class="chinese">A股全A等权与汇率变化、中美利差波动及融资余额变化的同步趋势。(下图)</span>
             </div>
             <img src="zonglan.png" alt="zonglan">
             <div class="explanation">
                 The synchronized trends of financing balance changes with large-cap indices (CSI 300) and small-cap indices (CSI 2000) <br>
-                <span class=".arrow::before">↓</span><span class="chinese">融资余额变化与大市值股指（沪深300）和小市值股指（中证2000）的同步趋势。</span>
+                <span class="arrow"></span><span class="chinese">融资余额变化与大市值股指（沪深300）和小市值股指（中证2000）的同步趋势。</span>
             </div>
             <img src="rongziyue.png" alt="Rongziyue">
-           <div class="explanation">
+            <h2 style="text-align: center;">轮动1</h2>
+            <div class="explanation">
                 Analysis of Momentum Trends for Different Market Cap Indices: All A Average, CSI 300, SSE 50, CSI 1000, CNX 2000. <br>
-                <span class=".arrow::before">↓</span><span class="chinese">全A平均、沪深300、上证50、中证1000、国证2000等不同市值指数动量走势分析。</span>
+                <span class="arrow"></span><span class="chinese">全A平均、沪深300、上证50、中证1000、国证2000等不同市值指数动量走势分析。</span>
             </div>
             <img src="scale.png" alt="Scale">
             <div class="explanation">
                 Analysis of Momentum Trends for Different Investment Styles: Heavy Hong Kong Stocks, Heavy Fund Holdings, High Dividend, Recently Multi-Listed, Inactive. <br>
-                <span class=".arrow::before">↓</span><span class="chinese">港股重仓、基金重仓、高股息、最近多板、不活跃等不同资金风格的指数动量走势分析。</span>
+                <span class="arrow"></span><span class="chinese">港股重仓、基金重仓、高股息、最近多板、不活跃等不同资金风格的指数动量走势分析。</span>
             </div>
             <img src="style.png" alt="Style">
+            <h2 style="text-align: center;">轮动2</h2>
             <div class="explanation">
                 Momentum Analysis of Market Indicators for Various Industry ETFs, Highlighting Outliers. Typically, the Highest Value is Selected. <br>
-                <span class=".arrow::before">↓</span><span class="chinese">各种行业ETF市场指标的动量分析，彩色部分表示游离于密集区的ETF种类。通常选择最高值进行分析。</span>
+                <span class="arrow"></span><span class="chinese">各种行业ETF市场指标的动量分析，彩色部分表示游离于密集区的ETF种类。通常选择最高值进行分析。</span>
             </div>
             <img src="Outliers.png" alt="Outliers">
             <div class="explanation">
                 Detailed Analysis of the Gray Areas (Concentrated Zones) in the Chart, with Colored Sections Highlighting the Top Gaining or Highest Potential Stocks that Could Break Through. <br>
-                <span class=".arrow::before">↓</span><span class="chinese">上图灰色部分（密集区）的细分分析，其中彩色表示涨幅较大或最高的品种，具备突破密集区的潜力。</span>
+                <span class="arrow"></span><span class="chinese">上图灰色部分（密集区）的细分分析，其中彩色表示涨幅较大或最高的品种，具备突破密集区的潜力。</span>
             </div>
             <img src="Inliers.png" alt="Inliers">
+
+            <a href="#" class="btn-collect">收藏本页</a>
+            <div class="wechat-qr">
+                <h2>关注我们的微信公众号</h2>
+               
+                <img src="wechat-qr.jpg" alt="WeChat QR Code">
+            </div>
         </div>
     </div>
     <div class="footer">
