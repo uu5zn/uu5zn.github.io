@@ -1,13 +1,13 @@
 ## 图片 1
-![图片 1](path/to/image1.png)
+![图片 1](vix.png)
 <caption>这是图片 1 的标题。</caption>
 
 ## 图片 2
-![图片 2](path/to/image2.png)
+![图片 2](tenbond.png)
 <caption>这是图片 2 的标题。</caption>
 
 ## 图片 3
-![图片 3](path/to/image3.png)
+![图片 3](sp500.png)
 <caption>这是图片 3 的标题。</caption>
 
 ## 图片 4
