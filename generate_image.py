@@ -127,6 +127,7 @@ def plot_oil_gold_bond():
 
     # 自动调整日期显示格式
     plt.gcf().autofmt_xdate()
+    plt.savefig('jyb_gz.png')
 
     plt.show()
 
