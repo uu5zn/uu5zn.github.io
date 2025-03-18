@@ -76,7 +76,7 @@ def plot_data(data, title, labels, colors, linewidths=None, save_path=None):
     """
     绘制数据图表
     """
-    fig = plt.figure(figsize=(20, 10))
+    fig = plt.figure(figsize=(20, 15))
     ax = fig.subplots()
     if linewidths is None:
         linewidths = [2.0] * len(data)
@@ -106,7 +106,7 @@ def plot_oil_gold_bond():
     us_bond_shifted = us_bond.shift(-25, freq='D')
 
     # 创建图表
-    fig, ax1 = plt.subplots(figsize=(20, 8))
+    fig, ax1 = plt.subplots(figsize=(20, 15))
     ax2 = ax1.twinx()
 
     # 绘制油金比
