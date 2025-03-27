@@ -179,7 +179,7 @@ if __name__ == "__main__":
             '500ETF': etf_500_normalized
         },
         '归一化后的融资余额、汇率、中美利差和500ETF收盘价',
-        ['融资余额', '汇率', '中美利差', '500ETF收盘价'],
+        ['rzye', 'huilv', 'cnUS', '500ETF'],
         ['g', 'c', 'k', 'r'],
         save_path='rongziyue_1.png'
     )
@@ -191,8 +191,8 @@ if __name__ == "__main__":
             '300ETF': etf_300_normalized,
             '1000ETF': etf_1000_normalized
         },
-        '归一化后的融资余额、300ETF和1000ETF收盘价',
-        ['融资余额', '300ETF收盘价', '1000ETF收盘价'],
+        'rzye、300&1000ETF',
+        ['rzye', '300ETF', '1000ETF'],
         ['g', 'r', 'b'],
         save_path='rongziyue_2.png'
     )
@@ -203,8 +203,8 @@ if __name__ == "__main__":
             'Shibor 1M': normalize(shibor_data['1M-定价'].iloc[-200:]),
             '中美国债收益率差': normalize(bond_data['spread'].iloc[-200:])
         },
-        '国内剩余流动性走向(归一化)',
-        ['Shibor 1M(归一化)', '中美国债收益率差(归一化)'],
+        'rate',
+        ['Shibor 1M', 'cnUS'],
         ['k', 'g'],
         save_path='liudongxing.png'
     )
@@ -215,8 +215,8 @@ if __name__ == "__main__":
             '融资余额': margin_data['融资余额'].iloc[-50:],
             'ma10': margin_data['ma10'].iloc[-50:]
         },
-        '1-融资余额',
-        ['融资余额', '10日移动平均'],
+        'rzye',
+        ['rzye', 'MA10'],
         ['r', 'b'],
         save_path='rongziyue_ma.png'
     )
