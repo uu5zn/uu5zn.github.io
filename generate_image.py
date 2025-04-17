@@ -164,7 +164,7 @@ if __name__ == "__main__":
 
     # 归一化处理
     margin_normalized = normalize(margin_data['融资余额'])
-    exchange_rate_normalized = normalize(exchange_rate)
+    exchange_rate_normalized = normalize(-exchange_rate)
     bond_spread_normalized = normalize(bond_data['spread'])
     etf_300_normalized = normalize(etf_300)
     etf_1000_normalized = normalize(etf_1000)
