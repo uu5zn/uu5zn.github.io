@@ -235,3 +235,34 @@ if __name__ == "__main__":
     # 判断融资余额是否低于10日移动平均线
     if last_margin['融资余额'].iloc[-1] < last_margin['ma10'].iloc[-1]:
         print("\x1b[31m注意：风险偏好下资金流出!!!\x1b[0m")
+
+    hsi_df = yf.download('^HSI', period='300d', interval='1d')
+    rsi2000_df = yf.download('^RUT', period='300d', interval='1d')
+    
+    # 统一索引为日期
+    hsi_df = hsi_df[['Close']].copy()
+    rsi2000_df = rsi2000_df[['Close']].copy()
+    hsi_df.index = pd.to_datetime(hsi_df.index)
+    rsi2000_df.index = pd.to_datetime(rsi2000_df.index)
+    
+    # 对齐日期
+    df = pd.concat([hsi_df, rsi2000_df], axis=1, join='inner', keys=['HSI', 'RUT'])
+    df.columns = ['HSI_Close', 'RUT_Close']
+    
+    # 计算相关性
+    correlation = df['HSI_Close'].corr(df['RUT_Close'])
+    print(f"恒生指数与Russell 2000指数的相关性: {correlation:.4f}")
+    
+    
+    # 可视化两个指数走势
+    plt.figure(figsize=(14,5))
+    plt.plot(df.index, df['HSI_Close']/df['HSI_Close'].iloc[0], label='HSI (归一化)')
+    plt.plot(df.index, df['RUT_Close']/df['RUT_Close'].iloc[0], label='RUT (归一化)')
+    plt.title('恒生指数与Russell 2000指数走势对比')
+    plt.legend()
+    plt.grid(alpha=0.3)
+    plt.savefig('hsi_rut_comparison.png', dpi=300, bbox_inches='tight')
+
+
+
+
