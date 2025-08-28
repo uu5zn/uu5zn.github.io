@@ -255,7 +255,7 @@ if __name__ == "__main__":
     
     
     # 可视化两个指数走势
-    plt.figure(figsize=(14,5))
+    plt.figure(figsize=(20,15))
     plt.plot(df.index, df['HSI_Close']/df['HSI_Close'].iloc[0], label='HSI (归一化)')
     plt.plot(df.index, df['RUT_Close']/df['RUT_Close'].iloc[0], label='RUT (归一化)')
     plt.title('恒生指数与Russell 2000指数走势对比')
@@ -275,7 +275,7 @@ if __name__ == "__main__":
     
     a=bond_zh_us_rate_df['中国国债收益率10年']-100/stock_index_pe_lg_df['滚动市盈率']
     a.ffill(inplace=True)
-    a.plot(figsize=(15,7),title='股债利差')
+    a.plot(figsize=(20,15),title='股债利差')
     plt.axhline(y=-2.6, ls=":", c="red", label="高息")
     plt.axhline(y=-5.5, ls=":", c="green", label="正常")
     plt.axhline(y=-7.8, ls=":", c="blue", label="低息")
@@ -284,4 +284,5 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(True, alpha=0.3)
     plt.savefig('guzhaixicha.png')
+
 
