@@ -263,6 +263,26 @@ if __name__ == "__main__":
     plt.grid(alpha=0.3)
     plt.savefig('hsi_rut_comparison.png', dpi=300, bbox_inches='tight')
 
-
-
-
+    bond_zh_us_rate_df = ak.bond_zh_us_rate(start_date="20121219")
+    bond_zh_us_rate_df['日期'] = pd.to_datetime(bond_zh_us_rate_df['日期'])
+    bond_zh_us_rate_df.set_index('日期', inplace=True)
+    bond_zh_us_rate_df=bond_zh_us_rate_df[['中国国债收益率2年','中国国债收益率5年','中国国债收益率10年','中国国债收益率30年']]
+    bond_zh_us_rate_df.plot(figsize=(15,7),title='中国国债收益率')
+    
+    stock_index_pe_lg_df = ak.stock_index_pe_lg(symbol="上证50")
+    stock_index_pe_lg_df['日期'] = pd.to_datetime(stock_index_pe_lg_df['日期'])
+    stock_index_pe_lg_df.set_index('日期', inplace=True)
+    stock_index_pe_lg_df=stock_index_pe_lg_df[['等权静态市盈率','静态市盈率','静态市盈率中位数','等权滚动市盈率' ,'滚动市盈率' ,'滚动市盈率中位数']]
+    stock_index_pe_lg_df.plot(figsize=(15,7),title='上证50 PE TTM/LYR')
+    
+    a=bond_zh_us_rate_df['中国国债收益率10年']-100/stock_index_pe_lg_df['滚动市盈率']
+    a.ffill(inplace=True)
+    a.plot(figsize=(15,7),title='股债利差')
+    plt.axhline(y=-2.6, ls=":", c="red", label="高息")
+    plt.axhline(y=-5.5, ls=":", c="green", label="正常")
+    plt.axhline(y=-7.8, ls=":", c="blue", label="低息")
+    plt.axhline(y=-4.5, ls=":", c="gray")
+    plt.axhline(y=-6.8, ls=":", c="gray")
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.savefig('guzhaixicha.png')
