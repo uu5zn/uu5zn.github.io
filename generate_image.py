@@ -262,6 +262,7 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(alpha=0.3)
     plt.savefig('hsi_rut_comparison.png', dpi=300, bbox_inches='tight')
+    plt.clf()
 
     bond_zh_us_rate_df = ak.bond_zh_us_rate(start_date="20121219")
     bond_zh_us_rate_df['日期'] = pd.to_datetime(bond_zh_us_rate_df['日期'])
@@ -284,5 +285,6 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(True, alpha=0.3)
     plt.savefig('guzhaixicha.png')
+
 
 
