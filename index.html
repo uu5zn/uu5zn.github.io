@@ -22,41 +22,44 @@
     <title>风向日报 - 市场指数动量走势分析 | A股 | 沪深300 | 上证50 | 中证1000 | 国证2000</title>
     <style>
         body {
-    font-family: 'Roboto', sans-serif; /* 使用更现代字体 */
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%); /* 渐变背景 */
-    color: #2c3e50;
-    line-height: 1.6;
-}
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
         .main-content {
             display: flex;
             flex: 1;
         }
         .sidebar {
-    background: linear-gradient(to bottom, #2c3e50, #1a2530); /* 深色渐变 */
-    padding: 15px;
-    box-shadow: 3px 0 10px rgba(0,0,0,0.2);
-}
+            width: 30%;
+            padding: 20px;
+            background-color: #34495e; /* 深蓝色 */
+            color: #ecf0f1;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
         .content {
-    padding: 25px;
-    background: rgba(255,255,255,0.95);
-    box-shadow: -5px 0 15px rgba(0,0,0,0.05);
-}
-       h1, h2 {
-    color: #2980b9;
-    border-bottom: 2px solid #3498db; /* 标题下划线 */
-    padding-bottom: 10px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-}
+            width: 70%;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        h1, h2 {
+            color: #3498db;
+        }
         img {
-    transition: transform 0.3s, box-shadow 0.3s; /* 悬停动画 */
-    border: 1px solid #eee;
-}
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
         .img-title {
-    font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    margin: 15px 0 8px;
-}
+            text-align: center;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
         .footer {
             background-color: #34495e; /* 深蓝色 */
             color: #ecf0f1;
@@ -181,11 +184,6 @@
                 <span class="arrow"></span><span class="chinese">美国债走势。</span>
             </div>
             <img src="jyb_gz.png" alt="Rongziyue">
-            <div class="explanation">
-                The synchronized trends of financing balance changes with large-cap indices (CSI 300) and small-cap indices (CSI 2000) <br>
-                <span class="arrow"></span><span class="chinese">股债利差</span>
-            </div>
-            <img src="guzhaixicha.png" alt="Rongziyue">
             <h2 style="text-align: center;">轮动1</h2>
             <div class="explanation">
                 Analysis of Momentum Trends for Different Market Cap Indices: All A Average, CSI 300, SSE 50, CSI 1000, CNX 2000. <br>
@@ -226,5 +224,3 @@
 </body>
  
 </html>
-
-
