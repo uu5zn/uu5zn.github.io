@@ -149,7 +149,7 @@ if __name__ == "__main__":
     generate_and_save_plot("^HSI", "hsi.png")
     generate_and_save_plot("CNY=X", "rmb.png")
 
-
+    """
     # 获取数据
     exchange_rate = get_data('美元', start_date_str, end_date_str)
     margin_data = get_data('融资余额', start_date_str, end_date_str)
@@ -285,6 +285,8 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(True, alpha=0.3)
     plt.savefig('guzhaixicha.png')
+    """
+
 
 
 
