@@ -28,7 +28,7 @@ def get_data(symbol, start_date, end_date):
     if symbol == '美元':
         data = ak.currency_boc_sina(symbol=symbol, start_date=start_date, end_date=end_date)
         data.set_index("日期", inplace=True)
-        return data['央行中间价']
+ datareturn data['央行中间价']
     elif symbol == '融资余额':
         data = ak.stock_margin_sse(start_date=start_date, end_date=end_date)
         data = data.iloc[:, [0, 1]].iloc[::-1]
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     generate_and_save_plot("^HSI", "hsi.png")
     generate_and_save_plot("CNY=X", "rmb.png")
 
-
+    """
     # 获取数据
     exchange_rate = get_data('美元', start_date_str, end_date_str)
     margin_data = get_data('融资余额', start_date_str, end_date_str)
@@ -285,6 +285,7 @@ if __name__ == "__main__":
     plt.legend()
     plt.grid(True, alpha=0.3)
     plt.savefig('guzhaixicha.png')
+    """
 
 
 
