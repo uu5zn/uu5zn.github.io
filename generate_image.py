@@ -28,7 +28,7 @@ def get_data(symbol, start_date, end_date):
     if symbol == '美元':
         data = ak.currency_boc_sina(symbol=symbol, start_date=start_date, end_date=end_date)
         data.set_index("日期", inplace=True)
- datareturn data['央行中间价']
+        return data['央行中间价']
     elif symbol == '融资余额':
         data = ak.stock_margin_sse(start_date=start_date, end_date=end_date)
         data = data.iloc[:, [0, 1]].iloc[::-1]
@@ -286,6 +286,7 @@ if __name__ == "__main__":
     plt.grid(True, alpha=0.3)
     plt.savefig('guzhaixicha.png')
     """
+
 
 
 
