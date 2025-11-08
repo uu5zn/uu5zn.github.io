@@ -442,23 +442,66 @@
         }
         
         /* 响应式设计 */
-        @media (max-width: 768px) {
+       /* 替换现有 @media (max-width: 768px) 样式 */
+
+@media (max-width: 768px) {
     .main-content {
-        padding: 10px;  /* 第1处：从20px改为10px */
+        flex-direction: column;  /* 垂直堆叠 */
+        padding: 10px;
+        gap: 15px;  /* 减小间距 */
     }
     
-    .sidebar, .content {
-        padding: 15px;  /* 第2处：sidebar从20px改15px，content从30px改15px */
+    .sidebar {
+        width: 100%;  /* 占满宽度 */
+        position: static;  /* 移除 sticky 定位避免冲突 */
+        padding: 15px;
+        margin-bottom: 0;
+        border-right: none;  /* 移除右侧边框 */
+        border-bottom: 1px solid var(--border-color);  /* 添加底部分隔线 */
     }
     
+    .content {
+        padding: 15px;
+    }
+    
+    /* 图表网格布局 - 不区分侧栏 */
     .sidebar-item {
-        margin-bottom: 15px;  /* 第3处：从20px改为15px */
-        padding-bottom: 15px;  /* 第4处：从20px改为15px */
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border-color);
     }
     
+    /* 图片优化 */
     .sidebar-item img {
-        border: none;  /* 第5处：删除边框，释放空间 */
-        border-radius: 4px;  /* 第6处：可选，稍微减小圆角 */
+        border: none;
+        border-radius: 4px;
+        max-height: 200px;  /* 限制高度避免过长 */
+        object-fit: contain;  /* 保持比例 */
+    }
+    
+    /* 字体大小调整 */
+    .header h1 {
+        font-size: 1.4rem;  /* 缩小标题 */
+    }
+    
+    .markdown-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .markdown-content h2 {
+        font-size: 1.3rem;
+    }
+    
+    /* 按钮优化 */
+    .refresh-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    /* 减少页面底部二维码大小 */
+    footer img {
+        width: 120px;
+        height: 120px;
     }
 }
     </style>
@@ -792,4 +835,5 @@
     </script>
 </body>
 </html>
+
 
