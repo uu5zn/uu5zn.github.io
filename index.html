@@ -1,233 +1,806 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3FY82H0FVC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3FY82H0FVC');
-</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7522766513341235"
-     crossorigin="anonymous"></script>
+<html lang="zh-CN">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FY82H0FVC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3FY82H0FVC');
+    </script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7522766513341235" crossorigin="anonymous"></script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="风向日报 - 深入分析A股市场动量走势，包括沪深300、上证50、中证1000、国证2000等指数的动量趋势及投资策略。获取最新市场数据和洞察，探索全面分析和图表。">
     <meta name="keywords" content="动量走势, 市值指数, 资金风格, 港股重仓, 基金重仓, 高股息, 上证50, 沪深300, 中证1000, 国证2000, A股, 股票分析, 股票动量, 中国股票市场, 投资策略, 股票趋势">
     <meta name="author" content="uu5zn">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7522766513341235"
-     crossorigin="anonymous"></script>
+    
     <title>风向日报 - 市场指数动量走势分析 | A股 | 沪深300 | 上证50 | 中证1000 | 国证2000</title>
+    
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-sidebar: #0d1117;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --border-color: #2d2d2d;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background-color: var(--dark-card);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 0;
+        }
+        
         .main-content {
             display: flex;
             flex: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            gap: 20px;
+            padding: 20px;
         }
+        
         .sidebar {
-            width: 30%;
+            width: 320px;
+            background-color: var(--dark-sidebar);
+            border-radius: 12px;
             padding: 20px;
-            background-color: #34495e; /* 深蓝色 */
-            color: #ecf0f1;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            border: 1px solid var(--border-color);
         }
-        .content {
-            width: 70%;
-            padding: 20px;
-            background-color: #ffffff;
-        }
-        h1, h2 {
-            color: #3498db;
-        }
-        img {
-            width: 100%;
-            height: auto;
+        
+        .sidebar h2 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
             margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .img-title {
-            text-align: center;
-            margin-bottom: 10px;
-            color: #ecf0f1;
-        }
-        .footer {
-            background-color: #34495e; /* 深蓝色 */
-            color: #ecf0f1;
-            text-align: center;
-            padding: 10px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-        .footer a {
-            color: #ecf0f1;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        .arrow-explanation {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            gap: 10px;
         }
-        .arrow {
+        
+        .sidebar h2::before {
+            content: "📈";
+            font-size: 1.5rem;
+        }
+        
+        .sidebar-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .sidebar-item:last-child {
+            border-bottom: none;
+        }
+        
+        .sidebar-item .img-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sidebar-item .img-title::before {
+            content: "•";
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            line-height: 0;
+        }
+        
+        .sidebar-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-item img:hover {
+            transform: scale(1.02);
+        }
+        
+        .content {
+            flex: 1;
+            background-color: var(--dark-card);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .explanation {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+            font-size: 0.95rem;
+        }
+        
+        .explanation .arrow {
+            color: var(--primary-color);
+            font-weight: bold;
             margin-right: 10px;
         }
-        .arrow::before {
-            content: '↓';
-            font-size: 18px;
-            color: #3498db;
-        }
-        .explanation {
-            font-size: 14px;
-            color: #34495e;
-        }
+        
         .explanation .chinese {
-            font-size: 18px;
-            color: #e74c3c; /* 红色 */
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-left: 10px;
         }
-        .btn-collect {
-            display: block;
-            margin: 20px 0;
+        
+        .chart-container {
+            background-color: var(--dark-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .chart-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        .chart-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        /* README 内容样式 */
+        .readme-section {
+            background-color: var(--dark-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .readme-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .readme-icon {
+            font-size: 2.5rem;
+        }
+        
+        .readme-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .readme-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .readme-content h3 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin: 20px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .event-card {
+            background-color: var(--dark-card);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .event-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.1);
+        }
+        
+        .event-card h4 {
+            color: var(--accent-color);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .event-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+        }
+        
+        .event-tag {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .event-impact {
+            background-color: rgba(231, 76, 60, 0.1);
             padding: 10px;
-            background-color: #3498db;
-            color: #fff;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        
+        .impact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        
+        .impact-table th,
+        .impact-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .impact-table th {
+            background-color: var(--dark-sidebar);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .impact-table tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .recommendation-box {
+            background-color: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .recommendation-box h4 {
+            color: var(--success-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .recommendation-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .recommendation-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .recommendation-list li::before {
+            content: "➤";
+            position: absolute;
+            left: 8px;
+            color: var(--success-color);
+        }
+        
+        .btn-collect {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
             text-align: center;
-            border-radius: 5px;
+            border-radius: 6px;
             text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
+        
         .btn-collect:hover {
-            background-color: #2980b9;
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
         }
+        
         .wechat-qr {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--dark-bg);
+            border-radius: 8px;
         }
+        
+        .wechat-qr h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
         .wechat-qr img {
             width: 150px;
             height: 150px;
-            border-radius: 10px;
+            border-radius: 8px;
+            border: 2px solid var(--primary-color);
         }
-        @media only screen and (max-width: 768px) {
+        
+        .footer {
+            background-color: var(--dark-sidebar);
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+        
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
+                padding: 10px;
             }
-            .sidebar, .content {
+            
+            .sidebar {
                 width: 100%;
-            }
-            .footer {
                 position: static;
+                margin-bottom: 20px;
             }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .readme-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .event-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .impact-table {
+                font-size: 0.8rem;
+            }
+            
+            .impact-table th,
+            .impact-table td {
+                padding: 8px;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        /* 代码块样式 */
+        .code-block {
+            background-color: var(--dark-sidebar);
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
         }
     </style>
 </head>
 <body>
-    <div class="main-content">
-        <div class="sidebar">
-            <h2>Market Data</h2>
-            <div class="img-title">十年期债券</div>
-            <img src="tenbond.png" alt="十年期债券走势">
-            <div class="img-title">波动率指数</div>
-            <img src="vix.png" alt="波动率指数走势">
-            <div class="img-title">标普500指数</div>
-            <img src="sp500.png" alt="标普500指数走势">
-            <div class="img-title">纳斯达克指数</div>
-            <img src="nasdaq.png" alt="纳斯达克指数走势">
-            <div class="img-title">罗素2000指数</div>
-            <img src="rs2000.png" alt="罗素2000指数走势">
-            <div class="img-title">房地产信托</div>
-            <img src="vnq.png" alt="房地产信托走势">
-            <div class="img-title">日经225指数</div>
-            <img src="nikkei225.png" alt="日经225指数走势">
-            <div class="img-title">恒生指数</div>
-            <img src="hsi.png" alt="恒生指数走势">
-            <div class="img-title">人民币</div>
-            <img src="rmb.png" alt="人民币走势">
-        </div>
-        <div class="content">
-            <h1>市场指数动量走势分析</h1>
-<h2 style="text-align: center;">择时</h2>
-            <div class="explanation">
-                The synchronized trends of A-share equity, exchange rate fluctuations, China-US interest rate differentials, and financing balance changes <br>
-                <span class="arrow"></span><span class="chinese">A股全A等权与汇率变化、中美利差波动及融资余额变化的同步趋势。(下图)</span>
-            </div>
-            <img src="rongziyue_1.png" alt="zonglan">
-            <div class="explanation">
-                The synchronized trends of financing balance changes with large-cap indices (CSI 300) and small-cap indices (CSI 2000) <br>
-                <span class="arrow"></span><span class="chinese">融资余额变化与大市值股指（沪深300）和小市值股指（中证1000）的同步趋势。</span>
-            </div>
-            <img src="rongziyue_2.png" alt="Rongziyue">
-            <div class="explanation">
-                The synchronized trends of financing balance changes with large-cap indices (CSI 300) and small-cap indices (CSI 2000) <br>
-                <span class="arrow"></span><span class="chinese">融资余额变化与10日均线关系。</span>
-            </div>
-            <img src="rongziyue_ma.png" alt="Rongziyue">
-            <div class="explanation">
-                The synchronized trends of financing balance changes with large-cap indices (CSI 300) and small-cap indices (CSI 2000) <br>
-                <span class="arrow"></span><span class="chinese">流动性。</span>
-            </div>
-            <img src="liudongxing.png" alt="Rongziyue">
-            <div class="explanation">
-                The synchronized trends of financing balance changes with large-cap indices (CSI 300) and small-cap indices (CSI 2000) <br>
-                <span class="arrow"></span><span class="chinese">美国债走势。</span>
-            </div>
-            <img src="jyb_gz.png" alt="Rongziyue">
-             <h2 style="text-align: center;">股债利差</h2>
-            <div class="explanation">
-                Analysis of Momentum Trends for Different Market Cap Indices: All A Average, CSI 300, SSE 50, CSI 1000, CNX 2000. <br>
-                <span class="arrow"></span><span class="chinese">股债息差。</span>
-            </div>
-            <img src="guzhaixicha.png" alt="Scale">
-            <h2 style="text-align: center;">轮动1</h2>
-            <div class="explanation">
-                Analysis of Momentum Trends for Different Market Cap Indices: All A Average, CSI 300, SSE 50, CSI 1000, CNX 2000. <br>
-                <span class="arrow"></span><span class="chinese">全A平均、沪深300、上证50、中证1000、国证2000等不同市值指数动量走势分析。</span>
-            </div>
-            <img src="scale.png" alt="Scale">
-            <div class="explanation">
-                Analysis of Momentum Trends for Different Investment Styles: Heavy Hong Kong Stocks, Heavy Fund Holdings, High Dividend, Recently Multi-Listed, Inactive. <br>
-                <span class="arrow"></span><span class="chinese">港股重仓、基金重仓、高股息、最近多板、不活跃等不同资金风格的指数动量走势分析。</span>
-            </div>
-            <img src="style.png" alt="Style">
-            <h2 style="text-align: center;">轮动2<a href="https://ceshine.blogspot.com/2025/02/etf.html">2025年1月27图解案例</a></h2>
-            <div class="explanation">
-                Momentum Analysis of Market Indicators for Various Industry ETFs, Highlighting Outliers. Typically, the Highest Value is Selected. <br>
-                <span class="arrow"></span><span class="chinese">各种行业ETF市场指标的动量分析，彩色部分表示游离于密集区的ETF种类。通常选择最高值进行分析。</span>
-            </div>
-            <img src="Outliers.png" alt="Outliers">
-            <div class="explanation">
-                Detailed Analysis of the Gray Areas (Concentrated Zones) in the Chart, with Colored Sections Highlighting the Top Gaining or Highest Potential Stocks that Could Break Through. <br>
-                <span class="arrow"></span><span class="chinese">上图灰色部分（密集区）的细分分析，其中彩色表示涨幅较大或最高的品种，具备突破密集区的潜力。</span>
-            </div>
-            <img src="hsi_rut_comparison.png" alt="Inliers">
-
-            <a href="#" class="btn-collect">收藏本页</a>
-            <div class="wechat-qr">
-                <h2>关注我们的微信公众号</h2>
-               
-                <img src="wechat-qr.jpg" alt="WeChat QR Code">
-            </div>
-        </div>
+    <div class="header">
+        <h1>风向日报 - 市场指数动量走势分析</h1>
     </div>
-    <div class="footer">
+    
+    <div class="main-content">
+        <aside class="sidebar">
+            <h2>市场数据</h2>
+            
+            <div class="sidebar-item">
+                <div class="img-title">十年期债券</div>
+                <img src="tenbond.png" alt="十年期债券走势">
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="img-title">波动率指数</div>
+                <img src="vix.png" alt="波动率指数走势">
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="img-title">标普500指数</div>
+                <img src="sp500.png" alt="标普500指数走势">
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="img-title">纳斯达克指数</div>
+                <img src="nasdaq.png" alt="纳斯达克指数走势">
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="img-title">罗素2000指数</div>
+                <img src="rs2000.png" alt="罗素2000指数走势">
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="img-title">房地产信托</div>
+                <img src="vnq.png" alt="房地产信托走势">
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="img-title">日经225指数</div>
+                <img src="nikkei225.png" alt="日经225指数走势">
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="img-title">恒生指数</div>
+                <img src="hsi.png" alt="恒生指数走势">
+            </div>
+            
+            <div class="sidebar-item">
+                <div class="img-title">人民币</div>
+                <img src="rmb.png" alt="人民币走势">
+            </div>
+        </aside>
+        
+        <main class="content">
+            <!-- 嵌入的README内容 -->
+            <section class="readme-section">
+                <div class="readme-header">
+                    <div class="readme-icon">📊</div>
+                    <div>
+                        <h2 class="readme-title">A股市场情绪分析报告</h2>
+                        <div class="readme-meta">
+                            <span>📅 数据时段：2025-11-05至2025-11-07</span>
+                            <span>🕐 生成时间：2025-11-07 21:00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="readme-content">
+                    <div class="event-card">
+                        <h4>🔥 核心事件（最近24小时）</h4>
+                        <div class="event-tag">国内政策</div>
+                        <p><strong>国家能源局：新型储能直接带动上下游投资超万亿元</strong></p>
+                        <div class="event-meta">
+                            <span>⭐⭐⭐⭐⭐ 强度评估</span>
+                            <span>🔴🔴⚪⚪⚪ 热度评级</span>
+                        </div>
+                        <p><strong>事件摘要：</strong>国家能源局表态"十四五"新型储能投资超2000亿元，带动产业链上下游超万亿，明确"十五五"发展规划。</p>
+                        <p><strong>传导路径：</strong>政策扶持 → 新能源基建加速 → 锂电池/光伏/电网设备需求扩张</p>
+                        
+                        <div class="event-impact">
+                            <strong>📈 A股关联：</strong>
+                            <table class="impact-table">
+                                <tr>
+                                    <th>维度</th>
+                                    <th>详情</th>
+                                </tr>
+                                <tr>
+                                    <td>主行业</td>
+                                    <td>能源设备（锂电池、光伏）</td>
+                                </tr>
+                                <tr>
+                                    <td>关联个股</td>
+                                    <td>宁德时代、比亚迪、隆基绿能</td>
+                                </tr>
+                                <tr>
+                                    <td>情绪评分</td>
+                                    <td><strong style="color: var(--success-color);">8.5/10</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <h3>🌐 国际事件传导分析</h3>
+                    <table class="impact-table">
+                        <tr>
+                            <th>大宗商品</th>
+                            <th>波动幅度</th>
+                            <th>A股影响行业</th>
+                            <th>传导路径</th>
+                            <th>确信度</th>
+                        </tr>
+                        <tr>
+                            <td>碳酸锂</td>
+                            <td style="color: var(--success-color);">12%↑</td>
+                            <td style="color: var(--success-color);">锂电池↑</td>
+                            <td>正极材料成本下降→宁德时代毛利率改善</td>
+                            <td>★★★★☆</td>
+                        </tr>
+                        <tr>
+                            <td>原油</td>
+                            <td style="color: var(--accent-color);">-3%↓</td>
+                            <td style="color: var(--accent-color);">航空运输↓</td>
+                            <td>燃油成本压力缓解，但短期需求低迷压制板块</td>
+                            <td>★★★☆☆</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>📅 三日趋势背景</h3>
+                    <div class="event-card">
+                        <h4>🔥 持续性主题演化</h4>
+                        <div class="code-block">
+gantt
+title 新能源产业链强度变化
+dateFormat YYYY-MM-DD
+section 核心主题
+ 光伏产能扩张 :active, 2025-11-05, 3d
+ 锂电池成本优化 :2025-11-06, 2d
+ 人形机器人交付 :crit, 2025-11-07, 2d
+                        </div>
+                        
+                        <h4>🔄 跨日关联事件</h4>
+                        <table class="impact-table">
+                            <tr>
+                                <th>日期</th>
+                                <th>事件摘要</th>
+                                <th>强度变化</th>
+                            </tr>
+                            <tr>
+                                <td>11/05</td>
+                                <td>国家能源局储能政策加码</td>
+                                <td>↗</td>
+                            </tr>
+                            <tr>
+                                <td>11/06</td>
+                                <td>蓝思科技人形机器人扩产</td>
+                                <td>↗↗</td>
+                            </tr>
+                            <tr>
+                                <td>11/07</td>
+                                <td>碳酸锂价格企稳反弹</td>
+                                <td>→</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="recommendation-box">
+                        <h4>🚨 操作建议</h4>
+                        <div style="margin-bottom: 15px;">
+                            <strong>1. 立即行动：</strong>
+                            <ul class="recommendation-list">
+                                <li>增持<strong style="color: var(--success-color);">新能源车产业链</strong>（宁德时代/比亚迪/天合光能）</li>
+                                <li>关注<strong style="color: var(--info-color);">具身智能硬件</strong>（蓝思科技/景业智能）</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <strong>2. 持续监控：</strong>
+                            <ul class="recommendation-list">
+                                <li>伦敦铜价与电力设备板块联动</li>
+                                <li>北向资金在半导体（中芯国际/华虹半导体）的配置动向</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>💡 逻辑聚焦</h3>
+                    <ol style="padding-left: 20px;">
+                        <li style="margin-bottom: 10px;"><strong>政策驱动明确：</strong>新型储能纳入"十五五"顶层设计，直接利好锂电/光伏中游制造，宁德时代毛利率改善预期强化。</li>
+                        <li style="margin-bottom: 10px;"><strong>技术突破叠加：</strong>人形机器人出货量超预期（蓝思科技2025年3000台），带动精密制造与AI硬件需求。</li>
+                        <li><strong>国际扰动分化：</strong>原油需求端疲软压制航空股，但碳酸锂反弹修复锂电板块估值，市场情绪向成长赛道集中。</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <!-- 原有内容 -->
+            <section class="section">
+                <h2>择时</h2>
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    A股全A等权与汇率变化、中美利差波动及融资余额变化的同步趋势。
+                    <span class="chinese">(下图)</span>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">融资余额与市场同步指标</div>
+                    <img src="rongziyue_1.png" alt="zonglan">
+                </div>
+                
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    融资余额变化与大市值股指（沪深300）和小市值股指（中证1000）的同步趋势。
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">融资余额与股指关系</div>
+                    <img src="rongziyue_2.png" alt="Rongziyue">
+                </div>
+                
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    融资余额变化与10日均线关系。
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">融资余额与均线</div>
+                    <img src="rongziyue_ma.png" alt="Rongziyue">
+                </div>
+                
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    流动性。
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">市场流动性分析</div>
+                    <img src="liudongxing.png" alt="Rongziyue">
+                </div>
+                
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    美国债走势。
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">美国国债走势</div>
+                    <img src="jyb_gz.png" alt="Rongziyue">
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>股债利差</h2>
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    Analysis of Momentum Trends for Different Market Cap Indices: All A Average, CSI 300, SSE 50, CSI 1000, CNX 2000.
+                    <span class="chinese">股债息差。</span>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">股债利差分析</div>
+                    <img src="guzhaixicha.png" alt="Scale">
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>轮动1</h2>
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    Analysis of Momentum Trends for Different Market Cap Indices: All A Average, CSI 300, SSE 50, CSI 1000, CNX 2000.
+                    <span class="chinese">全A平均、沪深300、上证50、中证1000、国证2000等不同市值指数动量走势分析。</span>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">市值指数动量分析</div>
+                    <img src="scale.png" alt="Scale">
+                </div>
+                
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    Analysis of Momentum Trends for Different Investment Styles: Heavy Hong Kong Stocks, Heavy Fund Holdings, High Dividend, Recently Multi-Listed, Inactive.
+                    <span class="chinese">港股重仓、基金重仓、高股息、最近多板、不活跃等不同资金风格的指数动量走势分析。</span>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">资金风格动量分析</div>
+                    <img src="style.png" alt="Style">
+                </div>
+            </section>
+            
+            <section class="section">
+                <h2>轮动2 <a href="https://ceshine.blogspot.com/2025/02/etf.html" target="_blank" style="font-size: 0.8rem; color: var(--primary-color);">2025年1月27图解案例 →</a></h2>
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    Momentum Analysis of Market Indicators for Various Industry ETFs, Highlighting Outliers. Typically, the Highest Value is Selected.
+                    <span class="chinese">各种行业ETF市场指标的动量分析，彩色部分表示游离于密集区的ETF种类。通常选择最高值进行分析。</span>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">行业ETF动量分析</div>
+                    <img src="Outliers.png" alt="Outliers">
+                </div>
+                
+                <div class="explanation">
+                    <span class="arrow">↓</span>
+                    Detailed Analysis of the Gray Areas (Concentrated Zones) in the Chart, with Colored Sections Highlighting the Top Gaining or Highest Potential Stocks that Could Break Through.
+                    <span class="chinese">上图灰色部分（密集区）的细分分析，其中彩色表示涨幅较大或最高的品种，具备突破密集区的潜力。</span>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-title">密集区突破潜力分析</div>
+                    <img src="hsi_rut_comparison.png" alt="Inliers">
+                </div>
+            </section>
+            
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="btn-collect" onclick="alert('已添加到收藏夹！')">收藏本页</button>
+            </div>
+            
+            <div class="wechat-qr">
+                <h3>关注我们的微信公众号</h3>
+                <img src="wechat-qr.jpg" alt="WeChat QR Code">
+                <p style="margin-top: 10px; color: var(--text-secondary);">扫码获取最新市场分析</p>
+            </div>
+        </main>
+    </div>
+    
+    <footer class="footer">
         <a href="about.html">About Us</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="contact.html">Contact Us</a>
-        <p>© 2024 风向日报</p>
-    </div>
+        <p style="margin-top: 15px;">© 2024 风向日报</p>
+    </footer>
 </body>
- 
 </html>
-
