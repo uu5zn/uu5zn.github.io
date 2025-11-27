@@ -687,13 +687,22 @@
         
         // 自定义代码块渲染
         renderer.code = function(code, language) {
-            const validLang = !!(language && hljs.getLanguage(language));
-            const highlighted = validLang ? hljs.highlight(code, { language }).value : hljs.highlightAuto(code).value;
-            
-            return `<pre style="background-color: var(--code-bg); border-radius: 8px; padding: 20px; overflow-x: auto; border: 1px solid var(--border-color);">
-                <code style="font-family: 'Courier New', monospace; font-size: 0.9rem;">${highlighted}</code>
-            </pre>`;
-        };
+  // 关键：如果是 mermaid 代码块，生成 Mermaid 容器（不做代码高亮）
+  if (language === 'mermaid') {
+    const chartId = `mermaid-chart-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    return `<div id="${chartId}" class="mermaid">${code}</div>`;
+  }
+
+  // 其他语言代码块（如 shell、json）按原有逻辑做高亮
+  const validLang = !!(language && hljs.getLanguage(language));
+  const highlighted = validLang 
+    ? hljs.highlight(code, { language }).value 
+    : hljs.highlightAuto(code).value;
+  
+  return `<pre style="background-color: var(--code-bg); border-radius: 8px; padding: 20px; overflow-x: auto; border: 1px solid var(--border-color);">
+    <code style="font-family: 'Courier New', monospace; font-size: 0.9rem;">${highlighted}</code>
+  </pre>`;
+};
         
         // 初始化 marked
         marked.use({
@@ -838,6 +847,7 @@
     </script>
 </body>
 </html>
+
 
 
 
