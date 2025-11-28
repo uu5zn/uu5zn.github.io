@@ -149,10 +149,24 @@ if __name__ == "__main__":
     generate_and_save_plot("^HSI", "hsi.png")
     generate_and_save_plot("CNY=X", "rmb.png")
 
+
+    margin_data = get_data('融资余额', start_date_str, end_date_str)
+    margin_data['ma10'] = margin_data['融资余额'].rolling(10).mean()
+    plot_data(
+        {
+            '融资余额': margin_data['融资余额'].iloc[-50:],
+            'ma10': margin_data['ma10'].iloc[-50:]
+        },
+        'rzye',
+        ['rzye', 'MA10'],
+        ['r', 'b'],
+        save_path='rongziyue_ma.png'
+    )
+
     """
     # 获取数据
     exchange_rate = get_data('美元', start_date_str, end_date_str)
-    margin_data = get_data('融资余额', start_date_str, end_date_str)
+    
     shibor_data = get_data('Shibor 1M', start_date_str, end_date_str)
     bond_data = get_data('中美国债收益率', start_date_str, end_date_str)
     etf_300 = get_data('ETF_510300', start_date_str, end_date_str)
@@ -160,7 +174,7 @@ if __name__ == "__main__":
     etf_500 = get_data('ETF_510500', start_date_str, end_date_str)
 
     # 计算指标
-    margin_data['ma10'] = margin_data['融资余额'].rolling(10).mean()
+    
 
     # 归一化处理
     margin_normalized = normalize(margin_data['融资余额'])
@@ -210,16 +224,7 @@ if __name__ == "__main__":
     )
 
     # 绘制第四张图表
-    plot_data(
-        {
-            '融资余额': margin_data['融资余额'].iloc[-50:],
-            'ma10': margin_data['ma10'].iloc[-50:]
-        },
-        'rzye',
-        ['rzye', 'MA10'],
-        ['r', 'b'],
-        save_path='rongziyue_ma.png'
-    )
+    
 
     # 绘制油金比和美债收益率图表
     plot_oil_gold_bond()
@@ -286,6 +291,7 @@ if __name__ == "__main__":
     plt.grid(True, alpha=0.3)
     plt.savefig('guzhaixicha.png')
     """
+
 
 
 
