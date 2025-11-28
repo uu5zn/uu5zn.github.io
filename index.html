@@ -790,25 +790,22 @@
                 });
                 
                 // 渲染Mermaid图表
-                const mermaidBlocks = container.querySelectorAll('.mermaid, pre code.language-mermaid');
-                if (mermaidBlocks.length > 0) {
-                    mermaidBlocks.forEach(block => {
-                        const graphDefinition = block.textContent;
-                        const id = 'mermaid-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-                        
-                        // 创建临时容器
-                        const tempDiv = document.createElement('div');
-                        tempDiv.className = 'mermaid';
-                        tempDiv.id = id;
-                        tempDiv.textContent = graphDefinition;
-                        
-                        // 替换原始块
-                        block.parentNode.replaceWith(tempDiv);
-                    });
-                    
-                    // 重新初始化mermaid
-                    await mermaid.init(undefined, container.querySelectorAll('.mermaid'));
-                }
+                const mermaidBlocks = container.querySelectorAll('.mermaid');
+if (mermaidBlocks.length > 0) {
+    mermaidBlocks.forEach(block => {
+        // 关键：获取纯文本代码（确保是字符串，解决 replace is not a function）
+        const graphDefinition = block.innerText.trim();
+        // 跳过空内容，避免无效渲染
+        if (!graphDefinition) return;
+        
+        // 使用 renderer.code 中已经生成的唯一 ID，无需重新创建容器
+        const chartId = block.id;
+        // 调用 Mermaid 渲染，生成 SVG 替换原容器内容
+        mermaid.render(chartId, graphDefinition, (svg) => {
+            block.innerHTML = svg;
+        });
+    });
+}
                 
                 // 更新时间戳
                 updateTimestamp();
@@ -847,6 +844,7 @@
     </script>
 </body>
 </html>
+
 
 
 
