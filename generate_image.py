@@ -7,9 +7,65 @@ import akshare as ak
 from datetime import datetime, timedelta
 
 # 设置全局字体
-plt.rcParams['font.sans-serif'] = ['SimHei']
-plt.rcParams['axes.unicode_minus'] = False
-
+plt.rcParams.update({
+    # 1. 基础尺寸与清晰度
+    'figure.figsize': (10, 6),
+    'figure.dpi': 100,
+    'savefig.dpi': 300,
+    
+    # 2. 黑底核心配置（全部支持）
+    'figure.facecolor': 'black',    # 画布黑底
+    'axes.facecolor': 'black',      # 坐标轴区域黑底
+    'savefig.facecolor': 'black',   # 保存图黑底（避免白边）
+    'savefig.transparent': False,   # 禁用透明（关键）
+    
+    # 3. 白字核心配置（全部支持）
+    'font.family': 'SimHei',        # 中文支持（按系统替换：Windows=SimHei/Mac=Heiti TC/Linux=WenQuanYi）
+    'font.size': 12,
+    'axes.labelcolor': 'white',     # 坐标轴标签白色
+    'xtick.color': 'white',         # x轴刻度白色
+    'ytick.color': 'white',         # y轴刻度白色
+    'text.color': 'white',          # 所有文字白色
+    'axes.titlesize': 16,
+    'axes.titlecolor': 'white',     # 标题白色
+    'legend.fontsize': 11,
+    'legend.labelcolor': 'white',   # 图例文字白色
+    
+    # 4. 线条与颜色（高对比度，黑底清晰）
+    'lines.linewidth': 2.0,
+    'lines.markersize': 6,
+    'axes.prop_cycle': plt.cycler(
+        color=['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6']
+    ),
+    
+    # 5. 坐标轴与网格（仅保留低版本支持的参数）
+    'axes.grid': True,
+    'grid.color': '#666666',        # 网格深灰色（不刺眼）
+    'grid.alpha': 0.5,
+    'grid.linestyle': '--',
+    'axes.spines.top': False,       # 隐藏上边框
+    'axes.spines.right': False,     # 隐藏右边框
+    'axes.spines.left': True,       # 显示左边框
+    'axes.spines.bottom': True,     # 显示下边框
+    'xtick.direction': 'in',        # 刻度向内
+    'ytick.direction': 'in',
+    
+    # 6. 图例样式（适配黑底）
+    'legend.frameon': True,
+    'legend.facecolor': '#333333',  # 图例背景深灰
+    'legend.edgecolor': 'white',    # 图例边框白色
+    'legend.framealpha': 0.8,
+    
+    # 7. 减少空白（核心配置，全部支持）
+    'figure.subplot.left': 0.08,    # 缩小左边距
+    'figure.subplot.right': 0.95,   # 扩大右边距
+    'figure.subplot.top': 0.92,     # 扩大上边距
+    'figure.subplot.bottom': 0.1,   # 缩小下边距
+    
+    # 8. 其他优化（全部支持）
+    'axes.unicode_minus': False,    # 正常显示负号
+})
+ 
 
 
 # 生成并保存图片的函数
@@ -291,6 +347,7 @@ if __name__ == "__main__":
     plt.grid(True, alpha=0.3)
     plt.savefig('guzhaixicha.png')
     """
+
 
 
 
