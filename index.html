@@ -23,7 +23,7 @@
     <!-- 核心解析库 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
-    <script src="./js/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     
@@ -791,21 +791,16 @@
                 
                 // 渲染Mermaid图表
                 const mermaidBlocks = container.querySelectorAll('.mermaid');
-if (mermaidBlocks.length > 0) {
-    mermaidBlocks.forEach(block => {
-        // 关键：获取纯文本代码（确保是字符串，解决 replace is not a function）
+    if (mermaidBlocks.length > 0) {
+      mermaidBlocks.forEach(block => {
         const graphDefinition = block.innerText.trim();
-        // 跳过空内容，避免无效渲染
         if (!graphDefinition) return;
-        
-        // 使用 renderer.code 中已经生成的唯一 ID，无需重新创建容器
         const chartId = block.id;
-        // 调用 Mermaid 渲染，生成 SVG 替换原容器内容
         mermaid.render(chartId, graphDefinition, (svg) => {
-            block.innerHTML = svg;
+          block.innerHTML = svg;
         });
-    });
-}
+      });
+    }
                 
                 // 更新时间戳
                 updateTimestamp();
@@ -844,6 +839,7 @@ if (mermaidBlocks.length > 0) {
     </script>
 </body>
 </html>
+
 
 
 
