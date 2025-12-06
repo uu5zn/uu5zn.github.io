@@ -53,7 +53,6 @@ class DataFetcher:
             
             # 处理多列情况 - 扁平化列索引
             if isinstance(data.columns, pd.MultiIndex):
-                # 将 ('Close', 'AAPL') 变为 'Close'
                 # 单个 ticker 时，yfinance 返回的 MultiIndex 有 ticker 层
                 data.columns = data.columns.droplevel(1)
             
@@ -72,50 +71,52 @@ class DataFetcher:
     
     def batch_download(self, tickers, period="300d"):
         """
-        批量下载数据，返回收盘价DataFrame
+        批量下载数据，返回MultiIndex DataFrame
         :param tickers: 代码列表或单个代码
         :param period: 周期
-        :return: DataFrame，列名为 ticker，索引为日期
+        :return: MultiIndex DataFrame，列结构为 (字段, ticker)
         """
         try:
             if not tickers:
                 return pd.DataFrame()
             
-            # 确保 tickers 是列表
             if isinstance(tickers, str):
                 tickers = [tickers]
             
-            # 下载数据 - 获取所有字段
+            # 下载数据 - 不指定 group_by，保持yfinance默认结构
             data = yf.download(
                 tickers, period=period, interval='1d', 
-                progress=False, timeout=YF_TIMEOUT,
-                group_by='ticker'  # 这将简化列结构
+                progress=False, timeout=YF_TIMEOUT
             )
             
             if data.empty:
                 self.logger('批量下载', 'warning', '返回空数据')
                 return pd.DataFrame()
             
-            # 处理列索引
-            result_df = pd.DataFrame()
-            
+            # 确保返回 MultiIndex 结构
             if isinstance(data.columns, pd.MultiIndex):
-                # MultiIndex 结构: (ticker, field)
-                for ticker in tickers:
-                    if ticker in data.columns.get_level_values(0):
-                        # 提取该 ticker 的 Close 价格
-                        ticker_data = data[ticker]['Close']
-                        result_df[ticker] = ticker_data
+                return data
             else:
-                # 单个 ticker，直接返回
+                # 单个 ticker 情况，转换为 MultiIndex
                 if len(tickers) == 1:
-                    result_df[tickers[0]] = data['Close']
+                    ticker = tickers[0]
+                    multi_cols = pd.MultiIndex.from_product([['Open', 'High', 'Low', 'Close', 'Volume'], [ticker]])
+                    result = pd.DataFrame(data.values, index=data.index, columns=multi_cols)
+                    return result
                 else:
-                    # 其他情况，尝试提取 Close 列
-                    if 'Close' in data.columns:
-                        result_df = data[['Close']].rename(columns={'Close': tickers[0]})
-            
-            return result_df
+                    # 多个 ticker，重建 MultiIndex
+                    new_cols = []
+                    for col in data.columns:
+                        for ticker in tickers:
+                            if ticker in str(col):
+                                field = str(col).replace(f'_{ticker}', '').replace(ticker, '').strip('_')
+                                if field == '':
+                                    field = 'Close'
+                                new_cols.append((field, ticker))
+                                break
+                    
+                    data.columns = pd.MultiIndex.from_tuples(new_cols)
+                    return data
         
         except Exception as e:
             self.logger('批量下载', 'error', f'{str(e)[:100]}')
