@@ -5,7 +5,7 @@ on:
     # 北京时间每天22:15（UTC 14:15）
     - cron: '15 14 * * 1-5'
   
-  workflow_dispatch:      # 允许手动触发
+  workflow_dispatch:
     inputs:
       analysis_type:
         description: '分析类型'
@@ -37,7 +37,7 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取完整历史用于可能的版本对比
+          fetch-depth: 0
 
       - name: 配置Python环境
         uses: actions/setup-python@v4
@@ -72,7 +72,7 @@ jobs:
         run: python main.py
 
       - name: 上传分析报告到Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # 🔧 升级到v4
         with:
           name: market-analysis-report-${{ github.run_number }}
           path: |
@@ -80,7 +80,11 @@ jobs:
             !output/*.log
           retention-days: 30
 
+      # GitHub Pages 部署部分（二选一）
+
+      # 方案1: 使用官方 deploy-pages (推荐)
       - name: 配置GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'schedule'
         uses: actions/configure-pages@v3
 
       - name: 部署到GitHub Pages
@@ -89,15 +93,17 @@ jobs:
         with:
           artifact_name: market-analysis-report-${{ github.run_number }}
 
+      # 方案2: 使用 peaceiris/actions-gh-pages
+      - name: 部署到GitHub Pages (备选)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'schedule'
+        uses: peaceiris/actions-gh-pages@v4  # 🔧 升级到v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output
+          destination_dir: reports
+
       - name: 摘要输出
         run: |
           echo "## 📊 市场分析完成" >> $GITHUB_STEP_SUMMARY
           echo "- **执行时间**: $(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
-          echo "- **报告链接**: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market分析报告.html" >> $GITHUB_STEP_SUMMARY
-
-      - name: 清理旧Artifacts (可选)
-        uses: actions/delete-package-versions@v4
-        if: github.ref == 'refs/heads/main'
-        with:
-          package-name: 'market-analysis-report'
-          min-versions-to-keep: 10
+          echo "- **报告链接**: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports/" >> $GITHUB_STEP_SUMMARY
