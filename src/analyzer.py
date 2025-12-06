@@ -522,17 +522,17 @@ class MarketAnalyzer:
         print("="*70)
         
         try:
-        from config import SECTOR_ETFS
-        
-        tickers = list(SECTOR_ETFS.values())
-        print(f"📥 正在下载 {len(tickers)} 个行业ETF数据...")
-        
-        # 批量下载（现在直接返回 Close 价格 DataFrame）
-        raw_data = self.fetcher.batch_download(tickers, period="1mo")
-        
-        if raw_data.empty:
-            self.logger('行业轮动', 'warning', '数据下载失败')
-            return None
+            from config import SECTOR_ETFS
+            
+            tickers = list(SECTOR_ETFS.values())
+            print(f"📥 正在下载 {len(tickers)} 个行业ETF数据...")
+            
+            # 批量下载（现在直接返回 Close 价格 DataFrame）
+            raw_data = self.fetcher.batch_download(tickers, period="1mo")
+            
+            if raw_data.empty:
+                self.logger('行业轮动', 'warning', '数据下载失败')
+                return None
         
         returns = {}
         for sector, ticker in SECTOR_ETFS.items():
