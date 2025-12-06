@@ -39,7 +39,7 @@ class MarketAnalyzer:
             
             if raw_data.empty:
                 self.logger('指数差异分析', 'warning', '数据下载失败')
-                return
+                return None
             
             # 提取收盘价
             if isinstance(raw_data.columns, pd.MultiIndex):
@@ -57,7 +57,7 @@ class MarketAnalyzer:
                     validate_data(russell, MIN_DATA_POINTS)):
                 print("⚠️  指数数据不足，无法分析")
                 self.logger('指数差异分析', 'warning', '数据不足')
-                return
+                return None
             
             # 计算收益率
             nasdaq_ret = (nasdaq.iloc[-1] / nasdaq.iloc[-30] - 1) * 100
@@ -183,7 +183,7 @@ class MarketAnalyzer:
                 vix_signal = "🚨 恐慌极值区，市场极度避险"
                 vix_level = "extreme"
             elif current_vix > VIX_HIGH:
-                vix_signal = "⚠️ 恐慌升温区，风险偏好下降"
+                vix_signal = "⚠️  恐慌升温区，风险偏好下降"
                 vix_level = "high"
             elif current_vix < VIX_LOW:
                 vix_signal = "😌 恐慌低迷区，市场过度乐观"
@@ -524,4 +524,100 @@ class MarketAnalyzer:
             from config import SECTOR_ETFS
             
             tickers = list(SECTOR_ETFS.values())
-            print(f
+            print(f"📥 正在下载 {len(tickers)} 个行业ETF数据...")
+            
+            # 批量下载
+            raw_data = self.fetcher.batch_download(tickers, period="1mo")
+            
+            returns = {}
+            for sector, ticker in SECTOR_ETFS.items():
+                try:
+                    if not ticker:
+                        returns[sector] = np.nan
+                        continue
+                    
+                    # 提取数据
+                    if isinstance(raw_data, pd.DataFrame) and ticker in raw_data.columns:
+                        data = raw_data[ticker].dropna()
+                    else:
+                        # 降级到单个下载
+                        data = self.fetcher.get_yf_data(ticker, period='1mo')
+                        if isinstance(data, pd.DataFrame):
+                            data = data['Close'].dropna()
+                    
+                    if validate_data(data, 10):
+                        returns[sector] = (data.iloc[-1] / data.iloc[0] - 1) * 100
+                    else:
+                        returns[sector] = np.nan
+                except Exception as e:
+                    print(f"⚠️  {sector}({ticker}) 失败: {e}")
+                    returns[sector] = np.nan
+            
+            # 过滤有效数据
+            valid_returns = {k: v for k, v in returns.items() if not np.isnan(v)}
+            if not valid_returns:
+                self.logger('行业轮动', 'warning', '无有效数据')
+                return None
+            
+            # 排序
+            sorted_returns = sorted(valid_returns.items(), key=lambda x: x[1], reverse=True)
+            
+            print(f"\n📊 近1月行业表现:")
+            for i, (sector, ret) in enumerate(sorted_returns, 1):
+                print(f"  {i}. {sector}: {ret:+.2f}%")
+            
+            # 领涨与落后
+            leaders = [s for s, r in sorted_returns[:2]]
+            laggards = [s for s, r in sorted_returns[-2:]]
+            
+            print(f"\n🏆 领涨: {', '.join(leaders)}")
+            print(f"📉 落后: {', '.join(laggards)}")
+            
+            # 轮动强度
+            rotation_signal = "中性"
+            dispersion = 0
+            if len(sorted_returns) >= 3:
+                top3_avg = np.mean([r for _, r in sorted_returns[:3]])
+                bottom3_avg = np.mean([r for _, r in sorted_returns[-3:]])
+                dispersion = top3_avg - bottom3_avg
+                
+                print(f"\n🔄 轮动强度: {dispersion:.2f}%")
+                if dispersion > 8:
+                    rotation_signal = "🔥 剧烈轮动"
+                    rotation_desc = "板块分化严重，追高风险大"
+                elif dispersion < 3:
+                    rotation_signal = "🟢 轮动平缓"
+                    rotation_desc = "板块表现趋同，普涨行情"
+                else:
+                    rotation_signal = "🔄 正常轮动"
+                    rotation_desc = "结构性机会为主"
+                
+                print(f"🎯 {rotation_signal}: {rotation_desc}")
+            
+            # 风格判断
+            us_tech_leading = any('美股科技' in s for s in leaders)
+            us_value_leading = any('美股金融' in s or '美股能源' in s for s in leaders)
+            
+            style_msg = []
+            if us_tech_leading:
+                style_msg.append("美股成长风格")
+            if us_value_leading:
+                style_msg.append("美股价值风格")
+            
+            style_str = " + ".join(style_msg) if style_msg else "风格不明朗"
+            
+            return {
+                'leaders': leaders,
+                'laggards': laggards,
+                'returns': valid_returns,
+                'dispersion': dispersion,
+                'rotation_signal': rotation_signal,
+                'style_str': style_str,
+                'sorted_returns': sorted_returns,
+                'rotation_desc': rotation_desc if len(sorted_returns) >= 3 else ""
+            }
+            
+        except Exception as e:
+            print(f"❌ 行业轮动分析失败: {e}")
+            self.logger('行业轮动分析', 'error', str(e))
+            return None
