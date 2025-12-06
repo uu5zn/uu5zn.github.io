@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 import mplfinance as mpf
-import pandas as pd
+import pandas as pd  # 🔧 添加
 import numpy as np
+import akshare as ak  # 🔧 添加
 import os
 from config import OUTPUT_DIR, MPL_STYLE
 from utils import validate_data
 
 class ChartGenerator:
-    def __init__(self, logger_callback, data_fetcher=None):  # 🔧 添加 data_fetcher 参数
+    def __init__(self, logger_callback, data_fetcher=None):
         """
         图表生成器
         :param logger_callback: 日志回调函数
         :param data_fetcher: 数据获取器实例（可选）
         """
         self.logger = logger_callback
-        self.fetcher = data_fetcher  # 🔧 保存 fetcher 引用
+        self.fetcher = data_fetcher
         self.setup_matplotlib()
     
     def setup_matplotlib(self):
@@ -23,12 +24,7 @@ class ChartGenerator:
         plt.rcParams.update(MPL_STYLE)
     
     def plot_kline(self, ticker, filename, period="1mo"):
-        """
-        生成K线图
-        :param ticker: 股票代码
-        :param filename: 输出文件名
-        :param period: 周期
-        """
+        """生成K线图"""
         try:
             import yfinance as yf
             
@@ -62,15 +58,7 @@ class ChartGenerator:
             return False
     
     def plot_line(self, data_dict, title, labels, colors, linewidths=None, save_path=None):
-        """
-        绘制折线图
-        :param data_dict: 数据字典
-        :param title: 图表标题
-        :param labels: 标签列表
-        :param colors: 颜色列表
-        :param linewidths: 线宽列表
-        :param save_path: 保存路径
-        """
+        """绘制折线图"""
         try:
             valid_data = {k: v for k, v in data_dict.items() if validate_data(v, 5)}
             if not valid_data:
@@ -108,10 +96,7 @@ class ChartGenerator:
             return False
     
     def plot_sector_rotation(self, sorted_returns):
-        """
-        绘制行业轮动图
-        :param sorted_returns: 排序后的收益率列表
-        """
+        """绘制行业轮动图"""
         try:
             if not sorted_returns:
                 return False
@@ -152,7 +137,7 @@ class ChartGenerator:
     def plot_oil_gold_ratio(self):
         """绘制油金比与美债收益率"""
         try:
-            # 使用 self.fetcher 而不是重新导入
+            # 使用 self.fetcher
             oil_prices = self.fetcher.get_data("CL", None, None)
             gold_prices = self.fetcher.get_data("GC", None, None)
             
@@ -170,7 +155,6 @@ class ChartGenerator:
             if not validate_data(us_bond, 30):
                 return False
             
-            # 限制数据长度
             us_bond = us_bond.iloc[-300:] if len(us_bond) > 300 else us_bond
             oil_gold_ratio = oil_gold_ratio.iloc[-300:] if len(oil_gold_ratio) > 300 else oil_gold_ratio
             
@@ -271,23 +255,6 @@ class ChartGenerator:
             print("✅ 图表: guzhaixicha.png")
             plt.close(fig)
             
-            # 生成解读
-            current_spread = spread.iloc[-1]
-            spread_percentile = calculate_percentile(spread, current_spread)
-            
-            print(f"\n【股债利差解读】")
-            print(f"当前利差: {current_spread:.2f}% (历史{spread_percentile:.0f}分位)")
-            
-            if current_spread < -7:
-                equity_signal = "🔴 股票性价比极低"
-            elif current_spread > -3:
-                equity_signal = "🟢 股票性价比高"
-            else:
-                equity_signal = "🟡 股票性价比中性"
-            
-            print(f"💡 {equity_signal}")
-            
-            self.logger('股债利差', 'success', f'{current_spread:.2f}%', 'guzhaixicha.png')
             return True
             
         except Exception as e:
