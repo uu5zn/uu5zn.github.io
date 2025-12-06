@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import yfinance as yf
 import akshare as ak
-import pandas as pd  # 确认这行存在
-import numpy as np  # 也添加 numpy
+import pandas as pd
+import numpy as np
 from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup
@@ -45,28 +45,26 @@ class DataFetcher:
                 ticker, period=period, interval=interval, 
                 progress=False, timeout=YF_TIMEOUT
             )
-            print(data.head())
             if data.empty:
                 self.logger('YFinance', 'warning', f'{ticker} 返回空数据')
                 return pd.DataFrame()
             
-            # 处理多列情况
+            # 处理多列情况 - 扁平化列索引
             if isinstance(data.columns, pd.MultiIndex):
-                return data['Close']
-            else:
-                return data
+                # 将 ('Close', 'AAPL') 变为 'Close_AAPL'
+                data.columns = ['_'.join(col).strip() for col in data.columns.values]
+            return data
+            
         except Exception as e:
             self.logger('YFinance', 'error', f'{ticker}: {str(e)}')
             return pd.DataFrame()
     
-    # src/data_fetcher.py
-
-    def batch_download(self, tickers, period="1mo"):
+    def batch_download(self, tickers, period="300d"):
         """
-        批量下载数据，返回收盘价DataFrame，列名为tickers
+        批量下载数据，返回包含所有价格字段的DataFrame
         :param tickers: 代码列表或单个代码
         :param period: 周期
-        :return: DataFrame，列名为tickers，索引为日期
+        :return: DataFrame，列名为 字段_股票代码，索引为日期
         """
         try:
             if not tickers:
@@ -76,41 +74,38 @@ class DataFetcher:
             if isinstance(tickers, str):
                 tickers = [tickers]
             
+            # 下载数据 - 获取所有字段
             data = yf.download(
                 tickers, period=period, interval='1d', 
-                progress=False, timeout=YF_TIMEOUT
+                progress=False, timeout=YF_TIMEOUT,
+                group_by='ticker'  # 这将使列结构更简单
             )
             
             if data.empty:
                 self.logger('批量下载', 'warning', '返回空数据')
                 return pd.DataFrame()
             
-            # 提取收盘价，简化列结构
+            # 处理列索引
             if isinstance(data.columns, pd.MultiIndex):
-                # 多级索引：只保留 Close 价格
-                close_data = data['Close']
-                # 如果是 MultiIndex，移除 'Ticker' 级别名称
-                if isinstance(close_data.columns, pd.MultiIndex):
-                    close_data.columns = close_data.columns.droplevel(0)
-                return close_data
-            else:
-                # 单个 ticker：直接返回 Close 列
-                ticker_name = tickers[0] if isinstance(tickers, list) else tickers
-                return pd.DataFrame({ticker_name: data['Close']})
+                # 将 (AAPL, Close) 变为 Close_AAPL
+                data.columns = pd.MultiIndex.from_tuples([
+                    (col[1], col[0]) for col in data.columns
+                ])
+                # 重新排列以便访问
+                data = data.reorder_levels([1, 0], axis=1)
+                # 扁平化
+                data.columns = ['_'.join(col).strip() for col in data.columns.values]
+            
+            return data
         
         except Exception as e:
             self.logger('批量下载', 'error', f'{str(e)[:100]}')
             return pd.DataFrame()
     
     def fix_currency_boc_sina(self, symbol="美元", start_date="20230304", end_date="20231110"):
-        """
-        修复版新浪财经-中行人民币牌价数据
-        :param symbol: 货币名称
-        :param start_date: 开始日期 YYYYMMDD
-        :param end_date: 结束日期 YYYYMMDD
-        """
+        """修复版新浪财经-中行人民币牌价数据"""
         url = "http://biz.finance.sina.com.cn/forex/forex.php"
-        
+        # ... (保持原样) ...
         try:
             # 第一步：获取货币代码映射
             params = {
