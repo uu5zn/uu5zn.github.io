@@ -25,27 +25,18 @@ def initialize():
     setup_matplotlib_fonts()
     check_available_fonts()
     
-    # 🔧 验证 mplfinance pandas 绑定
-    try:
-        import mplfinance as mpf
-        import pandas as pd
-        print(f"✅ Pandas 版本: {pd.__version__}")
-        print(f"✅ mplfinance 内部 Pandas 版本: {mpf._pd.__version__}")
-    except AttributeError:
-        print("⚠️  正在修复 mplfinance pandas 绑定...")
-        mpf._pd = pd
-        print("✅ 修复完成")
-    
     # 初始化日志
     log = setup_logging()
     log['start_time'] = datetime.now().isoformat()
     
+    # ✅ 创建 logger 函数，支持 kwargs
+    def logger_func(category, status, message):
+        log_execution(log, category, status, message)
+    
     # 创建核心组件
-    # 🔧 修改 lambda 支持 **kwargs
-    logger = lambda *args, **kwargs: log_execution(log, *args, **kwargs)
-    fetcher = DataFetcher(logger)
-    analyzer = MarketAnalyzer(fetcher, logger)
-    chart_gen = ChartGenerator(logger, fetcher)
+    fetcher = DataFetcher(logger_func)
+    analyzer = MarketAnalyzer(fetcher, logger_func)
+    chart_gen = ChartGenerator(logger_func, fetcher)
     
     print(f"初始化完成: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     return log, fetcher, analyzer, chart_gen
