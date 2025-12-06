@@ -9,6 +9,17 @@ from config import OUTPUT_DIR, MPL_STYLE
 from utils import validate_data
 import matplotlib.pyplot as plt
 import mplfinance as mpf
+
+
+# 测试 1：检查你的代码中 pd 是否可用
+print("✅ 你的代码中 Pandas 版本：", pd.__version__)
+
+# 测试 2：检查 mplfinance 内部是否能访问 Pandas
+try:
+    # mplfinance 内部会把 pandas 绑定为 _pd
+    print("✅ mplfinance 内部 Pandas 版本：", mpf._pd.__version__)
+except AttributeError:
+    print("❌ mplfinance 内部无法找到 Pandas（版本过低或安装损坏）")
 class ChartGenerator:
     def __init__(self, logger_callback, data_fetcher=None):
         """
