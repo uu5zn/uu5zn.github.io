@@ -168,21 +168,38 @@ def task_correlation(fetcher, chart_gen):
     print("\n【任务5】相关性分析...")
     
     try:
+        # ✅ 修复：batch_download 返回 MultiIndex DataFrame
         hsi_df = fetcher.batch_download(['^HSI'], period='300d')
         rut_df = fetcher.batch_download(['^RUT'], period='300d')
         
         if hsi_df.empty or rut_df.empty:
             return False
         
-        hsi_close = hsi_df['Close']['^HSI'].dropna()
-        rut_close = rut_df['Close']['^RUT'].dropna()
+        # ✅ 修复：正确访问 MultiIndex
+        def extract_close(df, ticker):
+            """从 MultiIndex DataFrame 提取 Close 序列"""
+            if isinstance(df.columns, pd.MultiIndex):
+                try:
+                    return df['Close'][ticker].dropna()
+                except KeyError:
+                    # 降级处理
+                    return df.iloc[:, 0].dropna()
+            else:
+                # 扁平结构（不应该发生）
+                return df.iloc[:, 0].dropna()
+        
+        hsi_close = extract_close(hsi_df, '^HSI')
+        rut_close = extract_close(rut_df, '^RUT')
+        
+        if len(hsi_close) < 30 or len(rut_close) < 30:
+            return False
         
         df = pd.concat([hsi_close, rut_close], axis=1, keys=['HSI', 'RUT']).dropna()
         
         if len(df) < 30:
             return False
         
-        correlation = df['HSI'].corr(df['RUT'])
+        correlation = float(df['HSI'].corr(df['RUT']))
         print(f"恒生指数与Russell 2000相关性: {correlation:.4f}")
         
         # 绘图
@@ -198,7 +215,6 @@ def task_correlation(fetcher, chart_gen):
     except Exception as e:
         print(f"❌ 相关性分析失败: {e}")
         return False
-
 def task_pe_bond_spread(chart_gen):
     """任务6: 股债利差"""
     print("\n【任务6】股债利差分析...")
