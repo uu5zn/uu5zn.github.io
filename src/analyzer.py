@@ -272,127 +272,127 @@ class MarketAnalyzer:
             return None
     
     def analyze_china_us_linkage(self):
-    """分析中美市场联动"""
-    print("\n" + "="*70)
-    print("【中美市场联动解读】")
-    print("="*70)
-    
-    try:
-        hsi_data = self.fetcher.get_yf_data('^HSI', period='3mo')
-        usdcny_data = self.fetcher.get_yf_data('CNY=X', period='3mo')
-        sp500_data = self.fetcher.get_yf_data('^GSPC', period='3mo')
+        """分析中美市场联动"""
+        print("\n" + "="*70)
+        print("【中美市场联动解读】")
+        print("="*70)
         
-        if hsi_data.empty or usdcny_data.empty or sp500_data.empty:
-            self.logger('中美联动分析', 'warning', '数据不足')
+        try:
+            hsi_data = self.fetcher.get_yf_data('^HSI', period='3mo')
+            usdcny_data = self.fetcher.get_yf_data('CNY=X', period='3mo')
+            sp500_data = self.fetcher.get_yf_data('^GSPC', period='3mo')
+            
+            if hsi_data.empty or usdcny_data.empty or sp500_data.empty:
+                self.logger('中美联动分析', 'warning', '数据不足')
+                return None
+            
+            # ✅ 修复：先定义 sp500，再使用它
+            hsi = hsi_data['Close'].dropna() if 'Close' in hsi_data.columns else pd.Series(dtype=float)
+            usdcny = usdcny_data['Close'].dropna() if 'Close' in usdcny_data.columns else pd.Series(dtype=float)
+            sp500 = sp500_data['Close'].dropna() if 'Close' in sp500_data.columns else pd.Series(dtype=float)
+            
+            # ✅ 修复：现在可以安全地检查 sp500
+            if len(hsi) < 30 or len(usdcny) < 30 or len(sp500) < 30:
+                self.logger('中美联动分析', 'warning', '数据点不足')
+                return None
+            
+            # ✅ 修复：确保标量值
+            hsi_ret = float((hsi.iloc[-1] / hsi.iloc[-30] - 1) * 100)
+            sp500_ret = float((sp500.iloc[-1] / sp500.iloc[-30] - 1) * 100)
+            current_cny = float(usdcny.iloc[-1])
+            cny_change_5d = float((usdcny.iloc[-1] / usdcny.iloc[-5] - 1) * 100)
+            cny_change_30d = float((usdcny.iloc[-1] / usdcny.iloc[-30] - 1) * 100)
+            
+            print(f"\n📊 市场表现 (30日):")
+            print(f"  恒生指数:    {hsi_ret:+.2f}%")
+            print(f"  标普500:     {sp500_ret:+.2f}%")
+            print(f"  人民币汇率:  {current_cny:.4f} (5日: {cny_change_5d:+.2f}%, 30日: {cny_change_30d:+.2f}%)")
+            
+            # 汇率解读
+            if cny_change_5d > 0.5:
+                cny_signal = "📉 快速贬值 → 资本外流压力，港股承压"
+                cny_regime = "depreciation"
+            elif cny_change_5d < -0.5:
+                cny_signal = "📈 快速升值 → 外资流入，港股受益"
+                cny_regime = "appreciation"
+            else:
+                cny_signal = "🔄 相对稳定 → 汇率不是主要矛盾"
+                cny_regime = "stable"
+            
+            print(f"\n🎯 汇率信号: {cny_signal}")
+            
+            # 计算相关性
+            df = pd.concat([
+                hsi.pct_change().dropna(),
+                usdcny.pct_change().dropna(),
+                sp500.pct_change().dropna()
+            ], axis=1, keys=['恒指', '人民币', '标普']).dropna()
+            
+            corr_hsi_sp500 = float(df['恒指'].corr(df['标普']))
+            corr_hsi_cny = float(df['恒指'].corr(-df['人民币']))
+            corr_sp500_cny = float(df['标普'].corr(-df['人民币']))
+            
+            print(f"\n🔗 相关性分析:")
+            print(f"  恒指-标普:   {corr_hsi_sp500:.3f} {'🔒强联动' if corr_hsi_sp500 > 0.7 else '🔓弱联动' if corr_hsi_sp500 < 0.3 else '🔄中等'}")
+            print(f"  恒指-人民币: {corr_hsi_cny:.3f} ({'✅正常' if corr_hsi_cny > 0 else '⚠️异常'})")
+            print(f"  标普-人民币: {corr_sp500_cny:.3f}")
+            
+            # 联动性强度
+            if corr_hsi_sp500 > 0.7:
+                linkage = "🔒 强联动"
+                linkage_desc = "港股完全跟随美股，基本面独立定价弱"
+            elif corr_hsi_sp500 < 0.3:
+                linkage = "🔓 弱联动"
+                linkage_desc = "港股独立行情，受A股或政策影响更大"
+            else:
+                linkage = "🔄 中等联动"
+                linkage_desc = "混合影响，需关注美股但不可完全参照"
+            
+            print(f"\n🎯 联动强度: {linkage}")
+            print(f"💡 解读: {linkage_desc}")
+            
+            # 相对强弱
+            relative_strength = hsi_ret - sp500_ret
+            strength_threshold = 5
+            
+            if relative_strength > strength_threshold:
+                strength_signal = "💪 港股显著跑赢"
+                strength_reason = "估值修复、政策利好、南向资金流入"
+            elif relative_strength < -strength_threshold:
+                strength_signal = "😞 港股显著跑输"
+                strength_reason = "汇率贬值、监管担忧、外资流出"
+            else:
+                strength_signal = "🤝 基本同步"
+                strength_reason = "港股与美股相关性主导"
+            
+            print(f"\n📈 相对强弱: {strength_signal} (差值: {relative_strength:+.2f}%)")
+            print(f"💡 原因推断: {strength_reason}")
+            
+            # 背离信号
+            if corr_hsi_cny < 0 and corr_hsi_cny < -0.2:
+                print("⚠️  汇率与港股负相关异常 → 基本面或情绪因素强于汇率")
+            
+            # 操作建议
+            if relative_strength < -5 and cny_change_5d > 0.5:
+                print("\n🚨 双重压力: 汇率贬值+相对弱势 → 谨慎观望")
+            elif relative_strength > 5 and cny_change_5d < -0.5:
+                print("\n✅ 双重利好: 汇率升值+相对强势 → 积极布局")
+            
+            return {
+                'hsi_ret': hsi_ret,
+                'sp500_ret': sp500_ret,
+                'cny_change': cny_change_5d,
+                'linkage': linkage,
+                'linkage_desc': linkage_desc,
+                'relative_strength': relative_strength,
+                'strength_signal': strength_signal,
+                'cny_regime': cny_regime
+            }
+            
+        except Exception as e:
+            print(f"❌ 中美联动分析失败: {e}")
+            self.logger('中美联动分析', 'error', str(e))
             return None
-        
-        # ✅ 修复：先定义 sp500，再使用它
-        hsi = hsi_data['Close'].dropna() if 'Close' in hsi_data.columns else pd.Series(dtype=float)
-        usdcny = usdcny_data['Close'].dropna() if 'Close' in usdcny_data.columns else pd.Series(dtype=float)
-        sp500 = sp500_data['Close'].dropna() if 'Close' in sp500_data.columns else pd.Series(dtype=float)
-        
-        # ✅ 修复：现在可以安全地检查 sp500
-        if len(hsi) < 30 or len(usdcny) < 30 or len(sp500) < 30:
-            self.logger('中美联动分析', 'warning', '数据点不足')
-            return None
-        
-        # ✅ 修复：确保标量值
-        hsi_ret = float((hsi.iloc[-1] / hsi.iloc[-30] - 1) * 100)
-        sp500_ret = float((sp500.iloc[-1] / sp500.iloc[-30] - 1) * 100)
-        current_cny = float(usdcny.iloc[-1])
-        cny_change_5d = float((usdcny.iloc[-1] / usdcny.iloc[-5] - 1) * 100)
-        cny_change_30d = float((usdcny.iloc[-1] / usdcny.iloc[-30] - 1) * 100)
-        
-        print(f"\n📊 市场表现 (30日):")
-        print(f"  恒生指数:    {hsi_ret:+.2f}%")
-        print(f"  标普500:     {sp500_ret:+.2f}%")
-        print(f"  人民币汇率:  {current_cny:.4f} (5日: {cny_change_5d:+.2f}%, 30日: {cny_change_30d:+.2f}%)")
-        
-        # 汇率解读
-        if cny_change_5d > 0.5:
-            cny_signal = "📉 快速贬值 → 资本外流压力，港股承压"
-            cny_regime = "depreciation"
-        elif cny_change_5d < -0.5:
-            cny_signal = "📈 快速升值 → 外资流入，港股受益"
-            cny_regime = "appreciation"
-        else:
-            cny_signal = "🔄 相对稳定 → 汇率不是主要矛盾"
-            cny_regime = "stable"
-        
-        print(f"\n🎯 汇率信号: {cny_signal}")
-        
-        # 计算相关性
-        df = pd.concat([
-            hsi.pct_change().dropna(),
-            usdcny.pct_change().dropna(),
-            sp500.pct_change().dropna()
-        ], axis=1, keys=['恒指', '人民币', '标普']).dropna()
-        
-        corr_hsi_sp500 = float(df['恒指'].corr(df['标普']))
-        corr_hsi_cny = float(df['恒指'].corr(-df['人民币']))
-        corr_sp500_cny = float(df['标普'].corr(-df['人民币']))
-        
-        print(f"\n🔗 相关性分析:")
-        print(f"  恒指-标普:   {corr_hsi_sp500:.3f} {'🔒强联动' if corr_hsi_sp500 > 0.7 else '🔓弱联动' if corr_hsi_sp500 < 0.3 else '🔄中等'}")
-        print(f"  恒指-人民币: {corr_hsi_cny:.3f} ({'✅正常' if corr_hsi_cny > 0 else '⚠️异常'})")
-        print(f"  标普-人民币: {corr_sp500_cny:.3f}")
-        
-        # 联动性强度
-        if corr_hsi_sp500 > 0.7:
-            linkage = "🔒 强联动"
-            linkage_desc = "港股完全跟随美股，基本面独立定价弱"
-        elif corr_hsi_sp500 < 0.3:
-            linkage = "🔓 弱联动"
-            linkage_desc = "港股独立行情，受A股或政策影响更大"
-        else:
-            linkage = "🔄 中等联动"
-            linkage_desc = "混合影响，需关注美股但不可完全参照"
-        
-        print(f"\n🎯 联动强度: {linkage}")
-        print(f"💡 解读: {linkage_desc}")
-        
-        # 相对强弱
-        relative_strength = hsi_ret - sp500_ret
-        strength_threshold = 5
-        
-        if relative_strength > strength_threshold:
-            strength_signal = "💪 港股显著跑赢"
-            strength_reason = "估值修复、政策利好、南向资金流入"
-        elif relative_strength < -strength_threshold:
-            strength_signal = "😞 港股显著跑输"
-            strength_reason = "汇率贬值、监管担忧、外资流出"
-        else:
-            strength_signal = "🤝 基本同步"
-            strength_reason = "港股与美股相关性主导"
-        
-        print(f"\n📈 相对强弱: {strength_signal} (差值: {relative_strength:+.2f}%)")
-        print(f"💡 原因推断: {strength_reason}")
-        
-        # 背离信号
-        if corr_hsi_cny < 0 and corr_hsi_cny < -0.2:
-            print("⚠️  汇率与港股负相关异常 → 基本面或情绪因素强于汇率")
-        
-        # 操作建议
-        if relative_strength < -5 and cny_change_5d > 0.5:
-            print("\n🚨 双重压力: 汇率贬值+相对弱势 → 谨慎观望")
-        elif relative_strength > 5 and cny_change_5d < -0.5:
-            print("\n✅ 双重利好: 汇率升值+相对强势 → 积极布局")
-        
-        return {
-            'hsi_ret': hsi_ret,
-            'sp500_ret': sp500_ret,
-            'cny_change': cny_change_5d,
-            'linkage': linkage,
-            'linkage_desc': linkage_desc,
-            'relative_strength': relative_strength,
-            'strength_signal': strength_signal,
-            'cny_regime': cny_regime
-        }
-        
-    except Exception as e:
-        print(f"❌ 中美联动分析失败: {e}")
-        self.logger('中美联动分析', 'error', str(e))
-        return None
     
     def analyze_liquidity_conditions(self, margin_data, shibor_data, bond_data):
         """分析流动性环境"""
