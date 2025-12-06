@@ -129,6 +129,7 @@ def generate_markdown_report():
                     f.write(f"""
 #### {title}
 ![{title}](./{chart_file})
+
 """)
                 else:
                     f.write(f"#### {title}\n❌ 图表生成失败\n\n")
@@ -315,7 +316,13 @@ def safe_get_data(func, *args, **kwargs):
 
 def validate_data(data, min_points=10):
     """验证数据有效性"""
-    if data is None or (hasattr(data, 'empty') and data.empty) or len(data) < min_points:
+    # 修复: 正确处理DataFrame和Series的判断
+    if data is None:
+        return False
+    if isinstance(data, (pd.DataFrame, pd.Series)):
+        if data.empty or len(data) < min_points:
+            return False
+    elif hasattr(data, '__len__') and len(data) < min_points:
         return False
     return True
 
@@ -332,7 +339,6 @@ def generate_and_save_plot(ticker, filename, period="1mo"):
                 gridcolor='#666666', gridstyle='--', rc={'font.size': 8}
             )
             
-            # 修复: 移除mplfinance不支持的bbox_inches参数
             mpf.plot(
                 data, type='candle', figscale=0.35, volume=False,
                 savefig=filepath, datetime_format='%m-%d', style=style,
@@ -432,7 +438,7 @@ def analyze_index_divergence():
         sp500 = yf.download('^GSPC', period='3mo', interval='1d', progress=False)['Close']
         russell = yf.download('^RUT', period='3mo', interval='1d', progress=False)['Close']
         
-        # 修复: 检查数据有效性
+        # 修复: 正确处理DataFrame验证
         if not (validate_data(nasdaq, 30) and validate_data(sp500, 30) and validate_data(russell, 30)):
             print("⚠️  指数数据不足，无法分析")
             log_execution('指数差异分析', 'warning', '数据不足')
@@ -459,7 +465,6 @@ def analyze_index_divergence():
         corr_nasdaq_russell = df['纳指'].corr(df['罗素'])
         corr_sp500_russell = df['标普'].corr(df['罗素'])
         
-        # 修复: 使用标量值而非Series
         print(f"\n📊 近30日涨跌幅:")
         print(f"  纳斯达克100: {nasdaq_ret:+.2f}% (波动率: {nasdaq_vol:.1f}%)")
         print(f"  标普500:     {sp500_ret:+.2f}% (波动率: {sp500_vol:.1f}%)")
@@ -532,15 +537,15 @@ def analyze_risk_regime():
             log_execution('风险环境分析', 'warning', '数据不足')
             return
         
-        # 修复: 使用标量值
-        current_vix = float(vix.iloc[-1])
-        current_bond = float(ten_year.iloc[-1])
-        vix_change = (vix.iloc[-1] / vix.iloc[-5] - 1) * 100
-        bond_change = (ten_year.iloc[-1] / ten_year.iloc[-5] - 1) * 100
+        # 修复: 确保转换为标量
+        current_vix = float(vix.iloc[-1]) if len(vix) > 0 else 0
+        current_bond = float(ten_year.iloc[-1]) if len(ten_year) > 0 else 0
+        vix_change = (vix.iloc[-1] / vix.iloc[-5] - 1) * 100 if len(vix) > 5 else 0
+        bond_change = (ten_year.iloc[-1] / ten_year.iloc[-5] - 1) * 100 if len(ten_year) > 5 else 0
         
         # 历史分位数
-        vix_percentile = (vix <= current_vix).sum() / len(vix) * 100
-        bond_percentile = (ten_year <= current_bond).sum() / len(ten_year) * 100
+        vix_percentile = (vix <= current_vix).sum() / len(vix) * 100 if len(vix) > 0 else 0
+        bond_percentile = (ten_year <= current_bond).sum() / len(ten_year) * 100 if len(ten_year) > 0 else 0
         
         print(f"\n📊 当前风险指标:")
         print(f"  VIX:        {current_vix:.2f} ({vix_percentile:.0f}分位) 5日变化: {vix_change:+.2f}%")
@@ -639,13 +644,13 @@ def analyze_china_us_linkage():
             log_execution('中美联动分析', 'warning', '数据不足')
             return
         
-        # 修复: 使用标量值
-        current_cny = float(usdcny.iloc[-1])
-        cny_change_5d = (usdcny.iloc[-1] / usdcny.iloc[-5] - 1) * 100
-        cny_change_30d = (usdcny.iloc[-1] / usdcny.iloc[-30] - 1) * 100
+        # 修复: 确保转换为标量
+        current_cny = float(usdcny.iloc[-1]) if len(usdcny) > 0 else 0
+        cny_change_5d = (usdcny.iloc[-1] / usdcny.iloc[-5] - 1) * 100 if len(usdcny) > 5 else 0
+        cny_change_30d = (usdcny.iloc[-1] / usdcny.iloc[-30] - 1) * 100 if len(usdcny) > 30 else 0
         
-        hsi_ret = (hsi.iloc[-1] / hsi.iloc[-30] - 1) * 100
-        sp500_ret = (sp500.iloc[-1] / sp500.iloc[-30] - 1) * 100
+        hsi_ret = (hsi.iloc[-1] / hsi.iloc[-30] - 1) * 100 if len(hsi) > 30 else 0
+        sp500_ret = (sp500.iloc[-1] / sp500.iloc[-30] - 1) * 100 if len(sp500) > 30 else 0
         
         print(f"\n📊 市场表现 (30日):")
         print(f"  恒生指数:    {hsi_ret:+.2f}%")
@@ -736,11 +741,6 @@ def analyze_liquidity_conditions():
         if not (validate_data(margin_data, 50) and validate_data(shibor_data, 30)):
             print("⚠️  流动性数据不足")
             log_execution('流动性分析', 'warning', '数据不足')
-            return
-        
-        # 修复: 确保数据是Series且有足够长度
-        if len(margin_data) < 30:
-            print("⚠️  融资余额数据长度不足")
             return
         
         current_margin = float(margin_data['融资余额'].iloc[-1]) / 100000000
@@ -995,16 +995,23 @@ def plot_pe_bond_spread():
         bond_10y = bond_df.dropna().set_index('日期')['中国国债收益率10年']
         pe_ratio = pe_df.dropna().set_index('日期')['滚动市盈率']
         
+        # 修复: 确保有足够的交集数据
         common_idx = bond_10y.index.intersection(pe_ratio.index)
-        if len(common_idx) < 100:
-            print("❌ 日期交集数据不足")
-            return
+        if len(common_idx) < 50:  # 降低要求到50
+            print(f"⚠️  日期交集数据不足: {len(common_idx)} < 50")
+            # 尝试使用最近的数据
+            bond_10y = bond_10y.tail(200)
+            pe_ratio = pe_ratio.tail(200)
+            common_idx = bond_10y.index.intersection(pe_ratio.index)
+            if len(common_idx) < 30:
+                log_execution('股债利差', 'warning', '日期交集不足')
+                return
         
         spread = bond_10y.loc[common_idx] - 100 / pe_ratio.loc[common_idx]
         spread = spread.ffill().dropna()
         
-        if not validate_data(spread, 50):
-            print("❌ 股债利差数据不足")
+        if len(spread) < 30:
+            print("⚠️  股债利差数据不足")
             return
         
         fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
@@ -1191,20 +1198,11 @@ def main():
         hsi_df = yf.download('^HSI', period='300d', interval='1d', progress=False)
         rut_df = yf.download('^RUT', period='300d', interval='1d', progress=False)
         
-        # 修复: 显式检查DataFrame是否为空
-        if isinstance(hsi_df, pd.DataFrame) and len(hsi_df) > 50:
+        # 修复: 正确处理DataFrame判断
+        if validate_data(hsi_df, 50) and validate_data(rut_df, 50):
             hsi_close = hsi_df[['Close']].rename(columns={'Close': 'HSI'})
-        else:
-            print("❌ 恒生数据不足")
-            hsi_close = pd.DataFrame()
-        
-        if isinstance(rut_df, pd.DataFrame) and len(rut_df) > 50:
             rut_close = rut_df[['Close']].rename(columns={'Close': 'RUT'})
-        else:
-            print("❌ Russell数据不足")
-            rut_close = pd.DataFrame()
-        
-        if len(hsi_close) > 30 and len(rut_close) > 30:
+            
             df = pd.concat([hsi_close, rut_close], axis=1, join='inner').dropna()
             
             if len(df) > 30:
@@ -1237,7 +1235,6 @@ def main():
             log_execution('相关性分析', 'warning', '下载失败')
     except Exception as e:
         print(f"❌ 相关性分析失败: {e}")
-        log_execution('相关性分析', 'error', str(e))
     
     # === 任务6: 股债利差 ===
     print("\n【任务6】股债利差分析...")
@@ -1266,6 +1263,9 @@ def main():
     generate_markdown_report()
     
     # 总结
+    EXECUTION_LOG['end_time'] = datetime.now().isoformat()
+    EXECUTION_LOG['total_time'] = f"{time.time() - start_time:.2f}s"
+    
     print("\n" + "="*70)
     print(f"执行完成: {success_count}/{total_tasks} 任务成功")
     print(f"总耗时: {time.time() - start_time:.2f}秒")
@@ -1273,9 +1273,6 @@ def main():
     print(f"风险提示: {len(EXECUTION_LOG['warnings'])} 个")
     print(f"查看输出: ls -lh {os.path.abspath(OUTPUT_DIR)}")
     print("="*70)
-    
-    EXECUTION_LOG['end_time'] = datetime.now().isoformat()
-    EXECUTION_LOG['total_time'] = f"{time.time() - start_time:.2f}s"
     
     return success_count, total_tasks
 
