@@ -23,6 +23,21 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
+          
+      - name: fonts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            fonts-wqy-microhei \
+            fonts-wqy-zenhei \
+            fonts-noto-cjk \
+            fontconfig
+          
+          # 刷新字体缓存
+          sudo fc-cache -fv
+          
+          # 检查字体是否安装成功
+          fc-list :lang=zh | head -5
 
       - name: Install dependencies
         run: pip install mplfinance yfinance akshare requests tqdm bs4
