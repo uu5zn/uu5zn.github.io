@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-import matplotlib.pyplot as plt
-import mplfinance as mpf
 import pandas as pd  # 🔧 添加
+
+
 import numpy as np
 import akshare as ak  # 🔧 添加
 import os
 from config import OUTPUT_DIR, MPL_STYLE
 from utils import validate_data
-
+import matplotlib.pyplot as plt
+import mplfinance as mpf
 class ChartGenerator:
     def __init__(self, logger_callback, data_fetcher=None):
         """
@@ -29,7 +30,7 @@ class ChartGenerator:
             import yfinance as yf
             
             data = yf.Ticker(ticker).history(period=period)
-            print(data.head())
+            #print(data.head())
             if not validate_data(data, 5):
                 self.logger('K线图', 'warning', f'{ticker} 数据不足')
                 return False
