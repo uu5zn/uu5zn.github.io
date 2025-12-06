@@ -8,12 +8,14 @@ from config import OUTPUT_DIR, MPL_STYLE
 from utils import validate_data
 
 class ChartGenerator:
-    def __init__(self, logger_callback):
+    def __init__(self, logger_callback, data_fetcher=None):  # 🔧 添加 data_fetcher 参数
         """
         图表生成器
         :param logger_callback: 日志回调函数
+        :param data_fetcher: 数据获取器实例（可选）
         """
         self.logger = logger_callback
+        self.fetcher = data_fetcher  # 🔧 保存 fetcher 引用
         self.setup_matplotlib()
     
     def setup_matplotlib(self):
@@ -150,6 +152,7 @@ class ChartGenerator:
     def plot_oil_gold_ratio(self):
         """绘制油金比与美债收益率"""
         try:
+            # 使用 self.fetcher 而不是重新导入
             oil_prices = self.fetcher.get_data("CL", None, None)
             gold_prices = self.fetcher.get_data("GC", None, None)
             
@@ -208,6 +211,7 @@ class ChartGenerator:
     def plot_pe_bond_spread(self):
         """绘制股债利差图"""
         try:
+            # 使用 self.fetcher
             bond_df = self.fetcher.safe_get_data(ak.bond_zh_us_rate, start_date="20121219")
             pe_df = self.fetcher.safe_get_data(ak.stock_index_pe_lg, symbol="上证50")
             
