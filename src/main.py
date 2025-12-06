@@ -235,15 +235,20 @@ def main():
     start_time = time.time()
     success_count = 0
     
+    # 在 main() 函数的任务调度部分
+
     for task_name, task_func in tasks:
         try:
             if task_func():
                 success_count += 1
-                log_execution(log, task_name, 'success')
+                # ✅ 修复：添加 message 参数
+                log_execution(log, task_name, 'success', '任务执行成功')
             else:
+                # 这行已经是正确的
                 log_execution(log, task_name, 'warning', '执行失败')
         except Exception as e:
             print(f"❌ 任务失败 {task_name}: {e}")
+            # 这行也是正确的
             log_execution(log, task_name, 'error', str(e))
     
     # 市场解读（核心分析）
