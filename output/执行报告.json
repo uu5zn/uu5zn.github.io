@@ -1,0 +1,213 @@
+{
+  "start_time": "2025-12-06T17:00:36.859304",
+  "end_time": null,
+  "tasks": [
+    {
+      "task": "字体设置",
+      "status": "success",
+      "details": "使用字体: WenQuanYi Micro Hei",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:00:36.858128"
+    },
+    {
+      "task": "字体检查",
+      "status": "success",
+      "details": "找到 7 个中文字体",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:00:36.859288"
+    },
+    {
+      "task": "K线图",
+      "status": "success",
+      "details": "^TNX -> tenbond.png",
+      "chart_path": "tenbond.png",
+      "timestamp": "2025-12-06T17:00:37.630331"
+    },
+    {
+      "task": "K线图",
+      "status": "success",
+      "details": "^VIX -> vix.png",
+      "chart_path": "vix.png",
+      "timestamp": "2025-12-06T17:00:37.854955"
+    },
+    {
+      "task": "K线图",
+      "status": "success",
+      "details": "^GSPC -> sp500.png",
+      "chart_path": "sp500.png",
+      "timestamp": "2025-12-06T17:00:38.063080"
+    },
+    {
+      "task": "K线图",
+      "status": "success",
+      "details": "^IXIC -> nasdaq.png",
+      "chart_path": "nasdaq.png",
+      "timestamp": "2025-12-06T17:00:38.274646"
+    },
+    {
+      "task": "K线图",
+      "status": "success",
+      "details": "^RUT -> rs2000.png",
+      "chart_path": "rs2000.png",
+      "timestamp": "2025-12-06T17:00:38.552293"
+    },
+    {
+      "task": "K线图",
+      "status": "success",
+      "details": "VNQ -> vnq.png",
+      "chart_path": "vnq.png",
+      "timestamp": "2025-12-06T17:00:38.889495"
+    },
+    {
+      "task": "K线图",
+      "status": "success",
+      "details": "^N225 -> nikkei225.png",
+      "chart_path": "nikkei225.png",
+      "timestamp": "2025-12-06T17:00:39.229297"
+    },
+    {
+      "task": "K线图",
+      "status": "success",
+      "details": "^HSI -> hsi.png",
+      "chart_path": "hsi.png",
+      "timestamp": "2025-12-06T17:00:39.442986"
+    },
+    {
+      "task": "K线图",
+      "status": "success",
+      "details": "CNY=X -> rmb.png",
+      "chart_path": "rmb.png",
+      "timestamp": "2025-12-06T17:00:39.659687"
+    },
+    {
+      "task": "绘图",
+      "status": "success",
+      "details": "融资余额与MA10 -> rongziyue_ma.png",
+      "chart_path": "rongziyue_ma.png",
+      "timestamp": "2025-12-06T17:00:41.865541"
+    },
+    {
+      "task": "绘图",
+      "status": "success",
+      "details": "融资余额与MA10 耗时 0.42s",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:00:41.865587"
+    },
+    {
+      "task": "融资余额",
+      "status": "success",
+      "details": "最新: 1246300.7M",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:00:41.866613"
+    },
+    {
+      "task": "汇率数据",
+      "status": "success",
+      "details": "获取 257 条记录",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:00:53.128205"
+    },
+    {
+      "task": "绘图",
+      "status": "success",
+      "details": "归一化指标对比 -> rongziyue_1.png",
+      "chart_path": "rongziyue_1.png",
+      "timestamp": "2025-12-06T17:01:12.859485"
+    },
+    {
+      "task": "绘图",
+      "status": "success",
+      "details": "归一化指标对比 耗时 0.43s",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:01:12.859534"
+    },
+    {
+      "task": "绘图",
+      "status": "success",
+      "details": "融资余额与ETF对比 -> rongziyue_2.png",
+      "chart_path": "rongziyue_2.png",
+      "timestamp": "2025-12-06T17:01:13.322384"
+    },
+    {
+      "task": "绘图",
+      "status": "success",
+      "details": "融资余额与ETF对比 耗时 0.46s",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:01:13.322427"
+    },
+    {
+      "task": "绘图",
+      "status": "success",
+      "details": "流动性指标 -> liudongxing.png",
+      "chart_path": "liudongxing.png",
+      "timestamp": "2025-12-06T17:01:13.737929"
+    },
+    {
+      "task": "绘图",
+      "status": "success",
+      "details": "流动性指标 耗时 0.41s",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:01:13.737974"
+    },
+    {
+      "task": "多指标对比",
+      "status": "success",
+      "details": "完成3张图表",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:01:13.738368"
+    },
+    {
+      "task": "股债利差",
+      "status": "warning",
+      "details": "日期交集不足",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:01:34.761143"
+    },
+    {
+      "task": "指数差异分析",
+      "status": "error",
+      "details": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:01:35.182196"
+    },
+    {
+      "task": "风险环境分析",
+      "status": "error",
+      "details": "unsupported format string passed to Series.__format__",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:01:35.533970"
+    },
+    {
+      "task": "中美联动分析",
+      "status": "error",
+      "details": "unsupported format string passed to Series.__format__",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:01:35.899024"
+    },
+    {
+      "task": "市场解读",
+      "status": "success",
+      "details": "完成全部维度分析",
+      "chart_path": null,
+      "timestamp": "2025-12-06T17:01:49.644283"
+    }
+  ],
+  "errors": [
+    "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
+    "unsupported format string passed to Series.__format__",
+    "unsupported format string passed to Series.__format__"
+  ],
+  "warnings": [
+    "日期交集不足"
+  ],
+  "charts": [],
+  "insights": [
+    [
+      "流动性",
+      "融资12463亿 Shibor1.52% 🟢 宽松环境"
+    ]
+  ],
+  "market_signals": {
+    "liquidity_env": "🟢 宽松环境"
+  }
+}
