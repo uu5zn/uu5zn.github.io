@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 import numpy as np
-import pandas as pd  # 🔧 确认这行存在
-import akshare as ak  # 🔧 确认这行存在
+import pandas as pd
+import akshare as ak
 from datetime import datetime, timedelta
-from config import MIN_DATA_POINTS, VIX_HIGH, VIX_EXTREME, VIX_LOW
+from config import MIN_DATA_POINTS, VIX_HIGH, VIX_EXTREME, VIX_LOW, SECTOR_ETFS
 from utils import validate_data, normalize, calculate_percentile
 
 class MarketAnalyzer:
@@ -27,7 +26,6 @@ class MarketAnalyzer:
     def analyze_index_divergence(self):
         """
         分析指数差异（纳指、标普、罗素2000）
-        识别市场风格：成长/价值/周期
         """
         print("\n" + "="*70)
         print("【市场结构解读】")
@@ -42,44 +40,48 @@ class MarketAnalyzer:
                 self.logger('指数差异分析', 'warning', '数据下载失败')
                 return None
             
-            # 提取收盘价
-            if isinstance(raw_data.columns, pd.MultiIndex):
-                nasdaq = raw_data['Close']['^IXIC'].dropna()
-                sp500 = raw_data['Close']['^GSPC'].dropna()
-                russell = raw_data['Close']['^RUT'].dropna()
-            else:
-                # 降级处理
-                nasdaq = self.fetcher.get_yf_data('^IXIC', period='3mo')['Close']
-                sp500 = self.fetcher.get_yf_data('^GSPC', period='3mo')['Close']
-                russell = self.fetcher.get_yf_data('^RUT', period='3mo')['Close']
+            # ✅ 修复：统一使用扁平化列名访问
+            try:
+                # 优先使用扁平化列名
+                nasdaq_close = raw_data['Close_^IXIC'].dropna()
+                sp500_close = raw_data['Close_^GSPC'].dropna()
+                russell_close = raw_data['Close_^RUT'].dropna()
+            except KeyError:
+                # 降级处理：如果仍是 MultiIndex
+                if isinstance(raw_data.columns, pd.MultiIndex):
+                    nasdaq_close = raw_data['Close']['^IXIC'].dropna()
+                    sp500_close = raw_data['Close']['^GSPC'].dropna()
+                    russell_close = raw_data['Close']['^RUT'].dropna()
+                else:
+                    raise
             
-            if not (validate_data(nasdaq, MIN_DATA_POINTS) and 
-                    validate_data(sp500, MIN_DATA_POINTS) and 
-                    validate_data(russell, MIN_DATA_POINTS)):
+            if not (validate_data(nasdaq_close, MIN_DATA_POINTS) and 
+                    validate_data(sp500_close, MIN_DATA_POINTS) and 
+                    validate_data(russell_close, MIN_DATA_POINTS)):
                 print("⚠️  指数数据不足，无法分析")
                 self.logger('指数差异分析', 'warning', '数据不足')
                 return None
             
-            # 计算收益率
-            nasdaq_ret = (nasdaq.iloc[-1] / nasdaq.iloc[-30] - 1) * 100
-            sp500_ret = (sp500.iloc[-1] / sp500.iloc[-30] - 1) * 100
-            russell_ret = (russell.iloc[-1] / russell.iloc[-30] - 1) * 100
+            # ✅ 修复：确保提取标量值再格式化
+            nasdaq_ret = float(nasdaq_close.iloc[-1] / nasdaq_close.iloc[-30] - 1) * 100
+            sp500_ret = float(sp500_close.iloc[-1] / sp500_close.iloc[-30] - 1) * 100
+            russell_ret = float(russell_close.iloc[-1] / russell_close.iloc[-30] - 1) * 100
             
             # 计算年化波动率
-            nasdaq_vol = nasdaq.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100
-            sp500_vol = sp500.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100
-            russell_vol = russell.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100
+            nasdaq_vol = float(nasdaq_close.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
+            sp500_vol = float(sp500_close.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
+            russell_vol = float(russell_close.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
             
             # 计算相关性矩阵
             df = pd.concat([
-                nasdaq.pct_change().dropna(),
-                sp500.pct_change().dropna(),
-                russell.pct_change().dropna()
+                nasdaq_close.pct_change().dropna(),
+                sp500_close.pct_change().dropna(),
+                russell_close.pct_change().dropna()
             ], axis=1, keys=['纳指', '标普', '罗素']).dropna()
             
-            corr_nasdaq_sp500 = df['纳指'].corr(df['标普'])
-            corr_nasdaq_russell = df['纳指'].corr(df['罗素'])
-            corr_sp500_russell = df['标普'].corr(df['罗素'])
+            corr_nasdaq_sp500 = float(df['纳指'].corr(df['标普']))
+            corr_nasdaq_russell = float(df['纳指'].corr(df['罗素']))
+            corr_sp500_russell = float(df['标普'].corr(df['罗素']))
             
             print(f"\n📊 近30日涨跌幅:")
             print(f"  纳斯达克100: {nasdaq_ret:+.2f}% (波动率: {nasdaq_vol:.1f}%)")
@@ -92,9 +94,9 @@ class MarketAnalyzer:
             print(f"  标普-罗素:   {corr_sp500_russell:.3f}")
             
             # 趋势分析
-            nasdaq_trend = self.calculate_trend(nasdaq)
-            sp500_trend = self.calculate_trend(sp500)
-            russell_trend = self.calculate_trend(russell)
+            nasdaq_trend = self.calculate_trend(nasdaq_close)
+            sp500_trend = self.calculate_trend(sp500_close)
+            russell_trend = self.calculate_trend(russell_close)
             
             print(f"\n📈 近期趋势:")
             print(f"  纳指: {'上涨' if nasdaq_trend == 'up' else '下跌'}趋势")
@@ -119,15 +121,6 @@ class MarketAnalyzer:
                 market_regime = "结构分化"
             
             print(f"\n💡 风格解读: {style_signal}")
-            
-            # 波动性异常检测
-            avg_vol = np.mean([nasdaq_vol, sp500_vol, russell_vol])
-            if russell_vol > avg_vol * 1.2:
-                print("⚠️  小盘股波动率异常放大 → 市场不确定性集中在小盘")
-            
-            # 相关性异常检测
-            if corr_nasdaq_russell < 0.6:
-                print("⚠️  纳指与罗素相关性显著下降 → 大小盘走势分化，市场结构不健康")
             
             # 记录洞察
             insight_msg = f"纳指{nasdaq_ret:+.2f}% 标普{sp500_ret:+.2f}% 罗素{russell_ret:+.2f}% {market_regime}"
@@ -156,20 +149,28 @@ class MarketAnalyzer:
         print("="*70)
         
         try:
-            # 获取数据
-            vix = self.fetcher.get_yf_data('^VIX', period='3mo')
-            ten_year = self.fetcher.get_yf_data('^TNX', period='3mo')
-            sp500 = self.fetcher.get_yf_data('^GSPC', period='3mo')
+            # ✅ 修复：get_yf_data 返回 DataFrame，需要提取 Close 列
+            vix_data = self.fetcher.get_yf_data('^VIX', period='3mo')
+            ten_year_data = self.fetcher.get_yf_data('^TNX', period='3mo')
+            sp500_data = self.fetcher.get_yf_data('^GSPC', period='3mo')
             
-            if not (validate_data(vix, MIN_DATA_POINTS) and 
-                    validate_data(ten_year, MIN_DATA_POINTS)):
+            if vix_data.empty or ten_year_data.empty:
                 self.logger('风险环境分析', 'warning', '数据不足')
                 return None
             
-            current_vix = vix.iloc[-1]
-            current_bond = ten_year.iloc[-1]
-            vix_change = (vix.iloc[-1] / vix.iloc[-5] - 1) * 100
-            bond_change = (ten_year.iloc[-1] / ten_year.iloc[-5] - 1) * 100
+            # ✅ 修复：提取 Close 列并确保是 Series
+            vix = vix_data['Close'].dropna()
+            ten_year = ten_year_data['Close'].dropna()
+            
+            if len(vix) < MIN_DATA_POINTS or len(ten_year) < MIN_DATA_POINTS:
+                self.logger('风险环境分析', 'warning', '数据点不足')
+                return None
+            
+            # ✅ 修复：提取标量值并转为 float
+            current_vix = float(vix.iloc[-1])
+            current_bond = float(ten_year.iloc[-1])
+            vix_change = float((vix.iloc[-1] / vix.iloc[-5] - 1) * 100)
+            bond_change = float((ten_year.iloc[-1] / ten_year.iloc[-5] - 1) * 100)
             
             # 计算百分位
             vix_percentile = calculate_percentile(vix, current_vix)
@@ -281,28 +282,38 @@ class MarketAnalyzer:
             self.logger('风险环境分析', 'error', str(e))
             return None
     
-    def analyze_china_us_linkage(self):
+     def analyze_china_us_linkage(self):
         """分析中美市场联动"""
         print("\n" + "="*70)
         print("【中美市场联动解读】")
         print("="*70)
         
         try:
-            hsi = self.fetcher.get_yf_data('^HSI', period='3mo')
-            usdcny = self.fetcher.get_yf_data('CNY=X', period='3mo')
-            sp500 = self.fetcher.get_yf_data('^GSPC', period='3mo')
+            # ✅ 修复：获取数据并提取 Close 列
+            hsi_data = self.fetcher.get_yf_data('^HSI', period='3mo')
+            usdcny_data = self.fetcher.get_yf_data('CNY=X', period='3mo')
+            sp500_data = self.fetcher.get_yf_data('^GSPC', period='3mo')
             
-            if not (validate_data(hsi, MIN_DATA_POINTS) and 
-                    validate_data(usdcny, MIN_DATA_POINTS)):
+            if hsi_data.empty or usdcny_data.empty:
                 self.logger('中美联动分析', 'warning', '数据不足')
                 return None
             
-            current_cny = usdcny.iloc[-1]
-            cny_change_5d = (usdcny.iloc[-1] / usdcny.iloc[-5] - 1) * 100
-            cny_change_30d = (usdcny.iloc[-1] / usdcny.iloc[-30] - 1) * 100
+            # ✅ 修复：提取 Close 列并确保是 Series
+            hsi = hsi_data['Close'].dropna()
+            usdcny = usdcny_data['Close'].dropna()
             
-            hsi_ret = (hsi.iloc[-1] / hsi.iloc[-30] - 1) * 100
-            sp500_ret = (sp500.iloc[-1] / sp500.iloc[-30] - 1) * 100
+            if len(hsi) < 30 or len(usdcny) < 30:
+                self.logger('中美联动分析', 'warning', '数据点不足')
+                return None
+            
+            # ✅ 修复：提取标量值
+            current_cny = float(usdcny.iloc[-1])
+            cny_change_5d = float((usdcny.iloc[-1] / usdcny.iloc[-5] - 1) * 100)
+            cny_change_30d = float((usdcny.iloc[-1] / usdcny.iloc[-30] - 1) * 100)
+            
+            # ✅ 修复：计算收益率并转为标量
+            hsi_ret = float((hsi.iloc[-1] / hsi.iloc[-30] - 1) * 100)
+            sp500_ret = float((sp500_data['Close'].iloc[-1] / sp500_data['Close'].iloc[-30] - 1) * 100)
             
             print(f"\n📊 市场表现 (30日):")
             print(f"  恒生指数:    {hsi_ret:+.2f}%")
@@ -395,27 +406,28 @@ class MarketAnalyzer:
             self.logger('中美联动分析', 'error', str(e))
             return None
     
-    def analyze_liquidity_conditions(self, margin_data, shibor_data, bond_data):
+   def analyze_liquidity_conditions(self, margin_data, shibor_data, bond_data):
         """分析流动性环境"""
         print("\n" + "="*70)
         print("【流动性环境解读】")
         print("="*70)
         
         try:
-            if not (validate_data(margin_data, 50) and validate_data(shibor_data, 30)):
-                self.logger('流动性分析', 'warning', '数据不足')
+            if not validate_data(margin_data, 50):
+                self.logger('流动性分析', 'warning', '融资余额数据不足')
                 return None
             
-            current_margin = margin_data.iloc[-1] / 100000000
-            margin_change_5d = margin_data.pct_change(5).iloc[-1] * 100
-            margin_change_30d = margin_data.pct_change(30).iloc[-1] * 100
+            # ✅ 修复：确保标量值
+            current_margin = float(margin_data.iloc[-1] / 100000000)
+            margin_change_5d = float(margin_data.pct_change(5).iloc[-1] * 100)
+            margin_change_30d = float(margin_data.pct_change(30).iloc[-1] * 100)
             
-            current_shibor = shibor_data.iloc[-1] if len(shibor_data) > 0 else np.nan
-            shibor_change = shibor_data.pct_change().iloc[-1] * 100 if len(shibor_data) > 1 else 0
+            current_shibor = float(shibor_data.iloc[-1]) if not shibor_data.empty else np.nan
+            shibor_change = float(shibor_data.pct_change().iloc[-1] * 100) if len(shibor_data) > 1 else 0
             
             print(f"\n📊 流动性指标:")
             print(f"  融资余额: {current_margin:.0f}亿")
-            print(f"    └─5日变化: {margin_change_5d:+.2f}%")
+            print(f"    ├─5日变化: {margin_change_5d:+.2f}%")
             print(f"    └─30日变化: {margin_change_30d:+.2f}%")
             print(f"  Shibor 1M: {current_shibor:.2f}%")
             print(f"    └─日变化: {shibor_change:+.2f}%")
@@ -513,10 +525,7 @@ class MarketAnalyzer:
             return None
     
     def analyze_sector_rotation(self):
-        """
-        分析行业轮动
-        识别领涨板块和市场风格
-        """
+        """分析行业轮动"""
         print("\n" + "="*70)
         print("【行业轮动解读】")
         print("="*70)
@@ -527,13 +536,13 @@ class MarketAnalyzer:
             tickers = list(SECTOR_ETFS.values())
             print(f"📥 正在下载 {len(tickers)} 个行业ETF数据...")
             
-            # 批量下载（现在直接返回 Close 价格 DataFrame）
+            # ✅ 修复：batch_download 返回扁平化列名的 DataFrame
             raw_data = self.fetcher.batch_download(tickers, period="1mo")
             
             if raw_data.empty:
                 self.logger('行业轮动', 'warning', '数据下载失败')
                 return None
-        
+            
             returns = {}
             for sector, ticker in SECTOR_ETFS.items():
                 try:
@@ -541,17 +550,25 @@ class MarketAnalyzer:
                         returns[sector] = np.nan
                         continue
                     
-                    # 🔧 简化：直接访问 ticker 列
-                    if ticker in raw_data.columns:
-                        data = raw_data[ticker].dropna()
+                    # ✅ 修复：直接使用扁平化列名访问
+                    col_name = f'Close_{ticker}'
+                    if col_name in raw_data.columns:
+                        data = raw_data[col_name].dropna()
                         
                         if validate_data(data, 10):
-                            returns[sector] = (data.iloc[-1] / data.iloc[0] - 1) * 100
+                            returns[sector] = float((data.iloc[-1] / data.iloc[0] - 1) * 100)
                         else:
                             returns[sector] = np.nan
                     else:
-                        print(f"⚠️  {sector}({ticker}) 数据列不存在")
-                        returns[sector] = np.nan
+                        # 降级处理：尝试 MultiIndex
+                        try:
+                            data = raw_data['Close'][ticker].dropna()
+                            if validate_data(data, 10):
+                                returns[sector] = float((data.iloc[-1] / data.iloc[0] - 1) * 100)
+                            else:
+                                returns[sector] = np.nan
+                        except:
+                            returns[sector] = np.nan
                         
                 except Exception as e:
                     print(f"⚠️  {sector}({ticker}) 失败: {e}")
@@ -614,11 +631,11 @@ class MarketAnalyzer:
                 'leaders': leaders,
                 'laggards': laggards,
                 'returns': valid_returns,
-                'dispersion': dispersion,
+                'dispersion': float(dispersion) if 'dispersion' in locals() else 0,
                 'rotation_signal': rotation_signal,
                 'style_str': style_str,
                 'sorted_returns': sorted_returns,
-                'rotation_desc': rotation_desc if len(sorted_returns) >= 3 else ""
+                'rotation_desc': rotation_desc if 'rotation_desc' in locals() else ""
             }
             
         except Exception as e:
