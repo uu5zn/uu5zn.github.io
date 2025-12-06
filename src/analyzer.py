@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-import pandas as pd
+import pandas as pd  # 🔧 确认这行存在
+import akshare as ak  # 🔧 确认这行存在
 from datetime import datetime, timedelta
 from config import MIN_DATA_POINTS, VIX_HIGH, VIX_EXTREME, VIX_LOW
 from utils import validate_data, normalize, calculate_percentile
