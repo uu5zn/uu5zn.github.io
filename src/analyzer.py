@@ -534,28 +534,28 @@ class MarketAnalyzer:
                 self.logger('行业轮动', 'warning', '数据下载失败')
                 return None
         
-        returns = {}
-        for sector, ticker in SECTOR_ETFS.items():
-            try:
-                if not ticker:
-                    returns[sector] = np.nan
-                    continue
-                
-                # 🔧 简化：直接访问 ticker 列
-                if ticker in raw_data.columns:
-                    data = raw_data[ticker].dropna()
-                    
-                    if validate_data(data, 10):
-                        returns[sector] = (data.iloc[-1] / data.iloc[0] - 1) * 100
-                    else:
+            returns = {}
+            for sector, ticker in SECTOR_ETFS.items():
+                try:
+                    if not ticker:
                         returns[sector] = np.nan
-                else:
-                    print(f"⚠️  {sector}({ticker}) 数据列不存在")
-                    returns[sector] = np.nan
+                        continue
                     
-            except Exception as e:
-                print(f"⚠️  {sector}({ticker}) 失败: {e}")
-                returns[sector] = np.nan
+                    # 🔧 简化：直接访问 ticker 列
+                    if ticker in raw_data.columns:
+                        data = raw_data[ticker].dropna()
+                        
+                        if validate_data(data, 10):
+                            returns[sector] = (data.iloc[-1] / data.iloc[0] - 1) * 100
+                        else:
+                            returns[sector] = np.nan
+                    else:
+                        print(f"⚠️  {sector}({ticker}) 数据列不存在")
+                        returns[sector] = np.nan
+                        
+                except Exception as e:
+                    print(f"⚠️  {sector}({ticker}) 失败: {e}")
+                    returns[sector] = np.nan
             
             # 过滤有效数据
             valid_returns = {k: v for k, v in returns.items() if not np.isnan(v)}
