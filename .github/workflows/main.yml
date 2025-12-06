@@ -1,60 +1,103 @@
-name: Generate and Deploy Images
+name: Daily Market Analysis
 
 on:
   schedule:
-    - cron: '15 10 * * *' # 每天夏令时 20:15 UTC 执行一次
-    - cron: '30 20 * * *' # 每天夏令时 20:15 UTC 执行一次
-    #- cron: '*/5 * * * *'  # 每天夏令时 20:15 UTC 执行一次
-    - cron: '15 20 * * *' # 每天夏令时 20:15 UTC 执行一次
+    # 北京时间每天22:15（UTC 14:15）
+    - cron: '15 14 * * 1-5'
+  
   workflow_dispatch:      # 允许手动触发
+    inputs:
+      analysis_type:
+        description: '分析类型'
+        required: false
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - quick
+  
   push:
     branches:
       - main
+    paths:
+      - 'src/**'
+      - 'requirements.txt'
 
 jobs:
-  build-and-deploy:
+  analyze-and-deploy:
     runs-on: ubuntu-latest
-
+    
+    # 设置权限
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史用于可能的版本对比
 
-      - name: Set up Python
+      - name: 配置Python环境
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
-          
-      - name: fonts
+          python-version: '3.10'
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: 安装系统字体
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             fonts-wqy-microhei \
             fonts-wqy-zenhei \
-            fonts-noto-cjk \
-            fontconfig
-          
-          # 刷新字体缓存
+            fonts-noto-cjk
           sudo fc-cache -fv
           
-          # 检查字体是否安装成功
-          fc-list :lang=zh | head -5
+          # 验证字体安装
+          echo "已安装的中文字体:"
+          fc-list :lang=zh | head -3
 
-      - name: Install dependencies
-        run: pip install mplfinance yfinance akshare requests tqdm bs4
-
-      - name: Generate images
-        run: python generate_image.py
-
-      - name: Commit and push changes
+      - name: 安装Python依赖
         run: |
-          git config --global user.name 'GitHub Actions'
-          #git config --global user.email 'actions@github.com'
-          git add .
-          git commit -m "Automated image update" || true
-          git push origin main || true
+          pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: 创建输出目录
+        run: mkdir -p output
+
+      - name: 运行市场分析
+        working-directory: ./src
+        run: python main.py
+
+      - name: 上传分析报告到Artifacts
+        uses: actions/upload-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          name: market-analysis-report-${{ github.run_number }}
+          path: |
+            output/
+            !output/*.log
+          retention-days: 30
+
+      - name: 配置GitHub Pages
+        uses: actions/configure-pages@v3
+
+      - name: 部署到GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'schedule'
+        uses: actions/deploy-pages@v2
+        with:
+          artifact_name: market-analysis-report-${{ github.run_number }}
+
+      - name: 摘要输出
+        run: |
+          echo "## 📊 市场分析完成" >> $GITHUB_STEP_SUMMARY
+          echo "- **执行时间**: $(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "- **报告链接**: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/market分析报告.html" >> $GITHUB_STEP_SUMMARY
+
+      - name: 清理旧Artifacts (可选)
+        uses: actions/delete-package-versions@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          package-name: 'market-analysis-report'
+          min-versions-to-keep: 10
