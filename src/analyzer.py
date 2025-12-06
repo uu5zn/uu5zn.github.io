@@ -406,7 +406,7 @@ class MarketAnalyzer:
             self.logger('中美联动分析', 'error', str(e))
             return None
     
-   def analyze_liquidity_conditions(self, margin_data, shibor_data, bond_data):
+    def analyze_liquidity_conditions(self, margin_data, shibor_data, bond_data):
         """分析流动性环境"""
         print("\n" + "="*70)
         print("【流动性环境解读】")
