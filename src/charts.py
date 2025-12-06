@@ -29,10 +29,7 @@ class ChartGenerator:
         """
         self.logger = logger_callback
         self.fetcher = data_fetcher
-        self.setup_matplotlib()
-    
-    def setup_matplotlib(self):
-        """配置matplotlib"""
+        # 应用样式配置
         plt.rcParams.update(MPL_STYLE)
     
     def plot_kline(self, ticker, filename, period="1mo"):
@@ -41,12 +38,13 @@ class ChartGenerator:
             import yfinance as yf
             
             data = yf.Ticker(ticker).history(period=period)
-            #print(data.head())
             if not validate_data(data, 5):
                 self.logger('K线图', 'warning', f'{ticker} 数据不足')
                 return False
             
             filepath = os.path.join(OUTPUT_DIR, filename)
+            
+            # 确保标题使用中文字体
             style = mpf.make_mpf_style(
                 base_mpf_style='charles',
                 marketcolors=mpf.make_marketcolors(up='#e74c3c', down='#2ecc71', edge='inherit'),
@@ -54,11 +52,15 @@ class ChartGenerator:
                 gridcolor='#666666', gridstyle='--', rc={'font.size': 8}
             )
             
+            # 设置标题字体
+            title_font = {'family': plt.rcParams['font.sans-serif'][0], 'size': 10}
+            
             mpf.plot(
                 data, type='candle', figscale=0.35, volume=False,
                 savefig=filepath, datetime_format='%m-%d', style=style,
                 title=ticker, tight_layout=True,
-                warn_too_much_data=1000
+                warn_too_much_data=1000,
+                title_fontdict=title_font  # 显式设置标题字体
             )
             
             print(f"✅ K线图: {filename}")
@@ -80,14 +82,31 @@ class ChartGenerator:
             
             fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
             
+            # 设置标题和标签字体
+            title_font = plt.rcParams['font.sans-serif'][0]
+            ax.set_title(title, fontsize=13, fontweight='heavy', pad=8, fontname=title_font)
+            
             for i, (key, values) in enumerate(valid_data.items()):
                 linewidth = linewidths[i] if linewidths else 1.5
                 ax.plot(values.index, values, color=colors[i], 
                        label=labels[i], linewidth=linewidth)
             
-            ax.set_title(title, fontsize=13, fontweight='heavy', pad=8)
-            ax.legend(loc='upper left', fontsize=8, framealpha=0.9)
+            # 设置图例字体
+            legend = ax.legend(loc='upper left', fontsize=8, framealpha=0.9)
+            for text in legend.get_texts():
+                text.set_fontname(title_font)
+            
             ax.grid(True, alpha=0.3, color='#666666')
+            
+            # 设置坐标轴标签字体
+            ax.set_xlabel(ax.get_xlabel(), fontname=title_font)
+            ax.set_ylabel(ax.get_ylabel(), fontname=title_font)
+            
+            # 设置刻度标签字体
+            for label in ax.get_xticklabels():
+                label.set_fontname(title_font)
+            for label in ax.get_yticklabels():
+                label.set_fontname(title_font)
             
             plt.gcf().autofmt_xdate(rotation=45, ha='right')
             plt.tight_layout(pad=0.8, h_pad=0.8, w_pad=0.8)
