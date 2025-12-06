@@ -19,115 +19,221 @@ warnings.filterwarnings('ignore')
 OUTPUT_DIR = "output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# 设置全局字体（适配Linux服务器环境）
-plt.rcParams.update({
-    'figure.figsize': (10, 6), 'figure.dpi': 100, 'savefig.dpi': 300,
-    'figure.facecolor': 'black', 'axes.facecolor': 'black', 'savefig.facecolor': 'black',
-    'savefig.transparent': False, 'font.family': 'WenQuanYi Micro Hei', 'font.size': 12,
-    'axes.labelcolor': 'white', 'xtick.color': 'white', 'ytick.color': 'white',
-    'text.color': 'white', 'axes.titlesize': 16, 'axes.titlecolor': 'white',
-    'legend.fontsize': 11, 'legend.labelcolor': 'white', 'lines.linewidth': 2.0,
-    'lines.markersize': 6, 'axes.prop_cycle': plt.cycler(color=['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6']),
-    'axes.grid': True, 'grid.color': '#666666', 'grid.alpha': 0.5, 'grid.linestyle': '--',
-    'axes.spines.top': False, 'axes.spines.right': False, 'axes.spines.left': True,
-    'axes.spines.bottom': True, 'xtick.direction': 'in', 'ytick.direction': 'in',
-    'legend.frameon': True, 'legend.facecolor': '#333333', 'legend.edgecolor': 'white',
-    'legend.framealpha': 0.8, 'figure.subplot.left': 0.08, 'figure.subplot.right': 0.95,
-    'figure.subplot.top': 0.92, 'figure.subplot.bottom': 0.1, 'axes.unicode_minus': False,
-})
+def check_available_fonts():
+    """检查系统可用字体（调试用）"""
+    import matplotlib.font_manager as fm
+    fonts = fm.findSystemFonts()
+    chinese_fonts = [f for f in fonts if 'wqy' in f.lower() or 'noto' in f.lower() or 'cjk' in f.lower()]
+    print(f"系统找到 {len(chinese_fonts)} 个中文字体:")
+    for f in chinese_fonts[:3]:
+        print(f"  - {os.path.basename(f)}")
+    
+    # 测试实际渲染
+    test_path = os.path.join(OUTPUT_DIR, "font_test.png")
+    try:
+        fig, ax = plt.subplots(figsize=(4, 2), facecolor='black')
+        ax.text(0.5, 0.5, '中文测试 123', ha='center', va='center', 
+                fontsize=12, color='white')
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, 1)
+        ax.axis('off')
+        plt.tight_layout(pad=0.1)
+        plt.savefig(test_path, bbox_inches='tight', facecolor='black')
+        plt.close()
+        print(f"✅ 字体测试图已生成: {test_path}")
+    except Exception as e:
+        print(f"⚠️  字体测试失败: {e}")
+    
+    return len(chinese_fonts) > 0
+
+def setup_matplotlib_fonts():
+    """设置matplotlib字体（服务器环境优化）"""
+    # 优先使用的中文字体列表（从轻到重）
+    font_candidates = [
+        'WenQuanYi Micro Hei',  # 最轻量
+        'WenQuanYi Zen Hei',
+        'Noto Sans CJK SC',
+        'Noto Sans SC',
+        'DejaVu Sans',
+    ]
+    
+    # 检查哪个字体可用
+    available_font = None
+    for font in font_candidates:
+        try:
+            fig = plt.figure(figsize=(1, 1))
+            plt.text(0.5, 0.5, '测试', fontfamily=font)
+            plt.close(fig)
+            available_font = font
+            print(f"✅ 使用字体: {font}")
+            break
+        except:
+            continue
+    
+    if not available_font:
+        print("⚠️  未找到中文字体，使用默认字体")
+        available_font = 'sans-serif'
+    
+    # 核心设置：优化边距和字体
+    plt.rcParams.update({
+        # 基础尺寸
+        'figure.figsize': (12, 8),
+        'figure.dpi': 100,
+        'savefig.dpi': 150,  # 降低DPI减少文件大小
+        
+        # 颜色主题（黑底白字）
+        'figure.facecolor': 'black',
+        'axes.facecolor': 'black',
+        'savefig.facecolor': 'black',
+        'savefig.transparent': False,
+        'axes.labelcolor': 'white',
+        'xtick.color': 'white',
+        'ytick.color': 'white',
+        'text.color': 'white',
+        'axes.titlecolor': 'white',
+        'legend.labelcolor': 'white',
+        
+        # 字体设置（关键）
+        'font.family': 'sans-serif',
+        'font.sans-serif': [available_font],
+        'font.size': 9,  # 减小字体
+        'axes.titlesize': 13,
+        'legend.fontsize': 8,
+        'xtick.labelsize': 8,
+        'ytick.labelsize': 8,
+        
+        # 线条样式
+        'lines.linewidth': 1.5,
+        'lines.markersize': 4,
+        'axes.prop_cycle': plt.cycler(color=['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6']),
+        
+        # 网格
+        'axes.grid': True,
+        'grid.color': '#666666',
+        'grid.alpha': 0.5,
+        'grid.linestyle': '--',
+        
+        # 边框
+        'axes.spines.top': False,
+        'axes.spines.right': False,
+        'axes.spines.left': True,
+        'axes.spines.bottom': True,
+        'xtick.direction': 'in',
+        'ytick.direction': 'in',
+        
+        # 图例
+        'legend.frameon': True,
+        'legend.facecolor': '#333333',
+        'legend.edgecolor': 'white',
+        'legend.framealpha': 0.8,
+        'legend.loc': 'upper left',
+        
+        # 关键：大幅减小边距
+        'figure.subplot.left': 0.06,
+        'figure.subplot.right': 0.96,
+        'figure.subplot.top': 0.94,
+        'figure.subplot.bottom': 0.08,
+        'figure.subplot.wspace': 0.1,
+        'figure.subplot.hspace': 0.1,
+        
+        # 其他
+        'axes.unicode_minus': False,
+        'figure.constrained_layout.use': False,  # 禁用自动布局
+    })
+
+# 初始化字体设置
+setup_matplotlib_fonts()
+check_available_fonts()
 
 def fix_currency_boc_sina(symbol: str = "美元", start_date: str = "20230304", end_date: str = "20231110") -> pd.DataFrame:
-
-    # 获取货币代码映射
-    url = "http://biz.finance.sina.com.cn/forex/forex.php "
-    params = {
-        "startdate": "-".join([start_date[:4], start_date[4:6], start_date[6:]]),
-        "enddate": "-".join([end_date[:4], end_date[4:6], end_date[6:]]),
-        "money_code": "EUR",
-        "type": "0",
-    }
-    r = requests.get(url, params=params)
-    r.encoding = "gbk"
-    soup = BeautifulSoup(r.text, "lxml")
-    
-    # 检查是否能找到货币代码选择器
-    money_code_element = soup.find(attrs={"id": "money_code"})
-    if money_code_element is None:
-        print(f"⚠️ 无法获取货币代码映射，可能网页结构已变化")
-        return pd.DataFrame()
-    
-    data_dict = dict(
-        zip(
-            [item.text for item in money_code_element.find_all("option")],
-            [item["value"] for item in money_code_element.find_all("option")]
-        )
-    )
-    
-    if symbol not in data_dict:
-        print(f"⚠️  不支持的货币类型: {symbol}，支持的货币: {list(data_dict.keys())}")
-        return pd.DataFrame()
-    
-    money_code = data_dict[symbol]
-    
-    # 构建请求参数
-    params = {
-        "money_code": money_code,
-        "type": "0",
-        "startdate": "-".join([start_date[:4], start_date[4:6], start_date[6:]]),
-        "enddate": "-".join([end_date[:4], end_date[4:6], end_date[6:]]),
-        "page": "1",
-        "call_type": "ajax",
+    """修复版新浪财经-中行人民币牌价数据"""
+    url = "http://biz.finance.sina.com.cn/forex/forex.php"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
     
-    # 获取数据
-    big_df = pd.DataFrame()
     try:
-        r = requests.get(url, params=params)
+        # 获取货币代码映射
+        params = {
+            "startdate": "-".join([start_date[:4], start_date[4:6], start_date[6:]]),
+            "enddate": "-".join([end_date[:4], end_date[4:6], end_date[6:]]),
+            "money_code": "EUR",
+            "type": "0",
+        }
+        r = requests.get(url, params=params, headers=headers, timeout=10)
+        r.encoding = "gbk"
+        soup = BeautifulSoup(r.text, "lxml")
+        
+        money_code_element = soup.find(attrs={"id": "money_code"})
+        if money_code_element is None:
+            print(f"⚠️ 无法获取货币代码映射")
+            return pd.DataFrame()
+        
+        data_dict = dict(
+            zip(
+                [item.text for item in money_code_element.find_all("option")],
+                [item["value"] for item in money_code_element.find_all("option")]
+            )
+        )
+        
+        if symbol not in data_dict:
+            print(f"⚠️ 不支持的货币: {symbol}")
+            return pd.DataFrame()
+        
+        money_code = data_dict[symbol]
+        
+        # 获取数据
+        params = {
+            "money_code": money_code,
+            "type": "0",
+            "startdate": "-".join([start_date[:4], start_date[4:6], start_date[6:]]),
+            "enddate": "-".join([end_date[:4], end_date[4:6], end_date[6:]]),
+            "page": "1",
+            "call_type": "ajax",
+        }
+        
+        big_df = pd.DataFrame()
+        r = requests.get(url, params=params, headers=headers, timeout=10)
         soup = BeautifulSoup(r.text, "lxml")
         page_element_list = soup.find_all("a", attrs={"class": "page"})
         page_num = int(page_element_list[-2].text) if len(page_element_list) != 0 else 1
-    except Exception as e:
-        print(f"⚠️  获取页码失败: {e}")
-        return pd.DataFrame()
-    
-    for page in tqdm(range(1, page_num + 1), leave=False):
-        params.update({"page": page})
-        try:
-            r = requests.get(url, params=params)
+        
+        for page in tqdm(range(1, page_num + 1), leave=False, desc=f"获取{symbol}数据"):
+            params.update({"page": page})
+            r = requests.get(url, params=params, headers=headers, timeout=10)
             temp_df = pd.read_html(StringIO(r.text), header=0)[0]
             big_df = pd.concat([big_df, temp_df], ignore_index=True)
-        except Exception as e:
-            print(f"⚠️  获取第{page}页数据失败: {e}")
-            continue
-    
-    # 动态处理列名，适应可能的列数变化
-    if len(big_df.columns) == 6:
-        big_df.columns = ["日期", "中行汇买价", "中行钞买价", "中行钞卖价", "中行汇卖价", "央行中间价"]
-    elif len(big_df.columns) == 5:
-        big_df.columns = ["日期", "中行汇买价", "中行钞买价", "中行钞卖价/汇卖价", "央行中间价"]
-    else:
-        print(f"⚠️  未知列数: {len(big_df.columns)}，列名: {big_df.columns.tolist()}")
+        
+        # 动态处理列名
+        if len(big_df.columns) == 6:
+            big_df.columns = ["日期", "中行汇买价", "中行钞买价", "中行钞卖价", "中行汇卖价", "央行中间价"]
+        elif len(big_df.columns) == 5:
+            big_df.columns = ["日期", "中行汇买价", "中行钞买价", "中行钞卖价/汇卖价", "央行中间价"]
+        else:
+            print(f"⚠️ 未知列数: {len(big_df.columns)}")
+            return pd.DataFrame()
+        
+        # 数据类型转换
+        big_df["日期"] = pd.to_datetime(big_df["日期"], errors="coerce").dt.date
+        for col in big_df.columns[1:]:
+            big_df[col] = pd.to_numeric(big_df[col], errors="coerce")
+        
+        big_df.sort_values(by=["日期"], inplace=True, ignore_index=True)
+        return big_df
+    except Exception as e:
+        print(f"⚠️ 获取汇率数据失败: {e}")
         return pd.DataFrame()
-    
-    # 数据类型转换
-    big_df["日期"] = pd.to_datetime(big_df["日期"], errors="coerce").dt.date
-    numeric_columns = big_df.columns[1:]
-    for col in numeric_columns:
-        big_df[col] = pd.to_numeric(big_df[col], errors="coerce")
-    
-    big_df.sort_values(by=["日期"], inplace=True, ignore_index=True)
-    return big_df
 
 def safe_get_data(func, *args, **kwargs):
-    """安全获取数据，失败时返回空DataFrame"""
+    """安全获取数据"""
     try:
         data = func(*args, **kwargs)
         if data is None or (hasattr(data, 'empty') and data.empty):
-            print(f"⚠️  数据获取失败: {func.__name__}")
+            print(f"⚠️ 数据获取失败: {func.__name__}")
             return pd.DataFrame()
         return data
     except Exception as e:
-        print(f"⚠️  数据获取异常 {func.__name__}: {str(e)[:100]}")
+        print(f"⚠️ 数据获取异常 {func.__name__}: {str(e)[:100]}")
         return pd.DataFrame()
 
 def validate_data(data, min_points=10):
@@ -137,13 +243,43 @@ def validate_data(data, min_points=10):
     return True
 
 def generate_and_save_plot(ticker, filename, period="1mo"):
-    """生成K线图"""
+    """生成K线图（优化版）"""
     try:
         data = yf.Ticker(ticker).history(period=period)
         if validate_data(data, 5):
             filepath = os.path.join(OUTPUT_DIR, filename)
-            mpf.plot(data, type='candle', figscale=0.4, volume=False, 
-                    savefig=filepath, datetime_format='%m-%d')
+            
+            # 创建自定义样式
+            style = mpf.make_mpf_style(
+                base_mpf_style='charles',
+                marketcolors=mpf.make_marketcolors(
+                    up='#e74c3c', down='#2ecc71',
+                    edge='inherit',
+                    wick={'up':'#e74c3c', 'down':'#2ecc71'},
+                    volume='in'
+                ),
+                facecolor='black',
+                edgecolor='white',
+                figcolor='black',
+                gridcolor='#666666',
+                gridstyle='--',
+                rc={'font.size': 8}
+            )
+            
+            # 绘制K线图
+            mpf.plot(
+                data, 
+                type='candle', 
+                figscale=0.35,
+                volume=False,
+                savefig=filepath,
+                datetime_format='%m-%d',
+                style=style,
+                title=ticker,
+                tight_layout=True,
+                bbox_inches='tight',
+                warn_too_much_data=1000  # 抑制数据过多警告
+            )
             print(f"✅ K线图: {filename}")
         else:
             print(f"❌ 数据不足: {ticker}")
@@ -151,7 +287,7 @@ def generate_and_save_plot(ticker, filename, period="1mo"):
         print(f"❌ K线图失败 {ticker}: {e}")
 
 def get_data(symbol, start_date, end_date):
-    """获取指定符号的历史数据（带错误处理）"""
+    """获取数据（主函数）"""
     try:
         if symbol == '美元':
             data = fix_currency_boc_sina(symbol=symbol, start_date=start_date, end_date=end_date)
@@ -180,6 +316,7 @@ def get_data(symbol, start_date, end_date):
                 if '中国国债收益率10年' in data.columns and '美国国债收益率10年' in data.columns:
                     data['spread'] = data['中国国债收益率10年'] - data['美国国债收益率10年']
                     return data
+        
         elif symbol.startswith('ETF_'):
             etf_code = symbol.split('_')[1]
             data = safe_get_data(ak.fund_etf_hist_em, symbol=etf_code)
@@ -206,7 +343,7 @@ def get_data(symbol, start_date, end_date):
     return pd.Series(dtype=float)
 
 def normalize(data):
-    """对数据进行归一化处理"""
+    """归一化处理"""
     try:
         if validate_data(data, 2):
             return (data - data.min()) / (data.max() - data.min())
@@ -215,36 +352,47 @@ def normalize(data):
     return pd.Series(dtype=float)
 
 def plot_data(data_dict, title, labels, colors, linewidths=None, save_path=None):
-    """绘制数据图表（带错误处理）"""
+    """绘制数据图表（最终优化版）"""
     try:
         valid_data = {k: v for k, v in data_dict.items() if validate_data(v, 5)}
         if not valid_data:
             print(f"❌ 无有效数据: {title}")
             return
         
-        fig, ax = plt.subplots(figsize=(20, 15))
+        fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')  # 调整比例
+        
+        # 绘制数据
         for i, (key, values) in enumerate(valid_data.items()):
-            linewidth = linewidths[i] if linewidths else 2.0
+            linewidth = linewidths[i] if linewidths else 1.5
             ax.plot(values.index, values, color=colors[i], 
                    label=labels[i], linewidth=linewidth)
         
-        ax.set_title(title, fontsize='xx-large', fontweight='heavy')
-        ax.legend(loc='upper left')
-        ax.grid(True, alpha=0.3)
-        plt.gcf().autofmt_xdate()
+        # 设置标题和标签
+        ax.set_title(title, fontsize=13, fontweight='heavy', pad=8, color='white')
+        ax.legend(loc='upper left', fontsize=8, framealpha=0.9)
+        ax.grid(True, alpha=0.3, color='#666666')
+        
+        # 日期格式优化
+        plt.gcf().autofmt_xdate(rotation=45, ha='right')
+        
+        # 关键：紧凑布局
+        plt.tight_layout(pad=0.8, h_pad=0.8, w_pad=0.8)
         
         if save_path:
             filepath = os.path.join(OUTPUT_DIR, save_path)
-            plt.savefig(filepath)
+            # 关键：bbox_inches='tight'去除白边
+            plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
+                       facecolor='black', dpi=150)
             print(f"✅ 图表: {save_path}")
-        plt.show()
-        plt.clf()
+        
+        plt.close(fig)  # 立即关闭释放内存
+        
     except Exception as e:
         print(f"❌ 绘图失败 {title}: {e}")
-        plt.clf()
+        plt.close('all')
 
 def plot_oil_gold_bond():
-    """绘制油金比和美债收益率图表"""
+    """油金比分析"""
     try:
         oil_prices = get_data("CL", None, None)
         gold_prices = get_data("GC", None, None)
@@ -265,36 +413,42 @@ def plot_oil_gold_bond():
             print("❌ 美债数据不足")
             return
         
+        # 限制数据长度
         us_bond = us_bond.iloc[-300:] if len(us_bond) > 300 else us_bond
         oil_gold_ratio = oil_gold_ratio.iloc[-300:] if len(oil_gold_ratio) > 300 else oil_gold_ratio
         
-        fig, ax1 = plt.subplots(figsize=(20, 15))
+        fig, ax1 = plt.subplots(figsize=(20, 12), facecolor='black')
         ax2 = ax1.twinx()
         
-        ax1.plot(oil_gold_ratio, 'r-', label='Oil/Gold Ratio')
-        ax1.set_ylabel('Oil/Gold Ratio', color='r')
+        line1 = ax1.plot(oil_gold_ratio, 'r-', label='Oil/Gold Ratio', linewidth=1.5)
+        ax1.set_ylabel('Oil/Gold Ratio', color='r', fontsize=10)
         
-        ax2.plot(us_bond, 'b-', label='US 10Y Yield')
-        ax2.set_ylabel('US 10Y Yield (%)', color='b')
+        line2 = ax2.plot(us_bond, 'b-', label='US 10Y Yield', linewidth=1.5)
+        ax2.set_ylabel('US 10Y Yield (%)', color='b', fontsize=10)
         
-        plt.title('Oil/Gold Ratio vs US 10Y Treasury Yield Trend', pad=20)
-        ax1.grid(True, alpha=0.3)
-        lines, labels = ax1.get_legend_handles_labels()
-        lines2, labels2 = ax2.get_legend_handles_labels()
-        ax1.legend(lines + lines2, labels + labels2, loc='upper left')
-        plt.gcf().autofmt_xdate()
+        plt.title('Oil/Gold Ratio vs US 10Y Treasury Yield Trend', 
+                 fontsize=13, fontweight='heavy', pad=8)
+        
+        ax1.grid(True, alpha=0.3, color='#666666')
+        lines = line1 + line2
+        labels = [l.get_label() for l in lines]
+        ax1.legend(lines, labels, loc='upper left', fontsize=8)
+        
+        plt.gcf().autofmt_xdate(rotation=45, ha='right')
+        plt.tight_layout(pad=0.8)
         
         filepath = os.path.join(OUTPUT_DIR, 'jyb_gz.png')
-        plt.savefig(filepath)
+        plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
+                   facecolor='black', dpi=150)
         print("✅ 图表: jyb_gz.png")
-        plt.show()
-        plt.clf()
+        plt.close(fig)
+        
     except Exception as e:
         print(f"❌ 油金比图表失败: {e}")
-        plt.clf()
+        plt.close('all')
 
 def plot_pe_bond_spread():
-    """绘制股债利差图表"""
+    """股债利差分析"""
     try:
         bond_df = safe_get_data(ak.bond_zh_us_rate, start_date="20121219")
         pe_df = safe_get_data(ak.stock_index_pe_lg, symbol="上证50")
@@ -303,11 +457,11 @@ def plot_pe_bond_spread():
             print("❌ 债券或PE数据获取失败")
             return
         
-        if not all(col in bond_df.columns for col in ['日期', '中国国债收益率10年']):
+        required_cols = {'债券': ['日期', '中国国债收益率10年'], 'PE': ['日期', '滚动市盈率']}
+        if not all(col in bond_df.columns for col in required_cols['债券']):
             print("❌ 债券数据缺少必要列")
             return
-        
-        if not all(col in pe_df.columns for col in ['日期', '滚动市盈率']):
+        if not all(col in pe_df.columns for col in required_cols['PE']):
             print("❌ PE数据缺少必要列")
             return
         
@@ -317,7 +471,6 @@ def plot_pe_bond_spread():
         bond_10y = bond_df.dropna().set_index('日期')['中国国债收益率10年']
         pe_ratio = pe_df.dropna().set_index('日期')['滚动市盈率']
         
-        # 对齐日期
         common_idx = bond_10y.index.intersection(pe_ratio.index)
         if len(common_idx) < 100:
             print("❌ 日期交集数据不足")
@@ -330,37 +483,47 @@ def plot_pe_bond_spread():
             print("❌ 股债利差数据不足")
             return
         
-        fig, ax = plt.subplots(figsize=(20, 15))
-        spread.plot(ax=ax, color='white', linewidth=2, title='股债利差')
+        fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
+        spread.plot(ax=ax, color='white', linewidth=1.5, title='股债利差')
         
-        plt.axhline(y=-2.6, ls=":", c="red", label="高息")
-        plt.axhline(y=-5.5, ls=":", c="green", label="正常")
-        plt.axhline(y=-7.8, ls=":", c="blue", label="低息")
-        plt.axhline(y=-4.5, ls=":", c="gray")
-        plt.axhline(y=-6.8, ls=":", c="gray")
-        plt.legend()
-        plt.grid(True, alpha=0.3)
+        # 添加参考线
+        for y, color, label in [
+            (-2.6, 'red', '高息'), (-5.5, 'green', '正常'), 
+            (-7.8, 'blue', '低息'), (-4.5, 'gray', ''), (-6.8, 'gray', '')
+        ]:
+            plt.axhline(y=y, ls=":", c=color, label=label if label else None, alpha=0.7)
+        
+        plt.legend(fontsize=8, loc='upper left')
+        plt.grid(True, alpha=0.3, color='#666666')
+        plt.title('股债利差', fontsize=13, fontweight='heavy', pad=8)
+        
+        plt.gcf().autofmt_xdate(rotation=45, ha='right')
+        plt.tight_layout(pad=0.8)
         
         filepath = os.path.join(OUTPUT_DIR, 'guzhaixicha.png')
-        plt.savefig(filepath)
+        plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
+                   facecolor='black', dpi=150)
         print("✅ 图表: guzhaixicha.png")
-        plt.show()
-        plt.clf()
+        plt.close(fig)
+        
     except Exception as e:
         print(f"❌ 股债利差图表失败: {e}")
-        plt.clf()
+        plt.close('all')
 
 def main():
     """主执行函数"""
-    print("="*70)
+    print("\n" + "="*70)
     print("金融数据分析程序启动")
     print(f"运行时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"输出目录: {os.path.abspath(OUTPUT_DIR)}")
     print("="*70)
     
     success_count = 0
     total_tasks = 0
+    start_date_str = ""
+    end_date_str = ""
     
-    # 任务1: 生成指数K线图
+    # 任务1: 指数K线图
     print("\n【任务1】生成指数K线图...")
     indices = [
         ("^TNX", "tenbond.png"), ("^VIX", "vix.png", "2mo"),
@@ -486,18 +649,21 @@ def main():
                 correlation = df['HSI'].corr(df['RUT'])
                 print(f"恒生指数与Russell 2000相关性: {correlation:.4f}")
                 
-                fig, ax = plt.subplots(figsize=(20,15))
-                ax.plot(df.index, df['HSI']/df['HSI'].iloc[0], label='HSI (归一化)', color='#3498db')
-                ax.plot(df.index, df['RUT']/df['RUT'].iloc[0], label='RUT (归一化)', color='#e74c3c')
-                ax.set_title('恒生指数与Russell 2000走势对比', fontsize=16, fontweight='heavy')
-                ax.legend()
-                ax.grid(alpha=0.3)
+                fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
+                ax.plot(df.index, df['HSI']/df['HSI'].iloc[0], label='HSI (归一化)', color='#3498db', linewidth=1.5)
+                ax.plot(df.index, df['RUT']/df['RUT'].iloc[0], label='RUT (归一化)', color='#e74c3c', linewidth=1.5)
+                ax.set_title('恒生指数与Russell 2000走势对比', fontsize=13, fontweight='heavy', pad=8)
+                ax.legend(fontsize=8)
+                ax.grid(alpha=0.3, color='#666666')
+                
+                plt.gcf().autofmt_xdate(rotation=45, ha='right')
+                plt.tight_layout(pad=0.8)
                 
                 filepath = os.path.join(OUTPUT_DIR, 'hsi_rut_comparison.png')
-                plt.savefig(filepath, dpi=300, bbox_inches='tight')
+                plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
+                           facecolor='black', dpi=150)
                 print("✅ 图表: hsi_rut_comparison.png")
-                plt.show()
-                plt.clf()
+                plt.close(fig)
                 
                 success_count += 1
             else:
@@ -519,10 +685,12 @@ def main():
     # 总结
     print("\n" + "="*70)
     print(f"执行完成: {success_count}/{total_tasks} 任务成功")
-    print(f"输出目录: {os.path.abspath(OUTPUT_DIR)}")
+    print(f"查看输出: ls -lh {os.path.abspath(OUTPUT_DIR)}")
     print("="*70)
     
     return success_count, total_tasks
 
 if __name__ == "__main__":
-    main()
+    success, total = main()
+    # 退出码非零表示有失败任务
+    sys.exit(0 if success == total else 1)
