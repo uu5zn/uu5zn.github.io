@@ -44,7 +44,7 @@ class DataFetcher:
                 ticker, period=period, interval=interval, 
                 progress=False, timeout=YF_TIMEOUT
             )
-            
+            print(data.head())
             if data.empty:
                 self.logger('YFinance', 'warning', f'{ticker} 返回空数据')
                 return pd.DataFrame()
