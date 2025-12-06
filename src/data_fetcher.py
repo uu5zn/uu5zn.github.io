@@ -10,7 +10,8 @@ from io import StringIO
 from tqdm import tqdm
 from config import HEADERS, YF_TIMEOUT
 from utils import validate_data, log_execution
-
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning, module='yfinance')
 
 
 class DataFetcher:
