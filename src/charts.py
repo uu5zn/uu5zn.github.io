@@ -44,23 +44,23 @@ class ChartGenerator:
             
             filepath = os.path.join(OUTPUT_DIR, filename)
             
-            # 确保标题使用中文字体
+            # 在 rc 参数中设置字体，而不是使用 title_fontdict
             style = mpf.make_mpf_style(
                 base_mpf_style='charles',
                 marketcolors=mpf.make_marketcolors(up='#e74c3c', down='#2ecc71', edge='inherit'),
                 facecolor='black', edgecolor='white', figcolor='black',
-                gridcolor='#666666', gridstyle='--', rc={'font.size': 8}
+                gridcolor='#666666', gridstyle='--',
+                rc={
+                    'font.size': 8,
+                    'font.family': plt.rcParams['font.sans-serif'][0]  # 设置中文字体
+                }
             )
-            
-            # 设置标题字体
-            title_font = {'family': plt.rcParams['font.sans-serif'][0], 'size': 10}
             
             mpf.plot(
                 data, type='candle', figscale=0.35, volume=False,
                 savefig=filepath, datetime_format='%m-%d', style=style,
                 title=ticker, tight_layout=True,
-                warn_too_much_data=1000,
-                title_fontdict=title_font  # 显式设置标题字体
+                warn_too_much_data=1000
             )
             
             print(f"✅ K线图: {filename}")
