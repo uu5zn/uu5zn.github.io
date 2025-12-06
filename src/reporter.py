@@ -5,12 +5,14 @@ from datetime import datetime
 from config import OUTPUT_DIR
 
 class ReportGenerator:
-    def __init__(self, execution_log):
+    def __init__(self, execution_log, logger_callback=None):  # 🔧 添加 logger 参数
         """
         报告生成器
         :param execution_log: 执行日志字典
+        :param logger_callback: 日志回调函数（可选）
         """
         self.log = execution_log
+        self.logger = logger_callback  # 🔧 保存 logger 引用
     
     def save_json_report(self):
         """保存JSON格式执行报告"""
@@ -22,9 +24,16 @@ class ReportGenerator:
                 json.dump(self.log, f, ensure_ascii=False, indent=2)
             
             print(f"\n📋 JSON报告已保存: {report_path}")
+            
+            # 🔧 使用 logger 记录
+            if self.logger:
+                self.logger('JSON报告', 'success', f'路径: {report_path}')
+            
             return report_path
         except Exception as e:
             print(f"❌ JSON报告保存失败: {e}")
+            if self.logger:
+                self.logger('JSON报告', 'error', str(e))
             return None
     
     def generate_markdown_report(self, **kwargs):
@@ -305,10 +314,15 @@ class ReportGenerator:
 """)
             
             print(f"✅ Markdown报告已生成: {report_path}")
-            self.logger('Markdown报告', 'success', f'报告路径: {report_path}')
+            
+            # 🔧 使用 logger 记录
+            if self.logger:
+                self.logger('Markdown报告', 'success', f'路径: {report_path}')
             
             return report_path
             
         except Exception as e:
             print(f"❌ Markdown报告生成失败: {e}")
+            if self.logger:
+                self.logger('Markdown报告', 'error', str(e))
             return None
