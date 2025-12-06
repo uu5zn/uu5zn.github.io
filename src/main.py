@@ -29,9 +29,13 @@ def initialize():
     log = setup_logging()
     log['start_time'] = datetime.now().isoformat()
     
-    # ✅ 创建 logger 函数，支持 kwargs
-    def logger_func(category, status, message):
-        log_execution(log, category, status, message)
+    # ✅ 修复：logger 函数必须接受 **kwargs
+    def logger_func(category, status, message, **kwargs):
+        """
+        日志回调函数
+        :param kwargs: 接收 chart_path 等额外参数
+        """
+        log_execution(log, category, status, message, **kwargs)
     
     # 创建核心组件
     fetcher = DataFetcher(logger_func)
