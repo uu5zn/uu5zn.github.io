@@ -177,4 +177,117 @@ class ChartGenerator:
             line1 = ax1.plot(oil_gold_ratio, 'r-', label='Oil/Gold Ratio', linewidth=1.5)
             ax1.set_ylabel('Oil/Gold Ratio', color='r', fontsize=10)
             
-            line2 = ax2.plot(us_bond, 'b-', label='US 10Y Yield', linewidth=1
+            line2 = ax2.plot(us_bond, 'b-', label='US 10Y Yield', linewidth=1.5)
+            ax2.set_ylabel('US 10Y Yield (%)', color='b', fontsize=10)
+            
+            plt.title('Oil/Gold Ratio vs US 10Y Treasury Yield Trend', 
+                     fontsize=13, fontweight='heavy', pad=8)
+            
+            ax1.grid(True, alpha=0.3, color='#666666')
+            lines = line1 + line2
+            labels = [l.get_label() for l in lines]
+            ax1.legend(lines, labels, loc='upper left', fontsize=8)
+            
+            plt.gcf().autofmt_xdate(rotation=45, ha='right')
+            plt.tight_layout(pad=0.8)
+            
+            filepath = os.path.join(OUTPUT_DIR, 'jyb_gz.png')
+            plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
+                       facecolor='black', dpi=150)
+            print("✅ 图表: jyb_gz.png")
+            plt.close(fig)
+            
+            return True
+            
+        except Exception as e:
+            print(f"❌ 油金比图表失败: {e}")
+            self.logger('油金比', 'error', str(e))
+            plt.close('all')
+            return False
+    
+    def plot_pe_bond_spread(self):
+        """绘制股债利差图"""
+        try:
+            bond_df = self.fetcher.safe_get_data(ak.bond_zh_us_rate, start_date="20121219")
+            pe_df = self.fetcher.safe_get_data(ak.stock_index_pe_lg, symbol="上证50")
+            
+            if bond_df.empty or pe_df.empty:
+                self.logger('股债利差', 'warning', '数据获取失败')
+                return False
+            
+            # 数据验证
+            if '日期' not in bond_df.columns or '中国国债收益率10年' not in bond_df.columns:
+                self.logger('股债利差', 'warning', '债券数据缺少列')
+                return False
+            if '日期' not in pe_df.columns or '滚动市盈率' not in pe_df.columns:
+                self.logger('股债利差', 'warning', 'PE数据缺少列')
+                return False
+            
+            # 数据清洗
+            bond_df['日期'] = pd.to_datetime(bond_df['日期'], errors='coerce')
+            pe_df['日期'] = pd.to_datetime(pe_df['日期'], errors='coerce')
+            
+            bond_10y = bond_df.dropna().set_index('日期')['中国国债收益率10年']
+            pe_ratio = pe_df.dropna().set_index('日期')['滚动市盈率']
+            
+            # 对齐日期
+            common_idx = bond_10y.index.intersection(pe_ratio.index)
+            if len(common_idx) < 100:
+                self.logger('股债利差', 'warning', '日期交集不足')
+                return False
+            
+            # 计算利差
+            spread = bond_10y.loc[common_idx] - 100 / pe_ratio.loc[common_idx]
+            spread = spread.ffill().dropna()
+            
+            if not validate_data(spread, 50):
+                return False
+            
+            # 绘图
+            fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
+            spread.plot(ax=ax, color='white', linewidth=1.5, title='股债利差')
+            
+            # 参考线
+            for y, color, label in [
+                (-2.6, 'red', '高息'), (-5.5, 'green', '正常'), 
+                (-7.8, 'blue', '低息'), (-4.5, 'gray', ''), (-6.8, 'gray', '')
+            ]:
+                plt.axhline(y=y, ls=":", c=color, label=label if label else None, alpha=0.7)
+            
+            plt.legend(fontsize=8, loc='upper left')
+            plt.grid(True, alpha=0.3, color='#666666')
+            plt.title('股债利差', fontsize=13, fontweight='heavy', pad=8)
+            
+            plt.gcf().autofmt_xdate(rotation=45, ha='right')
+            plt.tight_layout(pad=0.8)
+            
+            filepath = os.path.join(OUTPUT_DIR, 'guzhaixicha.png')
+            plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
+                       facecolor='black', dpi=150)
+            print("✅ 图表: guzhaixicha.png")
+            plt.close(fig)
+            
+            # 生成解读
+            current_spread = spread.iloc[-1]
+            spread_percentile = calculate_percentile(spread, current_spread)
+            
+            print(f"\n【股债利差解读】")
+            print(f"当前利差: {current_spread:.2f}% (历史{spread_percentile:.0f}分位)")
+            
+            if current_spread < -7:
+                equity_signal = "🔴 股票性价比极低"
+            elif current_spread > -3:
+                equity_signal = "🟢 股票性价比高"
+            else:
+                equity_signal = "🟡 股票性价比中性"
+            
+            print(f"💡 {equity_signal}")
+            
+            self.logger('股债利差', 'success', f'{current_spread:.2f}%', 'guzhaixicha.png')
+            return True
+            
+        except Exception as e:
+            print(f"❌ 股债利差图表失败: {e}")
+            self.logger('股债利差', 'error', str(e))
+            plt.close('all')
+            return False
