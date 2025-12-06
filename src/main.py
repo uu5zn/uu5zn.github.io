@@ -24,18 +24,26 @@ def initialize():
     setup_matplotlib_fonts()
     check_available_fonts()
     
+    # 🔧 验证 mplfinance pandas 绑定
+    try:
+        import mplfinance as mpf
+        import pandas as pd
+        print(f"✅ Pandas 版本: {pd.__version__}")
+        print(f"✅ mplfinance 内部 Pandas 版本: {mpf._pd.__version__}")
+    except AttributeError:
+        print("⚠️  正在修复 mplfinance pandas 绑定...")
+        mpf._pd = pd
+        print("✅ 修复完成")
+    
     # 初始化日志
     log = setup_logging()
     log['start_time'] = datetime.now().isoformat()
     
     # 创建核心组件
-    logger = lambda *args: log_execution(log, *args)
+    # 🔧 修改 lambda 支持 **kwargs
+    logger = lambda *args, **kwargs: log_execution(log, *args, **kwargs)
     fetcher = DataFetcher(logger)
-    
-    # 🔧 创建 analyzer 实例
     analyzer = MarketAnalyzer(fetcher, logger)
-    
-    # 🔧 传递 fetcher 给 ChartGenerator
     chart_gen = ChartGenerator(logger, fetcher)
     
     print(f"初始化完成: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
