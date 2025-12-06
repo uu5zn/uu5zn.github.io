@@ -29,6 +29,7 @@ class ChartGenerator:
             import yfinance as yf
             
             data = yf.Ticker(ticker).history(period=period)
+            print(data.head())
             if not validate_data(data, 5):
                 self.logger('K线图', 'warning', f'{ticker} 数据不足')
                 return False
