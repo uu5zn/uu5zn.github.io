@@ -282,7 +282,7 @@ class MarketAnalyzer:
             self.logger('风险环境分析', 'error', str(e))
             return None
     
-     def analyze_china_us_linkage(self):
+    def analyze_china_us_linkage(self):
         """分析中美市场联动"""
         print("\n" + "="*70)
         print("【中美市场联动解读】")
