@@ -522,37 +522,40 @@ class MarketAnalyzer:
         print("="*70)
         
         try:
-            from config import SECTOR_ETFS
-            
-            tickers = list(SECTOR_ETFS.values())
-            print(f"📥 正在下载 {len(tickers)} 个行业ETF数据...")
-            
-            # 批量下载
-            raw_data = self.fetcher.batch_download(tickers, period="1mo")
-            
-            returns = {}
-            for sector, ticker in SECTOR_ETFS.items():
-                try:
-                    if not ticker:
-                        returns[sector] = np.nan
-                        continue
-                    
-                    # 提取数据
-                    if isinstance(raw_data, pd.DataFrame) and ticker in raw_data.columns:
-                        data = raw_data[ticker].dropna()
-                    else:
-                        # 降级到单个下载
-                        data = self.fetcher.get_yf_data(ticker, period='1mo')
-                        if isinstance(data, pd.DataFrame):
-                            data = data['Close'].dropna()
+        from config import SECTOR_ETFS
+        
+        tickers = list(SECTOR_ETFS.values())
+        print(f"📥 正在下载 {len(tickers)} 个行业ETF数据...")
+        
+        # 批量下载（现在直接返回 Close 价格 DataFrame）
+        raw_data = self.fetcher.batch_download(tickers, period="1mo")
+        
+        if raw_data.empty:
+            self.logger('行业轮动', 'warning', '数据下载失败')
+            return None
+        
+        returns = {}
+        for sector, ticker in SECTOR_ETFS.items():
+            try:
+                if not ticker:
+                    returns[sector] = np.nan
+                    continue
+                
+                # 🔧 简化：直接访问 ticker 列
+                if ticker in raw_data.columns:
+                    data = raw_data[ticker].dropna()
                     
                     if validate_data(data, 10):
                         returns[sector] = (data.iloc[-1] / data.iloc[0] - 1) * 100
                     else:
                         returns[sector] = np.nan
-                except Exception as e:
-                    print(f"⚠️  {sector}({ticker}) 失败: {e}")
+                else:
+                    print(f"⚠️  {sector}({ticker}) 数据列不存在")
                     returns[sector] = np.nan
+                    
+            except Exception as e:
+                print(f"⚠️  {sector}({ticker}) 失败: {e}")
+                returns[sector] = np.nan
             
             # 过滤有效数据
             valid_returns = {k: v for k, v in returns.items() if not np.isnan(v)}
