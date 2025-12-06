@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import pandas as pd
 import akshare as ak
@@ -7,16 +8,10 @@ from utils import validate_data, normalize, calculate_percentile
 
 class MarketAnalyzer:
     def __init__(self, data_fetcher, logger_callback):
-        """
-        市场分析器
-        :param data_fetcher: 数据获取器实例
-        :param logger_callback: 日志回调函数
-        """
         self.fetcher = data_fetcher
         self.logger = logger_callback
     
     def calculate_trend(self, series, period=10):
-        """计算趋势方向"""
         if not validate_data(series, period * 2):
             return 'unknown'
         recent = series.iloc[-period:].mean()
@@ -24,15 +19,11 @@ class MarketAnalyzer:
         return 'up' if recent > previous else 'down'
     
     def analyze_index_divergence(self):
-        """
-        分析指数差异（纳指、标普、罗素2000）
-        """
         print("\n" + "="*70)
         print("【市场结构解读】")
         print("="*70)
         
         try:
-            # 批量下载指数数据
             tickers = ['^IXIC', '^GSPC', '^RUT']
             raw_data = self.fetcher.batch_download(tickers, period="3mo")
             
@@ -40,20 +31,37 @@ class MarketAnalyzer:
                 self.logger('指数差异分析', 'warning', '数据下载失败')
                 return None
             
-            # ✅ 修复：统一使用扁平化列名访问
-            try:
-                # 优先使用扁平化列名
-                nasdaq_close = raw_data['Close_^IXIC'].dropna()
-                sp500_close = raw_data['Close_^GSPC'].dropna()
-                russell_close = raw_data['Close_^RUT'].dropna()
-            except KeyError:
-                # 降级处理：如果仍是 MultiIndex
-                if isinstance(raw_data.columns, pd.MultiIndex):
-                    nasdaq_close = raw_data['Close']['^IXIC'].dropna()
-                    sp500_close = raw_data['Close']['^GSPC'].dropna()
-                    russell_close = raw_data['Close']['^RUT'].dropna()
-                else:
-                    raise
+            # ✅ 修复：统一访问方式，增加降级处理
+            def get_ticker_data(df, ticker):
+                """安全获取 ticker 的 Close 数据"""
+                # 尝试扁平化列名
+                col_name = ticker
+                if col_name in df.columns:
+                    return df[col_name].dropna()
+                
+                # 尝试带前缀的列名
+                col_name = f'Close_{ticker}'
+                if col_name in df.columns:
+                    return df[col_name].dropna()
+                
+                # 降级处理：MultiIndex
+                if isinstance(df.columns, pd.MultiIndex):
+                    try:
+                        return df['Close'][ticker].dropna()
+                    except:
+                        pass
+                
+                # 最后手段：用 get_yf_data 单独获取
+                fallback = self.fetcher.get_yf_data(ticker, period='3mo')
+                if not fallback.empty and 'Close' in fallback.columns:
+                    return fallback['Close'].dropna()
+                
+                return pd.Series(dtype=float)
+            
+            # 获取数据
+            nasdaq_close = get_ticker_data(raw_data, '^IXIC')
+            sp500_close = get_ticker_data(raw_data, '^GSPC')
+            russell_close = get_ticker_data(raw_data, '^RUT')
             
             if not (validate_data(nasdaq_close, MIN_DATA_POINTS) and 
                     validate_data(sp500_close, MIN_DATA_POINTS) and 
@@ -62,17 +70,16 @@ class MarketAnalyzer:
                 self.logger('指数差异分析', 'warning', '数据不足')
                 return None
             
-            # ✅ 修复：确保提取标量值再格式化
-            nasdaq_ret = float(nasdaq_close.iloc[-1] / nasdaq_close.iloc[-30] - 1) * 100
-            sp500_ret = float(sp500_close.iloc[-1] / sp500_close.iloc[-30] - 1) * 100
-            russell_ret = float(russell_close.iloc[-1] / russell_close.iloc[-30] - 1) * 100
+            # 计算指标（确保标量）
+            nasdaq_ret = float((nasdaq_close.iloc[-1] / nasdaq_close.iloc[-30] - 1) * 100)
+            sp500_ret = float((sp500_close.iloc[-1] / sp500_close.iloc[-30] - 1) * 100)
+            russell_ret = float((russell_close.iloc[-1] / russell_close.iloc[-30] - 1) * 100)
             
-            # 计算年化波动率
             nasdaq_vol = float(nasdaq_close.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
             sp500_vol = float(sp500_close.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
             russell_vol = float(russell_close.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
             
-            # 计算相关性矩阵
+            # 相关性
             df = pd.concat([
                 nasdaq_close.pct_change().dropna(),
                 sp500_close.pct_change().dropna(),
@@ -127,14 +134,7 @@ class MarketAnalyzer:
             return {
                 'regime': market_regime,
                 'returns': {'nasdaq': nasdaq_ret, 'sp500': sp500_ret, 'russell': russell_ret},
-                'volatilities': {'nasdaq': nasdaq_vol, 'sp500': sp500_vol, 'russell': russell_vol},
-                'correlations': {
-                    'nasdaq_sp500': corr_nasdaq_sp500,
-                    'nasdaq_russell': corr_nasdaq_russell,
-                    'sp500_russell': corr_sp500_russell
-                },
-                'trends': {'nasdaq': nasdaq_trend, 'sp500': sp500_trend, 'russell': russell_trend},
-                'insight': insight_msg
+                'insight': f"纳指{nasdaq_ret:+.2f}% 标普{sp500_ret:+.2f}% 罗素{russell_ret:+.2f}% {market_regime}"
             }
             
         except Exception as e:
