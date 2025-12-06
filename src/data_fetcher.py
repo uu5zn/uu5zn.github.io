@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import yfinance as yf
 import akshare as ak
-import pandas as pd
+import pandas as pd  # 确认这行存在
+import numpy as np  # 也添加 numpy
 from datetime import datetime, timedelta
 import requests
 from bs4 import BeautifulSoup
@@ -9,6 +10,8 @@ from io import StringIO
 from tqdm import tqdm
 from config import HEADERS, YF_TIMEOUT
 from utils import validate_data, log_execution
+
+
 
 class DataFetcher:
     def __init__(self, logger_callback):
