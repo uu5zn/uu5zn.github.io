@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ -*- coding: utf-8 -*-
 import sys
 import os
 import time
@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from config import OUTPUT_DIR, INDICES, EXECUTION_LOG
-from utils import setup_logging, log_execution, setup_matplotlib_fonts, check_available_fonts
+from utils import setup_logging, log_execution, setup_matplotlib_fonts, check_available_fonts, normalize  # 🔧 添加 normalize
 from data_fetcher import DataFetcher
 from analyzer import MarketAnalyzer
 from charts import ChartGenerator
@@ -31,8 +31,9 @@ def initialize():
     # 创建核心组件
     logger = lambda *args: log_execution(log, *args)
     fetcher = DataFetcher(logger)
-    analyzer = MarketAnalyzer(fetcher, logger)
-    chart_gen = ChartGenerator(logger)
+    
+    # 🔧 传递 fetcher 给 ChartGenerator
+    chart_gen = ChartGenerator(logger, fetcher)
     
     print(f"初始化完成: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     return log, fetcher, analyzer, chart_gen
@@ -279,7 +280,9 @@ def main():
     
     # 生成报告
     log['duration'] = f"{time.time() - start_time:.2f}秒"
-    reporter = ReportGenerator(log)
+    
+    # 🔧 传递 logger 给 ReportGenerator
+    reporter = ReportGenerator(log, lambda *args: log_execution(log, *args))
     reporter.save_json_report()
     reporter.generate_markdown_report()
     
