@@ -61,13 +61,7 @@ def generate_markdown_report():
     
     report_path = os.path.join(OUTPUT_DIR, '市场分析报告.md')
     
-    # 提取关键洞察
-    insights_dict = {}
-    for category, insight in EXECUTION_LOG['insights']:
-        insights_dict[category] = insight
-    
     with open(report_path, 'w', encoding='utf-8') as f:
-        # 报告头部
         f.write(f"""# 📊 每日市场分析报告
 
 **生成时间**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  
@@ -89,289 +83,89 @@ def generate_markdown_report():
 ---
 
 ## 💡 核心市场洞察
-
-### 1️⃣ 指数结构分析
 """)
-        # 指数差异解读
-        if '指数差异' in insights_dict:
-            f.write(f"{insights_dict['指数差异']}\n")
-        else:
-            f.write("- 纳指/标普/罗素2000分化程度: 数据暂缺\n")
+
+        # 提取关键洞察
+        for category, insight in EXECUTION_LOG['insights']:
+            f.write(f"\n### {category}\n")
+            f.write(f"{insight}\n")
 
         f.write("""
-### 2️⃣ 风险环境评估
-""")
-        if '风险环境' in insights_dict:
-            parts = insights_dict['风险环境'].split('VIX')
-            f.write(f"- VIX水平: {parts[1].split('国债')[0].strip()}\n")
-            f.write(f"- 10Y国债收益率: {parts[1].split('国债')[1].strip()}\n")
-            # 添加风险等级
-            if len([s for s in insights_dict['风险环境'] if '🔴' in s]) > 0:
-                f.write("- 🚨 风险等级: **高风险**\n")
-            elif len([s for s in insights_dict['风险环境'] if '🟢' in s]) > 0:
-                f.write("- ✅ 风险等级: **低风险**\n")
-            else:
-                f.write("- ⚠️ 风险等级: **中等风险**\n")
+---
 
-        f.write("""
-### 3️⃣ 中美市场联动
+## 📈 图表分析
 """)
-        if '中美联动' in insights_dict:
-            f.write(f"{insights_dict['中美联动']}\n")
-
-        f.write("""
-### 4️⃣ 流动性状况
-""")
-        if '流动性' in insights_dict:
-            f.write(f"- 融资余额: {insights_dict['流动性'].split(' ')[0]}\n")
-            f.write(f"- Shibor 1M: {insights_dict['流动性'].split(' ')[1]}\n")
-        else:
-            f.write("- 杠杆资金: 数据暂缺\n- 银行间利率: 数据暂缺\n")
-
-        f.write("""
-### 5️⃣ 股债性价比
-""")
-        if '股债利差' in insights_dict:
-            spread_value = float(insights_dict['股债利差'].split('%')[0])
-            f.write(f"- 当前利差: {spread_value:.2f}%\n")
-            if spread_value > -3:
-                f.write("- 🟢 股票性价比: **高**\n")
-            elif spread_value < -7:
-                f.write("- 🔴 股票性价比: **低**\n")
-            else:
-                f.write("- 🟡 股票性价比: **中性**\n")
-        else:
-            f.write("- 股债利差: 数据暂缺\n")
-
-        f.write("\n---\n\n")
 
         # 图表展示部分
-        f.write("""## 📈 图表分析
-
-### 🔷 全球核心指数
-""")
-        # 检查图表是否存在并嵌入
-        index_charts = [
-            ('sp500.png', '标普500指数'),
-            ('nasdaq.png', '纳斯达克100指数'),
-            ('rs2000.png', '罗素2000小盘股'),
-            ('hsi.png', '恒生指数'),
-            ('rmb.png', '人民币汇率')
+        chart_sections = [
+            ("### 🔷 全球核心指数", [
+                ('sp500.png', '标普500指数'),
+                ('nasdaq.png', '纳斯达克100指数'),
+                ('rs2000.png', '罗素2000小盘股'),
+                ('hsi.png', '恒生指数'),
+                ('rmb.png', '人民币汇率')
+            ]),
+            ("### 🔷 风险与利率指标", [
+                ('tenbond.png', '美国10年期国债收益率'),
+                ('vix.png', 'VIX恐慌指数'),
+                ('jyb_gz.png', '油金比 vs 美债收益率')
+            ]),
+            ("### 🔷 中国市场流动性", [
+                ('rongziyue_ma.png', '融资余额与10日均线'),
+                ('rongziyue_1.png', '多指标归一化对比'),
+                ('rongziyue_2.png', '融资余额与ETF对比'),
+                ('liudongxing.png', '流动性指标')
+            ]),
+            ("### 🔷 股债性价比分析", [
+                ('guzhaixicha.png', '上证50股债利差'),
+                ('hsi_rut_comparison.png', '恒生指数 vs Russell 2000')
+            ])
         ]
         
-        for chart_file, title in index_charts:
-            if os.path.exists(os.path.join(OUTPUT_DIR, chart_file)):
-                f.write(f"""
+        for section_title, charts in chart_sections:
+            f.write(f"\n{section_title}\n")
+            for chart_file, title in charts:
+                if os.path.exists(os.path.join(OUTPUT_DIR, chart_file)):
+                    f.write(f"""
 #### {title}
-
 ![{title}](./{chart_file})
-
 """)
-            else:
-                f.write(f"#### {title}\n❌ 图表生成失败\n\n")
+                else:
+                    f.write(f"#### {title}\n❌ 图表生成失败\n\n")
 
-        f.write("""### 🔷 风险与利率指标
-
-#### 美国10年期国债收益率
-![10Y国债](./tenbond.png)
-
-#### VIX恐慌指数
-![VIX](./vix.png)
-
-#### 油金比 vs 美债收益率
-![油金比](./jyb_gz.png)
-
----
-
-### 🔷 中国市场流动性
-
-#### 融资余额与10日均线
-![融资余额](./rongziyue_ma.png)
-
-**解读**: 融资余额反映杠杆资金情绪。上穿均线表示资金回流，下穿表示谨慎。
-
-#### 多指标归一化对比
-![归一化指标](./rongziyue_1.png)
-
-**指标说明**: 
-- 融资余额: A股杠杆资金风向标
-- 汇率: 逆向显示（升值向上）
-- 中美利差: 反映相对吸引力
-- 500ETF: 代表中小盘表现
-
-#### 流动性指标
-![流动性指标](./liudongxing.png)
-
-**解读**: Shibor代表银行间流动性，利差反映资本流动压力。
-
----
-
-### 🔷 股债性价比分析
-
-#### 上证50股债利差
-![股债利差](./guzhaixicha.png)
-
-**关键阈值**:
-- **-2.6%**: 股票吸引力高（绿色虚线）
-- **-5.5%**: 中性区域（绿色虚线）
-- **-7.8%**: 股票吸引力低（蓝色虚线）
-
-**当前位置**: 见图中白色曲线，越靠上股票越便宜。
-
----
-
-### 🔷 跨市场相关性
-
-#### 恒生指数 vs Russell 2000
-![相关性](./hsi_rut_comparison.png)
-
-**说明**: 两者走势对比可判断港股是否脱钩美股及相对强弱。
+        f.write("""
 
 ---
 
 ## 💼 资产配置建议
 
-### 基于当前市场环境的配置
-
-""")
-        # 生成配置建议
-        try:
-            if '风险环境' in insights_dict and '股债利差' in insights_dict:
-                vix_part = insights_dict['风险环境']
-                spread_part = insights_dict['股债利差']
-                
-                # 判断风险等级
-                high_risk = '🚨' in vix_part or '🔴' in vix_part
-                low_risk = '🟢' in vix_part
-                high_equity = '🔴' not in spread_part and '股票性价比高' in spread_part
-                
-                if high_risk:
-                    equity, bond, cash = "30%", "50%", "20%"
-                    strategy = "保守配置，防御为主"
-                elif low_risk and high_equity:
-                    equity, bond, cash = "70%", "20%", "10%"
-                    strategy = "积极进取，把握机会"
-                else:
-                    equity, bond, cash = "50%", "40%", "10%"
-                    strategy = "平衡配置，动态调整"
-                
-                f.write(f"""
+### 股票/债券/现金配置比例
 | 资产类别 | 建议比例 | 说明 |
 |----------|----------|------|
-| **股票** | {equity} | {strategy} |
-| **债券** | {bond} | 作为稳定器，对冲风险 |
-| **现金** | {cash} | 保持机动性 |
-| **商品** | 0-10% | 根据通胀预期调整 |
-""")
-        except:
-            f.write("""
-| 资产类别 | 建议比例 | 说明 |
-|----------|----------|------|
-| **股票** | 50% | 根据风险环境调整 |
+| **股票** | 50% | 根据风险环境动态调整 |
 | **债券** | 40% | 作为稳定器，对冲风险 |
 | **现金** | 10% | 保持机动性 |
-""")
 
-        f.write("""
-### 区域与风格配置
-""")
-        # 根据分析结果给出区域配置建议
-        if '中美联动' in insights_dict:
-            if '港股强' in insights_dict['中美联动']:
-                f.write("- **港股**: 超配（估值修复+相对强势）\n")
-            elif '港股弱' in insights_dict['中美联动']:
-                f.write("- **港股**: 低配（汇率压力+相对弱势）\n")
-            else:
-                f.write("- **港股**: 标配\n")
-        
-        if '指数差异' in insights_dict:
-            if '成长' in insights_dict['指数差异']:
-                f.write("- **美股**: 超配科技股（成长风格主导）\n")
-            elif '价值' in insights_dict['指数差异']:
-                f.write("- **美股**: 超配价值股（周期风格主导）\n")
-            else:
-                f.write("- **美股**: 均衡配置\n")
-        
-        f.write("- **A股**: 根据融资余额和流动性信号调整\n")
-
-        f.write("""
-### 重点关注板块
-""")
-
-        # 根据行业轮动分析添加
-        if '行业轮动' in insights_dict:
-            f.write(f"{insights_dict['行业轮动']}\n")
-        else:
-            f.write("- 根据领涨板块动态调整\n")
-
-        f.write("""
 ---
 
 ## ⚠️  风险警示
 
 ### 当前需重点关注的风险
 """)
-
-        # 从日志中提取具体风险
-        risk_list = []
-        if '风险环境' in insights_dict:
-            if '🚨' in insights_dict['风险环境']:
-                risk_list.append("市场恐慌指数处于高位")
-            if '📈 高利率' in insights_dict['风险环境']:
-                risk_list.append("利率环境压制资产估值")
+        # 从日志中提取风险
+        for warning in EXECUTION_LOG['warnings']:
+            f.write(f"- {warning}\n")
         
-        if '中美联动' in insights_dict:
-            if '贬值' in insights_dict['中美联动'] and '压力' in insights_dict['中美联动']:
-                risk_list.append("人民币汇率贬值压力")
-        
-        if len(risk_list) > 0:
-            for i, risk in enumerate(risk_list, 1):
-                f.write(f"{i}. {risk}\n")
-        else:
+        if len(EXECUTION_LOG['warnings']) == 0:
             f.write("- 暂无显著系统性风险\n")
 
         f.write("""
-### 技术指标警示
-- **股债利差**: 若跌破-7.8%，股票吸引力极低
-- **VIX**: 若升至30以上，恐慌情绪蔓延
-- **融资余额**: 若连续3天跌破MA10，资金撤离信号
-- **中美利差**: 若持续走阔，资本外流压力加大
-
-### 操作建议
-1. **止损纪律**: 个股亏损超过8%坚决止损
-2. **仓位管理**: 单只股票不超过总仓位20%
-3. **再平衡**: 每月末根据配置比例再平衡
-4. **动态调整**: 根据宏观信号每季度调整战略配置
-
 ---
 
-## 📋 数据与方法论说明
-
-### 数据来源
-| 数据类型 | 来源 | 更新频率 |
-|----------|------|----------|
-| 美股/全球指数 | Yahoo Finance | 实时 |
-| 中国宏观经济 | akshare | 每日 |
-| 汇率/利率 | 新浪财经/央行 | 每日 |
-| 融资余额 | 东方财富 | 每日 |
-
-### 分析方法论
-1. **多因子框架**: 结合估值、趋势、情绪、流动性四个维度
-2. **相对价值**: 通过股债利差判断资产性价比
-3. **风险平价**: 关注股债相关性变化
-4. **行为金融**: 融资余额反映市场情绪
-
-### 模型局限性
-- 历史数据不代表未来表现
-- 极端市场环境下模型可能失效
-- 需结合基本面分析综合判断
-
----
-
-*本报告由GitHub Actions自动生成于 {datetime.now().strftime('%Y-%m-%d %H:%M')}*  
+*本报告由GitHub Actions自动生成于 {}*  
 *版本: v1.0 | 算法更新: 2024-12*  
-*免责声明: 报告仅供参考，不构成投资建议。投资有风险，决策需谨慎。*
-""")
+*免责声明: 报告仅供参考，不构成投资建议。*
+""".format(datetime.now().strftime('%Y-%m-%d %H:%M')))
 
     print(f"✅ Markdown报告已生成: {report_path}")
     log_execution('Markdown报告', 'success', f'报告路径: {report_path}', '市场分析报告.md')
@@ -385,27 +179,10 @@ def check_available_fonts():
     for f in chinese_fonts[:3]:
         print(f"  - {os.path.basename(f)}")
     log_execution('字体检查', 'success', f'找到 {len(chinese_fonts)} 个中文字体')
-    
-    test_path = os.path.join(OUTPUT_DIR, "font_test.png")
-    try:
-        fig, ax = plt.subplots(figsize=(4, 2), facecolor='black')
-        ax.text(0.5, 0.5, '中文测试 123', ha='center', va='center', 
-                fontsize=12, color='white')
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0, 1)
-        ax.axis('off')
-        plt.tight_layout(pad=0.1)
-        plt.savefig(test_path, bbox_inches='tight', facecolor='black')
-        plt.close()
-        print(f"✅ 字体测试图已生成: {test_path}")
-    except Exception as e:
-        print(f"⚠️  字体测试失败: {e}")
-        log_execution('字体测试', 'warning', str(e))
-    
     return len(chinese_fonts) > 0
 
 def setup_matplotlib_fonts():
-    """设置matplotlib字体"""
+    """设置matplotlib字体（服务器环境优化）"""
     font_candidates = [
         'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 
         'Noto Sans CJK SC', 'Noto Sans SC', 'DejaVu Sans',
@@ -555,10 +332,11 @@ def generate_and_save_plot(ticker, filename, period="1mo"):
                 gridcolor='#666666', gridstyle='--', rc={'font.size': 8}
             )
             
+            # 修复: 移除mplfinance不支持的bbox_inches参数
             mpf.plot(
                 data, type='candle', figscale=0.35, volume=False,
                 savefig=filepath, datetime_format='%m-%d', style=style,
-                title=ticker, tight_layout=True, bbox_inches='tight',
+                title=ticker, tight_layout=True,
                 warn_too_much_data=1000
             )
             print(f"✅ K线图: {filename}")
@@ -654,6 +432,7 @@ def analyze_index_divergence():
         sp500 = yf.download('^GSPC', period='3mo', interval='1d', progress=False)['Close']
         russell = yf.download('^RUT', period='3mo', interval='1d', progress=False)['Close']
         
+        # 修复: 检查数据有效性
         if not (validate_data(nasdaq, 30) and validate_data(sp500, 30) and validate_data(russell, 30)):
             print("⚠️  指数数据不足，无法分析")
             log_execution('指数差异分析', 'warning', '数据不足')
@@ -680,6 +459,7 @@ def analyze_index_divergence():
         corr_nasdaq_russell = df['纳指'].corr(df['罗素'])
         corr_sp500_russell = df['标普'].corr(df['罗素'])
         
+        # 修复: 使用标量值而非Series
         print(f"\n📊 近30日涨跌幅:")
         print(f"  纳斯达克100: {nasdaq_ret:+.2f}% (波动率: {nasdaq_vol:.1f}%)")
         print(f"  标普500:     {sp500_ret:+.2f}% (波动率: {sp500_vol:.1f}%)")
@@ -752,8 +532,9 @@ def analyze_risk_regime():
             log_execution('风险环境分析', 'warning', '数据不足')
             return
         
-        current_vix = vix.iloc[-1]
-        current_bond = ten_year.iloc[-1]
+        # 修复: 使用标量值
+        current_vix = float(vix.iloc[-1])
+        current_bond = float(ten_year.iloc[-1])
         vix_change = (vix.iloc[-1] / vix.iloc[-5] - 1) * 100
         bond_change = (ten_year.iloc[-1] / ten_year.iloc[-5] - 1) * 100
         
@@ -807,16 +588,6 @@ def analyze_risk_regime():
             corr_signal = "弱相关 → 独立驱动因素"
         print(f"💡 相关性解读: {corr_signal}")
         
-        # 期限结构
-        if validate_data(ten_year, 10):
-            short_term = ten_year.rolling(5).mean()
-            long_term = ten_year.rolling(20).mean()
-            if short_term.iloc[-1] > long_term.iloc[-1]:
-                curve_signal = "🔼 曲线变陡 → 经济预期改善"
-            else:
-                curve_signal = "🔽 曲线变平 → 经济预期恶化"
-            print(f"\n📊 期限结构: {curve_signal}")
-        
         # 综合风险评分
         risk_score = 0
         if current_vix > 25: risk_score += 2
@@ -868,7 +639,8 @@ def analyze_china_us_linkage():
             log_execution('中美联动分析', 'warning', '数据不足')
             return
         
-        current_cny = usdcny.iloc[-1]
+        # 修复: 使用标量值
+        current_cny = float(usdcny.iloc[-1])
         cny_change_5d = (usdcny.iloc[-1] / usdcny.iloc[-5] - 1) * 100
         cny_change_30d = (usdcny.iloc[-1] / usdcny.iloc[-30] - 1) * 100
         
@@ -938,16 +710,6 @@ def analyze_china_us_linkage():
         print(f"\n📈 相对强弱: {strength_signal} (差值: {relative_strength:+.2f}%)")
         print(f"💡 原因推断: {strength_reason}")
         
-        # 背离信号
-        if corr_hsi_cny < 0 and corr_hsi_cny < -0.2:
-            print("⚠️  汇率与港股负相关异常 → 基本面或情绪因素强于汇率")
-        
-        # 操作信号
-        if relative_strength < -5 and cny_change_5d > 0.5:
-            print("\n🚨 双重压力: 汇率贬值+相对弱势 → 谨慎观望")
-        elif relative_strength > 5 and cny_change_5d < -0.5:
-            print("\n✅ 双重利好: 汇率升值+相对强势 → 积极布局")
-        
         # 记录洞察
         EXECUTION_LOG['insights'].append(('中美联动', f'恒指{hsi_ret:+.2f}% 汇率{cny_change_5d:+.2f}% {linkage}'))
         
@@ -976,11 +738,16 @@ def analyze_liquidity_conditions():
             log_execution('流动性分析', 'warning', '数据不足')
             return
         
-        current_margin = margin_data['融资余额'].iloc[-1] / 100000000
+        # 修复: 确保数据是Series且有足够长度
+        if len(margin_data) < 30:
+            print("⚠️  融资余额数据长度不足")
+            return
+        
+        current_margin = float(margin_data['融资余额'].iloc[-1]) / 100000000
         margin_change_5d = margin_data['融资余额'].pct_change(5).iloc[-1] * 100
         margin_change_30d = margin_data['融资余额'].pct_change(30).iloc[-1] * 100
         
-        current_shibor = shibor_data.iloc[-1] if len(shibor_data) > 0 else np.nan
+        current_shibor = float(shibor_data.iloc[-1]) if len(shibor_data) > 0 else np.nan
         shibor_change = shibor_data.pct_change().iloc[-1] * 100 if len(shibor_data) > 1 else 0
         
         print(f"\n📊 流动性指标:")
@@ -991,7 +758,7 @@ def analyze_liquidity_conditions():
         print(f"    └─日变化: {shibor_change:+.2f}%")
         
         if validate_data(bond_data) and 'spread' in bond_data.columns:
-            current_spread = bond_data['spread'].iloc[-1]
+            current_spread = float(bond_data['spread'].iloc[-1])
             spread_change_5d = bond_data['spread'].diff(5).iloc[-1]
             print(f"  中美利差: {current_spread:.2f}bp (5日变化: {spread_change_5d:+.0f}bp)")
         
@@ -1105,79 +872,6 @@ def analyze_liquidity_conditions():
     except Exception as e:
         print(f"❌ 流动性分析失败: {e}")
         log_execution('流动性分析', 'error', str(e))
-
-def analyze_sector_rotation():
-    """分析行业轮动"""
-    print("\n" + "="*70)
-    print("【行业轮动解读】")
-    print("="*70)
-    
-    try:
-        etfs = {
-            '科技': 'QQQ',
-            '金融': 'XLF',
-            '医药': 'XLV',
-            '消费': 'XLY',
-            '能源': 'XLE',
-            '工业': 'XLI',
-        }
-        
-        returns = {}
-        for sector, ticker in etfs.items():
-            try:
-                data = yf.download(ticker, period='1mo', interval='1d', progress=False)['Close']
-                if validate_data(data, 10):
-                    returns[sector] = (data.iloc[-1] / data.iloc[0] - 1) * 100
-                else:
-                    returns[sector] = np.nan
-            except:
-                returns[sector] = np.nan
-        
-        # 排序
-        sorted_returns = sorted(returns.items(), key=lambda x: x[1] if not np.isnan(x[1]) else -999, reverse=True)
-        
-        print(f"\n📊 近1月行业表现:")
-        for i, (sector, ret) in enumerate(sorted_returns, 1):
-            if not np.isnan(ret):
-                print(f"  {i}. {sector}: {ret:+.2f}%")
-        
-        # 解读
-        leaders = [s for s, r in sorted_returns[:2] if not np.isnan(r)]
-        laggards = [s for s, r in sorted_returns[-2:] if not np.isnan(r)]
-        
-        if leaders:
-            print(f"\n🏆 领涨板块: {', '.join(leaders)}")
-            if '科技' in leaders:
-                print("💡 科技领涨 → 风险偏好高，成长风格")
-            elif '能源' in leaders:
-                print("💡 能源领涨 → 通胀交易或复苏预期")
-            elif '金融' in leaders:
-                print("💡 金融领涨 → 利率上行预期")
-        
-        # 轮动强度
-        if len(sorted_returns) >= 3:
-            top3_avg = np.mean([r for _, r in sorted_returns[:3] if not np.isnan(r)])
-            bottom3_avg = np.mean([r for _, r in sorted_returns[-3:] if not np.isnan(r)])
-            dispersion = top3_avg - bottom3_avg
-            
-            print(f"\n🔄 轮动强度: {dispersion:.2f}%")
-            if dispersion > 8:
-                print("⚠️  行业分化严重，快速轮动 → 操作难度大，宜配置指数")
-            elif dispersion < 3:
-                print("✅ 行业表现趋同，普涨普跌 → 关注系统性机会")
-            else:
-                print("🔄 正常分化，结构性机会 → 精选行业")
-        
-        # 记录洞察
-        if leaders:
-            insight_msg = f"领涨: {','.join(leaders)} 轮动强度:{dispersion:.1f}%"
-            EXECUTION_LOG['insights'].append(('行业轮动', insight_msg))
-        
-        log_execution('行业轮动', 'success', f'领涨: {leaders}')
-        
-    except Exception as e:
-        print(f"❌ 行业轮动分析失败: {e}")
-        log_execution('行业轮动分析', 'error', str(e))
 
 def plot_data(data_dict, title, labels, colors, linewidths=None, save_path=None):
     """绘制数据图表"""
@@ -1337,7 +1031,7 @@ def plot_pe_bond_spread():
         plt.close(fig)
         
         # 解读
-        current_spread = spread.iloc[-1]
+        current_spread = float(spread.iloc[-1])
         spread_percentile = (spread <= current_spread).sum() / len(spread) * 100
         
         print(f"\n【股债利差解读】")
@@ -1434,8 +1128,6 @@ def main():
     except Exception as e:
         print(f"❌ 融资余额分析失败: {e}")
     
-    # === 后续任务... ===
-    # [此处省略后续任务代码，与之前相同]
     # === 任务3: 多指标对比 ===
     print("\n【任务3】多指标对比...")
     total_tasks += 1
@@ -1499,13 +1191,23 @@ def main():
         hsi_df = yf.download('^HSI', period='300d', interval='1d', progress=False)
         rut_df = yf.download('^RUT', period='300d', interval='1d', progress=False)
         
-        if validate_data(hsi_df, 50) and validate_data(rut_df, 50):
+        # 修复: 显式检查DataFrame是否为空
+        if isinstance(hsi_df, pd.DataFrame) and len(hsi_df) > 50:
             hsi_close = hsi_df[['Close']].rename(columns={'Close': 'HSI'})
+        else:
+            print("❌ 恒生数据不足")
+            hsi_close = pd.DataFrame()
+        
+        if isinstance(rut_df, pd.DataFrame) and len(rut_df) > 50:
             rut_close = rut_df[['Close']].rename(columns={'Close': 'RUT'})
-            
+        else:
+            print("❌ Russell数据不足")
+            rut_close = pd.DataFrame()
+        
+        if len(hsi_close) > 30 and len(rut_close) > 30:
             df = pd.concat([hsi_close, rut_close], axis=1, join='inner').dropna()
             
-            if validate_data(df, 30):
+            if len(df) > 30:
                 correlation = df['HSI'].corr(df['RUT'])
                 print(f"恒生指数与Russell 2000相关性: {correlation:.4f}")
                 
@@ -1535,6 +1237,7 @@ def main():
             log_execution('相关性分析', 'warning', '下载失败')
     except Exception as e:
         print(f"❌ 相关性分析失败: {e}")
+        log_execution('相关性分析', 'error', str(e))
     
     # === 任务6: 股债利差 ===
     print("\n【任务6】股债利差分析...")
@@ -1545,17 +1248,6 @@ def main():
     except Exception as e:
         print(f"❌ 股债利差分析失败: {e}")
     
-    # === 新增：行业轮动分析 ===
-    print("\n【任务7】行业轮动分析...")
-    total_tasks += 1
-    try:
-        analyze_sector_rotation()
-        success_count += 1
-    except Exception as e:
-        print(f"❌ 行业轮动分析失败: {e}")
-    
-    # === 综合解读（核心） ===
-    
     # === 综合解读（核心） ===
     print("\n" + "📈 开始生成市场解读".center(70, "="))
     try:
@@ -1563,7 +1255,6 @@ def main():
         analyze_risk_regime()
         analyze_china_us_linkage()
         analyze_liquidity_conditions()
-        # analyze_sector_rotation()  # 暂时注释，避免外部依赖
         print("\n" + "📊 市场解读完成".center(70, "="))
         log_execution('市场解读', 'success', '完成全部维度分析')
     except Exception as e:
@@ -1582,6 +1273,9 @@ def main():
     print(f"风险提示: {len(EXECUTION_LOG['warnings'])} 个")
     print(f"查看输出: ls -lh {os.path.abspath(OUTPUT_DIR)}")
     print("="*70)
+    
+    EXECUTION_LOG['end_time'] = datetime.now().isoformat()
+    EXECUTION_LOG['total_time'] = f"{time.time() - start_time:.2f}s"
     
     return success_count, total_tasks
 
