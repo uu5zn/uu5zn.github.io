@@ -143,30 +143,27 @@ class MarketAnalyzer:
             return None
     
     def analyze_risk_regime(self):
-        """分析风险环境（VIX+国债）"""
         print("\n" + "="*70)
         print("【风险环境解读】")
         print("="*70)
         
         try:
-            # ✅ 修复：get_yf_data 返回 DataFrame，需要提取 Close 列
+            # ✅ 修复：get_yf_data 返回 DataFrame，需要提取 Close
             vix_data = self.fetcher.get_yf_data('^VIX', period='3mo')
             ten_year_data = self.fetcher.get_yf_data('^TNX', period='3mo')
-            sp500_data = self.fetcher.get_yf_data('^GSPC', period='3mo')
             
             if vix_data.empty or ten_year_data.empty:
                 self.logger('风险环境分析', 'warning', '数据不足')
                 return None
             
-            # ✅ 修复：提取 Close 列并确保是 Series
-            vix = vix_data['Close'].dropna()
-            ten_year = ten_year_data['Close'].dropna()
+            # ✅ 修复：确保是 Series
+            vix = vix_data['Close'].dropna() if 'Close' in vix_data.columns else pd.Series(dtype=float)
+            ten_year = ten_year_data['Close'].dropna() if 'Close' in ten_year_data.columns else pd.Series(dtype=float)
             
             if len(vix) < MIN_DATA_POINTS or len(ten_year) < MIN_DATA_POINTS:
                 self.logger('风险环境分析', 'warning', '数据点不足')
                 return None
             
-            # ✅ 修复：提取标量值并转为 float
             current_vix = float(vix.iloc[-1])
             current_bond = float(ten_year.iloc[-1])
             vix_change = float((vix.iloc[-1] / vix.iloc[-5] - 1) * 100)
@@ -266,15 +263,7 @@ class MarketAnalyzer:
             return {
                 'vix': current_vix,
                 'bond_yield': current_bond,
-                'vix_change': vix_change,
-                'bond_change': bond_change,
-                'risk_level': risk_level,
-                'vix_level': vix_level,
-                'bond_level': bond_level,
-                'risk_score': risk_score,
-                'action': action,
-                'vix_signal': vix_signal,
-                'bond_signal': bond_signal
+                'risk_level': risk_level
             }
             
         except Exception as e:
@@ -283,31 +272,31 @@ class MarketAnalyzer:
             return None
     
     def analyze_china_us_linkage(self):
-        """分析中美市场联动"""
         print("\n" + "="*70)
         print("【中美市场联动解读】")
         print("="*70)
         
         try:
-            # ✅ 修复：获取数据并提取 Close 列
+            # ✅ 修复：确保提取 Close 列
             hsi_data = self.fetcher.get_yf_data('^HSI', period='3mo')
             usdcny_data = self.fetcher.get_yf_data('CNY=X', period='3mo')
             sp500_data = self.fetcher.get_yf_data('^GSPC', period='3mo')
             
-            if hsi_data.empty or usdcny_data.empty:
+            if hsi_data.empty or usdcny_data.empty or sp500_data.empty:
                 self.logger('中美联动分析', 'warning', '数据不足')
                 return None
             
-            # ✅ 修复：提取 Close 列并确保是 Series
-            hsi = hsi_data['Close'].dropna()
-            usdcny = usdcny_data['Close'].dropna()
+            hsi = hsi_data['Close'].dropna() if 'Close' in hsi_data.columns else pd.Series(dtype=float)
+            usdcny = usdcny_data['Close'].dropna() if 'Close' in usdcny_data.columns else pd.Series(dtype=float)
+            sp500 = sp500_data['Close'].dropna() if 'Close' in sp500_data.columns else pd.Series(dtype=float)
             
-            if len(hsi) < 30 or len(usdcny) < 30:
+            if len(hsi) < 30 or len(usdcny) < 30 or len(sp500) < 30:
                 self.logger('中美联动分析', 'warning', '数据点不足')
                 return None
             
             # ✅ 修复：提取标量值
-            current_cny = float(usdcny.iloc[-1])
+            hsi_ret = float((hsi.iloc[-1] / hsi.iloc[-30] - 1) * 100)
+            sp500_ret = float((sp500.iloc[-1] / sp500.iloc[-30] - 1) * 100)
             cny_change_5d = float((usdcny.iloc[-1] / usdcny.iloc[-5] - 1) * 100)
             cny_change_30d = float((usdcny.iloc[-1] / usdcny.iloc[-30] - 1) * 100)
             
@@ -393,12 +382,9 @@ class MarketAnalyzer:
             return {
                 'hsi_ret': hsi_ret,
                 'sp500_ret': sp500_ret,
-                'cny_change': cny_change_5d,
-                'linkage': linkage,
-                'linkage_desc': linkage_desc,
-                'relative_strength': relative_strength,
-                'strength_signal': strength_signal,
-                'cny_regime': cny_regime
+                'cny_change_5d': cny_change_5d,
+                'cny_change_30d': cny_change_30d,
+                'linkage': linkage
             }
             
         except Exception as e:
