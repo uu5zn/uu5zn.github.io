@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from config import OUTPUT_DIR, INDICES, EXECUTION_LOG
-from utils import setup_logging, log_execution, setup_matplotlib_fonts, check_available_fonts, normalize  # 🔧 添加 normalize
+from utils import setup_logging, log_execution, setup_matplotlib_fonts, check_available_fonts, normalize
 from data_fetcher import DataFetcher
 from analyzer import MarketAnalyzer
 from charts import ChartGenerator
@@ -31,6 +31,9 @@ def initialize():
     # 创建核心组件
     logger = lambda *args: log_execution(log, *args)
     fetcher = DataFetcher(logger)
+    
+    # 🔧 创建 analyzer 实例
+    analyzer = MarketAnalyzer(fetcher, logger)
     
     # 🔧 传递 fetcher 给 ChartGenerator
     chart_gen = ChartGenerator(logger, fetcher)
@@ -197,18 +200,16 @@ def task_pe_bond_spread(chart_gen):
     print("\n【任务6】股债利差分析...")
     return chart_gen.plot_pe_bond_spread()
 
-def task_sector_rotation(analyzer):
+def task_sector_rotation(analyzer, chart_gen):
     """任务7: 行业轮动"""
     print("\n【任务7】行业轮动分析...")
     result = analyzer.analyze_sector_rotation()
     
     if result and 'sorted_returns' in result:
-        # 获取图表生成器
-        from charts import ChartGenerator
-        chart_gen = ChartGenerator(lambda *args: log_execution(analyzer.logger.__self__, *args))
         chart_gen.plot_sector_rotation(result['sorted_returns'])
+        return True
     
-    return result is not None
+    return False
 
 def main():
     """主函数"""
@@ -223,7 +224,7 @@ def main():
         ("油金比分析", lambda: task_oil_gold(chart_gen)),
         ("相关性分析", lambda: task_correlation(fetcher, chart_gen)),
         ("股债利差", lambda: task_pe_bond_spread(chart_gen)),
-        ("行业轮动", lambda: task_sector_rotation(analyzer)),
+        ("行业轮动", lambda: task_sector_rotation(analyzer, chart_gen)),
     ]
     
     # 执行
@@ -234,6 +235,9 @@ def main():
         try:
             if task_func():
                 success_count += 1
+                log_execution(log, task_name, 'success')
+            else:
+                log_execution(log, task_name, 'warning', '执行失败')
         except Exception as e:
             print(f"❌ 任务失败 {task_name}: {e}")
             log_execution(log, task_name, 'error', str(e))
