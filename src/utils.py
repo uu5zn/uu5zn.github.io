@@ -23,19 +23,33 @@ def setup_logging():
         'market_signals': {}
     }
 
-def log_execution(log_dict, task, status='success', details='', chart_path=None):
-    """记录执行日志"""
-    log_dict['tasks'].append({
-        'task': task,
+def log_execution(log, category, status, message, **kwargs):
+    """
+    记录执行日志
+    :param log: 日志字典
+    :param category: 日志类别
+    :param status: 状态 (success/warning/error)
+    :param message: 消息内容
+    :param kwargs: 额外参数，如 chart_path
+    """
+    task = {
+        'timestamp': datetime.now().isoformat(),
+        'category': category,
         'status': status,
-        'details': details,
-        'chart_path': chart_path,
-        'timestamp': datetime.now().isoformat()
-    })
-    if status == 'error':
-        log_dict['errors'].append(details)
-    elif status == 'warning':
-        log_dict['warnings'].append(details)
+        'message': message
+    }
+    
+    # ✅ 处理额外参数
+    if 'chart_path' in kwargs:
+        task['chart_path'] = kwargs['chart_path']
+    
+    log['tasks'].append(task)
+    
+    # 根据状态记录到不同列表
+    if status == 'warning':
+        log['warnings'].append(f"{category}: {message}")
+    elif status == 'error':
+        log['errors'].append(f"{category}: {message}")
 
 def capture_print(func, *args, **kwargs):
     """捕获函数的所有print输出"""
