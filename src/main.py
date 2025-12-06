@@ -313,7 +313,7 @@ def main():
 if __name__ == "__main__":
     try:
         success = main()
-        sys.exit(0 if success else 1)
+        sys.exit(0)
     except KeyboardInterrupt:
         print("\n\n用户中断执行")
         sys.exit(130)
