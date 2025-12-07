@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from config import OUTPUT_DIR, INDICES, EXECUTION_LOG
-from utils import setup_logging, log_execution, setup_matplotlib_fonts, check_available_fonts, normalize
+from utils import setup_logging, log_execution, setup_matplotlib_fonts, check_available_fonts, normalize, capture_print
 from data_fetcher import DataFetcher
 from analyzer import MarketAnalyzer
 from charts import ChartGenerator
@@ -269,20 +269,42 @@ def main():
     
     # 市场解读（核心分析）
     print("\n" + "📈 开始生成综合市场解读".center(70, "="))
+    
+    # 初始化输出捕获存储
+    log['detailed_output'] = {
+        'sector_rotation': '',
+        'index_divergence': '',
+        'risk_regime': '',
+        'china_us_linkage': '',
+        'liquidity_conditions': ''
+    }
+    
     try:
+        # 行业轮动
+        from analyzer import MarketAnalyzer
+        # 先检查analyze_sector_rotation方法是否存在
+        if hasattr(analyzer, 'analyze_sector_rotation'):
+            success, sector_result, sector_output = capture_print(analyzer.analyze_sector_rotation)
+            log['detailed_output']['sector_rotation'] = sector_output
+            if sector_result:
+                log['insights'].append(('行业轮动', f"行业轮动强度{sector_result['rotation_strength']:.2f}% {sector_result['leading']}"))
+        
         # 指数差异
-        divergence_result = analyzer.analyze_index_divergence()
+        success, divergence_result, divergence_output = capture_print(analyzer.analyze_index_divergence)
+        log['detailed_output']['index_divergence'] = divergence_output
         if divergence_result:
             log['insights'].append(('指数差异', divergence_result['insight']))
         
         # 风险环境
-        risk_result = analyzer.analyze_risk_regime()
+        success, risk_result, risk_output = capture_print(analyzer.analyze_risk_regime)
+        log['detailed_output']['risk_regime'] = risk_output
         if risk_result:
             log['insights'].append(('风险环境', f"VIX{risk_result['vix']:.2f} 国债{risk_result['bond_yield']:.2f}% {risk_result['risk_level']}"))
             log['market_signals']['risk_level'] = risk_result['risk_level']
         
         # 中美联动
-        linkage_result = analyzer.analyze_china_us_linkage()
+        success, linkage_result, linkage_output = capture_print(analyzer.analyze_china_us_linkage)
+        log['detailed_output']['china_us_linkage'] = linkage_output
         if linkage_result:
             log['insights'].append(('中美联动', f"恒指{linkage_result['hsi_ret']:+.2f}% 汇率{linkage_result['cny_change']:+.2f}% {linkage_result['linkage']}"))
         
@@ -296,7 +318,8 @@ def main():
         shibor_data = fetcher.get_data('Shibor 1M', start_date_str, end_date_str)
         bond_data = fetcher.get_data('中美国债收益率', start_date_str, end_date_str)
         
-        liquidity_result = analyzer.analyze_liquidity_conditions(margin_data, shibor_data, bond_data)
+        success, liquidity_result, liquidity_output = capture_print(analyzer.analyze_liquidity_conditions, margin_data, shibor_data, bond_data)
+        log['detailed_output']['liquidity_conditions'] = liquidity_output
         if liquidity_result:
             log['insights'].append(('流动性', f"融资{liquidity_result['margin']:.0f}亿 Shibor{liquidity_result['shibor']:.2f}% {liquidity_result['liquidity_env']}"))
             log['market_signals']['liquidity_env'] = liquidity_result['liquidity_env']

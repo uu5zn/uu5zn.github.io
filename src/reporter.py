@@ -128,8 +128,80 @@ class ReportGenerator:
                 
                 f.write("\n---\n\n")
                 
+                # 详细市场分析报告
+                f.write("""
+## 📋 详细市场分析报告
+
+""")
+                
+                # 添加详细输出部分
+                detailed_output = self.log.get('detailed_output', {})
+                
+                # 行业轮动解读
+                if detailed_output.get('sector_rotation'):
+                    f.write("""
+### 🔷 行业轮动解读
+```
+""")
+                    f.write(detailed_output['sector_rotation'])
+                    f.write("""
+```
+
+""")
+                
+                # 市场结构解读
+                if detailed_output.get('index_divergence'):
+                    f.write("""
+### 🔷 市场结构解读
+```
+""")
+                    f.write(detailed_output['index_divergence'])
+                    f.write("""
+```
+
+""")
+                
+                # 风险环境解读
+                if detailed_output.get('risk_regime'):
+                    f.write("""
+### 🔷 风险环境解读
+```
+""")
+                    f.write(detailed_output['risk_regime'])
+                    f.write("""
+```
+
+""")
+                
+                # 中美市场联动解读
+                if detailed_output.get('china_us_linkage'):
+                    f.write("""
+### 🔷 中美市场联动解读
+```
+""")
+                    f.write(detailed_output['china_us_linkage'])
+                    f.write("""
+```
+
+""")
+                
+                # 流动性环境解读
+                if detailed_output.get('liquidity_conditions'):
+                    f.write("""
+### 🔷 流动性环境解读
+```
+""")
+                    f.write(detailed_output['liquidity_conditions'])
+                    f.write("""
+```
+
+""")
+                
+                f.write("\n---\n\n")
+                
                 # 图表展示
-                f.write("""## 📈 图表分析
+                f.write("""
+## 📈 图表分析
 
 ### 🔷 全球核心指数
 """)

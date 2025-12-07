@@ -256,17 +256,9 @@ class ChartGenerator:
         """绘制油金比与美债收益率"""
         try:
             # 使用 self.fetcher
-            print("📊 开始获取原油数据...")
             oil_prices = self.fetcher.get_data("CL", None, None)
-            print(f"📊 原油数据类型: {type(oil_prices)}")
-            print(f"📊 原油数据形状: {oil_prices.shape if hasattr(oil_prices, 'shape') else 'N/A'}")
-            print(f"📊 原油数据是否为空: {oil_prices.empty if hasattr(oil_prices, 'empty') else 'N/A'}")
             
-            print("📊 开始获取黄金数据...")
             gold_prices = self.fetcher.get_data("GC", None, None)
-            print(f"📊 黄金数据类型: {type(gold_prices)}")
-            print(f"📊 黄金数据形状: {gold_prices.shape if hasattr(gold_prices, 'shape') else 'N/A'}")
-            print(f"📊 黄金数据是否为空: {gold_prices.empty if hasattr(gold_prices, 'empty') else 'N/A'}")
             
             if not (validate_data(oil_prices, 50) and validate_data(gold_prices, 50)):
                 self.logger('油金比', 'warning', '数据不足')
@@ -274,18 +266,13 @@ class ChartGenerator:
                 return False
             
             oil_prices, gold_prices = oil_prices.align(gold_prices, join='inner')
-            print(f"📊 对齐后数据形状: {oil_prices.shape if hasattr(oil_prices, 'shape') else 'N/A'}")
             
             if not validate_data(oil_prices, 30):
                 print("⚠️  油金比数据验证失败：对齐后数据不足")
                 return False
             
             oil_gold_ratio = oil_prices / gold_prices
-            print("📊 开始获取美债数据...")
             us_bond = self.fetcher.get_data('US_BOND', None, None)
-            print(f"📊 美债数据类型: {type(us_bond)}")
-            print(f"📊 美债数据形状: {us_bond.shape if hasattr(us_bond, 'shape') else 'N/A'}")
-            print(f"📊 美债数据是否为空: {us_bond.empty if hasattr(us_bond, 'empty') else 'N/A'}")
             
             # 降低美债数据验证阈值，因为ak.bond_zh_us_rate返回的数据量较少
             if not validate_data(us_bond, 10):
@@ -352,36 +339,25 @@ class ChartGenerator:
         """绘制股债利差图"""
         try:
             # 使用 self.fetcher
-            bond_df = self.fetcher.safe_get_data(ak.bond_zh_us_rate, start_date="20121219")
-            pe_df = self.fetcher.safe_get_data(ak.stock_index_pe_lg, symbol="上证50")
+            bond_df = self.fetcher.safe_get_data(ak.bond_zh_us_rate, start_date="20121219")[['日期','中国国债收益率10年']]
+            bond_df['日期'] = pd.to_datetime(bond_df['日期'], errors='coerce')
+            bond_df.set_index('日期', inplace=True)
+            
+            pe_df = self.fetcher.safe_get_data(ak.stock_index_pe_lg, symbol="上证50")[['日期','滚动市盈率']]
+            pe_df['日期'] = pd.to_datetime(pe_df['日期'], errors='coerce')
+            pe_df.set_index('日期', inplace=True)
             
             if bond_df.empty or pe_df.empty:
                 self.logger('股债利差', 'warning', '数据获取失败')
                 return False
             
-            # 数据验证
-            if '日期' not in bond_df.columns or '中国国债收益率10年' not in bond_df.columns:
-                self.logger('股债利差', 'warning', '债券数据缺少列')
-                return False
-            if '日期' not in pe_df.columns or '滚动市盈率' not in pe_df.columns:
-                self.logger('股债利差', 'warning', 'PE数据缺少列')
-                return False
             
-            # 数据清洗
-            bond_df['日期'] = pd.to_datetime(bond_df['日期'], errors='coerce')
-            pe_df['日期'] = pd.to_datetime(pe_df['日期'], errors='coerce')
-            
-            bond_10y = bond_df.dropna().set_index('日期')['中国国债收益率10年']
-            pe_ratio = pe_df.dropna().set_index('日期')['滚动市盈率']
             
             # 对齐日期
-            common_idx = bond_10y.index.intersection(pe_ratio.index)
-            if len(common_idx) < 100:
-                self.logger('股债利差', 'warning', '日期交集不足')
-                return False
+            
             
             # 计算利差
-            spread = bond_10y.loc[common_idx] - 100 / pe_ratio.loc[common_idx]
+            spread = bond_df['中国国债收益率10年'] - 100 / pe_df['滚动市盈率']
             spread = spread.ffill().dropna()
             
             if not validate_data(spread, 50):
