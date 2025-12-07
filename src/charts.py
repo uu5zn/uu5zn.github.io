@@ -24,8 +24,22 @@ class ChartGenerator:
         """
         self.logger = logger_callback
         self.fetcher = data_fetcher
+        # 保存当前所有字体相关配置，避免被样式覆盖
+        current_font_config = {
+            'font.family': plt.rcParams.get('font.family', []),
+            'font.sans-serif': plt.rcParams.get('font.sans-serif', []),
+            'font.size': plt.rcParams.get('font.size', 9),
+            'axes.titlesize': plt.rcParams.get('axes.titlesize', 13),
+            'axes.labelsize': plt.rcParams.get('axes.labelsize', 10),
+            'legend.fontsize': plt.rcParams.get('legend.fontsize', 8),
+            'xtick.labelsize': plt.rcParams.get('xtick.labelsize', 8),
+            'ytick.labelsize': plt.rcParams.get('ytick.labelsize', 8),
+            'axes.unicode_minus': plt.rcParams.get('axes.unicode_minus', False)
+        }
         # 应用样式配置
         plt.rcParams.update(MPL_STYLE)
+        # 恢复所有字体相关配置
+        plt.rcParams.update(current_font_config)
     
     def plot_kline(self, ticker, filename, period="1mo"):
         """生成K线图"""
@@ -134,16 +148,30 @@ class ChartGenerator:
             fig, ax = plt.subplots(figsize=(16, 10), facecolor='black')
             bars = ax.barh(range(len(sectors)), rets, color=colors, alpha=0.8)
             
+            # 设置字体
+            title_font = plt.rcParams['font.sans-serif'][0]
+            
             ax.set_yticks(range(len(sectors)))
-            ax.set_yticklabels(sectors)
-            ax.set_xlabel('收益率 (%)', color='white')
-            ax.set_title('行业ETF近1月表现', fontsize=14, fontweight='heavy', pad=12)
+            # 直接设置yticklabels时指定字体
+            ax.set_yticklabels(sectors, fontname=title_font)
+            ax.set_xlabel('收益率 (%)', color='white', fontname=title_font)
+            ax.set_title('行业ETF近1月表现', fontsize=14, fontweight='heavy', pad=12, fontname=title_font)
             ax.grid(axis='x', alpha=0.3, color='#666666')
+            
+            # 设置坐标轴标签字体
+            ax.set_xlabel(ax.get_xlabel(), fontname=title_font)
+            ax.set_ylabel(ax.get_ylabel(), fontname=title_font)
+            
+            # 设置刻度标签字体（双重保险）
+            for label in ax.get_xticklabels():
+                label.set_fontname(title_font)
+            for label in ax.get_yticklabels():
+                label.set_fontname(title_font)
             
             # 添加数值标签
             for i, ret in enumerate(rets):
                 ax.text(ret + (0.2 if ret > 0 else -0.2), i, f'{ret:+.2f}%', 
-                       va='center', ha='left' if ret > 0 else 'right', color='white')
+                       va='center', ha='left' if ret > 0 else 'right', color='white', fontname=title_font)
             
             plt.tight_layout(pad=0.8)
             
@@ -188,19 +216,36 @@ class ChartGenerator:
             fig, ax1 = plt.subplots(figsize=(20, 12), facecolor='black')
             ax2 = ax1.twinx()
             
+            # 设置字体
+            title_font = plt.rcParams['font.sans-serif'][0]
+            
             line1 = ax1.plot(oil_gold_ratio, 'r-', label='Oil/Gold Ratio', linewidth=1.5)
-            ax1.set_ylabel('Oil/Gold Ratio', color='r', fontsize=10)
+            ax1.set_ylabel('Oil/Gold Ratio', color='r', fontsize=10, fontname=title_font)
             
             line2 = ax2.plot(us_bond, 'b-', label='US 10Y Yield', linewidth=1.5)
-            ax2.set_ylabel('US 10Y Yield (%)', color='b', fontsize=10)
+            ax2.set_ylabel('US 10Y Yield (%)', color='b', fontsize=10, fontname=title_font)
             
             plt.title('Oil/Gold Ratio vs US 10Y Treasury Yield Trend', 
-                     fontsize=13, fontweight='heavy', pad=8)
+                     fontsize=13, fontweight='heavy', pad=8, fontname=title_font)
             
             ax1.grid(True, alpha=0.3, color='#666666')
             lines = line1 + line2
             labels = [l.get_label() for l in lines]
-            ax1.legend(lines, labels, loc='upper left', fontsize=8)
+            legend = ax1.legend(lines, labels, loc='upper left', fontsize=8)
+            for text in legend.get_texts():
+                text.set_fontname(title_font)
+            
+            # 设置坐标轴标签字体
+            ax1.set_xlabel(ax1.get_xlabel(), fontname=title_font)
+            ax2.set_xlabel(ax2.get_xlabel(), fontname=title_font)
+            
+            # 设置刻度标签字体
+            for label in ax1.get_xticklabels():
+                label.set_fontname(title_font)
+            for label in ax1.get_yticklabels():
+                label.set_fontname(title_font)
+            for label in ax2.get_yticklabels():
+                label.set_fontname(title_font)
             
             plt.gcf().autofmt_xdate(rotation=45, ha='right')
             plt.tight_layout(pad=0.8)
@@ -258,20 +303,36 @@ class ChartGenerator:
             if not validate_data(spread, 50):
                 return False
             
+            # 设置字体
+            title_font = plt.rcParams['font.sans-serif'][0]
+            
             # 绘图
             fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
-            spread.plot(ax=ax, color='white', linewidth=1.5, title='股债利差')
+            spread.plot(ax=ax, color='white', linewidth=1.5)
+            ax.set_title('股债利差', fontsize=13, fontweight='heavy', pad=8, fontname=title_font)
             
             # 参考线
             for y, color, label in [
                 (-2.6, 'red', '高息'), (-5.5, 'green', '正常'), 
                 (-7.8, 'blue', '低息'), (-4.5, 'gray', ''), (-6.8, 'gray', '')
             ]:
-                plt.axhline(y=y, ls=":", c=color, label=label if label else None, alpha=0.7)
+                ax.axhline(y=y, ls=":", c=color, label=label if label else None, alpha=0.7)
             
-            plt.legend(fontsize=8, loc='upper left')
-            plt.grid(True, alpha=0.3, color='#666666')
-            plt.title('股债利差', fontsize=13, fontweight='heavy', pad=8)
+            legend = ax.legend(fontsize=8, loc='upper left')
+            for text in legend.get_texts():
+                text.set_fontname(title_font)
+            
+            ax.grid(True, alpha=0.3, color='#666666')
+            
+            # 设置坐标轴标签字体
+            ax.set_xlabel(ax.get_xlabel(), fontname=title_font)
+            ax.set_ylabel(ax.get_ylabel(), fontname=title_font)
+            
+            # 设置刻度标签字体
+            for label in ax.get_xticklabels():
+                label.set_fontname(title_font)
+            for label in ax.get_yticklabels():
+                label.set_fontname(title_font)
             
             plt.gcf().autofmt_xdate(rotation=45, ha='right')
             plt.tight_layout(pad=0.8)
