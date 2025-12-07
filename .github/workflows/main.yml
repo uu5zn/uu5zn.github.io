@@ -2,36 +2,27 @@ name: Daily Market Analysis
 
 on:
   schedule:
-    # 北京时间每天22:15（UTC 14:15）
     - cron: '15 14 * * 1-5'
-  
   workflow_dispatch:
-    
-  
   push:
-    branches:
-      - main
-    paths:
-      - 'src/**'
-      - 'requirements.txt'
+    branches: [main]
+    paths: ['src/**', 'requirements.txt']
+
 env:
   OUTPUT_PATH: ${{ github.workspace }}/output
-  
+
 jobs:
   analyze-and-deploy:
     runs-on: ubuntu-latest
     
-    # 修改权限配置
     permissions:
-      contents: write  # 从 read 改为 write！
-      pages: write
-      id-token: write
+      contents: write  # ✅ 必须允许写入
     
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # 需要完整历史才能推送
 
       - name: 配置Python环境
         uses: actions/setup-python@v4
@@ -43,36 +34,18 @@ jobs:
       - name: 安装系统字体
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            fonts-wqy-microhei \
-            fonts-wqy-zenhei \
-            fonts-noto-cjk \
-            fonts-arphic-ukai \
-            fonts-arphic-uming
+          sudo apt-get install -y --no-install-recommends fonts-wqy-microhei fonts-wqy-zenhei fonts-noto-cjk fonts-arphic-ukai fonts-arphic-uming
           sudo fc-cache -fv
-          
-          # 验证字体安装
-          echo "已安装的中文字体:"
           fc-list :lang=zh | head -3
-          
-      - name: 下载SimHei字体文件
+
+      - name: 下载并配置SimHei字体
         run: |
           wget -O simhei.ttf "https://github.com/StellarCN/scp_zh/raw/master/fonts/SimHei.ttf"
-          # 复制字体到多个位置，确保脚本能找到
           mkdir -p ~/.local/share/fonts
           cp simhei.ttf ~/.local/share/fonts/
-          # 复制到src目录，确保运行时能找到
           cp simhei.ttf ./src/
-          # 刷新字体缓存
           fc-cache -fv
-          # 验证SimHei字体是否可用
-          echo "SimHei字体状态:"
-          fc-list | grep -i simhei || echo "SimHei字体未安装成功"
-          # 列出所有字体位置，用于调试
-          echo "字体文件位置:"
-          ls -la simhei.ttf || echo "根目录无simhei.ttf"
-          ls -la ./src/simhei.ttf || echo "src目录无simhei.ttf"
-          ls -la ~/.local/share/fonts/simhei.ttf || echo "用户字体目录无simhei.ttf"
+          fc-list | grep -i simhei || echo "SimHei字体未安装"
 
       - name: 安装Python依赖
         run: |
@@ -82,51 +55,43 @@ jobs:
       - name: 创建输出目录
         run: mkdir -p ${{ env.OUTPUT_PATH }}
 
-
-      #- name: 运行字体修复测试
-      #  working-directory: ./src
-      #  run: python test_github_actions_font.py
-      
       - name: 运行市场分析
         working-directory: ./src
         env:
-          REPORT_OUTPUT_DIR: ${{ env.OUTPUT_PATH }}  # 传给脚本
+          REPORT_OUTPUT_DIR: ${{ env.OUTPUT_PATH }}
         run: python main.py
-
 
       - name: 验证输出目录内容
         run: |
           echo "=== 验证文件是否存在 ==="
-          if [ -d "./output" ]; then
-            echo "✅ ./output 目录存在"
-            ls -lh ./output/
-            echo "文件数量: $(find ./output -type f | wc -l)"
-          else
-            echo "❌ output 目录不存在"
-            ls -la ./
-          fi    
-          
-          echo "=== 检查根目录 output ==="
-          ls -la ./src/output/ 2>/dev/null || echo "src output 不存在"
-          
-      - name: Commit and push changes
+          ls -lh ./output/
+          echo "文件数量: $(find ./output -type f | wc -l)"
+
+      # ✅ 替换原来的 peaceiris/actions-gh-pages 步骤
+      - name: 配置 Git 身份
         run: |
           git config --global user.name 'GitHub Actions'
-          git add output/
-          git commit -m "Automated image update" || true
-          git push origin main || true
-          
-      - name: 部署到GitHub Pages
-        if: github.ref == 'refs/heads/main'  # 只判断分支，不限触发方式
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./output  # 根据之前讨论的目录调整
-          destination_dir: reports
+          git config --global user.email 'actions@github.com'
 
+      - name: 提交生成的文件到 main 分支
+        run: |
+          # 只添加 output 目录
+          git add output/
+          
+          # 检查是否有变更
+          if git diff --staged --quiet; then
+            echo "✅ 没有新文件需要提交"
+            exit 0
+          fi
+          
+          # 提交并推送
+          git commit -m "🤖 自动生成市场分析报告 $(date '+%Y-%m-%d %H:%M')"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 摘要输出
         run: |
           echo "## 📊 市场分析完成" >> $GITHUB_STEP_SUMMARY
           echo "- **执行时间**: $(date '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
-          echo "- **报告链接**: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports/" >> $GITHUB_STEP_SUMMARY
+          echo "- **提交分支**: main" >> $GITHUB_STEP_SUMMARY
