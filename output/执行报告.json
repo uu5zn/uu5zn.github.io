@@ -1,0 +1,188 @@
+{
+  "start_time": "2025-12-07T06:48:57.202201",
+  "end_time": "2025-12-07T06:50:03.527137",
+  "tasks": [
+    {
+      "timestamp": "2025-12-07T06:48:57.595488",
+      "category": "K线图",
+      "status": "success",
+      "message": "^TNX -> tenbond.png",
+      "chart_path": "tenbond.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:48:57.827520",
+      "category": "K线图",
+      "status": "success",
+      "message": "^VIX -> vix.png",
+      "chart_path": "vix.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:48:57.972263",
+      "category": "K线图",
+      "status": "success",
+      "message": "^GSPC -> sp500.png",
+      "chart_path": "sp500.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:48:58.165037",
+      "category": "K线图",
+      "status": "success",
+      "message": "^IXIC -> nasdaq.png",
+      "chart_path": "nasdaq.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:48:58.359799",
+      "category": "K线图",
+      "status": "success",
+      "message": "^RUT -> rs2000.png",
+      "chart_path": "rs2000.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:48:58.699675",
+      "category": "K线图",
+      "status": "success",
+      "message": "VNQ -> vnq.png",
+      "chart_path": "vnq.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:48:58.956394",
+      "category": "K线图",
+      "status": "success",
+      "message": "^N225 -> nikkei225.png",
+      "chart_path": "nikkei225.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:48:59.240742",
+      "category": "K线图",
+      "status": "success",
+      "message": "^HSI -> hsi.png",
+      "chart_path": "hsi.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:48:59.542159",
+      "category": "K线图",
+      "status": "success",
+      "message": "CNY=X -> rmb.png",
+      "chart_path": "rmb.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:48:59.542205",
+      "category": "K线图生成",
+      "status": "success",
+      "message": "任务执行成功"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:05.752494",
+      "category": "绘图",
+      "status": "success",
+      "message": "融资余额与MA10 -> rongziyue_ma.png",
+      "chart_path": "rongziyue_ma.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:05.752677",
+      "category": "融资余额分析",
+      "status": "success",
+      "message": "任务执行成功"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:16.639682",
+      "category": "汇率数据",
+      "status": "success",
+      "message": "获取 155 条记录"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:30.995864",
+      "category": "绘图",
+      "status": "success",
+      "message": "归一化指标对比 -> rongziyue_1.png",
+      "chart_path": "rongziyue_1.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:31.432243",
+      "category": "绘图",
+      "status": "success",
+      "message": "融资余额与ETF对比 -> rongziyue_2.png",
+      "chart_path": "rongziyue_2.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:31.832795",
+      "category": "绘图",
+      "status": "success",
+      "message": "流动性指标 -> liudongxing.png",
+      "chart_path": "liudongxing.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:31.832917",
+      "category": "多指标对比",
+      "status": "success",
+      "message": "任务执行成功"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:42.492895",
+      "category": "油金比分析",
+      "status": "warning",
+      "message": "执行失败"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:43.176893",
+      "category": "绘图",
+      "status": "success",
+      "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
+      "chart_path": "hsi_rut_comparison.png"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:43.177010",
+      "category": "相关性分析",
+      "status": "success",
+      "message": "任务执行成功"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:50.097115",
+      "category": "股债利差",
+      "status": "warning",
+      "message": "日期交集不足"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:50.097156",
+      "category": "股债利差",
+      "status": "warning",
+      "message": "执行失败"
+    },
+    {
+      "timestamp": "2025-12-07T06:49:50.866868",
+      "category": "行业轮动",
+      "status": "success",
+      "message": "任务执行成功"
+    }
+  ],
+  "errors": [],
+  "warnings": [
+    "油金比分析: 执行失败",
+    "股债利差: 日期交集不足",
+    "股债利差: 执行失败"
+  ],
+  "charts": [],
+  "insights": [
+    [
+      "指数差异",
+      "纳指+1.61% 标普+1.16% 罗素+0.32% 成长风格"
+    ],
+    [
+      "风险环境",
+      "VIX15.41 国债4.14% ⚪ 中等风险"
+    ],
+    [
+      "中美联动",
+      "恒指-0.29% 汇率-0.02% 🔓 弱联动"
+    ],
+    [
+      "流动性",
+      "融资12463亿 Shibor1.52% 🟢 宽松环境"
+    ]
+  ],
+  "market_signals": {
+    "risk_level": "⚪ 中等风险",
+    "liquidity_env": "🟢 宽松环境"
+  },
+  "duration": "66.32秒"
+}
