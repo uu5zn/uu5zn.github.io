@@ -111,7 +111,7 @@ class ChartGenerator:
             # 恢复原始rcParams
             plt.rcParams.update(original_rc)
             
-            print(f"✅ K线图: {filename}")
+            print(f"✅ K线图: {filename} (路径: {filepath})")
             self.logger('K线图', 'success', f'{ticker} -> {filename}', chart_path=filename)
             return True
             
@@ -167,7 +167,7 @@ class ChartGenerator:
                 filepath = os.path.join(OUTPUT_DIR, save_path)
                 plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
                            facecolor='black', dpi=150)
-                print(f"✅ 图表: {save_path}")
+                print(f"✅ 图表: {save_path} (路径: {filepath})")
                 self.logger('绘图', 'success', f'{title} -> {save_path}', chart_path=save_path)
             
             plt.close(fig)
@@ -221,7 +221,7 @@ class ChartGenerator:
             filepath = os.path.join(OUTPUT_DIR, 'sector_rotation.png')
             plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
                        facecolor='black', dpi=150)
-            print("✅ 图表: sector_rotation.png")
+            print(f"✅ 图表: sector_rotation.png (路径: {filepath})")
             plt.close(fig)
             
             return True
@@ -296,7 +296,7 @@ class ChartGenerator:
             filepath = os.path.join(OUTPUT_DIR, 'jyb_gz.png')
             plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
                        facecolor='black', dpi=150)
-            print("✅ 图表: jyb_gz.png")
+            print(f"✅ 图表: jyb_gz.png (路径: {filepath})")
             plt.close(fig)
             
             return True
