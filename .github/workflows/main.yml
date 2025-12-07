@@ -29,9 +29,9 @@ jobs:
   analyze-and-deploy:
     runs-on: ubuntu-latest
     
-    # 设置权限
+    # 修改权限配置
     permissions:
-      contents: read
+      contents: write  # 从 read 改为 write！
       pages: write
       id-token: write
     
@@ -102,12 +102,21 @@ jobs:
         run: python main.py
 
 
-      - name: 验证文件生成
+      - name: 验证输出目录内容
         run: |
-          echo "=== output 目录内容 ==="
-          ls -la ${{ env.OUTPUT_PATH }}/
-          echo "=== 文件数量 ==="
-          find ${{ env.OUTPUT_PATH }}/ -type f | wc -l
+          echo "=== 验证文件是否存在 ==="
+          if [ -d "./src/output" ]; then
+            echo "✅ src/output 目录存在"
+            ls -lh ./src/output/
+            echo "文件数量: $(find ./src/output -type f | wc -l)"
+          else
+            echo "❌ src/output 目录不存在"
+            ls -la ./src/
+          fi
+    
+          # 同时检查根目录（备用）
+          echo "=== 检查根目录 output ==="
+          ls -la ./output/ 2>/dev/null || echo "根目录 output 不存在"
 
       - name: 部署到GitHub Pages
         if: github.ref == 'refs/heads/main'  # 只判断分支，不限触发方式
