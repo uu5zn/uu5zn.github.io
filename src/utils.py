@@ -86,7 +86,14 @@ def setup_matplotlib_fonts():
     
     # 检查系统中所有可用字体，优先选择中文字体
     system_fonts = fm.findSystemFonts()
-    system_font_names = [fm.FontProperties(fname=f).get_name() for f in system_fonts]
+    system_font_names = []
+    for f in system_fonts:
+        try:
+            font_name = fm.FontProperties(fname=f).get_name()
+            system_font_names.append(font_name)
+        except Exception:
+            # 忽略无法加载的字体文件
+            continue
     
     # 优先使用系统中实际可用的中文字体
     for font in font_candidates:
