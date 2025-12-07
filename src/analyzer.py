@@ -151,14 +151,16 @@ class MarketAnalyzer:
             # ✅ 修复：get_yf_data 返回 DataFrame，需要提取 Close
             vix_data = self.fetcher.get_yf_data('^VIX', period='3mo')
             ten_year_data = self.fetcher.get_yf_data('^TNX', period='3mo')
+            sp500_data = self.fetcher.get_yf_data('^GSPC', period='3mo')
             
-            if vix_data.empty or ten_year_data.empty:
+            if vix_data.empty or ten_year_data.empty or sp500_data.empty:
                 self.logger('风险环境分析', 'warning', '数据不足')
                 return None
             
             # ✅ 修复：确保是 Series
             vix = vix_data['Close'].dropna() if 'Close' in vix_data.columns else pd.Series(dtype=float)
             ten_year = ten_year_data['Close'].dropna() if 'Close' in ten_year_data.columns else pd.Series(dtype=float)
+            sp500 = sp500_data['Close'].dropna() if 'Close' in sp500_data.columns else pd.Series(dtype=float)
             
             if len(vix) < MIN_DATA_POINTS or len(ten_year) < MIN_DATA_POINTS:
                 self.logger('风险环境分析', 'warning', '数据点不足')

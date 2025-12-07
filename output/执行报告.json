@@ -1,261 +1,348 @@
 {
-  "start_time": "2025-12-07T09:49:45.224175",
-  "end_time": "2025-12-07T09:51:56.153829",
+  "start_time": "2025-12-07T09:58:09.654308",
+  "end_time": "2025-12-07T09:58:29.510891",
   "tasks": [
     {
-      "timestamp": "2025-12-07T09:49:49.394110",
+      "timestamp": "2025-12-07T09:58:12.489602",
       "category": "K线图",
-      "status": "error",
-      "message": "^TNX: Too Many Requests. Rate limited. Try after a while."
+      "status": "warning",
+      "message": "^TNX 数据不足"
     },
     {
-      "timestamp": "2025-12-07T09:49:50.811681",
+      "timestamp": "2025-12-07T09:58:12.812816",
       "category": "K线图",
-      "status": "error",
-      "message": "^VIX: Too Many Requests. Rate limited. Try after a while."
+      "status": "warning",
+      "message": "^VIX 数据不足"
     },
     {
-      "timestamp": "2025-12-07T09:49:52.278200",
+      "timestamp": "2025-12-07T09:58:13.083734",
       "category": "K线图",
-      "status": "error",
-      "message": "^GSPC: Too Many Requests. Rate limited. Try after a while."
+      "status": "warning",
+      "message": "^GSPC 数据不足"
     },
     {
-      "timestamp": "2025-12-07T09:49:53.798838",
+      "timestamp": "2025-12-07T09:58:13.355090",
       "category": "K线图",
-      "status": "error",
-      "message": "^IXIC: Too Many Requests. Rate limited. Try after a while."
+      "status": "warning",
+      "message": "^IXIC 数据不足"
     },
     {
-      "timestamp": "2025-12-07T09:49:55.394389",
+      "timestamp": "2025-12-07T09:58:13.677119",
       "category": "K线图",
-      "status": "error",
-      "message": "^RUT: Too Many Requests. Rate limited. Try after a while."
+      "status": "warning",
+      "message": "^RUT 数据不足"
     },
     {
-      "timestamp": "2025-12-07T09:49:56.902979",
+      "timestamp": "2025-12-07T09:58:13.964519",
       "category": "K线图",
-      "status": "error",
-      "message": "VNQ: Too Many Requests. Rate limited. Try after a while."
+      "status": "warning",
+      "message": "VNQ 数据不足"
     },
     {
-      "timestamp": "2025-12-07T09:49:58.335770",
+      "timestamp": "2025-12-07T09:58:14.251930",
       "category": "K线图",
-      "status": "error",
-      "message": "^N225: Too Many Requests. Rate limited. Try after a while."
+      "status": "warning",
+      "message": "^N225 数据不足"
     },
     {
-      "timestamp": "2025-12-07T09:50:02.014343",
+      "timestamp": "2025-12-07T09:58:14.530731",
       "category": "K线图",
-      "status": "error",
-      "message": "^HSI: Too Many Requests. Rate limited. Try after a while."
+      "status": "warning",
+      "message": "^HSI 数据不足"
     },
     {
-      "timestamp": "2025-12-07T09:50:03.870656",
+      "timestamp": "2025-12-07T09:58:14.804996",
       "category": "K线图",
-      "status": "error",
-      "message": "CNY=X: Too Many Requests. Rate limited. Try after a while."
+      "status": "warning",
+      "message": "CNY=X 数据不足"
     },
     {
-      "timestamp": "2025-12-07T09:50:03.870656",
+      "timestamp": "2025-12-07T09:58:14.804996",
       "category": "K线图生成",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-07T09:50:06.372380",
-      "category": "绘图",
-      "status": "success",
-      "message": "融资余额与MA10 -> rongziyue_ma.png",
-      "chart_path": "rongziyue_ma.png"
+      "timestamp": "2025-12-07T09:58:15.503830",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "stock_margin_sse: HTTPSConnectionPool(host='query.sse.com.cn', port=443): Max retries exceeded with url: /marketdata/t"
     },
     {
-      "timestamp": "2025-12-07T09:50:06.372380",
+      "timestamp": "2025-12-07T09:58:15.507085",
       "category": "融资余额分析",
-      "status": "success",
-      "message": "任务执行成功"
+      "status": "warning",
+      "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-07T09:50:14.011332",
+      "timestamp": "2025-12-07T09:58:15.757262",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "stock_margin_sse: HTTPSConnectionPool(host='query.sse.com.cn', port=443): Max retries exceeded with url: /marketdata/t"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:16.017216",
       "category": "汇率数据",
-      "status": "success",
-      "message": "获取 155 条记录"
+      "status": "warning",
+      "message": "无法获取货币代码映射"
     },
     {
-      "timestamp": "2025-12-07T09:50:42.540076",
+      "timestamp": "2025-12-07T09:58:16.934338",
       "category": "数据获取",
       "status": "warning",
-      "message": "fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt"
+      "message": "macro_china_shibor_all: HTTPSConnectionPool(host='cdn.jin10.com', port=443): Max retries exceeded with url: /data_center/rep"
     },
     {
-      "timestamp": "2025-12-07T09:50:45.603875",
+      "timestamp": "2025-12-07T09:58:17.201764",
       "category": "数据获取",
       "status": "warning",
-      "message": "fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt"
+      "message": "bond_zh_us_rate: HTTPSConnectionPool(host='datacenter.eastmoney.com', port=443): Max retries exceeded with url: /api/"
     },
     {
-      "timestamp": "2025-12-07T09:50:50.219093",
+      "timestamp": "2025-12-07T09:58:17.472587",
       "category": "数据获取",
       "status": "warning",
-      "message": "fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt"
+      "message": "fund_etf_hist_em: HTTPSConnectionPool(host='88.push2.eastmoney.com', port=443): Max retries exceeded with url: /api/qt"
     },
     {
-      "timestamp": "2025-12-07T09:50:50.940909",
+      "timestamp": "2025-12-07T09:58:17.757588",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "fund_etf_hist_em: HTTPSConnectionPool(host='88.push2.eastmoney.com', port=443): Max retries exceeded with url: /api/qt"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:17.997738",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "fund_etf_hist_em: HTTPSConnectionPool(host='88.push2.eastmoney.com', port=443): Max retries exceeded with url: /api/qt"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:17.998288",
       "category": "绘图",
-      "status": "success",
-      "message": "归一化指标对比 -> rongziyue_1.png",
-      "chart_path": "rongziyue_1.png"
+      "status": "warning",
+      "message": "归一化指标对比 无有效数据"
     },
     {
-      "timestamp": "2025-12-07T09:50:51.514919",
+      "timestamp": "2025-12-07T09:58:17.998288",
       "category": "绘图",
-      "status": "success",
-      "message": "融资余额与ETF对比 -> rongziyue_2.png",
-      "chart_path": "rongziyue_2.png"
+      "status": "warning",
+      "message": "融资余额与ETF对比 无有效数据"
     },
     {
-      "timestamp": "2025-12-07T09:50:52.147403",
+      "timestamp": "2025-12-07T09:58:17.999333",
       "category": "绘图",
-      "status": "success",
-      "message": "流动性指标 -> liudongxing.png",
-      "chart_path": "liudongxing.png"
+      "status": "warning",
+      "message": "流动性指标 无有效数据"
     },
     {
-      "timestamp": "2025-12-07T09:50:52.147403",
+      "timestamp": "2025-12-07T09:58:17.999333",
       "category": "多指标对比",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-07T09:51:10.731839",
+      "timestamp": "2025-12-07T09:58:18.265107",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "futures_foreign_hist: HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Max retries exceeded with url: /fu"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:18.514729",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "futures_foreign_hist: HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Max retries exceeded with url: /fu"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:18.515274",
+      "category": "油金比",
+      "status": "warning",
+      "message": "数据不足"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:18.515274",
       "category": "油金比分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-07T09:51:12.959758",
+      "timestamp": "2025-12-07T09:58:21.808038",
       "category": "批量下载",
       "status": "warning",
       "message": "返回空数据"
     },
     {
-      "timestamp": "2025-12-07T09:51:14.599780",
+      "timestamp": "2025-12-07T09:58:22.448583",
       "category": "批量下载",
       "status": "warning",
       "message": "返回空数据"
     },
     {
-      "timestamp": "2025-12-07T09:51:14.600789",
+      "timestamp": "2025-12-07T09:58:22.448583",
       "category": "相关性分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-07T09:51:23.257803",
-      "category": "股债利差",
+      "timestamp": "2025-12-07T09:58:22.829650",
+      "category": "数据获取",
       "status": "warning",
-      "message": "日期交集不足"
+      "message": "bond_zh_us_rate: HTTPSConnectionPool(host='datacenter.eastmoney.com', port=443): Max retries exceeded with url: /api/"
     },
     {
-      "timestamp": "2025-12-07T09:51:23.257803",
+      "timestamp": "2025-12-07T09:58:23.097923",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "stock_index_pe_lg: HTTPSConnectionPool(host='legulegu.com', port=443): Max retries exceeded with url: /stockdata/sz50-t"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:23.098553",
+      "category": "股债利差",
+      "status": "warning",
+      "message": "数据获取失败"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:23.098553",
       "category": "股债利差",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-07T09:51:25.141334",
+      "timestamp": "2025-12-07T09:58:25.865000",
       "category": "批量下载",
       "status": "warning",
       "message": "返回空数据"
     },
     {
-      "timestamp": "2025-12-07T09:51:25.141334",
+      "timestamp": "2025-12-07T09:58:25.866000",
       "category": "行业轮动",
       "status": "warning",
       "message": "数据下载失败"
     },
     {
-      "timestamp": "2025-12-07T09:51:25.141334",
+      "timestamp": "2025-12-07T09:58:25.866000",
       "category": "行业轮动",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-07T09:51:26.829575",
+      "timestamp": "2025-12-07T09:58:27.076263",
       "category": "批量下载",
       "status": "warning",
       "message": "返回空数据"
     },
     {
-      "timestamp": "2025-12-07T09:51:26.829575",
+      "timestamp": "2025-12-07T09:58:27.077263",
       "category": "指数差异分析",
       "status": "warning",
       "message": "数据下载失败"
     },
     {
-      "timestamp": "2025-12-07T09:51:29.128259",
+      "timestamp": "2025-12-07T09:58:27.342402",
       "category": "YFinance",
       "status": "warning",
       "message": "^VIX 返回空数据"
     },
     {
-      "timestamp": "2025-12-07T09:51:30.833908",
+      "timestamp": "2025-12-07T09:58:27.607622",
       "category": "YFinance",
       "status": "warning",
       "message": "^TNX 返回空数据"
     },
     {
-      "timestamp": "2025-12-07T09:51:30.833908",
-      "category": "风险环境分析",
-      "status": "warning",
-      "message": "数据不足"
-    },
-    {
-      "timestamp": "2025-12-07T09:51:32.757385",
-      "category": "YFinance",
-      "status": "warning",
-      "message": "^HSI 返回空数据"
-    },
-    {
-      "timestamp": "2025-12-07T09:51:35.682514",
-      "category": "YFinance",
-      "status": "warning",
-      "message": "CNY=X 返回空数据"
-    },
-    {
-      "timestamp": "2025-12-07T09:51:37.483899",
+      "timestamp": "2025-12-07T09:58:27.914894",
       "category": "YFinance",
       "status": "warning",
       "message": "^GSPC 返回空数据"
     },
     {
-      "timestamp": "2025-12-07T09:51:37.483899",
+      "timestamp": "2025-12-07T09:58:27.914894",
+      "category": "风险环境分析",
+      "status": "warning",
+      "message": "数据不足"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:28.205057",
+      "category": "YFinance",
+      "status": "warning",
+      "message": "^HSI 返回空数据"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:28.478835",
+      "category": "YFinance",
+      "status": "warning",
+      "message": "CNY=X 返回空数据"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:28.754128",
+      "category": "YFinance",
+      "status": "warning",
+      "message": "^GSPC 返回空数据"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:28.755124",
       "category": "中美联动分析",
       "status": "warning",
       "message": "数据不足"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:29.003000",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "stock_margin_sse: HTTPSConnectionPool(host='query.sse.com.cn', port=443): Max retries exceeded with url: /marketdata/t"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:29.248578",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "macro_china_shibor_all: HTTPSConnectionPool(host='cdn.jin10.com', port=443): Max retries exceeded with url: /data_center/rep"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:29.510345",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "bond_zh_us_rate: HTTPSConnectionPool(host='datacenter.eastmoney.com', port=443): Max retries exceeded with url: /api/"
+    },
+    {
+      "timestamp": "2025-12-07T09:58:29.510891",
+      "category": "流动性分析",
+      "status": "warning",
+      "message": "融资余额数据不足"
     }
   ],
-  "errors": [
-    "K线图: ^TNX: Too Many Requests. Rate limited. Try after a while.",
-    "K线图: ^VIX: Too Many Requests. Rate limited. Try after a while.",
-    "K线图: ^GSPC: Too Many Requests. Rate limited. Try after a while.",
-    "K线图: ^IXIC: Too Many Requests. Rate limited. Try after a while.",
-    "K线图: ^RUT: Too Many Requests. Rate limited. Try after a while.",
-    "K线图: VNQ: Too Many Requests. Rate limited. Try after a while.",
-    "K线图: ^N225: Too Many Requests. Rate limited. Try after a while.",
-    "K线图: ^HSI: Too Many Requests. Rate limited. Try after a while.",
-    "K线图: CNY=X: Too Many Requests. Rate limited. Try after a while."
-  ],
+  "errors": [],
   "warnings": [
+    "K线图: ^TNX 数据不足",
+    "K线图: ^VIX 数据不足",
+    "K线图: ^GSPC 数据不足",
+    "K线图: ^IXIC 数据不足",
+    "K线图: ^RUT 数据不足",
+    "K线图: VNQ 数据不足",
+    "K线图: ^N225 数据不足",
+    "K线图: ^HSI 数据不足",
+    "K线图: CNY=X 数据不足",
     "K线图生成: 执行失败",
-    "数据获取: fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt",
-    "数据获取: fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt",
-    "数据获取: fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt",
+    "数据获取: stock_margin_sse: HTTPSConnectionPool(host='query.sse.com.cn', port=443): Max retries exceeded with url: /marketdata/t",
+    "融资余额分析: 执行失败",
+    "数据获取: stock_margin_sse: HTTPSConnectionPool(host='query.sse.com.cn', port=443): Max retries exceeded with url: /marketdata/t",
+    "汇率数据: 无法获取货币代码映射",
+    "数据获取: macro_china_shibor_all: HTTPSConnectionPool(host='cdn.jin10.com', port=443): Max retries exceeded with url: /data_center/rep",
+    "数据获取: bond_zh_us_rate: HTTPSConnectionPool(host='datacenter.eastmoney.com', port=443): Max retries exceeded with url: /api/",
+    "数据获取: fund_etf_hist_em: HTTPSConnectionPool(host='88.push2.eastmoney.com', port=443): Max retries exceeded with url: /api/qt",
+    "数据获取: fund_etf_hist_em: HTTPSConnectionPool(host='88.push2.eastmoney.com', port=443): Max retries exceeded with url: /api/qt",
+    "数据获取: fund_etf_hist_em: HTTPSConnectionPool(host='88.push2.eastmoney.com', port=443): Max retries exceeded with url: /api/qt",
+    "绘图: 归一化指标对比 无有效数据",
+    "绘图: 融资余额与ETF对比 无有效数据",
+    "绘图: 流动性指标 无有效数据",
+    "数据获取: futures_foreign_hist: HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Max retries exceeded with url: /fu",
+    "数据获取: futures_foreign_hist: HTTPSConnectionPool(host='stock2.finance.sina.com.cn', port=443): Max retries exceeded with url: /fu",
+    "油金比: 数据不足",
     "油金比分析: 执行失败",
     "批量下载: 返回空数据",
     "批量下载: 返回空数据",
     "相关性分析: 执行失败",
-    "股债利差: 日期交集不足",
+    "数据获取: bond_zh_us_rate: HTTPSConnectionPool(host='datacenter.eastmoney.com', port=443): Max retries exceeded with url: /api/",
+    "数据获取: stock_index_pe_lg: HTTPSConnectionPool(host='legulegu.com', port=443): Max retries exceeded with url: /stockdata/sz50-t",
+    "股债利差: 数据获取失败",
     "股债利差: 执行失败",
     "批量下载: 返回空数据",
     "行业轮动: 数据下载失败",
@@ -264,21 +351,19 @@
     "指数差异分析: 数据下载失败",
     "YFinance: ^VIX 返回空数据",
     "YFinance: ^TNX 返回空数据",
+    "YFinance: ^GSPC 返回空数据",
     "风险环境分析: 数据不足",
     "YFinance: ^HSI 返回空数据",
     "YFinance: CNY=X 返回空数据",
     "YFinance: ^GSPC 返回空数据",
-    "中美联动分析: 数据不足"
+    "中美联动分析: 数据不足",
+    "数据获取: stock_margin_sse: HTTPSConnectionPool(host='query.sse.com.cn', port=443): Max retries exceeded with url: /marketdata/t",
+    "数据获取: macro_china_shibor_all: HTTPSConnectionPool(host='cdn.jin10.com', port=443): Max retries exceeded with url: /data_center/rep",
+    "数据获取: bond_zh_us_rate: HTTPSConnectionPool(host='datacenter.eastmoney.com', port=443): Max retries exceeded with url: /api/",
+    "流动性分析: 融资余额数据不足"
   ],
   "charts": [],
-  "insights": [
-    [
-      "流动性",
-      "融资12463亿 Shibor1.52% 🟢 宽松环境"
-    ]
-  ],
-  "market_signals": {
-    "liquidity_env": "🟢 宽松环境"
-  },
-  "duration": "130.93秒"
+  "insights": [],
+  "market_signals": {},
+  "duration": "19.86秒"
 }

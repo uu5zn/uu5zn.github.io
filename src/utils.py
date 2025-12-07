@@ -79,56 +79,68 @@ from config import FONT_CANDIDATES
 
 def setup_matplotlib_fonts():
     """设置matplotlib字体（增强版）"""
-    # 使用config.py中定义的字体候选列表
-    font_candidates = FONT_CANDIDATES
-    
     available_font = None
+    available_font_path = None
     
-    # 检查系统中所有可用字体，优先选择中文字体
+    # 直接查找系统中已安装的中文字体文件
     system_fonts = fm.findSystemFonts()
-    system_font_names = []
-    for f in system_fonts:
-        try:
-            font_name = fm.FontProperties(fname=f).get_name()
-            system_font_names.append(font_name)
-        except Exception:
-            # 忽略无法加载的字体文件
-            continue
     
-    # 优先使用系统中实际可用的中文字体
-    for font in font_candidates:
-        try:
-            # 检查字体是否存在于系统中
-            if font in system_font_names:
-                # 测试能否创建文本
-                fig = plt.figure(figsize=(1, 1))
-                plt.text(0.5, 0.5, '测试中文', fontfamily=font)
-                plt.close(fig)
-                available_font = font
-                print(f"✅ 使用字体: {font}")
-                break
-            # 尝试直接使用字体名称（不依赖系统字体名称列表）
-            font_files = fm.findfont(font, fallback_to_default=False)
-            if font_files:
-                # 测试能否创建文本
-                fig = plt.figure(figsize=(1, 1))
-                plt.text(0.5, 0.5, '测试中文', fontfamily=font)
-                plt.close(fig)
-                available_font = font
-                print(f"✅ 使用字体: {font}")
-                break
-        except:
-            continue
+    # 优先匹配GitHub Actions中已安装的中文字体文件
+    font_patterns = [
+        r'wqy-microhei',   # WenQuanYi Micro Hei
+        r'wqy-zenhei',     # WenQuanYi Zen Hei
+        r'noto-cjk',       # Noto Sans CJK
+        r'simhei',         # SimHei
+        r'uming',          # uming
+        r'ukai'            # ukai
+    ]
+    
+    import re
+    for font_file in system_fonts:
+        font_path_lower = font_file.lower()
+        for pattern in font_patterns:
+            if re.search(pattern, font_path_lower):
+                try:
+                    # 直接获取字体名称（不依赖fontproperties）
+                    font_name = os.path.basename(font_file)
+                    print(f"🔍 发现中文字体文件: {font_name}")
+                    
+                    # 直接测试创建文本，使用fontpath
+                    fig = plt.figure(figsize=(1, 1))
+                    plt.text(0.5, 0.5, '测试中文', 
+                            fontproperties=fm.FontProperties(fname=font_file),
+                            fontsize=12)
+                    plt.close(fig)
+                    
+                    available_font_path = font_file
+                    # 提取字体名称，优先使用文件名（更可靠）
+                    if 'wqy-microhei' in font_path_lower:
+                        available_font = 'WenQuanYi Micro Hei'
+                    elif 'wqy-zenhei' in font_path_lower:
+                        available_font = 'WenQuanYi Zen Hei'
+                    elif 'noto-cjk' in font_path_lower or 'noto' in font_path_lower:
+                        available_font = 'Noto Sans CJK SC'
+                    else:
+                        available_font = font_name.split('.')[0]
+                    
+                    print(f"✅ 找到可用中文字体: {available_font} ({os.path.basename(font_file)})")
+                    break
+                except Exception as e:
+                    print(f"⚠️  字体文件 {font_file} 加载失败: {e}")
+                    continue
+        if available_font:
+            break
     
     if not available_font:
+        # 如果没有找到指定字体，尝试使用系统默认的sans-serif字体
         print("⚠️  未找到中文字体，使用默认字体")
         available_font = 'sans-serif'
     
     # 强制设置所有字体相关配置
-    plt.rcParams.update({
+    # 注意：我们直接使用字体路径而非字体名称，确保matplotlib能找到字体
+    font_config = {
         'font.family': 'sans-serif',
-        'font.sans-serif': [available_font],
-        'axes.unicode_minus': False,  # 正确显示负号
+        'font.sans-serif': [available_font, 'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 'Noto Sans CJK SC'],
         'font.size': 9,
         'axes.titlesize': 13,
         'axes.labelsize': 10,
@@ -136,20 +148,67 @@ def setup_matplotlib_fonts():
         'ytick.labelsize': 8,
         'legend.fontsize': 8,
         'figure.titlesize': 14,
-        # 确保中文文件名也能正确处理
+        'axes.unicode_minus': False,  # 正确显示负号
         'savefig.dpi': 150,
         'savefig.transparent': False,
-    })
+        # 额外设置：确保所有文本元素都使用指定字体
+        'mathtext.fontset': 'stixsans',
+        'mathtext.default': 'regular',
+    }
+    
+    # 应用字体配置
+    plt.rcParams.update(font_config)
+    
+    # 关键修复：直接使用字体路径设置，不依赖字体名称
+    if available_font_path:
+        # 1. 将字体添加到fontManager
+        fm.fontManager.addfont(available_font_path)
+        print(f"✅ 字体已添加到Matplotlib: {available_font_path}")
+        
+        # 2. 确保字体被优先使用
+        # 将字体路径作为第一个字体选项
+        plt.rcParams['font.sans-serif'].insert(0, available_font_path)
+        print(f"✅ 字体路径已添加到字体列表: {available_font_path}")
+    
+    # 3. 强制设置所有文本元素的默认字体
+    # 创建一个全局字体属性对象
+    global_font_props = fm.FontProperties(fname=available_font_path if available_font_path else available_font)
     
     # 验证字体确实被使用
     test_text = "中文测试 123 ABC"
     fig, ax = plt.subplots(figsize=(3, 1), facecolor='black')
-    text_obj = ax.text(0.5, 0.5, test_text, ha='center', va='center', fontsize=12, color='white')
+    
+    # 测试多种文本元素
+    # 1. 标题
+    ax.set_title("中文标题测试", fontproperties=global_font_props, fontsize=12, color='white')
+    
+    # 2. 轴标签
+    ax.set_xlabel("中文X轴", fontproperties=global_font_props, color='white')
+    ax.set_ylabel("中文Y轴", fontproperties=global_font_props, color='white')
+    
+    # 3. 文本
+    text_obj = ax.text(0.5, 0.5, test_text, ha='center', va='center', 
+                      fontsize=12, color='white',
+                      fontproperties=global_font_props)
+    
+    # 4. 图例
+    ax.plot([0, 1], [0, 1], label="中文图例", color='white')
+    legend = ax.legend(fontsize=10)
+    for text in legend.get_texts():
+        text.set_fontproperties(global_font_props)
+    
+    # 5. 刻度标签
+    for label in ax.get_xticklabels() + ax.get_yticklabels():
+        label.set_fontproperties(global_font_props)
+    
     fig.canvas.draw()  # 强制渲染
     
     # 检查实际使用的字体
     used_font = text_obj.get_fontname()
     print(f"✅ 实际使用字体: {used_font}")
+    
+    # 检查字体列表
+    print(f"✅ 当前字体列表: {plt.rcParams['font.sans-serif']}")
     
     plt.close(fig)
     
