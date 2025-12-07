@@ -256,21 +256,40 @@ class ChartGenerator:
         """绘制油金比与美债收益率"""
         try:
             # 使用 self.fetcher
+            print("📊 开始获取原油数据...")
             oil_prices = self.fetcher.get_data("CL", None, None)
+            print(f"📊 原油数据类型: {type(oil_prices)}")
+            print(f"📊 原油数据形状: {oil_prices.shape if hasattr(oil_prices, 'shape') else 'N/A'}")
+            print(f"📊 原油数据是否为空: {oil_prices.empty if hasattr(oil_prices, 'empty') else 'N/A'}")
+            
+            print("📊 开始获取黄金数据...")
             gold_prices = self.fetcher.get_data("GC", None, None)
+            print(f"📊 黄金数据类型: {type(gold_prices)}")
+            print(f"📊 黄金数据形状: {gold_prices.shape if hasattr(gold_prices, 'shape') else 'N/A'}")
+            print(f"📊 黄金数据是否为空: {gold_prices.empty if hasattr(gold_prices, 'empty') else 'N/A'}")
             
             if not (validate_data(oil_prices, 50) and validate_data(gold_prices, 50)):
                 self.logger('油金比', 'warning', '数据不足')
+                print("⚠️  油金比数据验证失败：原油或黄金数据不足")
                 return False
             
             oil_prices, gold_prices = oil_prices.align(gold_prices, join='inner')
+            print(f"📊 对齐后数据形状: {oil_prices.shape if hasattr(oil_prices, 'shape') else 'N/A'}")
+            
             if not validate_data(oil_prices, 30):
+                print("⚠️  油金比数据验证失败：对齐后数据不足")
                 return False
             
             oil_gold_ratio = oil_prices / gold_prices
+            print("📊 开始获取美债数据...")
             us_bond = self.fetcher.get_data('US_BOND', None, None)
+            print(f"📊 美债数据类型: {type(us_bond)}")
+            print(f"📊 美债数据形状: {us_bond.shape if hasattr(us_bond, 'shape') else 'N/A'}")
+            print(f"📊 美债数据是否为空: {us_bond.empty if hasattr(us_bond, 'empty') else 'N/A'}")
             
-            if not validate_data(us_bond, 30):
+            # 降低美债数据验证阈值，因为ak.bond_zh_us_rate返回的数据量较少
+            if not validate_data(us_bond, 10):
+                print("⚠️  油金比数据验证失败：美债数据不足")
                 return False
             
             us_bond = us_bond.iloc[-300:] if len(us_bond) > 300 else us_bond
@@ -323,6 +342,8 @@ class ChartGenerator:
             
         except Exception as e:
             print(f"❌ 油金比图表失败: {e}")
+            import traceback
+            traceback.print_exc()
             self.logger('油金比', 'error', str(e))
             plt.close('all')
             return False

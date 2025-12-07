@@ -255,7 +255,9 @@ class DataFetcher:
             elif symbol in ['CL', 'GC']:  # 原油、黄金
                 data = self.safe_get_data(ak.futures_foreign_hist, symbol=symbol)
                 if not data.empty and 'date' in data.columns and 'close' in data.columns:
-                    return data.set_index('date')['close']
+                    data_copy = data.copy()
+                    data_copy['date'] = pd.to_datetime(data_copy['date'], errors='coerce')
+                    return data_copy.dropna().sort_values('date').set_index('date')['close']
             
             # 美国国债
             elif symbol == 'US_BOND':
