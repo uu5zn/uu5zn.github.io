@@ -43,7 +43,7 @@ class DataFetcher:
         """
         try:
             data = yf.download(
-                ticker, period=period, interval=interval, 
+                ticker, period=period, interval=interval, auto_adjust=True, 
                 progress=False, timeout=YF_TIMEOUT
             )
             
@@ -85,7 +85,7 @@ class DataFetcher:
             
             # 下载数据 - 不指定 group_by，保持yfinance默认结构
             data = yf.download(
-                tickers, period=period, interval='1d', 
+                tickers, period=period, interval='1d', auto_adjust=True, 
                 progress=False, timeout=YF_TIMEOUT
             )
             
