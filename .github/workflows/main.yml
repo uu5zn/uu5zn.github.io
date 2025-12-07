@@ -6,15 +6,7 @@ on:
     - cron: '15 14 * * 1-5'
   
   workflow_dispatch:
-    inputs:
-      analysis_type:
-        description: '分析类型'
-        required: false
-        default: 'full'
-        type: choice
-        options:
-          - full
-          - quick
+    
   
   push:
     branches:
