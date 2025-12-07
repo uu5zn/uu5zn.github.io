@@ -228,19 +228,17 @@ class DataFetcher:
             elif symbol == 'Shibor 1M':
                 data = self.safe_get_data(ak.macro_china_shibor_all)
                 if not data.empty and '日期' in data.columns and '1M-定价' in data.columns:
-                    data['日期'] = pd.to_datetime(data['日期'], errors='coerce')
+                    data['日期'] = pd.to_datetime(data['日期'], errors='coerce', format='%Y%m%d')
                     return data.dropna().set_index('日期')['1M-定价']
             
             # 中美国债
             elif symbol == '中美国债收益率':
-                data = self.safe_get_data(ak.bond_zh_us_rate)
-                if not data.empty and '日期' in data.columns:
-                    data['日期'] = pd.to_datetime(data['日期'], errors='coerce')
-                    data = data.dropna().set_index('日期')
-                    data = data.ffill(axis=0)
-                    if '中国国债收益率10年' in data.columns and '美国国债收益率10年' in data.columns:
-                        data['spread'] = data['中国国债收益率10年'] - data['美国国债收益率10年']
-                        return data
+                data = self.safe_get_data(ak.bond_zh_us_rate)[['日期','中国国债收益率10年', '美国国债收益率10年']].iloc[-600:]
+                data['spread'] = data['中国国债收益率10年'] - data['美国国债收益率10年']
+                data['日期'] = pd.to_datetime(data['日期'], errors='coerce', format='%Y%m%d')
+                data = data.set_index('日期')
+                data = data.ffill(axis=0)
+                return data['spread']
             
             # ETF数据
             elif symbol.startswith('ETF_'):
@@ -261,12 +259,10 @@ class DataFetcher:
             
             # 美国国债
             elif symbol == 'US_BOND':
-                data = self.safe_get_data(ak.bond_zh_us_rate)
-                if not data.empty and '日期' in data.columns and '美国国债收益率10年' in data.columns:
-                    bond_df = data.copy()
-                    bond_df['日期'] = pd.to_datetime(bond_df['日期'], errors='coerce')
-                    us_bond = bond_df.dropna().sort_values('日期').set_index('日期')
-                    return us_bond['美国国债收益率10年'].ffill()
+                bond_df = self.safe_get_data(ak.bond_zh_us_rate)[['日期','美国国债收益率10年']].iloc[-600:]
+                bond_df['日期'] = pd.to_datetime(bond_df['日期'], errors='coerce', format='%Y%m%d')
+                us_bond = bond_df.set_index('日期')
+                return us_bond['美国国债收益率10年'].ffill()
             
             else:
                 self.logger('数据获取', 'warning', f'未识别的数据类型: {symbol}')

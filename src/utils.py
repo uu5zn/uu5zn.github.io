@@ -224,7 +224,7 @@ def validate_data(data, min_points=10):
 def normalize(data):
     """归一化处理"""
     try:
-        if validate_data(data, 2):
+        if validate_data(data, 50):
             return (data - data.min()) / (data.max() - data.min())
     except:
         pass

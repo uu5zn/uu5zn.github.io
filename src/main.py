@@ -126,11 +126,11 @@ def task_multi_indicator(fetcher, analyzer, chart_gen):
             {
                 '融资余额': normalize(margin_data),
                 '汇率': normalize(-exchange_rate),
-                '中美利差': normalize(bond_data['spread'] if 'spread' in bond_data else pd.Series()),
+                '中美利差': normalize(bond_data.iloc[-180:]),
                 '500ETF': normalize(etf_500)
             },
             '归一化指标对比', ['融资余额', '汇率', '中美利差', '500ETF'],
-            ['g', 'c', 'k', 'r'], save_path='rongziyue_1.png'
+            ['g', 'c', 'w', 'r'], save_path='rongziyue_1.png'
         )
         
         chart_gen.plot_line(
@@ -146,9 +146,9 @@ def task_multi_indicator(fetcher, analyzer, chart_gen):
         chart_gen.plot_line(
             {
                 'Shibor 1M': normalize(shibor_data.iloc[-200:]),
-                '中美国债利差': normalize(bond_data['spread'].iloc[-200:] if 'spread' in bond_data else pd.Series())
+                '中美国债利差': normalize(bond_data.iloc[-200:])
             },
-            '流动性指标', ['Shibor 1M', '中美国债利差'], ['k', 'g'],
+            '流动性指标', ['Shibor 1M', '中美国债利差'], ['r', 'g'],
             save_path='liudongxing.png'
         )
         
