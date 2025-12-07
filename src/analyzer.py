@@ -621,11 +621,12 @@ class MarketAnalyzer:
                 'leaders': leaders,
                 'laggards': laggards,
                 'returns': valid_returns,
-                'dispersion': float(dispersion) if 'dispersion' in locals() else 0,
+                'rotation_strength': float(dispersion) if 'dispersion' in locals() else 0,
                 'rotation_signal': rotation_signal,
                 'style_str': style_str,
                 'sorted_returns': sorted_returns,
-                'rotation_desc': rotation_desc if 'rotation_desc' in locals() else ""
+                'rotation_desc': rotation_desc if 'rotation_desc' in locals() else "",
+                'leading': ', '.join(leaders)
             }
             
         except Exception as e:
