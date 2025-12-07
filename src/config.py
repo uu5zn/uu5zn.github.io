@@ -6,7 +6,7 @@ import pandas as pd
 
 # ==================== 路径配置 ====================
 # 输出目录 - 指向主目录下的output文件夹
-OUTPUT_DIR = "output"
+OUTPUT_DIR = os.path.abspath("output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # 日志文件路径
