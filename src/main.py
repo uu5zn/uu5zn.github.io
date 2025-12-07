@@ -108,7 +108,7 @@ def task_multi_indicator(fetcher, analyzer, chart_gen):
     
     try:
         end_date = datetime.now()
-        start_date = end_date - timedelta(days=300)
+        start_date = end_date - timedelta(days=180)  # 调整为180天，解决横坐标过长问题
         start_date_str = start_date.strftime('%Y%m%d')
         end_date_str = end_date.strftime('%Y%m%d')
         

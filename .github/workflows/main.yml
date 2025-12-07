@@ -52,7 +52,9 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
             fonts-wqy-microhei \
             fonts-wqy-zenhei \
-            fonts-noto-cjk
+            fonts-noto-cjk \
+            fonts-arphic-ukai \
+            fonts-arphic-uming
           sudo fc-cache -fv
           
           # 验证字体安装

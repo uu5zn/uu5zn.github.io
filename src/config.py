@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import pandas as pd 
 
 # ==================== 路径配置 ====================
-# 输出目录
-OUTPUT_DIR = "output"
+# 输出目录 - 指向主目录下的output文件夹
+OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "output")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # 日志文件路径
@@ -48,8 +48,7 @@ SECTOR_ETFS = {
 # ==================== 字体配置 ====================
 # 中文字体候选列表
 FONT_CANDIDATES = [
-    'WenQuanYi Micro Hei', 'WenQuanYi Zen Hei', 
-    'Noto Sans CJK SC', 'Noto Sans SC', 'DejaVu Sans'
+    'SimHei', 'DejaVu Sans'
 ]
 
 # ==================== 可视化样式 ====================

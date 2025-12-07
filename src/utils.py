@@ -80,12 +80,7 @@ def setup_matplotlib_fonts():
     """设置matplotlib字体（增强版）"""
     # 优先使用的中文字体
     font_candidates = [
-        'WenQuanYi Micro Hei',  # 文泉驿微米黑
-        'WenQuanYi Zen Hei',    # 文泉驿正黑
-        'Noto Sans CJK SC',     # Noto Sans CJK
-        'Noto Sans SC',         # Noto Sans SC
-        'SimHei',               # 黑体 (Windows)
-        'Microsoft YaHei',      # 微软雅黑 (Windows)
+        'SimHei',               # 黑体
         'DejaVu Sans',          # 回退字体
     ]
     
@@ -150,7 +145,7 @@ def check_available_fonts():
     for f in chinese_fonts[:3]:
         print(f"  - {os.path.basename(f)}")
     
-    test_path = "output/font_test.png"
+    test_path = os.path.join(OUTPUT_DIR, "font_test.png")
     try:
         fig, ax = plt.subplots(figsize=(4, 2), facecolor='black')
         ax.text(0.5, 0.5, '中文测试 123 ABC', ha='center', va='center', 

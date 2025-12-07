@@ -1,207 +1,205 @@
 {
-  "start_time": "2025-12-06T17:48:12.227778",
-  "end_time": null,
+  "start_time": "2025-12-07T08:51:16.951870",
+  "end_time": "2025-12-07T08:52:36.824289",
   "tasks": [
     {
-      "task": "字体设置",
+      "timestamp": "2025-12-07T08:51:18.494081",
+      "category": "K线图",
       "status": "success",
-      "details": "使用字体: WenQuanYi Micro Hei",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:48:12.226540"
+      "message": "^TNX -> tenbond.png",
+      "chart_path": "tenbond.png"
     },
     {
-      "task": "字体检查",
+      "timestamp": "2025-12-07T08:51:18.793237",
+      "category": "K线图",
       "status": "success",
-      "details": "找到 7 个中文字体",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:48:12.227760"
+      "message": "^VIX -> vix.png",
+      "chart_path": "vix.png"
     },
     {
-      "task": "K线图",
+      "timestamp": "2025-12-07T08:51:19.086029",
+      "category": "K线图",
       "status": "success",
-      "details": "^TNX -> tenbond.png",
-      "chart_path": "tenbond.png",
-      "timestamp": "2025-12-06T17:48:12.598063"
+      "message": "^GSPC -> sp500.png",
+      "chart_path": "sp500.png"
     },
     {
-      "task": "K线图",
+      "timestamp": "2025-12-07T08:51:19.366423",
+      "category": "K线图",
       "status": "success",
-      "details": "^VIX -> vix.png",
-      "chart_path": "vix.png",
-      "timestamp": "2025-12-06T17:48:12.759412"
+      "message": "^IXIC -> nasdaq.png",
+      "chart_path": "nasdaq.png"
     },
     {
-      "task": "K线图",
+      "timestamp": "2025-12-07T08:51:19.643772",
+      "category": "K线图",
       "status": "success",
-      "details": "^GSPC -> sp500.png",
-      "chart_path": "sp500.png",
-      "timestamp": "2025-12-06T17:48:12.903263"
+      "message": "^RUT -> rs2000.png",
+      "chart_path": "rs2000.png"
     },
     {
-      "task": "K线图",
+      "timestamp": "2025-12-07T08:51:19.940570",
+      "category": "K线图",
       "status": "success",
-      "details": "^IXIC -> nasdaq.png",
-      "chart_path": "nasdaq.png",
-      "timestamp": "2025-12-06T17:48:13.087059"
+      "message": "VNQ -> vnq.png",
+      "chart_path": "vnq.png"
     },
     {
-      "task": "K线图",
+      "timestamp": "2025-12-07T08:51:20.228235",
+      "category": "K线图",
       "status": "success",
-      "details": "^RUT -> rs2000.png",
-      "chart_path": "rs2000.png",
-      "timestamp": "2025-12-06T17:48:13.233314"
+      "message": "^N225 -> nikkei225.png",
+      "chart_path": "nikkei225.png"
     },
     {
-      "task": "K线图",
+      "timestamp": "2025-12-07T08:51:20.505559",
+      "category": "K线图",
       "status": "success",
-      "details": "VNQ -> vnq.png",
-      "chart_path": "vnq.png",
-      "timestamp": "2025-12-06T17:48:13.428483"
+      "message": "^HSI -> hsi.png",
+      "chart_path": "hsi.png"
     },
     {
-      "task": "K线图",
+      "timestamp": "2025-12-07T08:51:20.809398",
+      "category": "K线图",
       "status": "success",
-      "details": "^N225 -> nikkei225.png",
-      "chart_path": "nikkei225.png",
-      "timestamp": "2025-12-06T17:48:13.648183"
+      "message": "CNY=X -> rmb.png",
+      "chart_path": "rmb.png"
     },
     {
-      "task": "K线图",
+      "timestamp": "2025-12-07T08:51:20.810398",
+      "category": "K线图生成",
       "status": "success",
-      "details": "^HSI -> hsi.png",
-      "chart_path": "hsi.png",
-      "timestamp": "2025-12-06T17:48:13.840083"
+      "message": "任务执行成功"
     },
     {
-      "task": "K线图",
+      "timestamp": "2025-12-07T08:51:22.639421",
+      "category": "绘图",
       "status": "success",
-      "details": "CNY=X -> rmb.png",
-      "chart_path": "rmb.png",
-      "timestamp": "2025-12-06T17:48:14.002614"
+      "message": "融资余额与MA10 -> rongziyue_ma.png",
+      "chart_path": "rongziyue_ma.png"
     },
     {
-      "task": "绘图",
+      "timestamp": "2025-12-07T08:51:22.639421",
+      "category": "融资余额分析",
       "status": "success",
-      "details": "融资余额与MA10 -> rongziyue_ma.png",
-      "chart_path": "rongziyue_ma.png",
-      "timestamp": "2025-12-06T17:48:16.403895"
+      "message": "任务执行成功"
     },
     {
-      "task": "绘图",
+      "timestamp": "2025-12-07T08:51:29.446772",
+      "category": "汇率数据",
       "status": "success",
-      "details": "融资余额与MA10 耗时 0.44s",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:48:16.403943"
+      "message": "获取 155 条记录"
     },
     {
-      "task": "融资余额",
-      "status": "success",
-      "details": "最新: 1246300.7M",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:48:16.405022"
-    },
-    {
-      "task": "汇率数据",
-      "status": "success",
-      "details": "获取 257 条记录",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:48:28.234630"
-    },
-    {
-      "task": "绘图",
-      "status": "success",
-      "details": "归一化指标对比 -> rongziyue_1.png",
-      "chart_path": "rongziyue_1.png",
-      "timestamp": "2025-12-06T17:48:42.385529"
-    },
-    {
-      "task": "绘图",
-      "status": "success",
-      "details": "归一化指标对比 耗时 0.45s",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:48:42.385576"
-    },
-    {
-      "task": "绘图",
-      "status": "success",
-      "details": "融资余额与ETF对比 -> rongziyue_2.png",
-      "chart_path": "rongziyue_2.png",
-      "timestamp": "2025-12-06T17:48:42.873189"
-    },
-    {
-      "task": "绘图",
-      "status": "success",
-      "details": "融资余额与ETF对比 耗时 0.49s",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:48:42.873237"
-    },
-    {
-      "task": "绘图",
-      "status": "success",
-      "details": "流动性指标 -> liudongxing.png",
-      "chart_path": "liudongxing.png",
-      "timestamp": "2025-12-06T17:48:43.308649"
-    },
-    {
-      "task": "绘图",
-      "status": "success",
-      "details": "流动性指标 耗时 0.43s",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:48:43.308695"
-    },
-    {
-      "task": "多指标对比",
-      "status": "success",
-      "details": "完成3张图表",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:48:43.309063"
-    },
-    {
-      "task": "股债利差",
+      "timestamp": "2025-12-07T08:51:47.269043",
+      "category": "数据获取",
       "status": "warning",
-      "details": "日期交集不足",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:49:01.090616"
+      "message": "fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt"
     },
     {
-      "task": "指数差异分析",
-      "status": "error",
-      "details": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:49:01.284724"
+      "timestamp": "2025-12-07T08:51:49.871954",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt"
     },
     {
-      "task": "风险环境分析",
-      "status": "error",
-      "details": "unsupported format string passed to Series.__format__",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:49:01.506320"
+      "timestamp": "2025-12-07T08:51:52.774390",
+      "category": "数据获取",
+      "status": "warning",
+      "message": "fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt"
     },
     {
-      "task": "中美联动分析",
-      "status": "error",
-      "details": "unsupported format string passed to Series.__format__",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:49:01.704389"
-    },
-    {
-      "task": "市场解读",
+      "timestamp": "2025-12-07T08:51:53.401654",
+      "category": "绘图",
       "status": "success",
-      "details": "完成全部维度分析",
-      "chart_path": null,
-      "timestamp": "2025-12-06T17:49:12.339680"
+      "message": "归一化指标对比 -> rongziyue_1.png",
+      "chart_path": "rongziyue_1.png"
+    },
+    {
+      "timestamp": "2025-12-07T08:51:53.939542",
+      "category": "绘图",
+      "status": "success",
+      "message": "融资余额与ETF对比 -> rongziyue_2.png",
+      "chart_path": "rongziyue_2.png"
+    },
+    {
+      "timestamp": "2025-12-07T08:51:54.553988",
+      "category": "绘图",
+      "status": "success",
+      "message": "流动性指标 -> liudongxing.png",
+      "chart_path": "liudongxing.png"
+    },
+    {
+      "timestamp": "2025-12-07T08:51:54.554988",
+      "category": "多指标对比",
+      "status": "success",
+      "message": "任务执行成功"
+    },
+    {
+      "timestamp": "2025-12-07T08:52:09.279354",
+      "category": "油金比分析",
+      "status": "warning",
+      "message": "执行失败"
+    },
+    {
+      "timestamp": "2025-12-07T08:52:11.130717",
+      "category": "绘图",
+      "status": "success",
+      "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
+      "chart_path": "hsi_rut_comparison.png"
+    },
+    {
+      "timestamp": "2025-12-07T08:52:11.130717",
+      "category": "相关性分析",
+      "status": "success",
+      "message": "任务执行成功"
+    },
+    {
+      "timestamp": "2025-12-07T08:52:18.264427",
+      "category": "股债利差",
+      "status": "warning",
+      "message": "日期交集不足"
+    },
+    {
+      "timestamp": "2025-12-07T08:52:18.265426",
+      "category": "股债利差",
+      "status": "warning",
+      "message": "执行失败"
+    },
+    {
+      "timestamp": "2025-12-07T08:52:20.187146",
+      "category": "行业轮动",
+      "status": "success",
+      "message": "任务执行成功"
+    },
+    {
+      "timestamp": "2025-12-07T08:52:20.915736",
+      "category": "风险环境分析",
+      "status": "error",
+      "message": "name 'sp500' is not defined"
     }
   ],
   "errors": [
-    "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
-    "unsupported format string passed to Series.__format__",
-    "unsupported format string passed to Series.__format__"
+    "风险环境分析: name 'sp500' is not defined"
   ],
   "warnings": [
-    "日期交集不足"
+    "数据获取: fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt",
+    "数据获取: fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt",
+    "数据获取: fund_etf_hist_em: HTTPSConnectionPool(host='push2his.eastmoney.com', port=443): Max retries exceeded with url: /api/qt",
+    "油金比分析: 执行失败",
+    "股债利差: 日期交集不足",
+    "股债利差: 执行失败"
   ],
   "charts": [],
   "insights": [
+    [
+      "指数差异",
+      "纳指+1.61% 标普+1.16% 罗素+0.32% 成长风格"
+    ],
+    [
+      "中美联动",
+      "恒指-0.29% 汇率-0.02% 🔓 弱联动"
+    ],
     [
       "流动性",
       "融资12463亿 Shibor1.52% 🟢 宽松环境"
@@ -209,5 +207,6 @@
   ],
   "market_signals": {
     "liquidity_env": "🟢 宽松环境"
-  }
+  },
+  "duration": "79.87秒"
 }
