@@ -9,7 +9,7 @@ import pandas as pd
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_DIR = os.path.join(BASE_DIR, 'output')
 os.makedirs(OUTPUT_DIR, exist_ok=True)
-
+print(f"输出目录: {OUTPUT_DIR}")  # 调试用
 # 日志文件路径
 LOG_PATH = os.path.join(OUTPUT_DIR, 'execution.log')
 
