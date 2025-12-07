@@ -109,28 +109,13 @@ jobs:
           echo "=== 文件数量 ==="
           find ${{ env.OUTPUT_PATH }}/ -type f | wc -l
 
-      #- name: 上传分析报告到Artifacts
-      #  uses: actions/upload-artifact@v4  # 🔧 升级到v4
-      #  with:
-       #   name: market-analysis-report-${{ github.run_number }}
-       #   path: |
-        #    output/
-        #    !output/*.log
-        #  retention-days: 30
-
-      # GitHub Pages 部署部分（二选一）
-
-      # 方案1: 使用官方 deploy-pages (推荐)
-      - name: 配置GitHub Pages
-        if: github.ref == 'refs/heads/main' && github.event_name == 'schedule'
-        uses: actions/configure-pages@v3
-
       - name: 部署到GitHub Pages
         if: github.ref == 'refs/heads/main' && github.event_name == 'schedule'
-        uses: actions/deploy-pages@v2
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          artifact_name: market-analysis-report-${{ github.run_number }}
-
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output  # 或 ./output，取决于您选择的方案
+          destination_dir: reports
 
 
       - name: 摘要输出
