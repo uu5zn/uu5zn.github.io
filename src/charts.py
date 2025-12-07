@@ -24,22 +24,19 @@ class ChartGenerator:
         """
         self.logger = logger_callback
         self.fetcher = data_fetcher
-        # 保存当前所有字体相关配置，避免被样式覆盖
-        current_font_config = {
-            'font.family': plt.rcParams.get('font.family', []),
-            'font.sans-serif': plt.rcParams.get('font.sans-serif', []),
-            'font.size': plt.rcParams.get('font.size', 9),
-            'axes.titlesize': plt.rcParams.get('axes.titlesize', 13),
-            'axes.labelsize': plt.rcParams.get('axes.labelsize', 10),
-            'legend.fontsize': plt.rcParams.get('legend.fontsize', 8),
-            'xtick.labelsize': plt.rcParams.get('xtick.labelsize', 8),
-            'ytick.labelsize': plt.rcParams.get('ytick.labelsize', 8),
-            'axes.unicode_minus': plt.rcParams.get('axes.unicode_minus', False)
+        
+        # 保存当前字体配置（这是由setup_matplotlib_fonts()设置的正确中文字体）
+        saved_font_config = {
+            'font.family': plt.rcParams['font.family'],
+            'font.sans-serif': plt.rcParams['font.sans-serif'],
+            'axes.unicode_minus': plt.rcParams['axes.unicode_minus'],
         }
+        
         # 应用样式配置
         plt.rcParams.update(MPL_STYLE)
-        # 恢复所有字体相关配置
-        plt.rcParams.update(current_font_config)
+        
+        # 恢复中文字体配置（覆盖样式中的字体设置）
+        plt.rcParams.update(saved_font_config)
     
     def plot_kline(self, ticker, filename, period="1mo"):
         """生成K线图"""
