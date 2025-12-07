@@ -108,7 +108,15 @@ jobs:
           
           echo "=== 检查根目录 output ==="
           ls -la ./src/output/ 2>/dev/null || echo "src output 不存在"
-
+          
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add .
+          git commit -m "Automated image update" || true
+          git push origin main || true
+          
       - name: 部署到GitHub Pages
         if: github.ref == 'refs/heads/main'  # 只判断分支，不限触发方式
         uses: peaceiris/actions-gh-pages@v4
