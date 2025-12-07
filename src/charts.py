@@ -65,11 +65,23 @@ class ChartGenerator:
             import yfinance as yf
             
             data = yf.Ticker(ticker).history(period=period)
+            
+            # 增强数据验证，确保数据有效且包含收盘价
             if not validate_data(data, 5):
                 self.logger('K线图', 'warning', f'{ticker} 数据不足')
+                print(f"⚠️  {ticker} 数据不足，跳过绘制")
+                return False
+            
+            # 检查是否包含有效收盘价数据
+            if data['Close'].isna().all():
+                self.logger('K线图', 'warning', f'{ticker} 无有效收盘价数据')
+                print(f"⚠️  {ticker} 无有效收盘价数据，跳过绘制")
                 return False
             
             filepath = os.path.join(OUTPUT_DIR, filename)
+            
+            # 确保输出目录存在
+            os.makedirs(os.path.dirname(filepath), exist_ok=True)
             
             # 获取当前可用的中文字体
             current_font = plt.rcParams['font.sans-serif'][0]
@@ -103,7 +115,8 @@ class ChartGenerator:
             
             mpf.plot(
                 data, type='candle', figscale=0.35, volume=False,
-                savefig=filepath, datetime_format='%m-%d', style=style,
+                savefig=dict(fname=filepath, dpi=150, bbox_inches='tight'),
+                datetime_format='%m-%d', style=style,
                 title=ticker, tight_layout=True,
                 warn_too_much_data=1000
             )
@@ -111,9 +124,16 @@ class ChartGenerator:
             # 恢复原始rcParams
             plt.rcParams.update(original_rc)
             
-            print(f"✅ K线图: {filename} (路径: {filepath})")
-            self.logger('K线图', 'success', f'{ticker} -> {filename}', chart_path=filename)
-            return True
+            # 验证文件是否生成成功
+            if os.path.exists(filepath):
+                file_size = os.path.getsize(filepath)
+                print(f"✅ K线图: {filename} (路径: {filepath}, 大小: {file_size} 字节)")
+                self.logger('K线图', 'success', f'{ticker} -> {filename}', chart_path=filename)
+                return True
+            else:
+                print(f"❌ K线图: {filename} 生成失败，文件不存在")
+                self.logger('K线图', 'error', f'{ticker}: 生成失败，文件不存在')
+                return False
             
         except Exception as e:
             print(f"❌ K线图失败 {ticker}: {e}")

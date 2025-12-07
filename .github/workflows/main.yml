@@ -96,6 +96,20 @@ jobs:
         working-directory: ./src
         run: python main.py
 
+      - name: 检查output目录内容
+        run: |
+          echo "=== 检查output目录内容 ==="
+          echo "当前工作目录: $(pwd)"
+          echo "output目录是否存在: $(ls -la | grep output || echo '不存在')"
+          if [ -d "output" ]; then
+            echo "output目录内容:"
+            ls -la output/
+            echo "output目录文件数量: $(ls -la output/ | wc -l)"
+          else
+            echo "output目录不存在，检查src/output目录:"
+            ls -la src/output/ 2>/dev/null || echo "src/output目录也不存在"
+          fi
+
       - name: 上传分析报告到Artifacts
         uses: actions/upload-artifact@v4  # 🔧 升级到v4
         with:
