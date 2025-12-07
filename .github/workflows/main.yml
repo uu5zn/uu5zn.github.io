@@ -60,6 +60,18 @@ jobs:
           # 验证字体安装
           echo "已安装的中文字体:"
           fc-list :lang=zh | head -3
+          
+      - name: 下载SimHei字体文件
+        run: |
+          wget -O simhei.ttf "https://github.com/StellarCN/scp_zh/raw/master/fonts/SimHei.ttf"
+          # 复制字体到matplotlib字体目录
+          mkdir -p ~/.local/share/fonts
+          cp simhei.ttf ~/.local/share/fonts/
+          # 刷新字体缓存
+          fc-cache -fv
+          # 验证SimHei字体是否可用
+          echo "SimHei字体状态:"
+          fc-list | grep -i simhei || echo "SimHei字体未安装成功"
 
       - name: 安装Python依赖
         run: |

@@ -46,12 +46,13 @@ SECTOR_ETFS = {
 }
 
 # ==================== 字体配置 ====================
-# 中文字体候选列表，调整顺序优先使用CI环境已安装的字体
+# 中文字体候选列表
 FONT_CANDIDATES = [
-    'WenQuanYi Micro Hei',  # CI环境默认中文字体，优先使用
+    'SimHei',               # 黑体（Windows默认）
+    'WenQuanYi Micro Hei',  # CI环境可用字体
     'WenQuanYi Zen Hei',    # CI环境可用字体
     'Noto Sans CJK SC',     # CI环境可用字体
-    'SimHei',               # 黑体（Windows默认）
+    'DejaVu Sans',          # 回退字体
 ]
 
 # ==================== 可视化样式 ====================

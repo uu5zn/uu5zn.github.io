@@ -24,35 +24,22 @@ class ChartGenerator:
         """
         self.logger = logger_callback
         self.fetcher = data_fetcher
-        
-        # 获取当前字体配置，确保使用已设置的中文字体
-        # 注意：如果第一个元素是路径，使用实际字体名称
-        font_list = plt.rcParams.get('font.sans-serif', ['WenQuanYi Micro Hei'])
-        self.current_font = font_list[0]
-        
-        # 如果第一个元素是路径（包含/或\），则使用实际字体名称
-        if '/' in self.current_font or '\\' in self.current_font:
-            # 使用GitHub Actions中可靠的中文字体名称
-            self.current_font = 'WenQuanYi Micro Hei'
-        
-        # 确保字体配置正确
-        plt.rcParams.update({
-            'font.family': 'sans-serif',
-            'font.sans-serif': [self.current_font] + font_list,  # 保留原始字体列表作为回退
-            'axes.unicode_minus': False,
-        })
-        
-        # 应用样式配置（不覆盖字体设置）
-        style_config = MPL_STYLE.copy()
-        # 移除可能冲突的字体配置
-        font_keys = ['font.family', 'font.sans-serif', 'axes.unicode_minus']
-        for key in font_keys:
-            if key in style_config:
-                del style_config[key]
-        plt.rcParams.update(style_config)
-        
-        # 保存字体属性，用于后续显式设置
-        self.font_props = plt.rcParams.copy()
+        # 保存当前所有字体相关配置，避免被样式覆盖
+        current_font_config = {
+            'font.family': plt.rcParams.get('font.family', []),
+            'font.sans-serif': plt.rcParams.get('font.sans-serif', []),
+            'font.size': plt.rcParams.get('font.size', 9),
+            'axes.titlesize': plt.rcParams.get('axes.titlesize', 13),
+            'axes.labelsize': plt.rcParams.get('axes.labelsize', 10),
+            'legend.fontsize': plt.rcParams.get('legend.fontsize', 8),
+            'xtick.labelsize': plt.rcParams.get('xtick.labelsize', 8),
+            'ytick.labelsize': plt.rcParams.get('ytick.labelsize', 8),
+            'axes.unicode_minus': plt.rcParams.get('axes.unicode_minus', False)
+        }
+        # 应用样式配置
+        plt.rcParams.update(MPL_STYLE)
+        # 恢复所有字体相关配置
+        plt.rcParams.update(current_font_config)
     
     def plot_kline(self, ticker, filename, period="1mo"):
         """生成K线图"""
@@ -102,73 +89,39 @@ class ChartGenerator:
                 self.logger('绘图', 'warning', f'{title} 无有效数据')
                 return False
             
-            # 确保使用当前字体
-            current_font = self.current_font
-            
-            # 创建全局字体属性对象，优先使用字体路径
-            font_list = plt.rcParams.get('font.sans-serif', [])
-            font_path = None
-            # 查找字体路径（第一个元素可能是路径）
-            for font_item in font_list:
-                if '/' in font_item or '\\' in font_item:
-                    font_path = font_item
-                    break
-            
-            # 使用fontproperties而不是fontname，更可靠
-            if font_path:
-                font_props = plt.font_manager.FontProperties(fname=font_path)
-            else:
-                font_props = plt.font_manager.FontProperties(family=current_font)
-            
             fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
             
-            # 设置标题 - 使用fontproperties确保中文显示
-            ax.set_title(title, fontsize=13, fontweight='heavy', pad=8, 
-                        fontproperties=font_props)
+            # 设置标题和标签字体
+            title_font = plt.rcParams['font.sans-serif'][0]
+            ax.set_title(title, fontsize=13, fontweight='heavy', pad=8, fontname=title_font)
             
-            # 绘制数据
             for i, (key, values) in enumerate(valid_data.items()):
                 linewidth = linewidths[i] if linewidths else 1.5
                 ax.plot(values.index, values, color=colors[i], 
                        label=labels[i], linewidth=linewidth)
             
-            # 设置图例 - 显式设置字体
+            # 设置图例字体
             legend = ax.legend(loc='upper left', fontsize=8, framealpha=0.9)
             for text in legend.get_texts():
-                text.set_fontproperties(font_props)
+                text.set_fontname(title_font)
             
             ax.grid(True, alpha=0.3, color='#666666')
             
-            # 设置坐标轴标签 - 使用fontproperties
-            ax.set_xlabel(ax.get_xlabel(), fontproperties=font_props, color='white')
-            ax.set_ylabel(ax.get_ylabel(), fontproperties=font_props, color='white')
+            # 设置坐标轴标签字体
+            ax.set_xlabel(ax.get_xlabel(), fontname=title_font)
+            ax.set_ylabel(ax.get_ylabel(), fontname=title_font)
             
-            # 设置刻度标签 - 使用fontproperties
+            # 设置刻度标签字体
             for label in ax.get_xticklabels():
-                label.set_fontproperties(font_props)
+                label.set_fontname(title_font)
             for label in ax.get_yticklabels():
-                label.set_fontproperties(font_props)
+                label.set_fontname(title_font)
             
             plt.gcf().autofmt_xdate(rotation=45, ha='right')
-            
-            # 确保所有文本元素都已应用字体后再调用tight_layout
-            # 1. 强制渲染所有文本
-            fig.canvas.draw()
-            # 2. 再次检查并设置所有文本元素的字体
-            for text in ax.texts:
-                text.set_fontproperties(font_props)
-            # 3. 确保图例文本也已设置
-            for text in legend.get_texts():
-                text.set_fontproperties(font_props)
-            # 4. 再次渲染
-            fig.canvas.draw()
-            
-            # 现在调用tight_layout
             plt.tight_layout(pad=0.8, h_pad=0.8, w_pad=0.8)
             
             if save_path:
                 filepath = os.path.join(OUTPUT_DIR, save_path)
-                # 保存时再次确保字体设置正确
                 plt.savefig(filepath, bbox_inches='tight', pad_inches=0.1, 
                            facecolor='black', dpi=150)
                 print(f"✅ 图表: {save_path}")
@@ -195,43 +148,31 @@ class ChartGenerator:
             fig, ax = plt.subplots(figsize=(16, 10), facecolor='black')
             bars = ax.barh(range(len(sectors)), rets, color=colors, alpha=0.8)
             
-            # 创建字体属性对象，优先使用字体路径
-            font_list = plt.rcParams.get('font.sans-serif', [])
-            font_path = None
-            for font_item in font_list:
-                if '/' in font_item or '\\' in font_item:
-                    font_path = font_item
-                    break
-            
-            if font_path:
-                font_props = plt.font_manager.FontProperties(fname=font_path)
-            else:
-                font_props = plt.font_manager.FontProperties(family=self.current_font)
+            # 设置字体
+            title_font = plt.rcParams['font.sans-serif'][0]
             
             ax.set_yticks(range(len(sectors)))
             # 直接设置yticklabels时指定字体
-            ax.set_yticklabels(sectors, fontproperties=font_props)
-            ax.set_xlabel('收益率 (%)', color='white', fontproperties=font_props)
-            ax.set_title('行业ETF近1月表现', fontsize=14, fontweight='heavy', pad=12, fontproperties=font_props)
+            ax.set_yticklabels(sectors, fontname=title_font)
+            ax.set_xlabel('收益率 (%)', color='white', fontname=title_font)
+            ax.set_title('行业ETF近1月表现', fontsize=14, fontweight='heavy', pad=12, fontname=title_font)
             ax.grid(axis='x', alpha=0.3, color='#666666')
             
             # 设置坐标轴标签字体
-            ax.set_xlabel(ax.get_xlabel(), fontproperties=font_props)
-            ax.set_ylabel(ax.get_ylabel(), fontproperties=font_props)
+            ax.set_xlabel(ax.get_xlabel(), fontname=title_font)
+            ax.set_ylabel(ax.get_ylabel(), fontname=title_font)
             
             # 设置刻度标签字体（双重保险）
             for label in ax.get_xticklabels():
-                label.set_fontproperties(font_props)
+                label.set_fontname(title_font)
             for label in ax.get_yticklabels():
-                label.set_fontproperties(font_props)
+                label.set_fontname(title_font)
             
             # 添加数值标签
             for i, ret in enumerate(rets):
                 ax.text(ret + (0.2 if ret > 0 else -0.2), i, f'{ret:+.2f}%', 
-                       va='center', ha='left' if ret > 0 else 'right', color='white', fontproperties=font_props)
+                       va='center', ha='left' if ret > 0 else 'right', color='white', fontname=title_font)
             
-            # 确保所有文本元素都已应用字体后再调用tight_layout
-            fig.canvas.draw()
             plt.tight_layout(pad=0.8)
             
             filepath = os.path.join(OUTPUT_DIR, 'sector_rotation.png')
@@ -275,51 +216,38 @@ class ChartGenerator:
             fig, ax1 = plt.subplots(figsize=(20, 12), facecolor='black')
             ax2 = ax1.twinx()
             
-            # 创建字体属性对象，优先使用字体路径
-            font_list = plt.rcParams.get('font.sans-serif', [])
-            font_path = None
-            for font_item in font_list:
-                if '/' in font_item or '\\' in font_item:
-                    font_path = font_item
-                    break
-            
-            if font_path:
-                font_props = plt.font_manager.FontProperties(fname=font_path)
-            else:
-                font_props = plt.font_manager.FontProperties(family=self.current_font)
+            # 设置字体
+            title_font = plt.rcParams['font.sans-serif'][0]
             
             line1 = ax1.plot(oil_gold_ratio, 'r-', label='Oil/Gold Ratio', linewidth=1.5)
-            ax1.set_ylabel('Oil/Gold Ratio', color='r', fontsize=10, fontproperties=font_props)
+            ax1.set_ylabel('Oil/Gold Ratio', color='r', fontsize=10, fontname=title_font)
             
             line2 = ax2.plot(us_bond, 'b-', label='US 10Y Yield', linewidth=1.5)
-            ax2.set_ylabel('US 10Y Yield (%)', color='b', fontsize=10, fontproperties=font_props)
+            ax2.set_ylabel('US 10Y Yield (%)', color='b', fontsize=10, fontname=title_font)
             
             plt.title('Oil/Gold Ratio vs US 10Y Treasury Yield Trend', 
-                     fontsize=13, fontweight='heavy', pad=8, fontproperties=font_props)
+                     fontsize=13, fontweight='heavy', pad=8, fontname=title_font)
             
             ax1.grid(True, alpha=0.3, color='#666666')
             lines = line1 + line2
             labels = [l.get_label() for l in lines]
             legend = ax1.legend(lines, labels, loc='upper left', fontsize=8)
             for text in legend.get_texts():
-                text.set_fontproperties(font_props)
+                text.set_fontname(title_font)
             
             # 设置坐标轴标签字体
-            ax1.set_xlabel(ax1.get_xlabel(), fontproperties=font_props)
-            ax2.set_xlabel(ax2.get_xlabel(), fontproperties=font_props)
+            ax1.set_xlabel(ax1.get_xlabel(), fontname=title_font)
+            ax2.set_xlabel(ax2.get_xlabel(), fontname=title_font)
             
             # 设置刻度标签字体
             for label in ax1.get_xticklabels():
-                label.set_fontproperties(font_props)
+                label.set_fontname(title_font)
             for label in ax1.get_yticklabels():
-                label.set_fontproperties(font_props)
+                label.set_fontname(title_font)
             for label in ax2.get_yticklabels():
-                label.set_fontproperties(font_props)
+                label.set_fontname(title_font)
             
             plt.gcf().autofmt_xdate(rotation=45, ha='right')
-            
-            # 确保所有文本元素都已应用字体后再调用tight_layout
-            fig.canvas.draw()
             plt.tight_layout(pad=0.8)
             
             filepath = os.path.join(OUTPUT_DIR, 'jyb_gz.png')
@@ -375,23 +303,13 @@ class ChartGenerator:
             if not validate_data(spread, 50):
                 return False
             
-            # 创建字体属性对象，优先使用字体路径
-            font_list = plt.rcParams.get('font.sans-serif', [])
-            font_path = None
-            for font_item in font_list:
-                if '/' in font_item or '\\' in font_item:
-                    font_path = font_item
-                    break
-            
-            if font_path:
-                font_props = plt.font_manager.FontProperties(fname=font_path)
-            else:
-                font_props = plt.font_manager.FontProperties(family=self.current_font)
+            # 设置字体
+            title_font = plt.rcParams['font.sans-serif'][0]
             
             # 绘图
             fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
             spread.plot(ax=ax, color='white', linewidth=1.5)
-            ax.set_title('股债利差', fontsize=13, fontweight='heavy', pad=8, fontproperties=font_props)
+            ax.set_title('股债利差', fontsize=13, fontweight='heavy', pad=8, fontname=title_font)
             
             # 参考线
             for y, color, label in [
@@ -402,24 +320,21 @@ class ChartGenerator:
             
             legend = ax.legend(fontsize=8, loc='upper left')
             for text in legend.get_texts():
-                text.set_fontproperties(font_props)
+                text.set_fontname(title_font)
             
             ax.grid(True, alpha=0.3, color='#666666')
             
             # 设置坐标轴标签字体
-            ax.set_xlabel(ax.get_xlabel(), fontproperties=font_props)
-            ax.set_ylabel(ax.get_ylabel(), fontproperties=font_props)
+            ax.set_xlabel(ax.get_xlabel(), fontname=title_font)
+            ax.set_ylabel(ax.get_ylabel(), fontname=title_font)
             
             # 设置刻度标签字体
             for label in ax.get_xticklabels():
-                label.set_fontproperties(font_props)
+                label.set_fontname(title_font)
             for label in ax.get_yticklabels():
-                label.set_fontproperties(font_props)
+                label.set_fontname(title_font)
             
             plt.gcf().autofmt_xdate(rotation=45, ha='right')
-            
-            # 确保所有文本元素都已应用字体后再调用tight_layout
-            fig.canvas.draw()
             plt.tight_layout(pad=0.8)
             
             filepath = os.path.join(OUTPUT_DIR, 'guzhaixicha.png')
