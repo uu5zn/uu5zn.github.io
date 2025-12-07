@@ -422,7 +422,7 @@ class MarketAnalyzer:
             print(f"  Shibor 1M: {current_shibor:.2f}%")
             print(f"    └─日变化: {shibor_change:+.2f}%")
             
-            if validate_data(bond_data) and 'spread' in bond_data.columns:
+            if validate_data(bond_data) :
                 current_spread = bond_data['spread'].iloc[-1]
                 spread_change_5d = bond_data['spread'].diff(5).iloc[-1]
                 print(f"  中美利差: {current_spread:.2f}bp (5日变化: {spread_change_5d:+.0f}bp)")
@@ -462,7 +462,7 @@ class MarketAnalyzer:
             print(f"💡 解读: {shibor_desc}")
             
             # 股债性价比
-            if validate_data(bond_data) and 'spread' in bond_data.columns:
+            if validate_data(bond_data) :
                 if current_spread > 50:
                     spread_signal = "🔼 利差走阔"
                     spread_desc = "中国相对吸引力下降，资本外流压力"
@@ -484,7 +484,7 @@ class MarketAnalyzer:
             if current_shibor < 2.5: liquidity_score += 1
             elif current_shibor > 3.0: liquidity_score -= 1
             
-            if validate_data(bond_data) and 'spread' in bond_data.columns:
+            if validate_data(bond_data) :
                 if bond_data['spread'].iloc[-1] > 50: liquidity_score -= 1
             
             print(f"\n💧 流动性评分: {liquidity_score}/2")
