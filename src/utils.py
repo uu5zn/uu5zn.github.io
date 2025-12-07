@@ -75,21 +75,32 @@ from contextlib import redirect_stdout
 from io import StringIO
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
+from config import FONT_CANDIDATES
 
 def setup_matplotlib_fonts():
     """设置matplotlib字体（增强版）"""
-    # 优先使用的中文字体
-    font_candidates = [
-        'SimHei',               # 黑体
-        'DejaVu Sans',          # 回退字体
-    ]
+    # 使用config.py中定义的字体候选列表
+    font_candidates = FONT_CANDIDATES
     
     available_font = None
     
-    # 检查并验证每个字体
+    # 检查系统中所有可用字体，优先选择中文字体
+    system_fonts = fm.findSystemFonts()
+    system_font_names = [fm.FontProperties(fname=f).get_name() for f in system_fonts]
+    
+    # 优先使用系统中实际可用的中文字体
     for font in font_candidates:
         try:
             # 检查字体是否存在于系统中
+            if font in system_font_names:
+                # 测试能否创建文本
+                fig = plt.figure(figsize=(1, 1))
+                plt.text(0.5, 0.5, '测试中文', fontfamily=font)
+                plt.close(fig)
+                available_font = font
+                print(f"✅ 使用字体: {font}")
+                break
+            # 尝试直接使用字体名称（不依赖系统字体名称列表）
             font_files = fm.findfont(font, fallback_to_default=False)
             if font_files:
                 # 测试能否创建文本

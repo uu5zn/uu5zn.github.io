@@ -48,7 +48,11 @@ SECTOR_ETFS = {
 # ==================== 字体配置 ====================
 # 中文字体候选列表
 FONT_CANDIDATES = [
-    'SimHei', 'DejaVu Sans'
+    'SimHei',               # 黑体（Windows默认）
+    'WenQuanYi Micro Hei',  # CI环境可用字体
+    'WenQuanYi Zen Hei',    # CI环境可用字体
+    'Noto Sans CJK SC',     # CI环境可用字体
+    'DejaVu Sans',          # 回退字体
 ]
 
 # ==================== 可视化样式 ====================
