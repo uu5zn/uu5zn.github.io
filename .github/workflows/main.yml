@@ -76,7 +76,7 @@ jobs:
       - name: 提交生成的文件到 main 分支
         run: |
           # 只添加 output 目录
-          git add output/
+          git add -f output/
           
           # 检查是否有变更
           if git diff --staged --quiet; then
