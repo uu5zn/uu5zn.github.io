@@ -32,14 +32,32 @@ class ChartGenerator:
             'axes.unicode_minus': plt.rcParams['axes.unicode_minus'],
         }
         
+        print(f"📊 ChartGenerator初始化 - 接收的字体配置:")
+        print(f"  - font.sans-serif: {current_font_config['font.sans-serif']}")
+        print(f"  - font.family: {current_font_config['font.family']}")
+        
         # 应用样式配置（不含字体配置）
         # 创建一个不含字体配置的样式副本
         style_without_font = {k: v for k, v in MPL_STYLE.items() 
                             if not k.startswith('font.') and k != 'axes.unicode_minus'}
         plt.rcParams.update(style_without_font)
         
-        # 恢复字体配置
+        # 恢复字体配置（确保字体设置优先级最高）
         plt.rcParams.update(current_font_config)
+        
+        # 额外强制设置一次，确保字体配置持久化
+        plt.rcParams.update({
+            'font.family': 'sans-serif',
+            'font.sans-serif': plt.rcParams['font.sans-serif'],
+            'axes.unicode_minus': False
+        })
+        
+        # 显式再设置一次，确保不会被覆盖
+        plt.rcParams['font.sans-serif'] = plt.rcParams['font.sans-serif']
+        
+        print(f"📊 ChartGenerator初始化 - 最终字体配置:")
+        print(f"  - font.sans-serif: {plt.rcParams['font.sans-serif']}")
+        print(f"  - font.family: {plt.rcParams['font.family']}")
     
     def plot_kline(self, ticker, filename, period="1mo"):
         """生成K线图"""
@@ -53,16 +71,34 @@ class ChartGenerator:
             
             filepath = os.path.join(OUTPUT_DIR, filename)
             
-            # 在 rc 参数中设置字体，而不是使用 title_fontdict
+            # 获取当前可用的中文字体
+            current_font = plt.rcParams['font.sans-serif'][0]
+            print(f"📊 绘制K线图 - 使用字体: {current_font}")
+            
+            # 为mplfinance创建样式，确保使用正确的中文字体
+            # 首先保存当前的rcParams
+            original_rc = plt.rcParams.copy()
+            
+            # 强制设置mplfinance使用正确的中文字体
+            mpf_rc = {
+                'font.size': 8,
+                'font.family': 'sans-serif',
+                'font.sans-serif': [current_font],
+                'axes.unicode_minus': False,
+                'figure.facecolor': 'black',
+                'axes.facecolor': 'black',
+                'savefig.facecolor': 'black',
+            }
+            
+            # 更新全局rcParams以确保mplfinance使用正确字体
+            plt.rcParams.update(mpf_rc)
+            
             style = mpf.make_mpf_style(
                 base_mpf_style='charles',
                 marketcolors=mpf.make_marketcolors(up='#e74c3c', down='#2ecc71', edge='inherit'),
                 facecolor='black', edgecolor='white', figcolor='black',
                 gridcolor='#666666', gridstyle='--',
-                rc={
-                    'font.size': 8,
-                    'font.family': plt.rcParams['font.sans-serif'][0]  # 设置中文字体
-                }
+                rc=mpf_rc
             )
             
             mpf.plot(
@@ -71,6 +107,9 @@ class ChartGenerator:
                 title=ticker, tight_layout=True,
                 warn_too_much_data=1000
             )
+            
+            # 恢复原始rcParams
+            plt.rcParams.update(original_rc)
             
             print(f"✅ K线图: {filename}")
             self.logger('K线图', 'success', f'{ticker} -> {filename}', chart_path=filename)
@@ -89,10 +128,14 @@ class ChartGenerator:
                 self.logger('绘图', 'warning', f'{title} 无有效数据')
                 return False
             
+            # 打印当前字体配置，用于调试
+            current_font = plt.rcParams['font.sans-serif'][0]
+            print(f"📊 绘制折线图 - {title} 使用字体: {current_font}")
+            
             fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
             
             # 设置标题和标签字体
-            title_font = plt.rcParams['font.sans-serif'][0]
+            title_font = current_font
             ax.set_title(title, fontsize=13, fontweight='heavy', pad=8, fontname=title_font)
             
             for i, (key, values) in enumerate(valid_data.items()):

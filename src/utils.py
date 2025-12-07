@@ -78,24 +78,42 @@ import matplotlib.font_manager as fm
 from config import FONT_CANDIDATES
 
 def setup_matplotlib_fonts():
-    """设置matplotlib字体（增强版）"""
+    """设置matplotlib字体（增强版，确保配置持久化）"""
     # 使用config.py中定义的字体候选列表
     font_candidates = FONT_CANDIDATES
     
     available_font = None
     
-    # 方案二：优先尝试直接加载下载的SimHei字体文件
-    simhei_path = os.path.join(os.path.dirname(__file__), '../simhei.ttf')
-    if os.path.exists(simhei_path):
+    # 1. 首先检查simhei.ttf文件是否存在（GitHub Actions会下载到项目根目录）
+    # 检查多个可能的位置
+    possible_font_paths = [
+        os.path.join(os.path.dirname(__file__), '../simhei.ttf'),  # 项目根目录
+        os.path.join(os.path.expanduser('~'), '.local/share/fonts/simhei.ttf'),  # 用户字体目录
+        'simhei.ttf'  # 当前目录
+    ]
+    
+    simhei_path = None
+    for path in possible_font_paths:
+        if os.path.exists(path):
+            simhei_path = path
+            break
+    
+    if simhei_path:
         try:
-            # 直接加载字体文件
+            # 直接加载字体文件到fontManager
             fm.fontManager.addfont(simhei_path)
+            # 立即强制设置字体配置
+            plt.rcParams['font.sans-serif'] = ['SimHei']
+            plt.rcParams['font.family'] = 'sans-serif'
+            plt.rcParams['axes.unicode_minus'] = False
+            
             # 测试能否创建文本
             fig = plt.figure(figsize=(1, 1))
             plt.text(0.5, 0.5, '测试中文', fontfamily='SimHei')
             plt.close(fig)
             available_font = 'SimHei'
             print(f"✅ 直接加载字体文件: simhei.ttf")
+            print(f"📝 当前font.sans-serif: {plt.rcParams['font.sans-serif']}")
         except Exception as e:
             print(f"⚠️  加载simhei.ttf失败: {e}")
     else:
@@ -103,64 +121,52 @@ def setup_matplotlib_fonts():
     
     # 如果直接加载失败，再尝试系统字体
     if not available_font:
-        # 检查系统中所有可用字体，优先选择中文字体
-        system_fonts = fm.findSystemFonts()
-        system_font_names = []
-        for f in system_fonts:
-            try:
-                font_name = fm.FontProperties(fname=f).get_name()
-                system_font_names.append(font_name)
-            except Exception:
-                # 忽略无法加载的字体文件
-                continue
+        print(f"🔍 尝试从系统字体中查找: {font_candidates}")
         
-        # 优先使用系统中实际可用的中文字体
+        # 遍历字体候选列表，尝试找到可用的中文字体
         for font in font_candidates:
             try:
-                # 检查字体是否存在于系统中
-                if font in system_font_names:
-                    # 测试能否创建文本
-                    fig = plt.figure(figsize=(1, 1))
-                    plt.text(0.5, 0.5, '测试中文', fontfamily=font)
-                    plt.close(fig)
-                    available_font = font
-                    print(f"✅ 使用系统字体: {font}")
-                    break
-                # 尝试直接使用字体名称（不依赖系统字体名称列表）
-                font_files = fm.findfont(font, fallback_to_default=False)
-                if font_files:
-                    # 测试能否创建文本
-                    fig = plt.figure(figsize=(1, 1))
-                    plt.text(0.5, 0.5, '测试中文', fontfamily=font)
-                    plt.close(fig)
-                    available_font = font
-                    print(f"✅ 使用系统字体: {font}")
-                    break
-            except:
+                # 立即设置字体配置
+                plt.rcParams['font.sans-serif'] = [font]
+                plt.rcParams['font.family'] = 'sans-serif'
+                plt.rcParams['axes.unicode_minus'] = False
+                
+                # 测试能否创建文本
+                fig = plt.figure(figsize=(1, 1))
+                plt.text(0.5, 0.5, '测试中文', fontfamily=font)
+                plt.close(fig)
+                available_font = font
+                print(f"✅ 使用系统字体: {font}")
+                print(f"📝 当前font.sans-serif: {plt.rcParams['font.sans-serif']}")
+                break
+            except Exception as e:
+                print(f"⚠️  测试字体 {font} 失败: {e}")
                 continue
     
     if not available_font:
         print("⚠️  未找到中文字体，使用默认字体")
         available_font = 'sans-serif'
+        plt.rcParams['font.sans-serif'] = [available_font]
     
-    # 强制设置所有字体相关配置
+    # 2. 强制设置所有字体相关配置，确保它们不会被覆盖
     plt.rcParams.update({
         'font.family': 'sans-serif',
         'font.sans-serif': [available_font],
-        'axes.unicode_minus': False,  # 正确显示负号
-        'font.size': 9,
-        'axes.titlesize': 13,
-        'axes.labelsize': 10,
-        'xtick.labelsize': 8,
-        'ytick.labelsize': 8,
-        'legend.fontsize': 8,
-        'figure.titlesize': 14,
-        # 确保中文文件名也能正确处理
-        'savefig.dpi': 150,
-        'savefig.transparent': False,
+        'axes.unicode_minus': False
     })
     
-    # 验证字体确实被使用
+    # 额外强制设置一次，确保字体配置不会被覆盖
+    plt.rcParams['font.sans-serif'] = [available_font]
+    
+    # 3. 额外设置其他字体相关参数
+    plt.rc('font', size=9)
+    plt.rc('axes', titlesize=13, labelsize=10)
+    plt.rc('xtick', labelsize=8)
+    plt.rc('ytick', labelsize=8)
+    plt.rc('legend', fontsize=8)
+    plt.rc('figure', titlesize=14)
+    
+    # 4. 验证字体确实被使用
     test_text = "中文测试 123 ABC"
     fig, ax = plt.subplots(figsize=(3, 1), facecolor='black')
     text_obj = ax.text(0.5, 0.5, test_text, ha='center', va='center', fontsize=12, color='white')
@@ -169,6 +175,8 @@ def setup_matplotlib_fonts():
     # 检查实际使用的字体
     used_font = text_obj.get_fontname()
     print(f"✅ 实际使用字体: {used_font}")
+    print(f"📝 最终font.sans-serif: {plt.rcParams['font.sans-serif']}")
+    print(f"📝 最终font.family: {plt.rcParams['font.family']}")
     
     plt.close(fig)
     

@@ -64,14 +64,21 @@ jobs:
       - name: 下载SimHei字体文件
         run: |
           wget -O simhei.ttf "https://github.com/StellarCN/scp_zh/raw/master/fonts/SimHei.ttf"
-          # 复制字体到matplotlib字体目录
+          # 复制字体到多个位置，确保脚本能找到
           mkdir -p ~/.local/share/fonts
           cp simhei.ttf ~/.local/share/fonts/
+          # 复制到src目录，确保运行时能找到
+          cp simhei.ttf ./src/
           # 刷新字体缓存
           fc-cache -fv
           # 验证SimHei字体是否可用
           echo "SimHei字体状态:"
           fc-list | grep -i simhei || echo "SimHei字体未安装成功"
+          # 列出所有字体位置，用于调试
+          echo "字体文件位置:"
+          ls -la simhei.ttf || echo "根目录无simhei.ttf"
+          ls -la ./src/simhei.ttf || echo "src目录无simhei.ttf"
+          ls -la ~/.local/share/fonts/simhei.ttf || echo "用户字体目录无simhei.ttf"
 
       - name: 安装Python依赖
         run: |
@@ -81,6 +88,10 @@ jobs:
       - name: 创建输出目录
         run: mkdir -p output
 
+      - name: 运行字体修复测试
+        working-directory: ./src
+        run: python test_github_actions_font.py
+      
       - name: 运行市场分析
         working-directory: ./src
         run: python main.py
