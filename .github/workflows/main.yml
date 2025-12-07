@@ -110,11 +110,11 @@ jobs:
           find ${{ env.OUTPUT_PATH }}/ -type f | wc -l
 
       - name: 部署到GitHub Pages
-        if: github.ref == 'refs/heads/main' && github.event_name == 'schedule'
+        if: github.ref == 'refs/heads/main'  # 只判断分支，不限触发方式
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./output  # 或 ./output，取决于您选择的方案
+          publish_dir: ./output  # 根据之前讨论的目录调整
           destination_dir: reports
 
 
