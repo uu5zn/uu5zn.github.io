@@ -26,17 +26,20 @@ class ChartGenerator:
         self.fetcher = data_fetcher
         
         # 保存当前字体配置（这是由setup_matplotlib_fonts()设置的正确中文字体）
-        saved_font_config = {
+        current_font_config = {
             'font.family': plt.rcParams['font.family'],
             'font.sans-serif': plt.rcParams['font.sans-serif'],
             'axes.unicode_minus': plt.rcParams['axes.unicode_minus'],
         }
         
-        # 应用样式配置
-        plt.rcParams.update(MPL_STYLE)
+        # 应用样式配置（不含字体配置）
+        # 创建一个不含字体配置的样式副本
+        style_without_font = {k: v for k, v in MPL_STYLE.items() 
+                            if not k.startswith('font.') and k != 'axes.unicode_minus'}
+        plt.rcParams.update(style_without_font)
         
-        # 恢复中文字体配置（覆盖样式中的字体设置）
-        plt.rcParams.update(saved_font_config)
+        # 恢复字体配置
+        plt.rcParams.update(current_font_config)
     
     def plot_kline(self, ticker, filename, period="1mo"):
         """生成K线图"""
