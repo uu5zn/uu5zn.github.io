@@ -71,13 +71,13 @@ class MarketAnalyzer:
                 return None
             
             # 计算指标（确保标量）
-            nasdaq_ret = float((nasdaq_close.iloc[-1] / nasdaq_close.iloc[-30] - 1) * 100)
-            sp500_ret = float((sp500_close.iloc[-1] / sp500_close.iloc[-30] - 1) * 100)
-            russell_ret = float((russell_close.iloc[-1] / russell_close.iloc[-30] - 1) * 100)
+            nasdaq_ret = float((nasdaq_close.iloc[-1].iloc[0] / nasdaq_close.iloc[-30].iloc[0] - 1) * 100)
+            sp500_ret = float((sp500_close.iloc[-1].iloc[0] / sp500_close.iloc[-30].iloc[0] - 1) * 100)
+            russell_ret = float((russell_close.iloc[-1].iloc[0] / russell_close.iloc[-30].iloc[0] - 1) * 100)
             
-            nasdaq_vol = float(nasdaq_close.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
-            sp500_vol = float(sp500_close.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
-            russell_vol = float(russell_close.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
+            nasdaq_vol = float(nasdaq_close.pct_change().rolling(20).std().iloc[-1].iloc[0] * np.sqrt(252) * 100)
+            sp500_vol = float(sp500_close.pct_change().rolling(20).std().iloc[-1].iloc[0] * np.sqrt(252) * 100)
+            russell_vol = float(russell_close.pct_change().rolling(20).std().iloc[-1].iloc[0] * np.sqrt(252) * 100)
             
             # 相关性
             df = pd.concat([
@@ -161,10 +161,10 @@ class MarketAnalyzer:
                 self.logger('风险环境分析', 'warning', '数据点不足')
                 return None
             
-            current_vix = float(vix.iloc[-1])
-            current_bond = float(ten_year.iloc[-1])
-            vix_change = float((vix.iloc[-1] / vix.iloc[-5] - 1) * 100)
-            bond_change = float((ten_year.iloc[-1] / ten_year.iloc[-5] - 1) * 100)
+            current_vix = float(vix.iloc[-1].iloc[0])
+            current_bond = float(ten_year.iloc[-1].iloc[0])
+            vix_change = float((vix.iloc[-1].iloc[0] / vix.iloc[-5].iloc[0] - 1) * 100)
+            bond_change = float((ten_year.iloc[-1].iloc[0] / ten_year.iloc[-5].iloc[0] - 1) * 100)
             
             # 计算百分位
             vix_percentile = calculate_percentile(vix, current_vix)
@@ -290,11 +290,11 @@ class MarketAnalyzer:
                 return None
             
             # ✅ 修复：确保标量值
-            hsi_ret = float((hsi.iloc[-1] / hsi.iloc[-30] - 1) * 100)
-            sp500_ret = float((sp500.iloc[-1] / sp500.iloc[-30] - 1) * 100)
-            current_cny = float(usdcny.iloc[-1])
-            cny_change_5d = float((usdcny.iloc[-1] / usdcny.iloc[-5] - 1) * 100)
-            cny_change_30d = float((usdcny.iloc[-1] / usdcny.iloc[-30] - 1) * 100)
+            hsi_ret = float((hsi.iloc[-1].iloc[0] / hsi.iloc[-30].iloc[0] - 1) * 100)
+            sp500_ret = float((sp500.iloc[-1].iloc[0] / sp500.iloc[-30].iloc[0] - 1) * 100)
+            current_cny = float(usdcny.iloc[-1].iloc[0])
+            cny_change_5d = float((usdcny.iloc[-1].iloc[0] / usdcny.iloc[-5].iloc[0] - 1) * 100)
+            cny_change_30d = float((usdcny.iloc[-1].iloc[0] / usdcny.iloc[-30].iloc[0] - 1) * 100)
             
             print(f"\n📊 市场表现 (30日):")
             print(f"  恒生指数:    {hsi_ret:+.2f}%")
@@ -399,12 +399,12 @@ class MarketAnalyzer:
                 return None
             
             # ✅ 修复：确保标量值
-            current_margin = float(margin_data.iloc[-1] / 100000000)
-            margin_change_5d = float(margin_data.pct_change(5).iloc[-1] * 100)
-            margin_change_30d = float(margin_data.pct_change(30).iloc[-1] * 100)
+            current_margin = float((margin_data.iloc[-1] / 100000000).iloc[0])
+            margin_change_5d = float(margin_data.pct_change(5).iloc[-1].iloc[0] * 100)
+            margin_change_30d = float(margin_data.pct_change(30).iloc[-1].iloc[0] * 100)
             
-            current_shibor = float(shibor_data.iloc[-1]) if not shibor_data.empty else np.nan
-            shibor_change = float(shibor_data.pct_change().iloc[-1] * 100) if len(shibor_data) > 1 else 0
+            current_shibor = float(shibor_data.iloc[-1].iloc[0]) if not shibor_data.empty else np.nan
+            shibor_change = float(shibor_data.pct_change().iloc[-1].iloc[0] * 100) if len(shibor_data) > 1 else 0
             
             print(f"\n📊 流动性指标:")
             print(f"  融资余额: {current_margin:.0f}亿")
@@ -609,7 +609,7 @@ class MarketAnalyzer:
                     data = self.get_cached_data(ticker)
                     
                     if validate_data(data, 10):
-                        returns[sector] = float((data.iloc[-1] / data.iloc[0] - 1) * 100)
+                        returns[sector] = float((data.iloc[-1].iloc[0] / data.iloc[0].iloc[0] - 1) * 100)
                     else:
                         returns[sector] = np.nan
                         
