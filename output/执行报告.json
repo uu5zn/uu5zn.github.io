@@ -1,139 +1,76 @@
 {
-  "start_time": "2025-12-08T12:02:04.204453",
-  "end_time": "2025-12-08T12:02:07.198080",
+  "start_time": "2025-12-08T12:24:18.605779",
+  "end_time": "2025-12-08T12:24:21.656421",
   "tasks": [
     {
-      "timestamp": "2025-12-08T12:02:04.349239",
-      "category": "K线图",
-      "status": "success",
-      "message": "^TNX -> tenbond.png",
-      "chart_path": "tenbond.png"
-    },
-    {
-      "timestamp": "2025-12-08T12:02:04.470417",
-      "category": "K线图",
-      "status": "success",
-      "message": "^VIX -> vix.png",
-      "chart_path": "vix.png"
-    },
-    {
-      "timestamp": "2025-12-08T12:02:04.602316",
-      "category": "K线图",
-      "status": "success",
-      "message": "^GSPC -> sp500.png",
-      "chart_path": "sp500.png"
-    },
-    {
-      "timestamp": "2025-12-08T12:02:04.724738",
-      "category": "K线图",
-      "status": "success",
-      "message": "^IXIC -> nasdaq.png",
-      "chart_path": "nasdaq.png"
-    },
-    {
-      "timestamp": "2025-12-08T12:02:04.855962",
-      "category": "K线图",
-      "status": "success",
-      "message": "^RUT -> rs2000.png",
-      "chart_path": "rs2000.png"
-    },
-    {
-      "timestamp": "2025-12-08T12:02:04.988706",
-      "category": "K线图",
-      "status": "success",
-      "message": "VNQ -> vnq.png",
-      "chart_path": "vnq.png"
-    },
-    {
-      "timestamp": "2025-12-08T12:02:05.123733",
-      "category": "K线图",
-      "status": "success",
-      "message": "^N225 -> nikkei225.png",
-      "chart_path": "nikkei225.png"
-    },
-    {
-      "timestamp": "2025-12-08T12:02:05.246300",
-      "category": "K线图",
-      "status": "success",
-      "message": "^HSI -> hsi.png",
-      "chart_path": "hsi.png"
-    },
-    {
-      "timestamp": "2025-12-08T12:02:05.408942",
-      "category": "K线图",
-      "status": "success",
-      "message": "CNY=X -> rmb.png",
-      "chart_path": "rmb.png"
-    },
-    {
-      "timestamp": "2025-12-08T12:02:05.408966",
+      "timestamp": "2025-12-08T12:24:19.835450",
       "category": "K线图生成",
-      "status": "success",
-      "message": "任务执行成功"
+      "status": "warning",
+      "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:02:05.411406",
+      "timestamp": "2025-12-08T12:24:19.838083",
       "category": "融资余额分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:02:05.425275",
+      "timestamp": "2025-12-08T12:24:19.852271",
       "category": "多指标对比",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:02:05.973713",
+      "timestamp": "2025-12-08T12:24:20.411476",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:02:06.407612",
+      "timestamp": "2025-12-08T12:24:20.850620",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2025-12-08T12:02:06.407724",
+      "timestamp": "2025-12-08T12:24:20.850734",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:02:06.847981",
+      "timestamp": "2025-12-08T12:24:21.300218",
       "category": "股债利差",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:02:07.140543",
+      "timestamp": "2025-12-08T12:24:21.598329",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:02:07.171744",
+      "timestamp": "2025-12-08T12:24:21.629988",
       "category": "指数差异分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T12:02:07.179150",
+      "timestamp": "2025-12-08T12:24:21.637446",
       "category": "风险环境分析",
       "status": "error",
       "message": "unsupported format string passed to Series.__format__"
     },
     {
-      "timestamp": "2025-12-08T12:02:07.191975",
+      "timestamp": "2025-12-08T12:24:21.650329",
       "category": "中美联动分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T12:02:07.198053",
+      "timestamp": "2025-12-08T12:24:21.656393",
       "category": "市场解读",
       "status": "error",
       "message": "'Series' object has no attribute 'columns'"
@@ -146,6 +83,7 @@
     "市场解读: 'Series' object has no attribute 'columns'"
   ],
   "warnings": [
+    "K线图生成: 执行失败",
     "融资余额分析: 执行失败",
     "多指标对比: 执行失败"
   ],
@@ -157,5 +95,5 @@
     ]
   ],
   "market_signals": {},
-  "duration": "2.99秒"
+  "duration": "3.05秒"
 }
