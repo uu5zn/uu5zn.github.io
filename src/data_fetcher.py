@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 import json
-from config import HEADERS, YF_TIMEOUT, OUTPUT_DIR, SECTOR_ETFS, INDICES
+from config import YF_TIMEOUT, OUTPUT_DIR, SECTOR_ETFS, INDICES
 
 import warnings
 warnings.filterwarnings('ignore', category=FutureWarning, module='yfinance')
@@ -129,12 +129,13 @@ class DataFetcher:
                 data = data.iloc[:, [0, 1]].iloc[::-1]
                 data['信用交易日期'] = pd.to_datetime(data['信用交易日期'], errors='coerce', format='%Y%m%d')
                 # 统一长度为300
-                self.all_data['融资余额'] = data.dropna().set_index('信用交易日期')['融资余额'].iloc[-300:]
+                series_data = data.dropna().set_index('信用交易日期')['融资余额'].iloc[-300:]
+                self.all_data['融资余额'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             else:
-                self.all_data['融资余额'] = pd.Series(dtype=float)
+                self.all_data['融资余额'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         except Exception as e:
             self.logger('数据获取', 'warning', f'融资余额: {str(e)[:100]}')
-            self.all_data['融资余额'] = pd.Series(dtype=float)
+            self.all_data['融资余额'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         
         
         
@@ -145,12 +146,13 @@ class DataFetcher:
             if not data.empty and '日期' in data.columns and '1M-定价' in data.columns:
                 data['日期'] = pd.to_datetime(data['日期'], errors='coerce', format='%Y%m%d')
                 # 统一长度为300
-                self.all_data['Shibor 1M'] = data.dropna().set_index('日期')['1M-定价'].iloc[-300:]
+                series_data = data.dropna().set_index('日期')['1M-定价'].iloc[-300:]
+                self.all_data['Shibor 1M'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             else:
-                self.all_data['Shibor 1M'] = pd.Series(dtype=float)
+                self.all_data['Shibor 1M'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         except Exception as e:
             self.logger('数据获取', 'warning', f'Shibor: {str(e)[:100]}')
-            self.all_data['Shibor 1M'] = pd.Series(dtype=float)
+            self.all_data['Shibor 1M'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         
         # 4. 中美国债收益率及相关数据
         self.logger('数据获取', 'info', '获取中美国债收益率数据...')
@@ -161,16 +163,16 @@ class DataFetcher:
             data = data.set_index('日期')
             data = data.ffill(axis=0)
             # 统一长度为300
-            self.all_data['中美国债收益率'] = data['spread'].iloc[-300:]
+            self.all_data['中美国债收益率'] = pd.DataFrame({'value': data['spread'].iloc[-300:]}) if not data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             # 保存美国国债收益率
-            self.all_data['US_BOND'] = data['美国国债收益率10年'].iloc[-300:]
+            self.all_data['US_BOND'] = pd.DataFrame({'value': data['美国国债收益率10年'].iloc[-300:]}) if not data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             # 保存中国国债收益率10年
-            self.all_data['中国国债收益率10年'] = data['中国国债收益率10年'].iloc[-300:]
+            self.all_data['中国国债收益率10年'] = pd.DataFrame({'value': data['中国国债收益率10年'].iloc[-300:]}) if not data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         except Exception as e:
             self.logger('数据获取', 'warning', f'中美国债收益率: {str(e)[:100]}')
-            self.all_data['中美国债收益率'] = pd.Series(dtype=float)
-            self.all_data['US_BOND'] = pd.Series(dtype=float)
-            self.all_data['中国国债收益率10年'] = pd.Series(dtype=float)
+            self.all_data['中美国债收益率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            self.all_data['US_BOND'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            self.all_data['中国国债收益率10年'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         
         # 5. ETF数据
         etf_list = {'ETF_510300': '510300', 'ETF_159845': '159845', 'ETF_510500': '510500'}
@@ -181,12 +183,13 @@ class DataFetcher:
                 if not data.empty and '日期' in data.columns and '收盘' in data.columns:
                     data['日期'] = pd.to_datetime(data['日期'], errors='coerce')
                     # 统一长度为300
-                    self.all_data[etf_key] = data.dropna().set_index('日期')['收盘'].iloc[-300:]
+                    series_data = data.dropna().set_index('日期')['收盘'].iloc[-300:]
+                    self.all_data[etf_key] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
                 else:
-                    self.all_data[etf_key] = pd.Series(dtype=float)
+                    self.all_data[etf_key] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             except Exception as e:
                 self.logger('数据获取', 'warning', f'{etf_key}: {str(e)[:100]}')
-                self.all_data[etf_key] = pd.Series(dtype=float)
+                self.all_data[etf_key] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         
         # 6. 原油价格
         self.logger('数据获取', 'info', '获取原油价格数据...')
@@ -196,12 +199,13 @@ class DataFetcher:
                 data_copy = data.copy()
                 data_copy['date'] = pd.to_datetime(data_copy['date'], errors='coerce')
                 # 统一长度为300
-                self.all_data['CL'] = data_copy.dropna().sort_values('date').set_index('date')['close'].iloc[-300:]
+                series_data = data_copy.dropna().sort_values('date').set_index('date')['close'].iloc[-300:]
+                self.all_data['CL'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             else:
-                self.all_data['CL'] = pd.Series(dtype=float)
+                self.all_data['CL'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         except Exception as e:
             self.logger('数据获取', 'warning', f'原油价格: {str(e)[:100]}')
-            self.all_data['CL'] = pd.Series(dtype=float)
+            self.all_data['CL'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         
         # 7. 黄金价格
         self.logger('数据获取', 'info', '获取黄金价格数据...')
@@ -211,12 +215,13 @@ class DataFetcher:
                 data_copy = data.copy()
                 data_copy['date'] = pd.to_datetime(data_copy['date'], errors='coerce')
                 # 统一长度为300
-                self.all_data['GC'] = data_copy.dropna().sort_values('date').set_index('date')['close'].iloc[-300:]
+                series_data = data_copy.dropna().sort_values('date').set_index('date')['close'].iloc[-300:]
+                self.all_data['GC'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             else:
-                self.all_data['GC'] = pd.Series(dtype=float)
+                self.all_data['GC'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         except Exception as e:
             self.logger('数据获取', 'warning', f'黄金价格: {str(e)[:100]}')
-            self.all_data['GC'] = pd.Series(dtype=float)
+            self.all_data['GC'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         
         # 8. 股债利差相关数据
         self.logger('数据获取', 'info', '获取股债利差相关数据...')
@@ -226,14 +231,16 @@ class DataFetcher:
             pe_df['日期'] = pd.to_datetime(pe_df['日期'], errors='coerce')
             pe_df.set_index('日期', inplace=True)
             # 统一长度为300
-            self.all_data['上证50滚动市盈率'] = pe_df['滚动市盈率'].iloc[-300:]
+            series_data = pe_df['滚动市盈率'].iloc[-300:]
+            self.all_data['上证50滚动市盈率'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         except Exception as e:
             self.logger('数据获取', 'warning', f'上证50滚动市盈率: {str(e)[:100]}')
-            self.all_data['上证50滚动市盈率'] = pd.Series(dtype=float)
+            self.all_data['上证50滚动市盈率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         
         # 10. Yf数据 - 补充更多全球指数和ETF
         # INDICES是一个列表，每个元素是(代码, 文件名, [周期])，提取第一个元素作为代码
         indices = [idx[0] for idx in INDICES]
+        #SECTOR_ETFS是一个字典，每个元素是(代码, 文件名)，提取第一个元素作为代码
         sector_tickers = list(SECTOR_ETFS.values())
 
         self.logger('数据获取', 'info', '获取指数数据...')
@@ -244,10 +251,12 @@ class DataFetcher:
                     if not idx_data.empty:
                         self.all_data[idx] = idx_data  # 保存完整OHLC数据
                     else:
-                        self.all_data[idx] = pd.Series(dtype=float)
+                        # 返回带OHLC列的空DataFrame
+                        self.all_data[idx] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['Open', 'High', 'Low', 'Close', 'Volume'])
                 except Exception as e:
                     self.logger('数据获取', 'warning', f'{idx}: {str(e)[:100]}')
-                    self.all_data[idx] = pd.Series(dtype=float)
+                    # 返回带OHLC列的空DataFrame
+                    self.all_data[idx] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['Open', 'High', 'Low', 'Close', 'Volume'])
         
         self.logger('数据获取', 'success', f'已获取所有数据，共{len(self.all_data)}种数据类型')
         
@@ -268,7 +277,8 @@ class DataFetcher:
             if not idx_data.empty:
                 self.all_data[symbol] = idx_data  # 保存完整OHLC数据
             else:
-                self.all_data[symbol] = pd.Series(dtype=float)
+                # 返回带OHLC列的空DataFrame
+                self.all_data[symbol] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['Open', 'High', 'Low', 'Close', 'Volume'])
             return self.all_data[symbol]
     
     

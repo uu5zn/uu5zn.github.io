@@ -41,11 +41,22 @@ class MarketAnalyzer:
     def get_cached_data(self, symbol):
         """从缓存获取数据"""
         all_data = self._load_cached_data()
-        return all_data.get(symbol, pd.Series(dtype=float))
+        return all_data.get(symbol, pd.DataFrame(dtype=float))
     
-    def calculate_trend(self, series, period=10):
-        if not validate_data(series, period * 2):
+    def calculate_trend(self, data, period=10):
+        if not validate_data(data, period * 2):
             return 'unknown'
+        # 处理DataFrame，取Close列或第一列
+        if isinstance(data, pd.DataFrame):
+            # 如果有Close列，使用Close列，否则使用第一列
+            if 'Close' in data.columns:
+                series = data['Close']
+            elif not data.empty:
+                series = data.iloc[:, 0]
+            else:
+                return 'unknown'
+        else:
+            series = data
         recent = series.iloc[-period:].mean()
         previous = series.iloc[-period*2:-period].mean()
         return 'up' if recent > previous else 'down'

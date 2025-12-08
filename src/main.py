@@ -39,11 +39,8 @@ def initialize():
     
     # 创建核心组件
     fetcher = DataFetcher(logger_func)
-    fetcher.fetch_all_data()  # 先获取数据并保存缓存
-    
-    # 初始化分析器和图表生成器，不再依赖data_fetcher
-    analyzer = MarketAnalyzer(logger_func)
-    chart_gen = ChartGenerator(logger_func)
+    analyzer = MarketAnalyzer(fetcher, logger_func)
+    chart_gen = ChartGenerator(logger_func, fetcher)
     
     print(f"初始化完成: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     return log, fetcher, analyzer, chart_gen
@@ -75,7 +72,7 @@ def task_margin_analysis(fetcher, analyzer, chart_gen):
         start_date_str = start_date.strftime('%Y%m%d')
         end_date_str = end_date.strftime('%Y%m%d')
         
-        margin_data = fetcher.get_cached_data('融资余额')
+        margin_data = fetcher.get_data('融资余额', start_date_str, end_date_str)
         
         if len(margin_data) < 50:
             print("⚠️ 融资余额数据不足")
@@ -116,13 +113,13 @@ def task_multi_indicator(fetcher, analyzer, chart_gen):
         end_date_str = end_date.strftime('%Y%m%d')
         
         # 获取数据
-        margin_data = fetcher.get_cached_data('融资余额')
-        exchange_rate = fetcher.get_cached_data('CNY=X')
-        shibor_data = fetcher.get_cached_data('Shibor 1M')
-        bond_data = fetcher.get_cached_data('中美国债收益率')
-        etf_300 = fetcher.get_cached_data('ETF_510300')
-        etf_1000 = fetcher.get_cached_data('ETF_159845')
-        etf_500 = fetcher.get_cached_data('ETF_510500')
+        margin_data = fetcher.get_data('融资余额', start_date_str, end_date_str)
+        exchange_rate = fetcher.get_data('美元', start_date_str, end_date_str)
+        shibor_data = fetcher.get_data('Shibor 1M', start_date_str, end_date_str)
+        bond_data = fetcher.get_data('中美国债收益率', start_date_str, end_date_str)
+        etf_300 = fetcher.get_data('ETF_510300', start_date_str, end_date_str)
+        etf_1000 = fetcher.get_data('ETF_159845', start_date_str, end_date_str)
+        etf_500 = fetcher.get_data('ETF_510500', start_date_str, end_date_str)
         
         # 归一化绘图
         chart_gen.plot_line(
@@ -166,22 +163,54 @@ def task_oil_gold(chart_gen):
     print("\n【任务4】油金比分析...")
     return chart_gen.plot_oil_gold_ratio()
 
-def task_correlation(chart_gen):
+def task_correlation(fetcher, chart_gen):
     """任务5: 相关性分析"""
     print("\n【任务5】相关性分析...")
     
     try:
-        # 从缓存获取数据
-        hsi_close = chart_gen.get_cached_data('^HSI')
-        rut_close = chart_gen.get_cached_data('^RUT')
+        # 直接使用yfinance下载数据，返回MultiIndex DataFrame
+        import yfinance as yf
+        from config import YF_TIMEOUT
         
-        if hsi_close.empty or rut_close.empty:
+        hsi_df = yf.download(['^HSI'], period='300d', interval='1d', auto_adjust=True, progress=False, timeout=YF_TIMEOUT)
+        rut_df = yf.download(['^RUT'], period='300d', interval='1d', auto_adjust=True, progress=False, timeout=YF_TIMEOUT)
+        
+        if hsi_df.empty or rut_df.empty:
             return False
+        
+        # 确保返回MultiIndex结构
+        def ensure_multiindex(df, ticker):
+            """确保DataFrame是MultiIndex结构"""
+            if isinstance(df.columns, pd.MultiIndex):
+                return df
+            else:
+                # 单个ticker情况，转换为MultiIndex
+                multi_cols = pd.MultiIndex.from_product([['Open', 'High', 'Low', 'Close', 'Volume'], [ticker]])
+                result = pd.DataFrame(df.values, index=df.index, columns=multi_cols)
+                return result
+        
+        hsi_df = ensure_multiindex(hsi_df, '^HSI')
+        rut_df = ensure_multiindex(rut_df, '^RUT')
+        
+        # ✅ 修复：正确访问 MultiIndex
+        def extract_close(df, ticker):
+            """从 MultiIndex DataFrame 提取 Close 序列"""
+            if isinstance(df.columns, pd.MultiIndex):
+                try:
+                    return df['Close'][ticker].dropna()
+                except KeyError:
+                    # 降级处理
+                    return df.iloc[:, 0].dropna()
+            else:
+                # 扁平结构（不应该发生）
+                return df.iloc[:, 0].dropna()
+        
+        hsi_close = extract_close(hsi_df, '^HSI')
+        rut_close = extract_close(rut_df, '^RUT')
         
         if len(hsi_close) < 30 or len(rut_close) < 30:
             return False
         
-        # 对齐数据
         df = pd.concat([hsi_close, rut_close], axis=1, keys=['HSI', 'RUT']).dropna()
         
         if len(df) < 30:
@@ -230,7 +259,7 @@ def main():
         ("融资余额分析", lambda: task_margin_analysis(fetcher, analyzer, chart_gen)),
         ("多指标对比", lambda: task_multi_indicator(fetcher, analyzer, chart_gen)),
         ("油金比分析", lambda: task_oil_gold(chart_gen)),
-        ("相关性分析", lambda: task_correlation(chart_gen)),
+        ("相关性分析", lambda: task_correlation(fetcher, chart_gen)),
         ("股债利差", lambda: task_pe_bond_spread(chart_gen)),
         ("行业轮动", lambda: task_sector_rotation(analyzer, chart_gen)),
     ]
@@ -269,6 +298,7 @@ def main():
     
     try:
         # 行业轮动
+        from analyzer import MarketAnalyzer
         # 先检查analyze_sector_rotation方法是否存在
         if hasattr(analyzer, 'analyze_sector_rotation'):
             success, sector_result, sector_output = capture_print(analyzer.analyze_sector_rotation)
@@ -301,9 +331,9 @@ def main():
         start_date_str = start_date.strftime('%Y%m%d')
         end_date_str = end_date.strftime('%Y%m%d')
         
-        margin_data = fetcher.get_cached_data('融资余额')
-        shibor_data = fetcher.get_cached_data('Shibor 1M')
-        bond_data = fetcher.get_cached_data('中美国债收益率')
+        margin_data = fetcher.get_data('融资余额', start_date_str, end_date_str)
+        shibor_data = fetcher.get_data('Shibor 1M', start_date_str, end_date_str)
+        bond_data = fetcher.get_data('中美国债收益率', start_date_str, end_date_str)
         
         success, liquidity_result, liquidity_output = capture_print(analyzer.analyze_liquidity_conditions, margin_data, shibor_data, bond_data)
         log['detailed_output']['liquidity_conditions'] = liquidity_output
