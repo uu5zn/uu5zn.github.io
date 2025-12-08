@@ -1,170 +1,217 @@
 {
-  "start_time": "2025-12-08T12:52:19.466681",
-  "end_time": "2025-12-08T12:52:52.565705",
+  "start_time": "2025-12-08T12:56:38.982433",
+  "end_time": "2025-12-08T12:57:11.413624",
   "tasks": [
     {
-      "timestamp": "2025-12-08T12:52:19.466758",
+      "timestamp": "2025-12-08T12:56:38.982530",
       "category": "数据获取",
       "status": "info",
       "message": "开始获取所有数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:19.466773",
+      "timestamp": "2025-12-08T12:56:38.982546",
       "category": "数据获取",
       "status": "info",
       "message": "获取融资余额数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:21.955202",
+      "timestamp": "2025-12-08T12:56:41.767893",
       "category": "数据获取",
       "status": "info",
       "message": "获取Shibor数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:23.073337",
+      "timestamp": "2025-12-08T12:56:43.171750",
       "category": "数据获取",
       "status": "info",
       "message": "获取中美国债收益率数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:32.135131",
+      "timestamp": "2025-12-08T12:56:51.108744",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510300数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:33.765673",
+      "timestamp": "2025-12-08T12:56:53.718467",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_159845数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:34.634344",
+      "timestamp": "2025-12-08T12:56:55.359243",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510500数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:35.716299",
+      "timestamp": "2025-12-08T12:56:57.471143",
       "category": "数据获取",
       "status": "info",
       "message": "获取原油价格数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:38.608981",
+      "timestamp": "2025-12-08T12:56:59.850852",
       "category": "数据获取",
       "status": "info",
       "message": "获取黄金价格数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:40.968583",
+      "timestamp": "2025-12-08T12:57:01.223040",
       "category": "数据获取",
       "status": "info",
       "message": "获取股债利差相关数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:44.255570",
+      "timestamp": "2025-12-08T12:57:04.439650",
       "category": "数据获取",
       "status": "info",
       "message": "获取指数数据..."
     },
     {
-      "timestamp": "2025-12-08T12:52:49.497311",
+      "timestamp": "2025-12-08T12:57:07.008721",
       "category": "数据获取",
       "status": "success",
       "message": "已获取所有数据，共26种数据类型"
     },
     {
-      "timestamp": "2025-12-08T12:52:49.497380",
-      "category": "数据获取",
-      "status": "error",
-      "message": "unsupported format string passed to tuple.__format__"
+      "timestamp": "2025-12-08T12:57:07.010847",
+      "category": "数据缓存",
+      "status": "success",
+      "message": "已保存数据到缓存"
     },
     {
-      "timestamp": "2025-12-08T12:52:50.747014",
+      "timestamp": "2025-12-08T12:57:07.010896",
+      "category": "数据获取",
+      "status": "success",
+      "message": "所有数据已成功获取并缓存"
+    },
+    {
+      "timestamp": "2025-12-08T12:57:08.242548",
       "category": "K线图生成",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:52:50.749688",
+      "timestamp": "2025-12-08T12:57:08.684597",
+      "category": "绘图",
+      "status": "success",
+      "message": "融资余额与MA10 -> rongziyue_ma.png",
+      "chart_path": "rongziyue_ma.png"
+    },
+    {
+      "timestamp": "2025-12-08T12:57:08.684699",
       "category": "融资余额分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:52:50.764389",
-      "category": "多指标对比",
-      "status": "warning",
-      "message": "执行失败"
+      "timestamp": "2025-12-08T12:57:09.154425",
+      "category": "绘图",
+      "status": "success",
+      "message": "归一化指标对比 -> rongziyue_1.png",
+      "chart_path": "rongziyue_1.png"
     },
     {
-      "timestamp": "2025-12-08T12:52:51.325860",
+      "timestamp": "2025-12-08T12:57:09.609197",
+      "category": "绘图",
+      "status": "success",
+      "message": "融资余额与ETF对比 -> rongziyue_2.png",
+      "chart_path": "rongziyue_2.png"
+    },
+    {
+      "timestamp": "2025-12-08T12:57:10.047621",
+      "category": "绘图",
+      "status": "success",
+      "message": "流动性指标 -> liudongxing.png",
+      "chart_path": "liudongxing.png"
+    },
+    {
+      "timestamp": "2025-12-08T12:57:10.047757",
+      "category": "多指标对比",
+      "status": "success",
+      "message": "任务执行成功"
+    },
+    {
+      "timestamp": "2025-12-08T12:57:10.600894",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:52:51.768491",
+      "timestamp": "2025-12-08T12:57:11.040677",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2025-12-08T12:52:51.768607",
+      "timestamp": "2025-12-08T12:57:11.040790",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:52:52.207924",
+      "timestamp": "2025-12-08T12:57:11.045988",
       "category": "股债利差",
-      "status": "success",
-      "message": "任务执行成功"
+      "status": "error",
+      "message": "If using all scalar values, you must pass an index"
     },
     {
-      "timestamp": "2025-12-08T12:52:52.508020",
+      "timestamp": "2025-12-08T12:57:11.046009",
+      "category": "股债利差",
+      "status": "warning",
+      "message": "执行失败"
+    },
+    {
+      "timestamp": "2025-12-08T12:57:11.346745",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:52:52.539450",
+      "timestamp": "2025-12-08T12:57:11.379062",
       "category": "指数差异分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T12:52:52.546848",
+      "timestamp": "2025-12-08T12:57:11.387115",
       "category": "风险环境分析",
       "status": "error",
       "message": "unsupported format string passed to Series.__format__"
     },
     {
-      "timestamp": "2025-12-08T12:52:52.559642",
+      "timestamp": "2025-12-08T12:57:11.400593",
       "category": "中美联动分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T12:52:52.565678",
-      "category": "市场解读",
+      "timestamp": "2025-12-08T12:57:11.407577",
+      "category": "流动性分析",
       "status": "error",
-      "message": "'Series' object has no attribute 'columns'"
+      "message": "'numpy.float64' object has no attribute 'iloc'"
+    },
+    {
+      "timestamp": "2025-12-08T12:57:11.413576",
+      "category": "股债性价比",
+      "status": "error",
+      "message": "If using all scalar values, you must pass an index"
     }
   ],
   "errors": [
-    "数据获取: unsupported format string passed to tuple.__format__",
+    "股债利差: If using all scalar values, you must pass an index",
     "指数差异分析: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
     "风险环境分析: unsupported format string passed to Series.__format__",
     "中美联动分析: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
-    "市场解读: 'Series' object has no attribute 'columns'"
+    "流动性分析: 'numpy.float64' object has no attribute 'iloc'",
+    "股债性价比: If using all scalar values, you must pass an index"
   ],
   "warnings": [
     "K线图生成: 执行失败",
     "融资余额分析: 执行失败",
-    "多指标对比: 执行失败"
+    "股债利差: 执行失败"
   ],
   "charts": [],
   "insights": [
@@ -174,5 +221,5 @@
     ]
   ],
   "market_signals": {},
-  "duration": "3.07秒"
+  "duration": "4.40秒"
 }
