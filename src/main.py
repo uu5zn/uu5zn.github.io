@@ -117,7 +117,7 @@ def task_multi_indicator(fetcher, analyzer, chart_gen):
         
         # 获取数据
         margin_data = fetcher.get_cached_data('融资余额')
-        exchange_rate = fetcher.get_cached_data('美元')
+        exchange_rate = fetcher.get_cached_data('CNY=X')
         shibor_data = fetcher.get_cached_data('Shibor 1M')
         bond_data = fetcher.get_cached_data('中美国债收益率')
         etf_300 = fetcher.get_cached_data('ETF_510300')
