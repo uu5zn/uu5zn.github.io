@@ -1,176 +1,176 @@
 {
-  "start_time": "2025-12-08T15:38:06.438868",
-  "end_time": "2025-12-08T15:38:42.258678",
+  "start_time": "2025-12-08T19:59:34.814986",
+  "end_time": "2025-12-08T20:00:06.694114",
   "tasks": [
     {
-      "timestamp": "2025-12-08T15:38:06.441118",
+      "timestamp": "2025-12-08T19:59:34.817891",
       "category": "数据缓存",
       "status": "success",
       "message": "已加载缓存数据"
     },
     {
-      "timestamp": "2025-12-08T15:38:06.441126",
+      "timestamp": "2025-12-08T19:59:34.817898",
       "category": "数据获取",
       "status": "info",
       "message": "开始获取所有数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:06.441143",
+      "timestamp": "2025-12-08T19:59:34.817914",
       "category": "数据获取",
       "status": "info",
       "message": "获取融资余额数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:09.704955",
+      "timestamp": "2025-12-08T19:59:37.446867",
       "category": "数据获取",
       "status": "info",
       "message": "获取Shibor数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:10.968711",
+      "timestamp": "2025-12-08T19:59:39.037026",
       "category": "数据获取",
       "status": "info",
       "message": "获取中美国债收益率数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:19.506799",
+      "timestamp": "2025-12-08T19:59:47.213726",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510300数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:21.198752",
+      "timestamp": "2025-12-08T19:59:48.863206",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_159845数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:22.060907",
+      "timestamp": "2025-12-08T19:59:49.892516",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510500数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:23.161645",
+      "timestamp": "2025-12-08T19:59:51.049826",
       "category": "数据获取",
       "status": "info",
       "message": "获取原油价格数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:26.282596",
+      "timestamp": "2025-12-08T19:59:54.021400",
       "category": "数据获取",
       "status": "info",
       "message": "获取黄金价格数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:28.302905",
+      "timestamp": "2025-12-08T19:59:55.160431",
       "category": "数据获取",
       "status": "info",
       "message": "获取股债利差相关数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:32.162319",
+      "timestamp": "2025-12-08T19:59:58.436143",
       "category": "数据获取",
       "status": "info",
       "message": "计算股债利差数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:32.164624",
+      "timestamp": "2025-12-08T19:59:58.438704",
       "category": "数据获取",
       "status": "info",
       "message": "获取指数数据..."
     },
     {
-      "timestamp": "2025-12-08T15:38:37.868565",
+      "timestamp": "2025-12-08T20:00:01.939133",
       "category": "数据获取",
       "status": "success",
       "message": "已获取所有数据，共27种数据类型"
     },
     {
-      "timestamp": "2025-12-08T15:38:37.870472",
+      "timestamp": "2025-12-08T20:00:01.941251",
       "category": "数据缓存",
       "status": "success",
       "message": "已保存数据到缓存"
     },
     {
-      "timestamp": "2025-12-08T15:38:37.870542",
+      "timestamp": "2025-12-08T20:00:01.941325",
       "category": "数据获取",
       "status": "success",
       "message": "所有数据已成功获取并缓存"
     },
     {
-      "timestamp": "2025-12-08T15:38:38.947106",
+      "timestamp": "2025-12-08T20:00:03.024281",
       "category": "K线图生成",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T15:38:39.348494",
+      "timestamp": "2025-12-08T20:00:03.461361",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与MA10 -> rongziyue_ma.png",
       "chart_path": "rongziyue_ma.png"
     },
     {
-      "timestamp": "2025-12-08T15:38:39.348595",
+      "timestamp": "2025-12-08T20:00:03.461445",
       "category": "融资余额分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T15:38:39.773662",
+      "timestamp": "2025-12-08T20:00:03.979153",
       "category": "绘图",
       "status": "success",
       "message": "归一化指标对比 -> rongziyue_1.png",
       "chart_path": "rongziyue_1.png"
     },
     {
-      "timestamp": "2025-12-08T15:38:40.185436",
+      "timestamp": "2025-12-08T20:00:04.433587",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与ETF对比 -> rongziyue_2.png",
       "chart_path": "rongziyue_2.png"
     },
     {
-      "timestamp": "2025-12-08T15:38:40.592293",
+      "timestamp": "2025-12-08T20:00:04.885858",
       "category": "绘图",
       "status": "success",
       "message": "流动性指标 -> liudongxing.png",
       "chart_path": "liudongxing.png"
     },
     {
-      "timestamp": "2025-12-08T15:38:40.592421",
+      "timestamp": "2025-12-08T20:00:04.886007",
       "category": "多指标对比",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T15:38:41.084852",
+      "timestamp": "2025-12-08T20:00:05.441114",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T15:38:41.481753",
+      "timestamp": "2025-12-08T20:00:05.883019",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2025-12-08T15:38:41.481860",
+      "timestamp": "2025-12-08T20:00:05.883166",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T15:38:41.881130",
+      "timestamp": "2025-12-08T20:00:06.324919",
       "category": "股债利差",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T15:38:42.151769",
+      "timestamp": "2025-12-08T20:00:06.625808",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
@@ -184,15 +184,15 @@
   "insights": [
     [
       "行业轮动",
-      "行业轮动强度14.16% 美股科技, 美股金融"
+      "行业轮动强度14.34% 美股科技, 美股金融"
     ],
     [
       "指数差异",
-      "纳指-0.23% 标普-0.22% 罗素+0.43% 价值风格"
+      "纳指-0.65% 标普-0.59% 罗素+0.23% 价值风格"
     ],
     [
       "风险环境",
-      "VIX16.55 国债4.18% ⚪ 中等风险"
+      "VIX16.76 国债4.17% ⚪ 中等风险"
     ],
     [
       "中美联动",
@@ -208,5 +208,5 @@
     ]
   ],
   "market_signals": {},
-  "duration": "4.39秒"
+  "duration": "4.75秒"
 }
