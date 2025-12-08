@@ -1,157 +1,157 @@
 {
-  "start_time": "2025-12-08T09:46:40.260113",
-  "end_time": "2025-12-08T09:46:44.389023",
+  "start_time": "2025-12-08T10:20:46.509052",
+  "end_time": "2025-12-08T10:20:50.531521",
   "tasks": [
     {
-      "timestamp": "2025-12-08T09:46:40.389053",
+      "timestamp": "2025-12-08T10:20:46.639776",
       "category": "K线图",
       "status": "success",
       "message": "^TNX -> tenbond.png",
       "chart_path": "tenbond.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:40.511876",
+      "timestamp": "2025-12-08T10:20:46.763184",
       "category": "K线图",
       "status": "success",
       "message": "^VIX -> vix.png",
       "chart_path": "vix.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:40.643485",
+      "timestamp": "2025-12-08T10:20:46.897250",
       "category": "K线图",
       "status": "success",
       "message": "^GSPC -> sp500.png",
       "chart_path": "sp500.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:40.768225",
+      "timestamp": "2025-12-08T10:20:47.025074",
       "category": "K线图",
       "status": "success",
       "message": "^IXIC -> nasdaq.png",
       "chart_path": "nasdaq.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:40.900281",
+      "timestamp": "2025-12-08T10:20:47.159826",
       "category": "K线图",
       "status": "success",
       "message": "^RUT -> rs2000.png",
       "chart_path": "rs2000.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:41.034456",
+      "timestamp": "2025-12-08T10:20:47.295135",
       "category": "K线图",
       "status": "success",
       "message": "VNQ -> vnq.png",
       "chart_path": "vnq.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:41.170905",
+      "timestamp": "2025-12-08T10:20:47.434952",
       "category": "K线图",
       "status": "success",
       "message": "^N225 -> nikkei225.png",
       "chart_path": "nikkei225.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:41.346006",
+      "timestamp": "2025-12-08T10:20:47.620757",
       "category": "K线图",
       "status": "success",
       "message": "^HSI -> hsi.png",
       "chart_path": "hsi.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:41.471097",
+      "timestamp": "2025-12-08T10:20:47.747434",
       "category": "K线图",
       "status": "success",
       "message": "CNY=X -> rmb.png",
       "chart_path": "rmb.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:41.471130",
+      "timestamp": "2025-12-08T10:20:47.747469",
       "category": "K线图生成",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T09:46:41.473355",
+      "timestamp": "2025-12-08T10:20:47.749721",
       "category": "数据缓存",
       "status": "success",
       "message": "已加载缓存数据"
     },
     {
-      "timestamp": "2025-12-08T09:46:41.473404",
+      "timestamp": "2025-12-08T10:20:47.749770",
       "category": "融资余额分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T09:46:41.473425",
+      "timestamp": "2025-12-08T10:20:47.749791",
       "category": "数据获取",
       "status": "info",
       "message": "缓存中未找到美元，尝试从yfinance获取..."
     },
     {
-      "timestamp": "2025-12-08T09:46:42.203207",
+      "timestamp": "2025-12-08T10:20:48.490186",
       "category": "YFinance",
       "status": "warning",
       "message": "美元 返回空数据"
     },
     {
-      "timestamp": "2025-12-08T09:46:42.204055",
+      "timestamp": "2025-12-08T10:20:48.491067",
       "category": "多指标对比",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T09:46:42.759780",
+      "timestamp": "2025-12-08T10:20:49.048620",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T09:46:43.605560",
+      "timestamp": "2025-12-08T10:20:49.746044",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2025-12-08T09:46:43.605684",
+      "timestamp": "2025-12-08T10:20:49.746168",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T09:46:44.044174",
+      "timestamp": "2025-12-08T10:20:50.184740",
       "category": "股债利差",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T09:46:44.338109",
+      "timestamp": "2025-12-08T10:20:50.480681",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T09:46:44.368415",
+      "timestamp": "2025-12-08T10:20:50.511058",
       "category": "指数差异分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T09:46:44.375994",
+      "timestamp": "2025-12-08T10:20:50.518519",
       "category": "风险环境分析",
       "status": "error",
       "message": "unsupported format string passed to Series.__format__"
     },
     {
-      "timestamp": "2025-12-08T09:46:44.388905",
+      "timestamp": "2025-12-08T10:20:50.531383",
       "category": "中美联动分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T09:46:44.389007",
+      "timestamp": "2025-12-08T10:20:50.531505",
       "category": "市场解读",
       "status": "error",
       "message": "'Series' object has no attribute 'columns'"
@@ -183,5 +183,5 @@
     "china_us_linkage": "\n======================================================================\n【中美市场联动解读】\n======================================================================\n\n📊 市场表现 (30日):\n  恒生指数:    -2.53%\n  标普500:     +1.16%\n  人民币汇率:  7.0705 (5日: -0.02%, 30日: -0.56%)\n\n🎯 汇率信号: 🔄 相对稳定 → 汇率不是主要矛盾\n❌ 中美联动分析失败: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n",
     "liquidity_conditions": ""
   },
-  "duration": "4.13秒"
+  "duration": "4.02秒"
 }
