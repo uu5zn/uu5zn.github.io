@@ -359,18 +359,16 @@ class ChartGenerator:
     def plot_pe_bond_spread(self):
         """绘制股债利差图"""
         try:
-            # 使用缓存获取数据
-            bond_yield = self.get_cached_data('中国国债收益率10年')
-            pe_50 = self.get_cached_data('上证50滚动市盈率')
+            # 直接使用已计算好的股债利差数据
+            spread_df = self.get_cached_data('股债利差')
             
-            if bond_yield.empty or pe_50.empty:
+            if spread_df.empty:
                 self.logger('股债利差', 'warning', '数据获取失败')
                 return False
             
-            # 对齐日期并计算利差
-            combined = pd.DataFrame({'中国国债收益率10年': bond_yield, '滚动市盈率': pe_50}).dropna()
-            spread = combined['中国国债收益率10年'] - 100 / combined['滚动市盈率']
-            spread = spread.ffill().dropna()
+            # 从DataFrame中提取value列作为Series
+            spread = spread_df['value'] if 'value' in spread_df.columns else spread_df.iloc[:, 0]
+            spread = spread.dropna()
             
             if not validate_data(spread, 50):
                 return False
