@@ -260,6 +260,28 @@ class DataFetcher:
         
         self.logger('数据获取', 'success', f'已获取所有数据，共{len(self.all_data)}种数据类型')
         
+        # 打印数据统计信息
+        print(f"\n📊 数据统计信息:")
+        print(f"{'-'*60}")
+        print(f"{'数据类型':<25} {'记录数':<10} {'状态':<10} {'最新日期':<15}")
+        print(f"{'-'*60}")
+        
+        for key, data in self.all_data.items():
+            if isinstance(data, pd.DataFrame):
+                row_count = len(data)
+                status = "正常" if row_count > 0 else "空"
+                # 获取最新日期
+                if row_count > 0 and isinstance(data.index, pd.DatetimeIndex):
+                    latest_date = data.index[-1].strftime('%Y-%m-%d')
+                else:
+                    latest_date = "N/A"
+                print(f"{key:<25} {row_count:<10} {status:<10} {latest_date:<15}")
+            else:
+                print(f"{key:<25} {'-':<10} {'异常':<10} {'-':<15}")
+        
+        print(f"{'-'*60}")
+        print(f"数据缓存路径: {os.path.abspath(self.cache_dir)}")
+        
         # 保存到缓存
         self._save_cache()
     

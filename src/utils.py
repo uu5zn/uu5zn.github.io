@@ -103,8 +103,8 @@ def setup_matplotlib_fonts():
             plt.text(0.5, 0.5, '测试中文', fontfamily='SimHei')
             plt.close(fig)
             available_font = 'SimHei'
-            print(f"✅ 直接加载字体文件: simhei.ttf")
-            print(f"📝 当前font.sans-serif: {plt.rcParams['font.sans-serif']}")
+            #print(f"✅ 直接加载字体文件: simhei.ttf")
+            #print(f"📝 当前font.sans-serif: {plt.rcParams['font.sans-serif']}")
         except Exception as e:
             print(f"⚠️  加载simhei.ttf失败: {e}")
     else:
@@ -157,17 +157,8 @@ def setup_matplotlib_fonts():
     plt.rc('legend', fontsize=8)
     plt.rc('figure', titlesize=14)
     
-    # 4. 验证字体确实被使用
-    test_text = "中文测试 123 ABC"
-    fig, ax = plt.subplots(figsize=(3, 1), facecolor='black')
-    text_obj = ax.text(0.5, 0.5, test_text, ha='center', va='center', fontsize=12, color='white')
-    fig.canvas.draw()  # 强制渲染
     
-    # 检查实际使用的字体
-    used_font = text_obj.get_fontname()
-    print(f"✅ 实际使用字体: {used_font}")
-    print(f"📝 最终font.sans-serif: {plt.rcParams['font.sans-serif']}")
-    print(f"📝 最终font.family: {plt.rcParams['font.family']}")
+
     
     plt.close(fig)
     
