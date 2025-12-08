@@ -304,7 +304,8 @@ class DataFetcher:
                     latest_date = data.index[-1].strftime('%Y-%m-%d')
                 else:
                     latest_date = "N/A"
-                print(f"{key:<25} {data_format:<10} {(row_count, col_count):<15} {status:<10} {latest_date:<15}")
+                shape_str = f"({row_count}, {col_count})"
+                print(f"{key:<25} {data_format:<10} {shape_str:<15} {status:<10} {latest_date:<15}")
                 total_records += row_count
                 if row_count > 0:
                     valid_data_count += 1
