@@ -1,168 +1,169 @@
 {
-  "start_time": "2025-12-08T15:54:38.724868",
-  "end_time": "2025-12-08T15:54:41.302555",
+  "start_time": "2025-12-08T15:43:29.943689",
+  "end_time": "2025-12-08T15:43:32.263309",
   "tasks": [
     {
-      "timestamp": "2025-12-08T15:54:38.734859",
+      "timestamp": "2025-12-08T15:43:29.955690",
       "category": "数据缓存",
       "status": "success",
       "message": "已加载缓存数据"
     },
     {
-      "timestamp": "2025-12-08T15:54:38.739861",
+      "timestamp": "2025-12-08T15:43:29.958689",
       "category": "K线图",
       "status": "warning",
-      "message": "^TNX 数据不足或格式不正确"
+      "message": "^TNX 数据不足"
     },
     {
-      "timestamp": "2025-12-08T15:54:38.744860",
+      "timestamp": "2025-12-08T15:43:29.961689",
+      "category": "K线图",
+      "status": "error",
+      "message": "^VIX: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+    },
+    {
+      "timestamp": "2025-12-08T15:43:29.965689",
+      "category": "K线图",
+      "status": "error",
+      "message": "^GSPC: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+    },
+    {
+      "timestamp": "2025-12-08T15:43:29.968689",
+      "category": "K线图",
+      "status": "error",
+      "message": "^IXIC: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+    },
+    {
+      "timestamp": "2025-12-08T15:43:29.971690",
+      "category": "K线图",
+      "status": "error",
+      "message": "^RUT: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+    },
+    {
+      "timestamp": "2025-12-08T15:43:29.974692",
       "category": "K线图",
       "status": "warning",
-      "message": "^VIX 数据不足或格式不正确"
+      "message": "VNQ 数据不足"
     },
     {
-      "timestamp": "2025-12-08T15:54:38.748860",
+      "timestamp": "2025-12-08T15:43:29.980218",
+      "category": "K线图",
+      "status": "error",
+      "message": "^N225: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+    },
+    {
+      "timestamp": "2025-12-08T15:43:29.986238",
       "category": "K线图",
       "status": "warning",
-      "message": "^GSPC 数据不足或格式不正确"
+      "message": "^HSI 数据不足"
     },
     {
-      "timestamp": "2025-12-08T15:54:38.752860",
+      "timestamp": "2025-12-08T15:43:29.990239",
       "category": "K线图",
-      "status": "warning",
-      "message": "^IXIC 数据不足或格式不正确"
+      "status": "error",
+      "message": "CNY=X: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T15:54:38.756859",
-      "category": "K线图",
-      "status": "warning",
-      "message": "^RUT 数据不足或格式不正确"
-    },
-    {
-      "timestamp": "2025-12-08T15:54:38.760870",
-      "category": "K线图",
-      "status": "warning",
-      "message": "VNQ 数据不足或格式不正确"
-    },
-    {
-      "timestamp": "2025-12-08T15:54:38.764862",
-      "category": "K线图",
-      "status": "warning",
-      "message": "^N225 数据不足或格式不正确"
-    },
-    {
-      "timestamp": "2025-12-08T15:54:38.769874",
-      "category": "K线图",
-      "status": "warning",
-      "message": "^HSI 数据不足或格式不正确"
-    },
-    {
-      "timestamp": "2025-12-08T15:54:38.775877",
-      "category": "K线图",
-      "status": "warning",
-      "message": "CNY=X 数据不足或格式不正确"
-    },
-    {
-      "timestamp": "2025-12-08T15:54:38.775877",
+      "timestamp": "2025-12-08T15:43:29.990239",
       "category": "K线图生成",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T15:54:39.429726",
+      "timestamp": "2025-12-08T15:43:30.591453",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与MA10 -> rongziyue_ma.png",
       "chart_path": "rongziyue_ma.png"
     },
     {
-      "timestamp": "2025-12-08T15:54:39.430724",
+      "timestamp": "2025-12-08T15:43:30.591453",
       "category": "融资余额分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T15:54:40.185028",
+      "timestamp": "2025-12-08T15:43:31.234747",
       "category": "绘图",
       "status": "success",
       "message": "归一化指标对比 -> rongziyue_1.png",
       "chart_path": "rongziyue_1.png"
     },
     {
-      "timestamp": "2025-12-08T15:54:40.816543",
+      "timestamp": "2025-12-08T15:43:31.835320",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与ETF对比 -> rongziyue_2.png",
       "chart_path": "rongziyue_2.png"
     },
     {
-      "timestamp": "2025-12-08T15:54:40.817544",
+      "timestamp": "2025-12-08T15:43:31.836321",
       "category": "绘图",
-      "status": "warning",
-      "message": "流动性指标 无有效数据"
+      "status": "success",
+      "message": "流动性指标 -> liudongxing.png",
+      "chart_path": "liudongxing.png"
     },
     {
-      "timestamp": "2025-12-08T15:54:40.817544",
+      "timestamp": "2025-12-08T15:43:31.836321",
       "category": "多指标对比",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T15:54:40.834542",
+      "timestamp": "2025-12-08T15:43:31.849324",
       "category": "油金比分析",
-      "status": "warning",
-      "message": "执行失败"
+      "status": "success",
+      "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T15:54:40.842543",
+      "timestamp": "2025-12-08T15:43:31.855333",
       "category": "相关性分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T15:54:40.851540",
+      "timestamp": "2025-12-08T15:43:31.870864",
       "category": "股债利差",
       "status": "warning",
       "message": "数据获取失败"
     },
     {
-      "timestamp": "2025-12-08T15:54:40.851540",
+      "timestamp": "2025-12-08T15:43:31.870864",
       "category": "股债利差",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T15:54:41.221445",
+      "timestamp": "2025-12-08T15:43:32.193390",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T15:54:41.279035",
+      "timestamp": "2025-12-08T15:43:32.239416",
       "category": "指数差异分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T15:54:41.290552",
+      "timestamp": "2025-12-08T15:43:32.249300",
       "category": "风险环境分析",
       "status": "warning",
       "message": "数据不足"
     },
     {
-      "timestamp": "2025-12-08T15:54:41.297554",
+      "timestamp": "2025-12-08T15:43:32.256308",
       "category": "中美联动分析",
-      "status": "warning",
-      "message": "数据不足"
+      "status": "error",
+      "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T15:54:41.297554",
+      "timestamp": "2025-12-08T15:43:32.256308",
       "category": "流动性分析",
       "status": "error",
       "message": "'numpy.float64' object has no attribute 'iloc'"
     },
     {
-      "timestamp": "2025-12-08T15:54:41.302555",
+      "timestamp": "2025-12-08T15:43:32.262309",
       "category": "股债性价比",
       "status": "warning",
       "message": "数据获取失败"
@@ -170,43 +171,38 @@
   ],
   "errors": [
     "指数差异分析: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
+    "中美联动分析: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
     "流动性分析: 'numpy.float64' object has no attribute 'iloc'"
   ],
   "warnings": [
-    "K线图: ^TNX 数据不足或格式不正确",
-    "K线图: ^VIX 数据不足或格式不正确",
-    "K线图: ^GSPC 数据不足或格式不正确",
-    "K线图: ^IXIC 数据不足或格式不正确",
-    "K线图: ^RUT 数据不足或格式不正确",
-    "K线图: VNQ 数据不足或格式不正确",
-    "K线图: ^N225 数据不足或格式不正确",
-    "K线图: ^HSI 数据不足或格式不正确",
-    "K线图: CNY=X 数据不足或格式不正确",
+    "K线图: ^TNX 数据不足",
+    "K线图: VNQ 数据不足",
+    "K线图: ^HSI 数据不足",
     "K线图生成: 执行失败",
-    "绘图: 流动性指标 无有效数据",
-    "油金比分析: 执行失败",
     "相关性分析: 执行失败",
-    "股债利差: 数据获取失败",
-    "股债利差: 执行失败",
-    "风险环境分析: 数据不足",
-    "中美联动分析: 数据不足",
-    "股债性价比: 数据获取失败"
+    "风险环境分析: 数据不足"
   ],
   "charts": [],
   "insights": [
     [
       "行业轮动",
       "行业轮动强度0.00% 美股科技"
+    ],
+    [
+      "股债利差",
+      "🟢 股债利差处于历史低位，股票吸引力显著增强，债券相对昂贵"
     ]
   ],
-  "market_signals": {},
+  "market_signals": {
+    "pe_bond_signal": "股票占优"
+  },
   "detailed_output": {
     "sector_rotation": "\n======================================================================\n【行业轮动解读】\n======================================================================\n\n📊 近1月行业表现:\n  1. 美股科技: +28.48%\n\n🏆 领涨: 美股科技\n📉 落后: 美股科技\n",
     "index_divergence": "\n======================================================================\n【市场结构解读】\n======================================================================\n❌ 指数差异分析失败: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n",
     "risk_regime": "\n======================================================================\n【风险环境解读】\n======================================================================\n",
-    "china_us_linkage": "\n======================================================================\n【中美市场联动解读】\n======================================================================\n",
+    "china_us_linkage": "\n======================================================================\n【中美市场联动解读】\n======================================================================\n\n📊 市场表现 (30日):\n  恒生指数:    -2.38%\n  标普500:     +1.16%\n  人民币汇率:  7.0687 (5日: -0.04%, 30日: -0.58%)\n\n🎯 汇率信号: 🔄 相对稳定 → 汇率不是主要矛盾\n❌ 中美联动分析失败: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n",
     "liquidity_conditions": "\n======================================================================\n【流动性环境解读】\n======================================================================\n❌ 流动性分析失败: 'numpy.float64' object has no attribute 'iloc'\n",
-    "pe_bond_spread": "\n======================================================================\n【股债性价比解读】\n======================================================================\n"
+    "pe_bond_spread": "\n======================================================================\n【股债性价比解读】\n======================================================================\n\n📊 股债性价比指标:\n  中国10年期国债收益率: 1.85%\n  上证50滚动市盈率:     11.53\n  股债利差:             -6.83\n  历史百分位:           86%\n\n🎯 解读: 🟢 股债利差处于历史低位，股票吸引力显著增强，债券相对昂贵\n💡 信号: 股票占优\n💼 建议: 增加股票配置比例，减少债券持仓\n"
   },
-  "duration": "2.57秒"
+  "duration": "2.31秒"
 }
