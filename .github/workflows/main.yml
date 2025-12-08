@@ -31,12 +31,12 @@ jobs:
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
 
-      - name: 安装系统字体
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends fonts-wqy-microhei fonts-wqy-zenhei fonts-noto-cjk fonts-arphic-ukai fonts-arphic-uming
-          sudo fc-cache -fv
-          fc-list :lang=zh | head -3
+      #- name: 安装系统字体
+      #  run: |
+      #    sudo apt-get update
+      #    sudo apt-get install -y --no-install-recommends fonts-wqy-microhei fonts-wqy-zenhei fonts-noto-cjk fonts-arphic-ukai fonts-arphic-uming
+      #    sudo fc-cache -fv
+      #    fc-list :lang=zh | head -3
 
       - name: 下载并配置SimHei字体
         run: |
