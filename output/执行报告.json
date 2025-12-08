@@ -1,204 +1,258 @@
 {
-  "start_time": "2025-12-08T07:57:57.159536",
-  "end_time": "2025-12-08T07:58:00.050570",
+  "start_time": "2025-12-08T08:30:05.493744",
+  "end_time": "2025-12-08T08:30:47.048127",
   "tasks": [
     {
-      "timestamp": "2025-12-08T07:57:57.163250",
+      "timestamp": "2025-12-08T08:30:05.493919",
+      "category": "数据获取",
+      "status": "info",
+      "message": "开始获取所有数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:05.493949",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取融资余额数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:13.755950",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取Shibor数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:16.680290",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取中美国债收益率数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:26.220460",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取ETF_510300数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:28.009951",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取ETF_159845数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:29.019051",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取ETF_510500数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:30.259665",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取原油价格数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:33.720953",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取黄金价格数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:35.057741",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取股债利差相关数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:39.073215",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取指数数据..."
+    },
+    {
+      "timestamp": "2025-12-08T08:30:42.178622",
+      "category": "数据获取",
+      "status": "success",
+      "message": "已获取所有数据，共26种数据类型"
+    },
+    {
+      "timestamp": "2025-12-08T08:30:42.180888",
       "category": "数据缓存",
       "status": "success",
       "message": "已保存数据到缓存"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.165882",
+      "timestamp": "2025-12-08T08:30:42.379635",
       "category": "K线图",
-      "status": "warning",
-      "message": "^TNX 数据不足或格式不正确"
+      "status": "success",
+      "message": "^TNX -> tenbond.png",
+      "chart_path": "tenbond.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.168212",
+      "timestamp": "2025-12-08T08:30:42.596773",
       "category": "K线图",
-      "status": "warning",
-      "message": "^VIX 数据不足或格式不正确"
+      "status": "success",
+      "message": "^VIX -> vix.png",
+      "chart_path": "vix.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.170382",
+      "timestamp": "2025-12-08T08:30:42.819860",
       "category": "K线图",
-      "status": "warning",
-      "message": "^GSPC 数据不足或格式不正确"
+      "status": "success",
+      "message": "^GSPC -> sp500.png",
+      "chart_path": "sp500.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.172582",
+      "timestamp": "2025-12-08T08:30:43.022089",
       "category": "K线图",
-      "status": "warning",
-      "message": "^IXIC 数据不足或格式不正确"
+      "status": "success",
+      "message": "^IXIC -> nasdaq.png",
+      "chart_path": "nasdaq.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.174819",
+      "timestamp": "2025-12-08T08:30:43.229409",
       "category": "K线图",
-      "status": "warning",
-      "message": "^RUT 数据不足或格式不正确"
+      "status": "success",
+      "message": "^RUT -> rs2000.png",
+      "chart_path": "rs2000.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.177081",
+      "timestamp": "2025-12-08T08:30:43.434984",
       "category": "K线图",
-      "status": "warning",
-      "message": "VNQ 数据不足或格式不正确"
+      "status": "success",
+      "message": "VNQ -> vnq.png",
+      "chart_path": "vnq.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.179246",
+      "timestamp": "2025-12-08T08:30:43.622246",
       "category": "K线图",
-      "status": "warning",
-      "message": "^N225 数据不足或格式不正确"
+      "status": "success",
+      "message": "^N225 -> nikkei225.png",
+      "chart_path": "nikkei225.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.181405",
+      "timestamp": "2025-12-08T08:30:43.814813",
       "category": "K线图",
-      "status": "warning",
-      "message": "^HSI 数据不足或格式不正确"
+      "status": "success",
+      "message": "^HSI -> hsi.png",
+      "chart_path": "hsi.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.183582",
+      "timestamp": "2025-12-08T08:30:44.012177",
       "category": "K线图",
-      "status": "warning",
-      "message": "CNY=X 数据不足或格式不正确"
+      "status": "success",
+      "message": "CNY=X -> rmb.png",
+      "chart_path": "rmb.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.183594",
+      "timestamp": "2025-12-08T08:30:44.012206",
       "category": "K线图生成",
-      "status": "warning",
-      "message": "执行失败"
+      "status": "success",
+      "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.603453",
+      "timestamp": "2025-12-08T08:30:44.436904",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与MA10 -> rongziyue_ma.png",
       "chart_path": "rongziyue_ma.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:57.603599",
+      "timestamp": "2025-12-08T08:30:44.437038",
       "category": "融资余额分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T07:57:58.041169",
+      "timestamp": "2025-12-08T08:30:44.916603",
       "category": "绘图",
       "status": "success",
       "message": "归一化指标对比 -> rongziyue_1.png",
       "chart_path": "rongziyue_1.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:58.476354",
+      "timestamp": "2025-12-08T08:30:45.353657",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与ETF对比 -> rongziyue_2.png",
       "chart_path": "rongziyue_2.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:58.892580",
+      "timestamp": "2025-12-08T08:30:45.779731",
       "category": "绘图",
       "status": "success",
       "message": "流动性指标 -> liudongxing.png",
       "chart_path": "liudongxing.png"
     },
     {
-      "timestamp": "2025-12-08T07:57:58.892668",
+      "timestamp": "2025-12-08T08:30:45.779797",
       "category": "多指标对比",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T07:57:59.417211",
+      "timestamp": "2025-12-08T08:30:46.365212",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T07:57:59.425166",
+      "timestamp": "2025-12-08T08:30:46.372844",
       "category": "相关性分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T07:57:59.789582",
+      "timestamp": "2025-12-08T08:30:46.740435",
       "category": "股债利差",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T07:57:59.998776",
+      "timestamp": "2025-12-08T08:30:46.992953",
       "category": "行业轮动",
-      "status": "warning",
-      "message": "无有效数据"
+      "status": "success",
+      "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T07:58:00.025822",
+      "timestamp": "2025-12-08T08:30:47.022205",
       "category": "指数差异分析",
-      "status": "warning",
-      "message": "数据不足"
+      "status": "error",
+      "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T07:58:00.031886",
+      "timestamp": "2025-12-08T08:30:47.029323",
       "category": "风险环境分析",
-      "status": "warning",
-      "message": "数据不足"
+      "status": "error",
+      "message": "unsupported format string passed to Series.__format__"
     },
     {
-      "timestamp": "2025-12-08T07:58:00.043848",
+      "timestamp": "2025-12-08T08:30:47.041821",
       "category": "中美联动分析",
-      "status": "warning",
-      "message": "数据不足"
+      "status": "error",
+      "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T07:58:00.043948",
+      "timestamp": "2025-12-08T08:30:47.041932",
       "category": "流动性分析",
       "status": "error",
       "message": "'numpy.float64' object has no attribute 'iloc'"
     }
   ],
   "errors": [
+    "指数差异分析: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
+    "风险环境分析: unsupported format string passed to Series.__format__",
+    "中美联动分析: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
     "流动性分析: 'numpy.float64' object has no attribute 'iloc'"
   ],
   "warnings": [
-    "数据获取: ETF_510300: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
-    "数据获取: ETF_159845: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
-    "数据获取: ETF_510500: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
-    "YFinance: ^TNX 返回空数据",
-    "YFinance: ^VIX 返回空数据",
-    "YFinance: ^GSPC 返回空数据",
-    "YFinance: ^IXIC 返回空数据",
-    "YFinance: ^RUT 返回空数据",
-    "YFinance: VNQ 返回空数据",
-    "YFinance: ^N225 返回空数据",
-    "YFinance: ^HSI 返回空数据",
-    "YFinance: CNY=X 返回空数据",
-    "YFinance: QQQ 返回空数据",
-    "YFinance: XLF 返回空数据",
-    "YFinance: XLV 返回空数据",
-    "YFinance: XLY 返回空数据",
-    "YFinance: XLE 返回空数据",
-    "YFinance: XLI 返回空数据",
-    "K线图: ^TNX 数据不足或格式不正确",
-    "K线图: ^VIX 数据不足或格式不正确",
-    "K线图: ^GSPC 数据不足或格式不正确",
-    "K线图: ^IXIC 数据不足或格式不正确",
-    "K线图: ^RUT 数据不足或格式不正确",
-    "K线图: VNQ 数据不足或格式不正确",
-    "K线图: ^N225 数据不足或格式不正确",
-    "K线图: ^HSI 数据不足或格式不正确",
-    "K线图: CNY=X 数据不足或格式不正确",
-    "K线图生成: 执行失败",
-    "相关性分析: 执行失败",
-    "行业轮动: 无有效数据",
-    "行业轮动: 执行失败",
-    "行业轮动: 无有效数据",
-    "指数差异分析: 数据不足",
-    "风险环境分析: 数据不足",
-    "中美联动分析: 数据不足"
+    "相关性分析: 执行失败"
   ],
   "charts": [],
   "insights": [
+    [
+      "行业轮动",
+      "行业轮动强度13.46% 美股科技, 美股金融"
+    ],
     [
       "股债利差",
       "🟢 股债利差处于历史低位，股票吸引力显著增强，债券相对昂贵"
@@ -208,12 +262,12 @@
     "pe_bond_signal": "股票占优"
   },
   "detailed_output": {
-    "sector_rotation": "\n======================================================================\n【行业轮动解读】\n======================================================================\n",
-    "index_divergence": "\n======================================================================\n【市场结构解读】\n======================================================================\n⚠️  指数数据不足，无法分析\n",
-    "risk_regime": "\n======================================================================\n【风险环境解读】\n======================================================================\n",
-    "china_us_linkage": "\n======================================================================\n【中美市场联动解读】\n======================================================================\n",
+    "sector_rotation": "\n======================================================================\n【行业轮动解读】\n======================================================================\n\n📊 近1月行业表现:\n  1. 美股科技: +28.48%\n  2. 美股金融: +20.99%\n  3. 美股消费: +20.43%\n  4. 美股工业: +16.57%\n  5. 美股能源: +11.05%\n  6. 美股医药: +1.89%\n\n🏆 领涨: 美股科技, 美股金融\n📉 落后: 美股能源, 美股医药\n\n🔄 轮动强度: 13.46%\n🎯 🔥 剧烈轮动: 板块分化严重，追高风险大\n",
+    "index_divergence": "\n======================================================================\n【市场结构解读】\n======================================================================\n❌ 指数差异分析失败: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n",
+    "risk_regime": "\n======================================================================\n【风险环境解读】\n======================================================================\n\n📊 当前风险指标:\n❌ 风险环境分析失败: unsupported format string passed to Series.__format__\n",
+    "china_us_linkage": "\n======================================================================\n【中美市场联动解读】\n======================================================================\n\n📊 市场表现 (30日):\n  恒生指数:    -2.53%\n  标普500:     +1.16%\n  人民币汇率:  7.0705 (5日: -0.02%, 30日: -0.56%)\n\n🎯 汇率信号: 🔄 相对稳定 → 汇率不是主要矛盾\n❌ 中美联动分析失败: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n",
     "liquidity_conditions": "\n======================================================================\n【流动性环境解读】\n======================================================================\n❌ 流动性分析失败: 'numpy.float64' object has no attribute 'iloc'\n",
     "pe_bond_spread": "\n======================================================================\n【股债性价比解读】\n======================================================================\n\n📊 股债性价比指标:\n  中国10年期国债收益率: 1.85%\n  上证50滚动市盈率:     11.53\n  股债利差:             -6.83\n  历史百分位:           86%\n\n🎯 解读: 🟢 股债利差处于历史低位，股票吸引力显著增强，债券相对昂贵\n💡 信号: 股票占优\n💼 建议: 增加股票配置比例，减少债券持仓\n"
   },
-  "duration": "2.89秒"
+  "duration": "4.87秒"
 }
