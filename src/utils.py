@@ -8,7 +8,7 @@ from contextlib import redirect_stdout
 from io import StringIO
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
-from config import OUTPUT_DIR, FONT_CANDIDATES, MPL_STYLE
+from .config import OUTPUT_DIR, FONT_CANDIDATES, MPL_STYLE
 
 def setup_logging():
     """初始化执行日志"""
@@ -66,16 +66,7 @@ def capture_print(func, *args, **kwargs):
     output = buffer.getvalue()
     return success, result, output
 
-# -*- coding: utf-8 -*-
-import os
-import sys
-import json
-from datetime import datetime
-from contextlib import redirect_stdout
-from io import StringIO
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-from config import FONT_CANDIDATES
+
 
 def setup_matplotlib_fonts():
     """设置matplotlib字体（增强版，确保配置持久化）"""

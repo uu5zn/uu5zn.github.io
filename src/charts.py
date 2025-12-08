@@ -3,10 +3,11 @@ import pandas as pd  # 🔧 添加
 
 
 import numpy as np
-import akshare as ak  # 🔧 添加
 import os
-from config import OUTPUT_DIR, MPL_STYLE
-from utils import validate_data
+import json
+from datetime import datetime
+from .config import OUTPUT_DIR, MPL_STYLE
+from .utils import validate_data
 import matplotlib.pyplot as plt
 import mplfinance as mpf
 
@@ -16,67 +17,74 @@ import mplfinance as mpf
 
    
 class ChartGenerator:
-    def __init__(self, logger_callback, data_fetcher=None):
+    def __init__(self, logger_callback):
         """
         图表生成器
         :param logger_callback: 日志回调函数
-        :param data_fetcher: 数据获取器实例（可选）
         """
         self.logger = logger_callback
-        self.fetcher = data_fetcher
-        
-        # 保存当前字体配置（这是由setup_matplotlib_fonts()设置的正确中文字体）
-        current_font_config = {
-            'font.family': plt.rcParams['font.family'],
-            'font.sans-serif': plt.rcParams['font.sans-serif'],
-            'axes.unicode_minus': plt.rcParams['axes.unicode_minus'],
-        }
-        
-        print(f"📊 ChartGenerator初始化 - 接收的字体配置:")
-        print(f"  - font.sans-serif: {current_font_config['font.sans-serif']}")
-        print(f"  - font.family: {current_font_config['font.family']}")
-        
-        # 应用样式配置（不含字体配置）
-        # 创建一个不含字体配置的样式副本
-        style_without_font = {k: v for k, v in MPL_STYLE.items() 
-                            if not k.startswith('font.') and k != 'axes.unicode_minus'}
-        plt.rcParams.update(style_without_font)
-        
-        # 恢复字体配置（确保字体设置优先级最高）
-        plt.rcParams.update(current_font_config)
-        
-        # 额外强制设置一次，确保字体配置持久化
-        plt.rcParams.update({
-            'font.family': 'sans-serif',
-            'font.sans-serif': plt.rcParams['font.sans-serif'],
-            'axes.unicode_minus': False
-        })
-        
-        # 显式再设置一次，确保不会被覆盖
-        plt.rcParams['font.sans-serif'] = plt.rcParams['font.sans-serif']
-        
-        print(f"📊 ChartGenerator初始化 - 最终字体配置:")
-        print(f"  - font.sans-serif: {plt.rcParams['font.sans-serif']}")
-        print(f"  - font.family: {plt.rcParams['font.family']}")
+        self.cache_dir = os.path.join(OUTPUT_DIR, 'data_cache')
+        self.cache_validity = 24 * 3600  # 缓存有效期（秒）
+    
+    def _is_cache_valid(self):
+        """检查缓存是否有效"""
+        cache_meta_file = os.path.join(self.cache_dir, 'cache_meta.json')
+        if os.path.exists(cache_meta_file):
+            try:
+                with open(cache_meta_file, 'r') as f:
+                    meta = json.load(f)
+                cache_time = meta.get('cache_time', 0)
+                current_time = datetime.now().timestamp()
+                return current_time - cache_time < self.cache_validity
+            except:
+                pass
+        return False
+    
+    def _load_cached_data(self):
+        """加载所有缓存数据"""
+        data_file = os.path.join(self.cache_dir, 'all_data.pkl')
+        if os.path.exists(data_file):
+            try:
+                all_data = pd.read_pickle(data_file)
+                return all_data
+            except Exception as e:
+                self.logger('数据缓存', 'error', f'加载缓存失败: {e}')
+        return {}
+    
+    def get_cached_data(self, symbol):
+        """
+        从缓存获取数据
+        """
+        all_data = self._load_cached_data()
+        return all_data.get(symbol, pd.Series(dtype=float))
     
     def plot_kline(self, ticker, filename, period="1mo"):
         """生成K线图"""
         try:
-            import yfinance as yf
-            
-            data = yf.Ticker(ticker).history(period=period)
+            # 从缓存获取数据
+            close_data = self.get_cached_data(ticker)
             
             # 增强数据验证，确保数据有效且包含收盘价
-            if not validate_data(data, 5):
+            if not validate_data(close_data, 5):
                 self.logger('K线图', 'warning', f'{ticker} 数据不足')
                 print(f"⚠️  {ticker} 数据不足，跳过绘制")
                 return False
             
             # 检查是否包含有效收盘价数据
-            if data['Close'].isna().all():
+            if close_data.isna().all():
                 self.logger('K线图', 'warning', f'{ticker} 无有效收盘价数据')
                 print(f"⚠️  {ticker} 无有效收盘价数据，跳过绘制")
                 return False
+            
+            # 由于缓存中只有Close数据，我们创建一个简单的K线数据结构
+            # 实际应用中，可能需要从data_fetcher获取完整的OHLC数据
+            data = pd.DataFrame({
+                'Open': close_data,
+                'High': close_data,
+                'Low': close_data,
+                'Close': close_data,
+                'Volume': 0
+            })
             
             filepath = os.path.join(OUTPUT_DIR, filename)
             
@@ -255,10 +263,10 @@ class ChartGenerator:
     def plot_oil_gold_ratio(self):
         """绘制油金比与美债收益率"""
         try:
-            # 使用 self.fetcher
-            oil_prices = self.fetcher.get_data("CL", None, None)
+            # 使用缓存获取数据
+            oil_prices = self.get_cached_data("CL")
             
-            gold_prices = self.fetcher.get_data("GC", None, None)
+            gold_prices = self.get_cached_data("GC")
             
             if not (validate_data(oil_prices, 50) and validate_data(gold_prices, 50)):
                 self.logger('油金比', 'warning', '数据不足')
@@ -272,7 +280,7 @@ class ChartGenerator:
                 return False
             
             oil_gold_ratio = oil_prices / gold_prices
-            us_bond = self.fetcher.get_data('US_BOND', None, None)
+            us_bond = self.get_cached_data('US_BOND')
             
             # 降低美债数据验证阈值，因为ak.bond_zh_us_rate返回的数据量较少
             if not validate_data(us_bond, 10):
@@ -338,26 +346,17 @@ class ChartGenerator:
     def plot_pe_bond_spread(self):
         """绘制股债利差图"""
         try:
-            # 使用 self.fetcher
-            bond_df = self.fetcher.safe_get_data(ak.bond_zh_us_rate, start_date="20121219")[['日期','中国国债收益率10年']]
-            bond_df['日期'] = pd.to_datetime(bond_df['日期'], errors='coerce')
-            bond_df.set_index('日期', inplace=True)
+            # 使用缓存获取数据
+            bond_yield = self.get_cached_data('中国国债收益率10年')
+            pe_50 = self.get_cached_data('上证50滚动市盈率')
             
-            pe_df = self.fetcher.safe_get_data(ak.stock_index_pe_lg, symbol="上证50")[['日期','滚动市盈率']]
-            pe_df['日期'] = pd.to_datetime(pe_df['日期'], errors='coerce')
-            pe_df.set_index('日期', inplace=True)
-            
-            if bond_df.empty or pe_df.empty:
+            if bond_yield.empty or pe_50.empty:
                 self.logger('股债利差', 'warning', '数据获取失败')
                 return False
             
-            
-            
-            # 对齐日期
-            
-            
-            # 计算利差
-            spread = bond_df['中国国债收益率10年'] - 100 / pe_df['滚动市盈率']
+            # 对齐日期并计算利差
+            combined = pd.DataFrame({'中国国债收益率10年': bond_yield, '滚动市盈率': pe_50}).dropna()
+            spread = combined['中国国债收益率10年'] - 100 / combined['滚动市盈率']
             spread = spread.ffill().dropna()
             
             if not validate_data(spread, 50):

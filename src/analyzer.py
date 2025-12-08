@@ -1,15 +1,47 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import pandas as pd
-import akshare as ak
 from datetime import datetime, timedelta
-from config import MIN_DATA_POINTS, VIX_HIGH, VIX_EXTREME, VIX_LOW, SECTOR_ETFS
-from utils import validate_data, normalize, calculate_percentile
+import os
+import json
+from .config import MIN_DATA_POINTS, VIX_HIGH, VIX_EXTREME, VIX_LOW, SECTOR_ETFS, OUTPUT_DIR
+from .utils import validate_data, normalize, calculate_percentile
 
 class MarketAnalyzer:
-    def __init__(self, data_fetcher, logger_callback):
-        self.fetcher = data_fetcher
+    def __init__(self, logger_callback):
         self.logger = logger_callback
+        self.cache_dir = os.path.join(OUTPUT_DIR, 'data_cache')
+        self.cache_validity = 24 * 3600  # 缓存有效期（秒）
+    
+    def _is_cache_valid(self):
+        """检查缓存是否有效"""
+        cache_meta_file = os.path.join(self.cache_dir, 'cache_meta.json')
+        if os.path.exists(cache_meta_file):
+            try:
+                with open(cache_meta_file, 'r') as f:
+                    meta = json.load(f)
+                cache_time = meta.get('cache_time', 0)
+                current_time = datetime.now().timestamp()
+                return current_time - cache_time < self.cache_validity
+            except:
+                pass
+        return False
+    
+    def _load_cached_data(self):
+        """加载所有缓存数据"""
+        data_file = os.path.join(self.cache_dir, 'all_data.pkl')
+        if os.path.exists(data_file):
+            try:
+                all_data = pd.read_pickle(data_file)
+                return all_data
+            except Exception as e:
+                self.logger('数据缓存', 'error', f'加载缓存失败: {e}')
+        return {}
+    
+    def get_cached_data(self, symbol):
+        """从缓存获取数据"""
+        all_data = self._load_cached_data()
+        return all_data.get(symbol, pd.Series(dtype=float))
     
     def calculate_trend(self, series, period=10):
         if not validate_data(series, period * 2):
@@ -25,43 +57,11 @@ class MarketAnalyzer:
         
         try:
             tickers = ['^IXIC', '^GSPC', '^RUT']
-            raw_data = self.fetcher.batch_download(tickers, period="3mo")
             
-            if raw_data.empty:
-                self.logger('指数差异分析', 'warning', '数据下载失败')
-                return None
-            
-            # ✅ 修复：统一访问方式，增加降级处理
-            def get_ticker_data(df, ticker):
-                """安全获取 ticker 的 Close 数据"""
-                # 尝试扁平化列名
-                col_name = ticker
-                if col_name in df.columns:
-                    return df[col_name].dropna()
-                
-                # 尝试带前缀的列名
-                col_name = f'Close_{ticker}'
-                if col_name in df.columns:
-                    return df[col_name].dropna()
-                
-                # 降级处理：MultiIndex
-                if isinstance(df.columns, pd.MultiIndex):
-                    try:
-                        return df['Close'][ticker].dropna()
-                    except:
-                        pass
-                
-                # 最后手段：用 get_yf_data 单独获取
-                fallback = self.fetcher.get_yf_data(ticker, period='3mo')
-                if not fallback.empty and 'Close' in fallback.columns:
-                    return fallback['Close'].dropna()
-                
-                return pd.Series(dtype=float)
-            
-            # 获取数据
-            nasdaq_close = get_ticker_data(raw_data, '^IXIC')
-            sp500_close = get_ticker_data(raw_data, '^GSPC')
-            russell_close = get_ticker_data(raw_data, '^RUT')
+            # 从缓存获取数据
+            nasdaq_close = self.get_cached_data('^IXIC')
+            sp500_close = self.get_cached_data('^GSPC')
+            russell_close = self.get_cached_data('^RUT')
             
             if not (validate_data(nasdaq_close, MIN_DATA_POINTS) and 
                     validate_data(sp500_close, MIN_DATA_POINTS) and 
@@ -148,19 +148,14 @@ class MarketAnalyzer:
         print("="*70)
         
         try:
-            # ✅ 修复：get_yf_data 返回 DataFrame，需要提取 Close
-            vix_data = self.fetcher.get_yf_data('^VIX', period='3mo')
-            ten_year_data = self.fetcher.get_yf_data('^TNX', period='3mo')
-            sp500_data = self.fetcher.get_yf_data('^GSPC', period='3mo')
+            # 从缓存获取数据
+            vix = self.get_cached_data('^VIX')
+            ten_year = self.get_cached_data('^TNX')
+            sp500 = self.get_cached_data('^GSPC')
             
-            if vix_data.empty or ten_year_data.empty or sp500_data.empty:
+            if vix.empty or ten_year.empty or sp500.empty:
                 self.logger('风险环境分析', 'warning', '数据不足')
                 return None
-            
-            # ✅ 修复：确保是 Series
-            vix = vix_data['Close'].dropna() if 'Close' in vix_data.columns else pd.Series(dtype=float)
-            ten_year = ten_year_data['Close'].dropna() if 'Close' in ten_year_data.columns else pd.Series(dtype=float)
-            sp500 = sp500_data['Close'].dropna() if 'Close' in sp500_data.columns else pd.Series(dtype=float)
             
             if len(vix) < MIN_DATA_POINTS or len(ten_year) < MIN_DATA_POINTS:
                 self.logger('风险环境分析', 'warning', '数据点不足')
@@ -280,18 +275,14 @@ class MarketAnalyzer:
         print("="*70)
         
         try:
-            hsi_data = self.fetcher.get_yf_data('^HSI', period='3mo')
-            usdcny_data = self.fetcher.get_yf_data('CNY=X', period='3mo')
-            sp500_data = self.fetcher.get_yf_data('^GSPC', period='3mo')
+            # 从缓存获取数据
+            hsi = self.get_cached_data('^HSI')
+            usdcny = self.get_cached_data('CNY=X')
+            sp500 = self.get_cached_data('^GSPC')
             
-            if hsi_data.empty or usdcny_data.empty or sp500_data.empty:
+            if hsi.empty or usdcny.empty or sp500.empty:
                 self.logger('中美联动分析', 'warning', '数据不足')
                 return None
-            
-            # ✅ 修复：先定义 sp500，再使用它
-            hsi = hsi_data['Close'].dropna() if 'Close' in hsi_data.columns else pd.Series(dtype=float)
-            usdcny = usdcny_data['Close'].dropna() if 'Close' in usdcny_data.columns else pd.Series(dtype=float)
-            sp500 = sp500_data['Close'].dropna() if 'Close' in sp500_data.columns else pd.Series(dtype=float)
             
             # ✅ 修复：现在可以安全地检查 sp500
             if len(hsi) < 30 or len(usdcny) < 30 or len(sp500) < 30:
@@ -516,6 +507,89 @@ class MarketAnalyzer:
             self.logger('流动性分析', 'error', str(e))
             return None
     
+    def analyze_pe_bond_spread(self):
+        """分析股债性价比"""
+        print("\n" + "="*70)
+        print("【股债性价比解读】")
+        print("="*70)
+        
+        try:
+            # 从缓存获取数据
+            bond_yield = self.get_cached_data('中国国债收益率10年')
+            pe_50 = self.get_cached_data('上证50滚动市盈率')
+            
+            if bond_yield.empty or pe_50.empty:
+                self.logger('股债性价比', 'warning', '数据获取失败')
+                return None
+            
+            # 对齐日期
+            combined = pd.DataFrame({'中国国债收益率10年': bond_yield, '滚动市盈率': pe_50}).dropna()
+            
+            # 计算股债利差
+            combined['股债利差'] = combined['中国国债收益率10年'] - 100 / combined['滚动市盈率']
+            combined['股债利差'] = combined['股债利差'].ffill().dropna()
+            
+            if not validate_data(combined['股债利差'], 50):
+                self.logger('股债性价比', 'warning', '数据不足')
+                return None
+            
+            # 最新数据
+            current_bond = float(combined['中国国债收益率10年'].iloc[-1])
+            current_pe = float(combined['滚动市盈率'].iloc[-1])
+            current_spread = float(combined['股债利差'].iloc[-1])
+            
+            # 历史百分位
+            spread_percentile = calculate_percentile(combined['股债利差'], current_spread)
+            
+            # 解读
+            if current_spread > -2.6:
+                interpretation = "🔴 股债利差处于历史高位，债券吸引力显著增强，股票相对昂贵"
+                signal = "债券占优"
+            elif current_spread > -5.5:
+                interpretation = "🟡 股债利差处于中等水平，股债配置相对均衡"
+                signal = "均衡配置"
+            elif current_spread > -7.8:
+                interpretation = "🟢 股债利差处于历史低位，股票吸引力显著增强，债券相对昂贵"
+                signal = "股票占优"
+            else:
+                interpretation = "🔵 股债利差极度偏低，股票性价比极高，强烈建议配置股票"
+                signal = "股票极度占优"
+            
+            print(f"\n📊 股债性价比指标:")
+            print(f"  中国10年期国债收益率: {current_bond:.2f}%")
+            print(f"  上证50滚动市盈率:     {current_pe:.2f}")
+            print(f"  股债利差:             {current_spread:.2f}")
+            print(f"  历史百分位:           {spread_percentile:.0f}%")
+            
+            print(f"\n🎯 解读: {interpretation}")
+            print(f"💡 信号: {signal}")
+            
+            # 操作建议
+            if signal == "债券占优":
+                print(f"💼 建议: 增加债券配置比例，减少股票持仓")
+            elif signal == "均衡配置":
+                print(f"💼 建议: 保持股债均衡配置，关注市场变化")
+            elif signal == "股票占优":
+                print(f"💼 建议: 增加股票配置比例，减少债券持仓")
+            else:
+                print(f"💼 建议: 大幅增加股票配置，减少债券持仓")
+            
+            return {
+                '股债利差': interpretation,
+                '当前利差': current_spread,
+                '国债收益率': current_bond,
+                '滚动市盈率': current_pe,
+                '百分位': spread_percentile,
+                '信号': signal
+            }
+            
+        except Exception as e:
+            print(f"❌ 股债性价比分析失败: {e}")
+            import traceback
+            traceback.print_exc()
+            self.logger('股债性价比', 'error', str(e))
+            return None
+    
     def analyze_sector_rotation(self):
         """分析行业轮动"""
         print("\n" + "="*70)
@@ -523,17 +597,6 @@ class MarketAnalyzer:
         print("="*70)
         
         try:
-            from config import SECTOR_ETFS
-            
-            tickers = list(SECTOR_ETFS.values())
-            print(f"📥 正在下载 {len(tickers)} 个行业ETF数据...")
-            
-            # ✅ 修复：batch_download 返回扁平化列名的 DataFrame
-            raw_data = self.fetcher.batch_download(tickers, period="1mo")
-            
-            if raw_data.empty:
-                self.logger('行业轮动', 'warning', '数据下载失败')
-                return None
             
             returns = {}
             for sector, ticker in SECTOR_ETFS.items():
@@ -542,25 +605,13 @@ class MarketAnalyzer:
                         returns[sector] = np.nan
                         continue
                     
-                    # ✅ 修复：直接使用扁平化列名访问
-                    col_name = f'Close_{ticker}'
-                    if col_name in raw_data.columns:
-                        data = raw_data[col_name].dropna()
-                        
-                        if validate_data(data, 10):
-                            returns[sector] = float((data.iloc[-1] / data.iloc[0] - 1) * 100)
-                        else:
-                            returns[sector] = np.nan
+                    # 从data_fetcher获取缓存数据
+                    data = self.get_cached_data(ticker)
+                    
+                    if validate_data(data, 10):
+                        returns[sector] = float((data.iloc[-1] / data.iloc[0] - 1) * 100)
                     else:
-                        # 降级处理：尝试 MultiIndex
-                        try:
-                            data = raw_data['Close'][ticker].dropna()
-                            if validate_data(data, 10):
-                                returns[sector] = float((data.iloc[-1] / data.iloc[0] - 1) * 100)
-                            else:
-                                returns[sector] = np.nan
-                        except:
-                            returns[sector] = np.nan
+                        returns[sector] = np.nan
                         
                 except Exception as e:
                     print(f"⚠️  {sector}({ticker}) 失败: {e}")
