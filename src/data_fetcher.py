@@ -232,15 +232,19 @@ class DataFetcher:
             self.all_data['上证50滚动市盈率'] = pd.Series(dtype=float)
         
         # 10. Yf数据 - 补充更多全球指数和ETF
-        indices = list(INDICES.values())
+        # INDICES是一个列表，每个元素是(代码, 文件名, [周期])，提取第一个元素作为代码
+        indices = [idx[0] for idx in INDICES]
         sector_tickers = list(SECTOR_ETFS.values())
 
         self.logger('数据获取', 'info', '获取指数数据...')
         for idx in indices+sector_tickers:
             if idx not in self.all_data:
                 try:
-                    # 直接使用yfinance下载数据，不通过get_yf_data方法
                     idx_data = self.get_yf_data(idx, period="300d")
+                    if not idx_data.empty:
+                        self.all_data[idx] = idx_data  # 保存完整OHLC数据
+                    else:
+                        self.all_data[idx] = pd.Series(dtype=float)
                 except Exception as e:
                     self.logger('数据获取', 'warning', f'{idx}: {str(e)[:100]}')
                     self.all_data[idx] = pd.Series(dtype=float)
@@ -261,8 +265,8 @@ class DataFetcher:
             # 如果数据不在缓存中，尝试从yfinance获取
             self.logger('数据获取', 'info', f'缓存中未找到{symbol}，尝试从yfinance获取...')
             idx_data = self.get_yf_data(symbol, period="300d")
-            if not idx_data.empty and 'Close' in idx_data.columns:
-                self.all_data[symbol] = idx_data['Close']
+            if not idx_data.empty:
+                self.all_data[symbol] = idx_data  # 保存完整OHLC数据
             else:
                 self.all_data[symbol] = pd.Series(dtype=float)
             return self.all_data[symbol]
