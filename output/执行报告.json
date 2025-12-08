@@ -1,206 +1,188 @@
 {
-  "start_time": "2025-12-08T13:52:54.018737",
-  "end_time": "2025-12-08T13:53:26.316505",
+  "start_time": "2025-12-08T14:11:35.941024",
+  "end_time": "2025-12-08T14:12:12.340159",
   "tasks": [
     {
-      "timestamp": "2025-12-08T13:52:54.018818",
+      "timestamp": "2025-12-08T14:11:35.941108",
       "category": "数据获取",
       "status": "info",
       "message": "开始获取所有数据..."
     },
     {
-      "timestamp": "2025-12-08T13:52:54.018834",
+      "timestamp": "2025-12-08T14:11:35.941123",
       "category": "数据获取",
       "status": "info",
       "message": "获取融资余额数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:00.414614",
+      "timestamp": "2025-12-08T14:11:42.654224",
       "category": "数据获取",
       "status": "info",
       "message": "获取Shibor数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:01.746391",
+      "timestamp": "2025-12-08T14:11:44.118767",
       "category": "数据获取",
       "status": "info",
       "message": "获取中美国债收益率数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:09.663458",
+      "timestamp": "2025-12-08T14:11:53.175096",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510300数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:11.079239",
-      "category": "数据获取",
-      "status": "warning",
-      "message": "ETF_510300: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
-    },
-    {
-      "timestamp": "2025-12-08T13:53:11.080070",
+      "timestamp": "2025-12-08T14:11:54.644710",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_159845数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:11.532290",
-      "category": "数据获取",
-      "status": "warning",
-      "message": "ETF_159845: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
-    },
-    {
-      "timestamp": "2025-12-08T13:53:11.533112",
+      "timestamp": "2025-12-08T14:11:56.666580",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510500数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:11.983413",
-      "category": "数据获取",
-      "status": "warning",
-      "message": "ETF_510500: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
-    },
-    {
-      "timestamp": "2025-12-08T13:53:11.985829",
+      "timestamp": "2025-12-08T14:11:58.691449",
       "category": "数据获取",
       "status": "info",
       "message": "获取原油价格数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:14.462637",
+      "timestamp": "2025-12-08T14:12:02.014866",
       "category": "数据获取",
       "status": "info",
       "message": "获取黄金价格数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:15.565916",
+      "timestamp": "2025-12-08T14:12:04.399806",
       "category": "数据获取",
       "status": "info",
       "message": "获取股债利差相关数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:21.855244",
+      "timestamp": "2025-12-08T14:12:07.921762",
       "category": "数据获取",
       "status": "info",
       "message": "获取股债喜茶数据..."
     },
     {
-      "timestamp": "2025-12-08T13:53:21.855261",
+      "timestamp": "2025-12-08T14:12:07.921780",
       "category": "数据获取",
       "status": "error",
       "message": "'滚动市盈率'"
     },
     {
-      "timestamp": "2025-12-08T13:53:23.071799",
+      "timestamp": "2025-12-08T14:12:09.163661",
       "category": "K线图生成",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T13:53:23.573914",
+      "timestamp": "2025-12-08T14:12:09.601835",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与MA10 -> rongziyue_ma.png",
       "chart_path": "rongziyue_ma.png"
     },
     {
-      "timestamp": "2025-12-08T13:53:23.574001",
+      "timestamp": "2025-12-08T14:12:09.601922",
       "category": "融资余额分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T13:53:24.048557",
+      "timestamp": "2025-12-08T14:12:10.077335",
       "category": "绘图",
       "status": "success",
       "message": "归一化指标对比 -> rongziyue_1.png",
       "chart_path": "rongziyue_1.png"
     },
     {
-      "timestamp": "2025-12-08T13:53:24.506983",
+      "timestamp": "2025-12-08T14:12:10.535690",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与ETF对比 -> rongziyue_2.png",
       "chart_path": "rongziyue_2.png"
     },
     {
-      "timestamp": "2025-12-08T13:53:24.946870",
+      "timestamp": "2025-12-08T14:12:10.971361",
       "category": "绘图",
       "status": "success",
       "message": "流动性指标 -> liudongxing.png",
       "chart_path": "liudongxing.png"
     },
     {
-      "timestamp": "2025-12-08T13:53:24.947000",
+      "timestamp": "2025-12-08T14:12:10.971493",
       "category": "多指标对比",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T13:53:25.499846",
+      "timestamp": "2025-12-08T14:12:11.526282",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T13:53:25.941604",
+      "timestamp": "2025-12-08T14:12:11.966413",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2025-12-08T13:53:25.941718",
+      "timestamp": "2025-12-08T14:12:11.966540",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T13:53:25.947225",
+      "timestamp": "2025-12-08T14:12:11.973007",
       "category": "股债利差",
       "status": "error",
       "message": "If using all scalar values, you must pass an index"
     },
     {
-      "timestamp": "2025-12-08T13:53:25.947247",
+      "timestamp": "2025-12-08T14:12:11.973031",
       "category": "股债利差",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T13:53:26.247079",
+      "timestamp": "2025-12-08T14:12:12.271033",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T13:53:26.280380",
+      "timestamp": "2025-12-08T14:12:12.304154",
       "category": "指数差异分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T13:53:26.288678",
+      "timestamp": "2025-12-08T14:12:12.312572",
       "category": "风险环境分析",
       "status": "error",
       "message": "unsupported format string passed to Series.__format__"
     },
     {
-      "timestamp": "2025-12-08T13:53:26.302487",
+      "timestamp": "2025-12-08T14:12:12.326320",
       "category": "中美联动分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T13:53:26.309695",
+      "timestamp": "2025-12-08T14:12:12.333411",
       "category": "流动性分析",
       "status": "error",
       "message": "'numpy.float64' object has no attribute 'iloc'"
     },
     {
-      "timestamp": "2025-12-08T13:53:26.316462",
+      "timestamp": "2025-12-08T14:12:12.340098",
       "category": "股债性价比",
       "status": "warning",
       "message": "数据获取失败"
@@ -215,9 +197,6 @@
     "流动性分析: 'numpy.float64' object has no attribute 'iloc'"
   ],
   "warnings": [
-    "数据获取: ETF_510300: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
-    "数据获取: ETF_159845: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
-    "数据获取: ETF_510500: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
     "K线图生成: 执行失败",
     "股债利差: 执行失败",
     "股债性价比: 数据获取失败"
@@ -230,5 +209,5 @@
     ]
   ],
   "market_signals": {},
-  "duration": "4.46秒"
+  "duration": "4.42秒"
 }
