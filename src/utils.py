@@ -194,14 +194,10 @@ def validate_data(data, min_points=10):
     if data is None:
         return False
     if isinstance(data, pd.DataFrame):
-        if data.empty or len(data) < min_points:
-            return False
+        return not data.empty and len(data) >= min_points
     elif isinstance(data, pd.Series):
-        if data.empty or len(data) < min_points:
-            return False
-    elif hasattr(data, '__len__') and len(data) < min_points:
-        return False
-    return True
+        return not data.empty and len(data) >= min_points
+    return False
 
 def normalize(data):
     """归一化处理"""
@@ -212,11 +208,29 @@ def normalize(data):
         pass
     return pd.Series(dtype=float)
 
-def calculate_percentile(series, value):
+def calculate_percentile(data, value):
     """计算百分位"""
     try:
+        # 处理DataFrame，取Close列或第一列
+        if isinstance(data, pd.DataFrame):
+            if 'Close' in data.columns:
+                series = data['Close']
+            elif 'value' in data.columns:
+                series = data['value']
+            elif not data.empty:
+                series = data.iloc[:, 0]
+            else:
+                return 0
+        else:
+            series = data
+        
+        # 确保是Series
+        if not isinstance(series, pd.Series):
+            return 0
+        
         return (series <= value).sum() / len(series) * 100
-    except:
+    except Exception as e:
+        print(f"⚠️  计算百分位失败: {e}")
         return 0
 
 def format_date(date_str, fmt='%Y%m%d'):
