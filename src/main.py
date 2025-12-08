@@ -8,12 +8,12 @@ from datetime import datetime, timedelta
 # 添加src到路径
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from .config import OUTPUT_DIR, INDICES, EXECUTION_LOG
-from .utils import setup_logging, log_execution, setup_matplotlib_fonts, check_available_fonts, normalize, capture_print
-from .data_fetcher import DataFetcher
-from .analyzer import MarketAnalyzer
-from .charts import ChartGenerator
-from .reporter import ReportGenerator
+from config import OUTPUT_DIR, INDICES, EXECUTION_LOG
+from utils import setup_logging, log_execution, setup_matplotlib_fonts, check_available_fonts, normalize, capture_print
+from data_fetcher import DataFetcher
+from analyzer import MarketAnalyzer
+from charts import ChartGenerator
+from reporter import ReportGenerator
 
 def initialize():
     """初始化系统"""
