@@ -39,8 +39,8 @@ def initialize():
     
     # 创建核心组件
     fetcher = DataFetcher(logger_func)
-    analyzer = MarketAnalyzer(fetcher, logger_func)
-    chart_gen = ChartGenerator(logger_func, fetcher)
+    analyzer = MarketAnalyzer(logger_func)
+    chart_gen = ChartGenerator(logger_func)
     
     print(f"初始化完成: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     return log, fetcher, analyzer, chart_gen
