@@ -51,10 +51,8 @@ class MarketAnalyzer:
             # 如果有Close列，使用Close列，否则使用第一列
             if 'Close' in data.columns:
                 series = data['Close']
-            elif not data.empty:
-                series = data.iloc[:, 0]
             else:
-                return 'unknown'
+                series = data.iloc[:, 0]
         else:
             series = data
         recent = series.iloc[-period:].mean()
@@ -81,14 +79,19 @@ class MarketAnalyzer:
                 self.logger('指数差异分析', 'warning', '数据不足')
                 return None
             
-            # 计算指标（确保标量）
-            nasdaq_ret = float((nasdaq_close.iloc[-1].iloc[0] / nasdaq_close.iloc[-30].iloc[0] - 1) * 100)
-            sp500_ret = float((sp500_close.iloc[-1].iloc[0] / sp500_close.iloc[-30].iloc[0] - 1) * 100)
-            russell_ret = float((russell_close.iloc[-1].iloc[0] / russell_close.iloc[-30].iloc[0] - 1) * 100)
+            # 从DataFrame中正确提取value列
+            nasdaq_series = nasdaq_close['Close'] if 'Close' in nasdaq_close.columns else nasdaq_close.iloc[:, 0]
+            sp500_series = sp500_close['Close'] if 'Close' in sp500_close.columns else sp500_close.iloc[:, 0]
+            russell_series = russell_close['Close'] if 'Close' in russell_close.columns else russell_close.iloc[:, 0]
             
-            nasdaq_vol = float(nasdaq_close.pct_change().rolling(20).std().iloc[-1].iloc[0] * np.sqrt(252) * 100)
-            sp500_vol = float(sp500_close.pct_change().rolling(20).std().iloc[-1].iloc[0] * np.sqrt(252) * 100)
-            russell_vol = float(russell_close.pct_change().rolling(20).std().iloc[-1].iloc[0] * np.sqrt(252) * 100)
+            # 计算指标（确保标量）
+            nasdaq_ret = float((nasdaq_series.iloc[-1] / nasdaq_series.iloc[-30] - 1) * 100)
+            sp500_ret = float((sp500_series.iloc[-1] / sp500_series.iloc[-30] - 1) * 100)
+            russell_ret = float((russell_series.iloc[-1] / russell_series.iloc[-30] - 1) * 100)
+            
+            nasdaq_vol = float(nasdaq_series.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
+            sp500_vol = float(sp500_series.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
+            russell_vol = float(russell_series.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
             
             # 相关性
             df = pd.concat([
@@ -164,22 +167,23 @@ class MarketAnalyzer:
             ten_year = self.get_cached_data('^TNX')
             sp500 = self.get_cached_data('^GSPC')
             
-            if vix.empty or ten_year.empty or sp500.empty:
+            # 使用validate_data函数检查数据有效性
+            if not (validate_data(vix, MIN_DATA_POINTS) and validate_data(ten_year, MIN_DATA_POINTS) and validate_data(sp500, MIN_DATA_POINTS)):
                 self.logger('风险环境分析', 'warning', '数据不足')
                 return None
             
-            if len(vix) < MIN_DATA_POINTS or len(ten_year) < MIN_DATA_POINTS:
-                self.logger('风险环境分析', 'warning', '数据点不足')
-                return None
+            # 从DataFrame中正确提取value列
+            vix_series = vix['Close'] if 'Close' in vix.columns else vix.iloc[:, 0]
+            ten_year_series = ten_year['Close'] if 'Close' in ten_year.columns else ten_year.iloc[:, 0]
             
-            current_vix = float(vix.iloc[-1].iloc[0])
-            current_bond = float(ten_year.iloc[-1].iloc[0])
-            vix_change = float((vix.iloc[-1].iloc[0] / vix.iloc[-5].iloc[0] - 1) * 100)
-            bond_change = float((ten_year.iloc[-1].iloc[0] / ten_year.iloc[-5].iloc[0] - 1) * 100)
+            current_vix = float(vix_series.iloc[-1])
+            current_bond = float(ten_year_series.iloc[-1])
+            vix_change = float((vix_series.iloc[-1] / vix_series.iloc[-5] - 1) * 100)
+            bond_change = float((ten_year_series.iloc[-1] / ten_year_series.iloc[-5] - 1) * 100)
             
             # 计算百分位
-            vix_percentile = calculate_percentile(vix, current_vix)
-            bond_percentile = calculate_percentile(ten_year, current_bond)
+            vix_percentile = calculate_percentile(vix_series, current_vix)
+            bond_percentile = calculate_percentile(ten_year_series, current_bond)
             
             print(f"\n📊 当前风险指标:")
             print(f"  VIX:        {current_vix:.2f} ({vix_percentile:.0f}分位) 5日变化: {vix_change:+.2f}%")
@@ -230,7 +234,11 @@ class MarketAnalyzer:
             
             # 股债相关性
             if validate_data(sp500, MIN_DATA_POINTS):
-                recent_corr = sp500.pct_change().iloc[-30:].corr(ten_year.diff().iloc[-30:])
+                # 从DataFrame中正确提取value列
+                sp500_series = sp500['Close'] if 'Close' in sp500.columns else sp500.iloc[:, 0]
+                
+                # 计算相关性
+                recent_corr = float(sp500_series.pct_change().iloc[-30:].corr(ten_year_series.diff().iloc[-30:]))
                 print(f"\n🔗 股债30日相关性: {recent_corr:.3f}")
                 if recent_corr > 0.3:
                     corr_signal = "正相关 → 传统股债配置失效，宏观驱动主导"
@@ -291,21 +299,22 @@ class MarketAnalyzer:
             usdcny = self.get_cached_data('CNY=X')
             sp500 = self.get_cached_data('^GSPC')
             
-            if hsi.empty or usdcny.empty or sp500.empty:
+            # 使用validate_data函数检查数据有效性
+            if not (validate_data(hsi, 30) and validate_data(usdcny, 30) and validate_data(sp500, 30)):
                 self.logger('中美联动分析', 'warning', '数据不足')
                 return None
             
-            # ✅ 修复：现在可以安全地检查 sp500
-            if len(hsi) < 30 or len(usdcny) < 30 or len(sp500) < 30:
-                self.logger('中美联动分析', 'warning', '数据点不足')
-                return None
+            # 从DataFrame中正确提取value列
+            hsi_series = hsi['Close'] if 'Close' in hsi.columns else hsi.iloc[:, 0]
+            sp500_series = sp500['Close'] if 'Close' in sp500.columns else sp500.iloc[:, 0]
+            usdcny_series = usdcny['Close'] if 'Close' in usdcny.columns else usdcny.iloc[:, 0]
             
-            # ✅ 修复：确保标量值
-            hsi_ret = float((hsi.iloc[-1].iloc[0] / hsi.iloc[-30].iloc[0] - 1) * 100)
-            sp500_ret = float((sp500.iloc[-1].iloc[0] / sp500.iloc[-30].iloc[0] - 1) * 100)
-            current_cny = float(usdcny.iloc[-1].iloc[0])
-            cny_change_5d = float((usdcny.iloc[-1].iloc[0] / usdcny.iloc[-5].iloc[0] - 1) * 100)
-            cny_change_30d = float((usdcny.iloc[-1].iloc[0] / usdcny.iloc[-30].iloc[0] - 1) * 100)
+            # 确保标量值
+            hsi_ret = float((hsi_series.iloc[-1] / hsi_series.iloc[-30] - 1) * 100)
+            sp500_ret = float((sp500_series.iloc[-1] / sp500_series.iloc[-30] - 1) * 100)
+            current_cny = float(usdcny_series.iloc[-1])
+            cny_change_5d = float((usdcny_series.iloc[-1] / usdcny_series.iloc[-5] - 1) * 100)
+            cny_change_30d = float((usdcny_series.iloc[-1] / usdcny_series.iloc[-30] - 1) * 100)
             
             print(f"\n📊 市场表现 (30日):")
             print(f"  恒生指数:    {hsi_ret:+.2f}%")
@@ -409,13 +418,25 @@ class MarketAnalyzer:
                 self.logger('流动性分析', 'warning', '融资余额数据不足')
                 return None
             
-            # ✅ 修复：确保标量值
-            current_margin = float((margin_data.iloc[-1] / 100000000).iloc[0])
-            margin_change_5d = float(margin_data.pct_change(5).iloc[-1].iloc[0] * 100)
-            margin_change_30d = float(margin_data.pct_change(30).iloc[-1].iloc[0] * 100)
+            # 提取Series
+            margin_series = margin_data['value'] if 'value' in margin_data.columns else margin_data.iloc[:, 0]
             
-            current_shibor = float(shibor_data.iloc[-1].iloc[0]) if not shibor_data.empty else np.nan
-            shibor_change = float(shibor_data.pct_change().iloc[-1].iloc[0] * 100) if len(shibor_data) > 1 else 0
+            # 计算标量值
+            current_margin = float(margin_series.iloc[-1] / 100000000)
+            margin_change_5d = float(margin_series.pct_change(5).iloc[-1] * 100)
+            margin_change_30d = float(margin_series.pct_change(30).iloc[-1] * 100)
+            
+            # 处理Shibor数据
+            current_shibor = 0.0
+            shibor_change = 0.0
+            if validate_data(shibor_data, 10):
+                # 确保shibor_data是Series
+                if isinstance(shibor_data, pd.DataFrame):
+                    shibor_series = shibor_data['value'] if 'value' in shibor_data.columns else shibor_data.iloc[:, 0]
+                else:
+                    shibor_series = shibor_data
+                current_shibor = float(shibor_series.iloc[-1])
+                shibor_change = float(shibor_series.pct_change().iloc[-1] * 100) if len(shibor_series) > 1 else 0
             
             print(f"\n📊 流动性指标:")
             print(f"  融资余额: {current_margin:.0f}亿")
@@ -424,9 +445,17 @@ class MarketAnalyzer:
             print(f"  Shibor 1M: {current_shibor:.2f}%")
             print(f"    └─日变化: {shibor_change:+.2f}%")
             
-            if validate_data(bond_data):
-                current_spread = bond_data.iloc[-1] * 100  # 转换为基点
-                spread_change_5d = bond_data.diff(5).iloc[-1] * 100  # 转换为基点
+            # 处理bond_data
+            current_spread = 0.0
+            spread_change_5d = 0.0
+            if validate_data(bond_data, 10):
+                # 确保bond_data是Series
+                if isinstance(bond_data, pd.DataFrame):
+                    bond_series = bond_data['value'] if 'value' in bond_data.columns else bond_data.iloc[:, 0]
+                else:
+                    bond_series = bond_data
+                current_spread = float(bond_series.iloc[-1] * 100)  # 转换为基点
+                spread_change_5d = float(bond_series.diff(5).iloc[-1] * 100) if len(bond_series) > 5 else 0  # 转换为基点
                 print(f"  中美利差: {current_spread:.2f}bp (5日变化: {spread_change_5d:+.0f}bp)")
             
             # 融资余额解读
@@ -463,8 +492,13 @@ class MarketAnalyzer:
             print(f"\n🎯 Shibor: {shibor_signal}")
             print(f"💡 解读: {shibor_desc}")
             
-            # 股债性价比
-            if validate_data(bond_data):
+            # 处理bond_data
+            current_spread = 0.0
+            if validate_data(bond_data, 10):
+                bond_series = bond_data['value'] if 'value' in bond_data.columns else bond_data.iloc[:, 0]
+                current_spread = float(bond_series.iloc[-1])
+                
+                # 中美利差解读
                 # 注意：current_spread 已经是基点单位
                 if current_spread > 50:
                     spread_signal = "🔼 利差走阔"
@@ -487,8 +521,9 @@ class MarketAnalyzer:
             if current_shibor < 2.5: liquidity_score += 1
             elif current_shibor > 3.0: liquidity_score -= 1
             
-            if validate_data(bond_data):
-                spread_value = bond_data.iloc[-1] * 100  # 转换为基点
+            if validate_data(bond_data, 10):
+                bond_series = bond_data['value'] if 'value' in bond_data.columns else bond_data.iloc[:, 0]
+                spread_value = float(bond_series.iloc[-1]) * 100  # 转换为基点
                 if spread_value > 50: liquidity_score -= 1
             
             print(f"\n💧 流动性评分: {liquidity_score}/2")
@@ -530,8 +565,8 @@ class MarketAnalyzer:
             pe_50 = self.get_cached_data('上证50滚动市盈率')
             spread = self.get_cached_data('股债利差')  # 股债利差是计算结果
             
-            if bond_yield.empty or pe_50.empty or spread.empty:
-                self.logger('股债性价比', 'warning', '数据获取失败')
+            if not (validate_data(bond_yield) and validate_data(pe_50) and validate_data(spread)):
+                self.logger('股债性价比', 'warning', '数据获取失败或不足')
                 return None
             
             # 从DataFrame中正确提取value列
@@ -545,7 +580,7 @@ class MarketAnalyzer:
             current_spread = float(spread_series.iloc[-1])
             
             # 历史百分位
-            spread_percentile = calculate_percentile(spread, current_spread)
+            spread_percentile = calculate_percentile(spread_series, current_spread)
             
             # 解读
             if current_spread > -2.6:
@@ -604,7 +639,7 @@ class MarketAnalyzer:
             # 从缓存获取数据
             margin_data = self.get_cached_data('融资余额')
             
-            if margin_data.empty or len(margin_data) < 50:
+            if not validate_data(margin_data, 50):
                 return {
                     'success': False,
                     'message': '融资余额数据不足'
