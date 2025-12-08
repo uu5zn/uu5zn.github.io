@@ -232,8 +232,8 @@ class DataFetcher:
                         # 确保索引是DatetimeIndex
                         idx_data.index = pd.to_datetime(idx_data.index, errors='coerce')
                         idx_data = idx_data.dropna()
-                        # 统一数据长度为300
-                        self.all_data[idx] = idx_data['Close'].iloc[-300:] if len(idx_data) >= 300 else idx_data['Close']
+                        # 统一数据长度为300，保存完整的OHLC数据
+                        self.all_data[idx] = idx_data.iloc[-300:] if len(idx_data) >= 300 else idx_data
                     else:
                         self.all_data[idx] = pd.Series(dtype=float, index=pd.DatetimeIndex([]))
                 except Exception as e:

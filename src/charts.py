@@ -56,63 +56,45 @@ class ChartGenerator:
         从缓存获取数据
         """
         all_data = self._load_cached_data()
-        return all_data.get(symbol, pd.Series(dtype=float))
+        return all_data.get(symbol, pd.DataFrame(dtype=float))
     
     def plot_kline(self, ticker, filename, period="1mo"):
-        """生成K线图 - 使用matplotlib直接绘制，避免mplfinance库"""
+        """生成K线图 - 使用mplfinance库绘制真正的K线图"""
         try:
             print(f"\n🔍 开始处理 {ticker} K线图")
             
             # 从缓存获取数据
             print(f"   1. 从缓存获取数据")
-            close_data = self.get_cached_data(ticker)
-            print(f"   数据类型: {type(close_data)}")
-            print(f"   数据形状: {close_data.shape if hasattr(close_data, 'shape') else len(close_data) if hasattr(close_data, '__len__') else '未知'}")
+            ohlc_data = self.get_cached_data(ticker)
+            print(f"   数据类型: {type(ohlc_data)}")
+            print(f"   数据形状: {ohlc_data.shape if hasattr(ohlc_data, 'shape') else len(ohlc_data) if hasattr(ohlc_data, '__len__') else '未知'}")
             
-            # 增强数据验证，确保数据有效且包含收盘价
+            # 增强数据验证，确保数据有效且包含OHLC列
             print(f"   2. 验证数据有效性")
             try:
-                is_valid = validate_data(close_data, 5)
+                # 检查是否为DataFrame且包含OHLC列
+                is_valid = isinstance(ohlc_data, pd.DataFrame) and \
+                           not ohlc_data.empty and \
+                           all(col in ohlc_data.columns for col in ['Open', 'High', 'Low', 'Close'])
+                print(f"   数据类型和结构检查: {is_valid}")
+                if is_valid:
+                    # 进一步验证数据点数量
+                    is_valid = len(ohlc_data) >= 5
+                    print(f"   数据点数量检查: {is_valid}")
                 print(f"   数据验证结果: {is_valid}")
             except Exception as ve:
                 print(f"   ❌ 数据验证失败: {ve}")
                 return False
             
             if not is_valid:
-                self.logger('K线图', 'warning', f'{ticker} 数据不足')
-                print(f"⚠️  {ticker} 数据不足，跳过绘制")
-                return False
-            
-            # 检查是否包含有效收盘价数据
-            print(f"   3. 检查有效数据")
-            try:
-                has_valid_data = not close_data.isna().all()
-                print(f"   有效数据检查结果: {has_valid_data}")
-            except Exception as ve:
-                print(f"   ❌ 有效数据检查失败: {ve}")
-                return False
-            
-            if not has_valid_data:
-                self.logger('K线图', 'warning', f'{ticker} 无有效收盘价数据')
-                print(f"⚠️  {ticker} 无有效收盘价数据，跳过绘制")
-                return False
-            
-            # 确保数据是Series
-            print(f"   4. 确保数据是Series")
-            try:
-                if isinstance(close_data, pd.DataFrame):
-                    # 如果是DataFrame，取第一列作为Series
-                    print(f"   转换DataFrame为Series")
-                    close_data = close_data.iloc[:, 0]
-                print(f"   转换后数据类型: {type(close_data)}")
-            except Exception as ve:
-                print(f"   ❌ 数据类型转换失败: {ve}")
+                self.logger('K线图', 'warning', f'{ticker} 数据不足或格式不正确')
+                print(f"⚠️  {ticker} 数据不足或格式不正确，跳过绘制")
                 return False
             
             # 确保索引是datetime类型
-            print(f"   5. 检查索引类型")
+            print(f"   3. 检查索引类型")
             try:
-                is_datetime_index = isinstance(close_data.index, pd.DatetimeIndex)
+                is_datetime_index = isinstance(ohlc_data.index, pd.DatetimeIndex)
                 print(f"   索引是否为datetime: {is_datetime_index}")
             except Exception as ve:
                 print(f"   ❌ 索引类型检查失败: {ve}")
@@ -121,8 +103,8 @@ class ChartGenerator:
             if not is_datetime_index:
                 try:
                     print(f"   转换索引为datetime")
-                    close_data.index = pd.to_datetime(close_data.index)
-                    print(f"   转换后索引类型: {type(close_data.index)}")
+                    ohlc_data.index = pd.to_datetime(ohlc_data.index)
+                    print(f"   转换后索引类型: {type(ohlc_data.index)}")
                 except Exception as ve:
                     # 如果无法转换为datetime，跳过绘制
                     self.logger('K线图', 'warning', f'{ticker} 无法转换索引为日期时间')
@@ -132,59 +114,82 @@ class ChartGenerator:
             filepath = os.path.join(OUTPUT_DIR, filename)
             
             # 确保输出目录存在
-            print(f"   6. 确保输出目录存在")
+            print(f"   4. 确保输出目录存在")
             os.makedirs(os.path.dirname(filepath), exist_ok=True)
             
-            # 获取当前可用的中文字体
-            print(f"   7. 设置字体")
-            current_font = plt.rcParams['font.sans-serif'][0]
-            print(f"   使用字体: {current_font}")
-            
-            # 使用matplotlib直接绘制简单的折线图
-            print(f"   8. 创建图表")
-            fig, ax = plt.subplots(figsize=(6, 4), facecolor='black')
-            
-            # 设置图表背景
-            print(f"   9. 设置图表样式")
-            ax.set_facecolor('black')
-            
-            # 绘制收盘价折线
-            print(f"   10. 绘制折线图")
-            ax.plot(close_data.index, close_data.values, color='#2ecc71', linewidth=1.5)
-            
-            # 设置标题和标签
-            print(f"   11. 设置标题和标签")
-            ax.set_title(ticker, fontsize=12, fontweight='bold', color='white', fontname=current_font)
-            ax.set_xlabel('日期', fontsize=10, color='white', fontname=current_font)
-            ax.set_ylabel('价格', fontsize=10, color='white', fontname=current_font)
-            
-            # 设置坐标轴颜色
-            print(f"   12. 设置坐标轴样式")
-            ax.spines['bottom'].set_color('#666666')
-            ax.spines['top'].set_color('#666666')
-            ax.spines['left'].set_color('#666666')
-            ax.spines['right'].set_color('#666666')
-            
-            # 设置刻度颜色
-            ax.tick_params(axis='x', colors='white', labelsize=8)
-            ax.tick_params(axis='y', colors='white', labelsize=8)
-            
-            # 设置网格
-            ax.grid(True, alpha=0.3, color='#666666', linestyle='--')
-            
-            # 设置日期格式
-            fig.autofmt_xdate()
-            
-            # 调整布局
-            plt.tight_layout()
-            
-            # 保存图表
-            print(f"   13. 保存图表")
-            plt.savefig(filepath, dpi=150, bbox_inches='tight', facecolor='black')
-            plt.close(fig)
+            # 使用mplfinance绘制K线图
+            print(f"   5. 使用mplfinance绘制K线图")
+            try:
+                # 设置K线图样式
+                mc = mpf.make_marketcolors(
+                    up='#2ecc71', down='#e74c3c',
+                    edge='inherit',
+                    wick='inherit',
+                    volume='in',
+                    ohlc='inherit'
+                )
+                s = mpf.make_mpf_style(
+                    base_mpf_style='charles',
+                    marketcolors=mc,
+                    facecolor='black',
+                    edgecolor='#666666',
+                    figcolor='black',
+                    gridcolor='#666666',
+                    gridstyle='--',
+                    gridaxis='both',
+                    gridalpha=0.3,
+                    rc={'font.size': 8, 'font.sans-serif': ['SimHei']}
+                )
+                
+                # 绘制K线图
+                mpf.plot(
+                    ohlc_data,
+                    type='candle',
+                    style=s,
+                    figsize=(6, 4),
+                    title=ticker,
+                    ylabel='价格',
+                    volume=False,
+                    savefig=dict(fname=filepath, dpi=150, bbox_inches='tight'),
+                    tight_layout=True
+                )
+            except Exception as e:
+                print(f"   ❌ mplfinance绘制失败: {e}")
+                # 如果mplfinance绘制失败，回退到折线图
+                print(f"   6. 回退到折线图绘制")
+                fig, ax = plt.subplots(figsize=(6, 4), facecolor='black')
+                ax.set_facecolor('black')
+                ax.plot(ohlc_data.index, ohlc_data['Close'], color='#2ecc71', linewidth=1.5)
+                
+                # 设置标题和标签
+                current_font = plt.rcParams['font.sans-serif'][0]
+                ax.set_title(ticker, fontsize=12, fontweight='bold', color='white', fontname=current_font)
+                ax.set_xlabel('日期', fontsize=10, color='white', fontname=current_font)
+                ax.set_ylabel('价格', fontsize=10, color='white', fontname=current_font)
+                
+                # 设置坐标轴颜色
+                ax.spines['bottom'].set_color('#666666')
+                ax.spines['top'].set_color('#666666')
+                ax.spines['left'].set_color('#666666')
+                ax.spines['right'].set_color('#666666')
+                
+                # 设置刻度颜色
+                ax.tick_params(axis='x', colors='white', labelsize=8)
+                ax.tick_params(axis='y', colors='white', labelsize=8)
+                
+                # 设置网格
+                ax.grid(True, alpha=0.3, color='#666666', linestyle='--')
+                
+                # 设置日期格式
+                fig.autofmt_xdate()
+                
+                # 调整布局并保存
+                plt.tight_layout()
+                plt.savefig(filepath, dpi=150, bbox_inches='tight', facecolor='black')
+                plt.close(fig)
             
             # 验证文件是否生成成功
-            print(f"   14. 验证文件")
+            print(f"   7. 验证文件")
             if os.path.exists(filepath):
                 file_size = os.path.getsize(filepath)
                 print(f"✅ K线图: {filename} (路径: {filepath}, 大小: {file_size} 字节)")
