@@ -37,9 +37,9 @@ class DataFetcher:
                 pass
         return False
     
-    def _load_cache(self):
-        """加载缓存数据"""
-        if self._is_cache_valid():
+    def _load_cache(self, force_valid=False):
+        """加载缓存数据，force_valid=True时强制加载过期缓存"""
+        if force_valid or self._is_cache_valid():
             try:
                 data_file = os.path.join(self.cache_dir, 'all_data.pkl')
                 if os.path.exists(data_file):
@@ -118,8 +118,12 @@ class DataFetcher:
 
 
     def fetch_all_data(self, force_refresh=False):
-        """一次性获取所有需要的数据"""
-        if not force_refresh and self._load_cache():
+        """一次性获取所有需要的数据，获取失败时保留旧缓存"""
+        # 1. 先加载旧缓存作为备份（即使过期）
+        self._load_cache(force_valid=True)
+        
+        # 2. 检查是否需要获取新数据
+        if not force_refresh and self._is_cache_valid():
             return
         
         self.logger('数据获取', 'info', '开始获取所有数据...')
@@ -129,7 +133,9 @@ class DataFetcher:
         start_date_str = start_date.strftime('%Y%m%d')
         end_date_str = end_date.strftime('%Y%m%d')
         
-        self.all_data = {}
+        # 3. 如果没有缓存数据，初始化空字典
+        if self.all_data is None:
+            self.all_data = {}
         
         # 1. 融资余额
         self.logger('数据获取', 'info', '获取融资余额数据...')
@@ -143,12 +149,14 @@ class DataFetcher:
                 self.all_data['融资余额'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
                 print(f"  ✅ 融资余额: {len(series_data)} 条记录")
             else:
-                self.all_data['融资余额'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-                print(f"  ⚠️  融资余额: 空数据")
+                if '融资余额' not in self.all_data:
+                    self.all_data['融资余额'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ⚠️  融资余额: 空数据，使用旧缓存")
         except Exception as e:
             self.logger('数据获取', 'warning', f'融资余额: {str(e)[:100]}')
-            self.all_data['融资余额'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-            print(f"  ❌ 融资余额: 获取失败 - {str(e)[:50]}")
+            if '融资余额' not in self.all_data:
+                self.all_data['融资余额'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 融资余额: 获取失败，使用旧缓存 - {str(e)[:50]}")
         
         
         
@@ -164,8 +172,9 @@ class DataFetcher:
             
         except Exception as e:
             self.logger('数据获取', 'warning', f'Shibor: {str(e)[:100]}')
-            self.all_data['Shibor 1M'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-            print(f"  ❌ Shibor 1M: 获取失败 - {str(e)[:50]}")
+            if 'Shibor 1M' not in self.all_data:
+                self.all_data['Shibor 1M'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ Shibor 1M: 获取失败，使用旧缓存 - {str(e)[:50]}")
         
         # 4. 中美国债收益率及相关数据
         self.logger('数据获取', 'info', '获取中美国债收益率数据...')
@@ -184,10 +193,13 @@ class DataFetcher:
             print(f"  ✅ 中美国债收益率: {len(data.iloc[-300:])} 条记录")
         except Exception as e:
             self.logger('数据获取', 'warning', f'中美国债收益率: {str(e)[:100]}')
-            self.all_data['中美国债收益率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-            self.all_data['US_BOND'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-            self.all_data['中国国债收益率10年'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-            print(f"  ❌ 中美国债收益率: 获取失败 - {str(e)[:50]}")
+            if '中美国债收益率' not in self.all_data:
+                self.all_data['中美国债收益率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            if 'US_BOND' not in self.all_data:
+                self.all_data['US_BOND'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            if '中国国债收益率10年' not in self.all_data:
+                self.all_data['中国国债收益率10年'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 中美国债收益率: 获取失败，使用旧缓存 - {str(e)[:50]}")
         
         # 5. ETF数据
         etf_list = {'ETF_510300': '510300', 'ETF_159845': '159845', 'ETF_510500': '510500'}
@@ -202,12 +214,14 @@ class DataFetcher:
                     self.all_data[etf_key] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
                     print(f"  ✅ {etf_key}: {len(series_data)} 条记录")
                 else:
-                    self.all_data[etf_key] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-                    print(f"  ⚠️  {etf_key}: 空数据")
+                    if etf_key not in self.all_data:
+                        self.all_data[etf_key] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                    print(f"  ⚠️  {etf_key}: 空数据，使用旧缓存")
             except Exception as e:
                 self.logger('数据获取', 'warning', f'{etf_key}: {str(e)[:100]}')
-                self.all_data[etf_key] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-                print(f"  ❌ {etf_key}: 获取失败 - {str(e)[:50]}")
+                if etf_key not in self.all_data:
+                    self.all_data[etf_key] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ❌ {etf_key}: 获取失败，使用旧缓存 - {str(e)[:50]}")
         
         # 6. 原油价格
         self.logger('数据获取', 'info', '获取原油价格数据...')
@@ -221,12 +235,14 @@ class DataFetcher:
                 self.all_data['CL'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
                 print(f"  ✅ 原油价格(CL): {len(series_data)} 条记录")
             else:
-                self.all_data['CL'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-                print(f"  ⚠️  原油价格(CL): 空数据")
+                if 'CL' not in self.all_data:
+                    self.all_data['CL'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ⚠️  原油价格(CL): 空数据，使用旧缓存")
         except Exception as e:
             self.logger('数据获取', 'warning', f'原油价格: {str(e)[:100]}')
-            self.all_data['CL'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-            print(f"  ❌ 原油价格(CL): 获取失败 - {str(e)[:50]}")
+            if 'CL' not in self.all_data:
+                self.all_data['CL'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 原油价格(CL): 获取失败，使用旧缓存 - {str(e)[:50]}")
         
         # 7. 黄金价格
         self.logger('数据获取', 'info', '获取黄金价格数据...')
@@ -240,18 +256,20 @@ class DataFetcher:
                 self.all_data['GC'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
                 print(f"  ✅ 黄金价格(GC): {len(series_data)} 条记录")
             else:
-                self.all_data['GC'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-                print(f"  ⚠️  黄金价格(GC): 空数据")
+                if 'GC' not in self.all_data:
+                    self.all_data['GC'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ⚠️  黄金价格(GC): 空数据，使用旧缓存")
         except Exception as e:
             self.logger('数据获取', 'warning', f'黄金价格: {str(e)[:100]}')
-            self.all_data['GC'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-            print(f"  ❌ 黄金价格(GC): 获取失败 - {str(e)[:50]}")
+            if 'GC' not in self.all_data:
+                self.all_data['GC'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 黄金价格(GC): 获取失败，使用旧缓存 - {str(e)[:50]}")
         
         # 8. 股债利差相关数据
         self.logger('数据获取', 'info', '获取股债利差相关数据...')
         # 上证50滚动市盈率
         try:
-            pe_df = ak.stock_index_pe_lg(symbol="上证50")[['日期','滚动市盈率']]
+            pe_df = ak.stock_index_pe_lg(symbol="上证50")
             pe_df['日期'] = pd.to_datetime(pe_df['日期'], errors='coerce')
             pe_df.set_index('日期', inplace=True)
             # 统一长度为300
@@ -260,8 +278,9 @@ class DataFetcher:
             print(f"  ✅ 上证50滚动市盈率: {len(series_data)} 条记录")
         except Exception as e:
             self.logger('数据获取', 'warning', f'上证50滚动市盈率: {str(e)[:100]}')
-            self.all_data['上证50滚动市盈率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-            print(f"  ❌ 上证50滚动市盈率: 获取失败 - {str(e)[:50]}")
+            if '上证50滚动市盈率' not in self.all_data:
+                self.all_data['上证50滚动市盈率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 上证50滚动市盈率: 获取失败，使用旧缓存 - {str(e)[:50]}")
 
         self.logger('数据获取', 'info', '获取股债喜茶数据...')
         series_data2 = self.all_data['中国国债收益率10年'] - 100 / self.all_data['滚动市盈率']
@@ -279,24 +298,25 @@ class DataFetcher:
         self.logger('数据获取', 'info', '获取指数数据...')
         success_count = 0
         for idx in indices+sector_tickers:
-            if idx not in self.all_data:
-                try:
-                    idx_data = self.get_yf_data(idx, period="300d")
-                    if not idx_data.empty:
-                            self.all_data[idx] = idx_data  # 保存完整OHLC数据
-                            # 修复tuple格式化错误：将shape转换为字符串
-                            shape_str = f"({idx_data.shape[0]}, {idx_data.shape[1]})"
-                            print(f"  ✅ {idx}: {shape_str} 记录")
-                            success_count += 1
-                    else:
+            try:
+                idx_data = self.get_yf_data(idx, period="300d")
+                if not idx_data.empty:
+                        self.all_data[idx] = idx_data  # 保存完整OHLC数据
+                        # 修复tuple格式化错误：将shape转换为字符串
+                        shape_str = f"({idx_data.shape[0]}, {idx_data.shape[1]})"
+                        print(f"  ✅ {idx}: {shape_str} 记录")
+                        success_count += 1
+                else:
+                    if idx not in self.all_data:
                         # 返回带OHLC列的空DataFrame
                         self.all_data[idx] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['Open', 'High', 'Low', 'Close', 'Volume'])
-                        print(f"  ⚠️  {idx}: 空数据")
-                except Exception as e:
-                    self.logger('数据获取', 'warning', f'{idx}: {str(e)[:100]}')
+                    print(f"  ⚠️  {idx}: 空数据，使用旧缓存")
+            except Exception as e:
+                self.logger('数据获取', 'warning', f'{idx}: {str(e)[:100]}')
+                if idx not in self.all_data:
                     # 返回带OHLC列的空DataFrame
                     self.all_data[idx] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['Open', 'High', 'Low', 'Close', 'Volume'])
-                    print(f"  ❌ {idx}: 获取失败 - {str(e)[:50]}")
+                print(f"  ❌ {idx}: 获取失败，使用旧缓存 - {str(e)[:50]}")
         print(f"  📊 指数数据获取完成: {success_count}/{len(indices+sector_tickers)} 成功")
         
         self.logger('数据获取', 'success', f'已获取所有数据，共{len(self.all_data)}种数据类型')
