@@ -526,20 +526,23 @@ class MarketAnalyzer:
         
         try:
             # 从缓存获取数据
-            bond_yield = self.get_cached_data('股债利差')
+            bond_yield = self.get_cached_data('中国国债收益率10年')  # 正确获取国债收益率
             pe_50 = self.get_cached_data('上证50滚动市盈率')
-            spread = self.get_cached_data('股债利差')
+            spread = self.get_cached_data('股债利差')  # 股债利差是计算结果
             
-            if bond_yield.empty or pe_50.empty:
+            if bond_yield.empty or pe_50.empty or spread.empty:
                 self.logger('股债性价比', 'warning', '数据获取失败')
                 return None
             
-            
+            # 从DataFrame中正确提取value列
+            bond_yield_series = bond_yield['value'] if 'value' in bond_yield.columns else bond_yield.iloc[:, 0]
+            pe_50_series = pe_50['value'] if 'value' in pe_50.columns else pe_50.iloc[:, 0]
+            spread_series = spread['value'] if 'value' in spread.columns else spread.iloc[:, 0]
             
             # 最新数据
-            current_bond = float(bond_yield.iloc[-1])
-            current_pe = float(pe_50.iloc[-1])
-            current_spread = float(spread.iloc[-1])
+            current_bond = float(bond_yield_series.iloc[-1])
+            current_pe = float(pe_50_series.iloc[-1])
+            current_spread = float(spread_series.iloc[-1])
             
             # 历史百分位
             spread_percentile = calculate_percentile(spread, current_spread)

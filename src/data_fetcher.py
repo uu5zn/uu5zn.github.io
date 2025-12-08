@@ -272,8 +272,17 @@ class DataFetcher:
             pe_df = ak.stock_index_pe_lg(symbol="上证50")
             pe_df['日期'] = pd.to_datetime(pe_df['日期'], errors='coerce')
             pe_df.set_index('日期', inplace=True)
+            
+            # 健壮的列处理逻辑：优先使用'滚动市盈率'，如果不存在则使用'市盈率'，再不行则使用第二列
+            if '滚动市盈率' in pe_df.columns:
+                pe_column = '滚动市盈率'
+            elif '市盈率' in pe_df.columns:
+                pe_column = '市盈率'
+            else:
+                pe_column = pe_df.columns[1] if len(pe_df.columns) > 1 else pe_df.columns[0]
+            
             # 统一长度为300
-            series_data = pe_df['滚动市盈率'].iloc[-300:]
+            series_data = pe_df[pe_column].iloc[-300:]
             self.all_data['上证50滚动市盈率'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             print(f"  ✅ 上证50滚动市盈率: {len(series_data)} 条记录")
         except Exception as e:
