@@ -155,9 +155,10 @@ class DataFetcher:
         # 3. Shibor 1M
         self.logger('数据获取', 'info', '获取Shibor数据...')
         try:
-            data = ak.macro_china_shibor_all()[['日期','1M-定价']]
-            data['日期'] = pd.to_datetime(data['日期'], errors='coerce', format='%Y%m%d')
-            series_data = data.set_index('日期').iloc[-300:]
+            data = ak.macro_china_shibor_all()
+            data['日期'] = pd.to_datetime(data['日期'], errors='coerce', format='%Y-%m-%d')
+            data = data.set_index('日期')
+            series_data = data['1M-定价'].iloc[-300:]
             self.all_data['Shibor 1M'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             print(f"  ✅ Shibor 1M: {len(series_data)} 条记录")
             
@@ -263,7 +264,7 @@ class DataFetcher:
             print(f"  ❌ 上证50滚动市盈率: 获取失败 - {str(e)[:50]}")
 
         self.logger('数据获取', 'info', '获取股债喜茶数据...')
-        series_data2 = combined['中国国债收益率10年'] - 100 / combined['滚动市盈率']
+        series_data2 = elf.all_data['中国国债收益率10年'] - 100 / elf.all_data['滚动市盈率']
         self.all_data['股债利差'] = pd.DataFrame({'value': series_data2}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         print(f"  ✅ 股债息差: {len(series_data2)} 条记录")
             
