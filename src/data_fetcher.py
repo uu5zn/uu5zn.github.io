@@ -5,7 +5,8 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 import json
-from config import HEADERS, YF_TIMEOUT, OUTPUT_DIR
+from config import HEADERS, YF_TIMEOUT, OUTPUT_DIR, SECTOR_ETFS
+
 import warnings
 warnings.filterwarnings('ignore', category=FutureWarning, module='yfinance')
 
@@ -240,7 +241,6 @@ class DataFetcher:
                     self.all_data[idx] = pd.Series(dtype=float, index=pd.DatetimeIndex([]))
         
         # 11. 行业ETF数据
-        from .config import SECTOR_ETFS
         sector_tickers = list(SECTOR_ETFS.values())
         if sector_tickers:
             self.logger('数据获取', 'info', '获取行业ETF数据...')
