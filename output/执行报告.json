@@ -1,145 +1,139 @@
 {
-  "start_time": "2025-12-08T10:42:35.459750",
-  "end_time": "2025-12-08T10:42:39.078454",
+  "start_time": "2025-12-08T12:02:04.204453",
+  "end_time": "2025-12-08T12:02:07.198080",
   "tasks": [
     {
-      "timestamp": "2025-12-08T10:42:35.591665",
+      "timestamp": "2025-12-08T12:02:04.349239",
       "category": "K线图",
       "status": "success",
       "message": "^TNX -> tenbond.png",
       "chart_path": "tenbond.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:35.717946",
+      "timestamp": "2025-12-08T12:02:04.470417",
       "category": "K线图",
       "status": "success",
       "message": "^VIX -> vix.png",
       "chart_path": "vix.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:35.853944",
+      "timestamp": "2025-12-08T12:02:04.602316",
       "category": "K线图",
       "status": "success",
       "message": "^GSPC -> sp500.png",
       "chart_path": "sp500.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:35.982562",
+      "timestamp": "2025-12-08T12:02:04.724738",
       "category": "K线图",
       "status": "success",
       "message": "^IXIC -> nasdaq.png",
       "chart_path": "nasdaq.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:36.117398",
+      "timestamp": "2025-12-08T12:02:04.855962",
       "category": "K线图",
       "status": "success",
       "message": "^RUT -> rs2000.png",
       "chart_path": "rs2000.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:36.254115",
+      "timestamp": "2025-12-08T12:02:04.988706",
       "category": "K线图",
       "status": "success",
       "message": "VNQ -> vnq.png",
       "chart_path": "vnq.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:36.395355",
+      "timestamp": "2025-12-08T12:02:05.123733",
       "category": "K线图",
       "status": "success",
       "message": "^N225 -> nikkei225.png",
       "chart_path": "nikkei225.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:36.585067",
+      "timestamp": "2025-12-08T12:02:05.246300",
       "category": "K线图",
       "status": "success",
       "message": "^HSI -> hsi.png",
       "chart_path": "hsi.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:36.713809",
+      "timestamp": "2025-12-08T12:02:05.408942",
       "category": "K线图",
       "status": "success",
       "message": "CNY=X -> rmb.png",
       "chart_path": "rmb.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:36.713855",
+      "timestamp": "2025-12-08T12:02:05.408966",
       "category": "K线图生成",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T10:42:36.716318",
-      "category": "数据缓存",
-      "status": "success",
-      "message": "已加载缓存数据"
-    },
-    {
-      "timestamp": "2025-12-08T10:42:36.716372",
+      "timestamp": "2025-12-08T12:02:05.411406",
       "category": "融资余额分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T10:42:36.716409",
+      "timestamp": "2025-12-08T12:02:05.425275",
       "category": "多指标对比",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T10:42:37.281782",
+      "timestamp": "2025-12-08T12:02:05.973713",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T10:42:38.279427",
+      "timestamp": "2025-12-08T12:02:06.407612",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2025-12-08T10:42:38.279563",
+      "timestamp": "2025-12-08T12:02:06.407724",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T10:42:38.726986",
+      "timestamp": "2025-12-08T12:02:06.847981",
       "category": "股债利差",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T10:42:39.026745",
+      "timestamp": "2025-12-08T12:02:07.140543",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T10:42:39.057219",
+      "timestamp": "2025-12-08T12:02:07.171744",
       "category": "指数差异分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T10:42:39.064921",
+      "timestamp": "2025-12-08T12:02:07.179150",
       "category": "风险环境分析",
       "status": "error",
       "message": "unsupported format string passed to Series.__format__"
     },
     {
-      "timestamp": "2025-12-08T10:42:39.078325",
+      "timestamp": "2025-12-08T12:02:07.191975",
       "category": "中美联动分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T10:42:39.078437",
+      "timestamp": "2025-12-08T12:02:07.198053",
       "category": "市场解读",
       "status": "error",
       "message": "'Series' object has no attribute 'columns'"
@@ -163,12 +157,5 @@
     ]
   ],
   "market_signals": {},
-  "detailed_output": {
-    "sector_rotation": "\n======================================================================\n【行业轮动解读】\n======================================================================\n\n📊 近1月行业表现:\n  1. 美股科技: +28.48%\n  2. 美股金融: +20.99%\n  3. 美股消费: +20.43%\n  4. 美股工业: +16.57%\n  5. 美股能源: +11.05%\n  6. 美股医药: +1.89%\n\n🏆 领涨: 美股科技, 美股金融\n📉 落后: 美股能源, 美股医药\n\n🔄 轮动强度: 13.46%\n🎯 🔥 剧烈轮动: 板块分化严重，追高风险大\n",
-    "index_divergence": "\n======================================================================\n【市场结构解读】\n======================================================================\n❌ 指数差异分析失败: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n",
-    "risk_regime": "\n======================================================================\n【风险环境解读】\n======================================================================\n\n📊 当前风险指标:\n❌ 风险环境分析失败: unsupported format string passed to Series.__format__\n",
-    "china_us_linkage": "\n======================================================================\n【中美市场联动解读】\n======================================================================\n\n📊 市场表现 (30日):\n  恒生指数:    -2.53%\n  标普500:     +1.16%\n  人民币汇率:  7.0705 (5日: -0.02%, 30日: -0.56%)\n\n🎯 汇率信号: 🔄 相对稳定 → 汇率不是主要矛盾\n❌ 中美联动分析失败: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().\n",
-    "liquidity_conditions": ""
-  },
-  "duration": "3.62秒"
+  "duration": "2.99秒"
 }
