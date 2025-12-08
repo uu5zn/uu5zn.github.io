@@ -601,6 +601,149 @@ class MarketAnalyzer:
             self.logger('股债性价比', 'error', str(e))
             return None
     
+    
+    
+    def analyze_margin_analysis(self):
+        """融资余额分析 - 从缓存数据获取"""
+        try:
+            # 从缓存获取数据
+            margin_data = self.get_cached_data('融资余额')
+            
+            if margin_data.empty or len(margin_data) < 50:
+                return {
+                    'success': False,
+                    'message': '融资余额数据不足'
+                }
+            
+            # 获取value列的数据
+            margin_values = margin_data['value'] if 'value' in margin_data.columns else margin_data['Close']
+            
+            # 计算均线
+            margin_ma10 = margin_values.rolling(10).mean()
+            
+            # 打印最新值
+            last_margin = margin_data.iloc[-1] / 1000000
+            last_ma10 = margin_ma10.iloc[-1]
+            
+            return {
+                'success': True,
+                'margin_data': margin_data,
+                'margin_values': margin_values,
+                'margin_ma10': margin_ma10,
+                'last_margin': last_margin,
+                'last_ma10': last_ma10,
+                'below_ma10': margin_data.iloc[-1] < last_ma10
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'message': f'融资余额分析失败: {e}'
+            }
+    
+    def analyze_multi_indicator(self):
+        """多指标对比 - 从缓存数据获取"""
+        try:
+            # 从缓存获取数据
+            margin_data = self.get_cached_data('融资余额')
+            exchange_rate = self.get_cached_data('美元')
+            shibor_data = self.get_cached_data('Shibor 1M')
+            bond_data = self.get_cached_data('中美国债收益率')
+            etf_300 = self.get_cached_data('ETF_510300')
+            etf_1000 = self.get_cached_data('ETF_159845')
+            etf_500 = self.get_cached_data('ETF_510500')
+            
+            # 提取需要的数据列
+            margin_values = margin_data['value'] if not margin_data.empty and 'value' in margin_data.columns else pd.Series()
+            exchange_rate_values = exchange_rate['value'] if not exchange_rate.empty and 'value' in exchange_rate.columns else pd.Series()
+            shibor_values = shibor_data['value'] if not shibor_data.empty and 'value' in shibor_data.columns else pd.Series()
+            bond_values = bond_data['value'] if not bond_data.empty and 'value' in bond_data.columns else pd.Series()
+            etf_300_values = etf_300['Close'] if not etf_300.empty and 'Close' in etf_300.columns else pd.Series()
+            etf_1000_values = etf_1000['Close'] if not etf_1000.empty and 'Close' in etf_1000.columns else pd.Series()
+            etf_500_values = etf_500['Close'] if not etf_500.empty and 'Close' in etf_500.columns else pd.Series()
+            
+            return {
+                'success': True,
+                'margin_data': margin_data,
+                'exchange_rate': exchange_rate,
+                'shibor_data': shibor_data,
+                'bond_data': bond_data,
+                'etf_300': etf_300,
+                'etf_1000': etf_1000,
+                'etf_500': etf_500,
+                'margin_values': margin_values,
+                'exchange_rate_values': exchange_rate_values,
+                'shibor_values': shibor_values,
+                'bond_values': bond_values,
+                'etf_300_values': etf_300_values,
+                'etf_1000_values': etf_1000_values,
+                'etf_500_values': etf_500_values
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'message': f'多指标对比失败: {e}'
+            }
+    
+    def analyze_correlation(self):
+        """相关性分析 - 从缓存数据获取"""
+        try:
+            # 从缓存获取数据
+            hsi = self.get_cached_data('^HSI')
+            rut = self.get_cached_data('^RUT')
+            
+            if hsi.empty or rut.empty:
+                return {
+                    'success': False,
+                    'message': '相关性分析数据不足'
+                }
+            
+            # 提取Close列或第一列
+            def extract_close(data):
+                if isinstance(data, pd.DataFrame):
+                    if 'Close' in data.columns:
+                        return data['Close'].dropna()
+                    elif not data.empty:
+                        return data.iloc[:, 0].dropna()
+                return data
+            
+            hsi_close = extract_close(hsi)
+            rut_close = extract_close(rut)
+            
+            if len(hsi_close) < 30 or len(rut_close) < 30:
+                return {
+                    'success': False,
+                    'message': '相关性分析数据不足'
+                }
+            
+            # 对齐数据
+            df = pd.concat([hsi_close, rut_close], axis=1, keys=['HSI', 'RUT']).dropna()
+            
+            if len(df) < 30:
+                return {
+                    'success': False,
+                    'message': '相关性分析数据不足'
+                }
+            
+            correlation = float(df['HSI'].corr(df['RUT']))
+            
+            return {
+                'success': True,
+                'hsi': hsi,
+                'rut': rut,
+                'hsi_close': hsi_close,
+                'rut_close': rut_close,
+                'df': df,
+                'correlation': correlation
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'message': f'相关性分析失败: {e}'
+            }
+    
     def analyze_sector_rotation(self):
         """分析行业轮动"""
         print("\n" + "="*70)
@@ -697,3 +840,74 @@ class MarketAnalyzer:
             print(f"❌ 行业轮动分析失败: {e}")
             self.logger('行业轮动分析', 'error', str(e))
             return None
+    
+    def analyze_market(self):
+        """综合市场分析，整合所有分析模块"""
+        print("\n" + "📈 开始生成综合市场解读".center(70, "="))
+        
+        # 初始化输出捕获存储
+        insights = []
+        detailed_output = {
+            'sector_rotation': '',
+            'index_divergence': '',
+            'risk_regime': '',
+            'china_us_linkage': '',
+            'liquidity_conditions': ''
+        }
+        
+        try:
+            # 行业轮动
+            # 先检查analyze_sector_rotation方法是否存在
+            if hasattr(self, 'analyze_sector_rotation'):
+                sector_result = self.analyze_sector_rotation()
+                if sector_result:
+                    insights.append(('行业轮动', f"行业轮动强度{sector_result['rotation_strength']:.2f}% {sector_result['leading']}"))
+            
+            # 指数差异
+            index_result = self.analyze_index_divergence()
+            if index_result:
+                insights.append(('指数差异', index_result['insight']))
+            
+            # 风险环境
+            risk_result = self.analyze_risk_regime()
+            if risk_result:
+                insights.append(('风险环境', f"VIX{risk_result['vix']:.2f} 国债{risk_result['bond_yield']:.2f}% {risk_result['risk_level']}"))
+            
+            # 中美联动
+            linkage_result = self.analyze_china_us_linkage()
+            if linkage_result:
+                insights.append(('中美联动', f"恒指{linkage_result['hsi_ret']:+.2f}% 汇率{linkage_result['cny_change']:+.2f}% {linkage_result['linkage']}"))
+            
+            # 流动性 - 使用缓存数据
+            margin_data = self.get_cached_data('融资余额')
+            shibor_data = self.get_cached_data('Shibor 1M')
+            bond_data = self.get_cached_data('中美国债收益率')
+            
+            # 提取需要的数据列
+            margin_values = margin_data['value'] if not margin_data.empty and 'value' in margin_data.columns else pd.Series()
+            shibor_values = shibor_data['value'] if not shibor_data.empty and 'value' in shibor_data.columns else pd.Series()
+            bond_values = bond_data['value'] if not bond_data.empty and 'value' in bond_data.columns else pd.Series()
+            
+            liquidity_result = self.analyze_liquidity_conditions(margin_values, shibor_values, bond_values)
+            if liquidity_result:
+                insights.append(('流动性', f"融资{liquidity_result['margin']:.0f}亿 Shibor{liquidity_result['shibor']:.2f}% {liquidity_result['liquidity_env']}"))
+            
+            # 股债性价比
+            pe_bond_result = self.analyze_pe_bond_spread()
+            if pe_bond_result:
+                insights.append(('股债利差', pe_bond_result['股债利差']))
+            
+            print("\n" + "📊 市场解读完成".center(70, "="))
+            
+            return {
+                'insights': insights,
+                'detailed_output': detailed_output
+            }
+            
+        except Exception as e:
+            print(f"❌ 市场解读失败: {e}")
+            self.logger('市场解读', 'error', str(e))
+            return {
+                'insights': insights,
+                'detailed_output': detailed_output
+            }

@@ -64,58 +64,15 @@ class ChartGenerator:
             print(f"\n🔍 开始处理 {ticker} K线图")
             
             # 从缓存获取数据
-            print(f"   1. 从缓存获取数据")
             ohlc_data = self.get_cached_data(ticker)
-            print(f"   数据类型: {type(ohlc_data)}")
-            print(f"   数据形状: {ohlc_data.shape if hasattr(ohlc_data, 'shape') else len(ohlc_data) if hasattr(ohlc_data, '__len__') else '未知'}")
             
-            # 增强数据验证，确保数据有效且包含OHLC列
-            print(f"   2. 验证数据有效性")
-            try:
-                # 检查是否为DataFrame且包含OHLC列
-                is_valid = isinstance(ohlc_data, pd.DataFrame) and \
-                           not ohlc_data.empty and \
-                           all(col in ohlc_data.columns for col in ['Open', 'High', 'Low', 'Close'])
-                print(f"   数据类型和结构检查: {is_valid}")
-                if is_valid:
-                    # 进一步验证数据点数量
-                    is_valid = len(ohlc_data) >= 5
-                    print(f"   数据点数量检查: {is_valid}")
-                print(f"   数据验证结果: {is_valid}")
-            except Exception as ve:
-                print(f"   ❌ 数据验证失败: {ve}")
+            # 检查数据是否为空
+            if ohlc_data.empty:
+                print(f"   ⚠️  缓存中无 {ticker} 数据")
+                self.logger('K线图', 'warning', f'{ticker}: 缓存中无数据')
                 return False
-            
-            if not is_valid:
-                self.logger('K线图', 'warning', f'{ticker} 数据不足或格式不正确')
-                print(f"⚠️  {ticker} 数据不足或格式不正确，跳过绘制")
-                return False
-            
-            # 确保索引是datetime类型
-            print(f"   3. 检查索引类型")
-            try:
-                is_datetime_index = isinstance(ohlc_data.index, pd.DatetimeIndex)
-                print(f"   索引是否为datetime: {is_datetime_index}")
-            except Exception as ve:
-                print(f"   ❌ 索引类型检查失败: {ve}")
-                return False
-            
-            if not is_datetime_index:
-                try:
-                    print(f"   转换索引为datetime")
-                    ohlc_data.index = pd.to_datetime(ohlc_data.index)
-                    print(f"   转换后索引类型: {type(ohlc_data.index)}")
-                except Exception as ve:
-                    # 如果无法转换为datetime，跳过绘制
-                    self.logger('K线图', 'warning', f'{ticker} 无法转换索引为日期时间')
-                    print(f"⚠️  {ticker} 无法转换索引为日期时间，跳过绘制")
-                    return False
             
             filepath = os.path.join(OUTPUT_DIR, filename)
-            
-            # 确保输出目录存在
-            print(f"   4. 确保输出目录存在")
-            os.makedirs(os.path.dirname(filepath), exist_ok=True)
             
             # 使用mplfinance绘制K线图
             print(f"   5. 使用mplfinance绘制K线图")
@@ -155,10 +112,20 @@ class ChartGenerator:
             except Exception as e:
                 print(f"   ❌ mplfinance绘制失败: {e}")
                 # 如果mplfinance绘制失败，回退到折线图
-                print(f"   6. 回退到折线图绘制")
+                print(f"   回退到折线图绘制")
+                
+                # 确保有Close列或第一列
+                if isinstance(ohlc_data, pd.DataFrame):
+                    if 'Close' in ohlc_data.columns:
+                        close_data = ohlc_data['Close']
+                    else:
+                        close_data = ohlc_data.iloc[:, 0]
+                else:
+                    close_data = ohlc_data
+                
                 fig, ax = plt.subplots(figsize=(6, 4), facecolor='black')
                 ax.set_facecolor('black')
-                ax.plot(ohlc_data.index, ohlc_data['Close'], color='#2ecc71', linewidth=1.5)
+                ax.plot(close_data.index, close_data, color='#2ecc71', linewidth=1.5)
                 
                 # 设置标题和标签
                 current_font = plt.rcParams['font.sans-serif'][0]
@@ -188,7 +155,6 @@ class ChartGenerator:
                 plt.close(fig)
             
             # 验证文件是否生成成功
-            print(f"   7. 验证文件")
             if os.path.exists(filepath):
                 file_size = os.path.getsize(filepath)
                 print(f"✅ K线图: {filename} (路径: {filepath}, 大小: {file_size} 字节)")

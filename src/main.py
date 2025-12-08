@@ -10,7 +10,6 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from config import OUTPUT_DIR, INDICES, EXECUTION_LOG
 from utils import setup_logging, log_execution, setup_matplotlib_fonts, check_available_fonts, normalize, capture_print
-from data_fetcher import DataFetcher
 from analyzer import MarketAnalyzer
 from charts import ChartGenerator
 from reporter import ReportGenerator
@@ -37,13 +36,12 @@ def initialize():
         """
         log_execution(log, category, status, message, **kwargs)
     
-    # 创建核心组件
-    fetcher = DataFetcher(logger_func)
+    # 创建核心组件 - 移除DataFetcher，只使用缓存数据
     analyzer = MarketAnalyzer(logger_func)
     chart_gen = ChartGenerator(logger_func)
     
     print(f"初始化完成: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    return log, fetcher, analyzer, chart_gen
+    return log, analyzer, chart_gen
 
 def task_kline_charts(chart_gen):
     """任务1: 生成指数K线图"""
@@ -62,41 +60,29 @@ def task_kline_charts(chart_gen):
     
     return success_count
 
-def task_margin_analysis(fetcher, analyzer, chart_gen):
-    """任务2: 融资余额分析"""
+def task_margin_analysis(analyzer, chart_gen):
+    """任务2: 融资余额分析 - 使用缓存数据"""
     print("\n【任务2】融资余额分析...")
     
     try:
-        end_date = datetime.now()
-        start_date = end_date - timedelta(days=300)
-        start_date_str = start_date.strftime('%Y%m%d')
-        end_date_str = end_date.strftime('%Y%m%d')
+        # 调用analyzer中的新方法
+        result = analyzer.analyze_margin_analysis()
         
-        margin_data = fetcher.get_cached_data('融资余额')
-        
-        if margin_data.empty or len(margin_data) < 50:
-            print("⚠️ 融资余额数据不足")
+        if not result['success']:
+            print(f"⚠️ {result['message']}")
             return False
-        
-        # 获取value列的数据
-        margin_values = margin_data['value'] if 'value' in margin_data.columns else margin_data['Close']
-        
-        # 计算均线
-        margin_ma10 = margin_values.rolling(10).mean()
         
         # 绘图
         chart_gen.plot_line(
-            {'融资余额': margin_values.iloc[-50:], 'ma10': margin_ma10.iloc[-50:]},
+            {'融资余额': result['margin_values'].iloc[-50:], 'ma10': result['margin_ma10'].iloc[-50:]},
             '融资余额与MA10', ['融资余额', 'MA10'], ['r', 'b'],
             save_path='rongziyue_ma.png'
         )
         
         # 打印最新值
-        last_margin = margin_data.iloc[-1] / 1000000
-        last_ma10 = margin_ma10.iloc[-1]
-        print(f"最新融资余额: {last_margin:.1f}M")
+        print(f"最新融资余额: {result['last_margin']:.1f}M")
         
-        if margin_data.iloc[-1] < last_ma10:
+        if result['below_ma10']:
             print("⚠️  警告: 融资余额低于MA10，资金流出")
         
         return True
@@ -105,41 +91,25 @@ def task_margin_analysis(fetcher, analyzer, chart_gen):
         print(f"❌ 融资余额分析失败: {e}")
         return False
 
-def task_multi_indicator(fetcher, analyzer, chart_gen):
-    """任务3: 多指标对比"""
+def task_multi_indicator(analyzer, chart_gen):
+    """任务3: 多指标对比 - 使用缓存数据"""
     print("\n【任务3】多指标对比...")
     
     try:
-        end_date = datetime.now()
-        start_date = end_date - timedelta(days=180)  # 调整为180天，解决横坐标过长问题
-        start_date_str = start_date.strftime('%Y%m%d')
-        end_date_str = end_date.strftime('%Y%m%d')
+        # 调用analyzer中的新方法
+        result = analyzer.analyze_multi_indicator()
         
-        # 获取数据
-        margin_data = fetcher.get_cached_data('融资余额')
-        exchange_rate = fetcher.get_cached_data('CNY=X')
-        shibor_data = fetcher.get_cached_data('Shibor 1M')
-        bond_data = fetcher.get_cached_data('中美国债收益率')
-        etf_300 = fetcher.get_cached_data('ETF_510300')
-        etf_1000 = fetcher.get_cached_data('ETF_159845')
-        etf_500 = fetcher.get_cached_data('ETF_510500')
-        
-        # 提取需要的数据列
-        margin_values = margin_data['value'] if not margin_data.empty and 'value' in margin_data.columns else pd.Series()
-        exchange_rate_values = exchange_rate['value'] if not exchange_rate.empty and 'value' in exchange_rate.columns else pd.Series()
-        shibor_values = shibor_data['value'] if not shibor_data.empty and 'value' in shibor_data.columns else pd.Series()
-        bond_values = bond_data['value'] if not bond_data.empty and 'value' in bond_data.columns else pd.Series()
-        etf_300_values = etf_300['Close'] if not etf_300.empty and 'Close' in etf_300.columns else pd.Series()
-        etf_1000_values = etf_1000['Close'] if not etf_1000.empty and 'Close' in etf_1000.columns else pd.Series()
-        etf_500_values = etf_500['Close'] if not etf_500.empty and 'Close' in etf_500.columns else pd.Series()
+        if not result['success']:
+            print(f"⚠️ {result['message']}")
+            return False
         
         # 归一化绘图
         chart_gen.plot_line(
             {
-                '融资余额': normalize(margin_values),
-                '汇率': normalize(-exchange_rate_values),
-                '中美利差': normalize(bond_values),
-                '500ETF': normalize(etf_500)
+                '融资余额': normalize(result['margin_values']),
+                '汇率': normalize(-result['exchange_rate_values']),
+                '中美利差': normalize(result['bond_values']),
+                '500ETF': normalize(result['etf_500'])
             },
             '归一化指标对比', ['融资余额', '汇率', '中美利差', '500ETF'],
             ['g', 'c', 'w', 'r'], save_path='rongziyue_1.png'
@@ -147,9 +117,9 @@ def task_multi_indicator(fetcher, analyzer, chart_gen):
         
         chart_gen.plot_line(
             {
-                '融资余额': normalize(margin_data),
-                '300ETF': normalize(etf_300),
-                '1000ETF': normalize(etf_1000)
+                '融资余额': normalize(result['margin_data']),
+                '300ETF': normalize(result['etf_300']),
+                '1000ETF': normalize(result['etf_1000'])
             },
             '融资余额与ETF对比', ['融资余额', '300ETF', '1000ETF'],
             ['g', 'r', 'b'], save_path='rongziyue_2.png'
@@ -157,8 +127,8 @@ def task_multi_indicator(fetcher, analyzer, chart_gen):
         
         chart_gen.plot_line(
             {
-                'Shibor 1M': normalize(shibor_data.iloc[-200:]),
-                '中美国债利差': normalize(bond_data.iloc[-200:])
+                'Shibor 1M': normalize(result['shibor_data'].iloc[-200:]),
+                '中美国债利差': normalize(result['bond_data'].iloc[-200:])
             },
             '流动性指标', ['Shibor 1M', '中美国债利差'], ['r', 'g'],
             save_path='liudongxing.png'
@@ -175,65 +145,23 @@ def task_oil_gold(chart_gen):
     print("\n【任务4】油金比分析...")
     return chart_gen.plot_oil_gold_ratio()
 
-def task_correlation(fetcher, chart_gen):
-    """任务5: 相关性分析"""
+def task_correlation(analyzer, chart_gen):
+    """任务5: 相关性分析 - 使用缓存数据"""
     print("\n【任务5】相关性分析...")
     
     try:
-        # 直接使用yfinance下载数据，返回MultiIndex DataFrame
-        import yfinance as yf
-        from config import YF_TIMEOUT
+        # 调用analyzer中的新方法
+        result = analyzer.analyze_correlation()
         
-        hsi_df = yf.download(['^HSI'], period='300d', interval='1d', auto_adjust=True, progress=False, timeout=YF_TIMEOUT)
-        rut_df = yf.download(['^RUT'], period='300d', interval='1d', auto_adjust=True, progress=False, timeout=YF_TIMEOUT)
-        
-        if hsi_df.empty or rut_df.empty:
+        if not result['success']:
+            print(f"⚠️ {result['message']}")
             return False
         
-        # 确保返回MultiIndex结构
-        def ensure_multiindex(df, ticker):
-            """确保DataFrame是MultiIndex结构"""
-            if isinstance(df.columns, pd.MultiIndex):
-                return df
-            else:
-                # 单个ticker情况，转换为MultiIndex
-                multi_cols = pd.MultiIndex.from_product([['Open', 'High', 'Low', 'Close', 'Volume'], [ticker]])
-                result = pd.DataFrame(df.values, index=df.index, columns=multi_cols)
-                return result
-        
-        hsi_df = ensure_multiindex(hsi_df, '^HSI')
-        rut_df = ensure_multiindex(rut_df, '^RUT')
-        
-        # ✅ 修复：正确访问 MultiIndex
-        def extract_close(df, ticker):
-            """从 MultiIndex DataFrame 提取 Close 序列"""
-            if isinstance(df.columns, pd.MultiIndex):
-                try:
-                    return df['Close'][ticker].dropna()
-                except KeyError:
-                    # 降级处理
-                    return df.iloc[:, 0].dropna()
-            else:
-                # 扁平结构（不应该发生）
-                return df.iloc[:, 0].dropna()
-        
-        hsi_close = extract_close(hsi_df, '^HSI')
-        rut_close = extract_close(rut_df, '^RUT')
-        
-        if len(hsi_close) < 30 or len(rut_close) < 30:
-            return False
-        
-        df = pd.concat([hsi_close, rut_close], axis=1, keys=['HSI', 'RUT']).dropna()
-        
-        if len(df) < 30:
-            return False
-        
-        correlation = float(df['HSI'].corr(df['RUT']))
-        print(f"恒生指数与Russell 2000相关性: {correlation:.4f}")
+        print(f"恒生指数与Russell 2000相关性: {result['correlation']:.4f}")
         
         # 绘图
         chart_gen.plot_line(
-            {'HSI': df['HSI']/df['HSI'].iloc[0], 'RUT': df['RUT']/df['RUT'].iloc[0]},
+            {'HSI': result['df']['HSI']/result['df']['HSI'].iloc[0], 'RUT': result['df']['RUT']/result['df']['RUT'].iloc[0]},
             '恒生指数与Russell 2000走势对比(归一化)',
             ['HSI', 'RUT'], ['#3498db', '#e74c3c'],
             save_path='hsi_rut_comparison.png'
@@ -263,15 +191,15 @@ def task_sector_rotation(analyzer, chart_gen):
 def main():
     """主函数"""
     # 初始化
-    log, fetcher, analyzer, chart_gen = initialize()
+    log, analyzer, chart_gen = initialize()
     
-    # 任务调度
+    # 任务调度 - 移除外部API数据获取相关任务，只保留基于缓存数据的任务
     tasks = [
         ("K线图生成", lambda: task_kline_charts(chart_gen)),
-        ("融资余额分析", lambda: task_margin_analysis(fetcher, analyzer, chart_gen)),
-        ("多指标对比", lambda: task_multi_indicator(fetcher, analyzer, chart_gen)),
+        ("融资余额分析", lambda: task_margin_analysis(analyzer, chart_gen)),
+        ("多指标对比", lambda: task_multi_indicator(analyzer, chart_gen)),
         ("油金比分析", lambda: task_oil_gold(chart_gen)),
-        ("相关性分析", lambda: task_correlation(fetcher, chart_gen)),
+        ("相关性分析", lambda: task_correlation(analyzer, chart_gen)),
         ("股债利差", lambda: task_pe_bond_spread(chart_gen)),
         ("行业轮动", lambda: task_sector_rotation(analyzer, chart_gen)),
     ]
@@ -297,79 +225,13 @@ def main():
             log_execution(log, task_name, 'error', str(e))
     
     # 市场解读（核心分析）
-    print("\n" + "📈 开始生成综合市场解读".center(70, "="))
+    # 调用 analyzer 中的综合市场分析方法
+    market_result = analyzer.analyze_market()
     
-    # 初始化输出捕获存储
-    log['detailed_output'] = {
-        'sector_rotation': '',
-        'index_divergence': '',
-        'risk_regime': '',
-        'china_us_linkage': '',
-        'liquidity_conditions': ''
-    }
-    
-    try:
-        # 行业轮动
-        from analyzer import MarketAnalyzer
-        # 先检查analyze_sector_rotation方法是否存在
-        if hasattr(analyzer, 'analyze_sector_rotation'):
-            success, sector_result, sector_output = capture_print(analyzer.analyze_sector_rotation)
-            log['detailed_output']['sector_rotation'] = sector_output
-            if sector_result:
-                log['insights'].append(('行业轮动', f"行业轮动强度{sector_result['rotation_strength']:.2f}% {sector_result['leading']}"))
-        
-        # 指数差异
-        success, divergence_result, divergence_output = capture_print(analyzer.analyze_index_divergence)
-        log['detailed_output']['index_divergence'] = divergence_output
-        if divergence_result:
-            log['insights'].append(('指数差异', divergence_result['insight']))
-        
-        # 风险环境
-        success, risk_result, risk_output = capture_print(analyzer.analyze_risk_regime)
-        log['detailed_output']['risk_regime'] = risk_output
-        if risk_result:
-            log['insights'].append(('风险环境', f"VIX{risk_result['vix']:.2f} 国债{risk_result['bond_yield']:.2f}% {risk_result['risk_level']}"))
-            log['market_signals']['risk_level'] = risk_result['risk_level']
-        
-        # 中美联动
-        success, linkage_result, linkage_output = capture_print(analyzer.analyze_china_us_linkage)
-        log['detailed_output']['china_us_linkage'] = linkage_output
-        if linkage_result:
-            log['insights'].append(('中美联动', f"恒指{linkage_result['hsi_ret']:+.2f}% 汇率{linkage_result['cny_change']:+.2f}% {linkage_result['linkage']}"))
-        
-        # 流动性
-        end_date = datetime.now()
-        start_date = end_date - timedelta(days=300)
-        start_date_str = start_date.strftime('%Y%m%d')
-        end_date_str = end_date.strftime('%Y%m%d')
-        
-        margin_data = fetcher.get_cached_data('融资余额')
-        shibor_data = fetcher.get_cached_data('Shibor 1M')
-        bond_data = fetcher.get_cached_data('中美国债收益率')
-        
-        # 提取需要的数据列
-        margin_values = margin_data['value'] if not margin_data.empty and 'value' in margin_data.columns else pd.Series()
-        shibor_values = shibor_data['value'] if not shibor_data.empty and 'value' in shibor_data.columns else pd.Series()
-        bond_values = bond_data['value'] if not bond_data.empty and 'value' in bond_data.columns else pd.Series()
-        
-        success, liquidity_result, liquidity_output = capture_print(analyzer.analyze_liquidity_conditions, margin_values, shibor_values, bond_values)
-        log['detailed_output']['liquidity_conditions'] = liquidity_output
-        if liquidity_result:
-            log['insights'].append(('流动性', f"融资{liquidity_result['margin']:.0f}亿 Shibor{liquidity_result['shibor']:.2f}% {liquidity_result['liquidity_env']}"))
-            log['market_signals']['liquidity_env'] = liquidity_result['liquidity_env']
-        
-        # 股债性价比
-        success, pe_bond_result, pe_bond_output = capture_print(analyzer.analyze_pe_bond_spread)
-        log['detailed_output']['pe_bond_spread'] = pe_bond_output
-        if pe_bond_result:
-            log['insights'].append(('股债利差', pe_bond_result['股债利差']))
-            log['market_signals']['pe_bond_signal'] = pe_bond_result['信号']
-        
-        print("\n" + "📊 市场解读完成".center(70, "="))
-        
-    except Exception as e:
-        print(f"❌ 市场解读失败: {e}")
-        log_execution(log, '市场解读', 'error', str(e))
+    # 将分析结果添加到日志中
+    if 'insights' in market_result:
+        for insight in market_result['insights']:
+            log['insights'].append(insight)
     
     # 生成报告
     log['duration'] = f"{time.time() - start_time:.2f}秒"
