@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 import json
-from config import HEADERS, YF_TIMEOUT, OUTPUT_DIR, SECTOR_ETFS
+from config import HEADERS, YF_TIMEOUT, OUTPUT_DIR, SECTOR_ETFS, INDICES
 
 import warnings
 warnings.filterwarnings('ignore', category=FutureWarning, module='yfinance')
@@ -70,7 +70,43 @@ class DataFetcher:
                 self.logger('数据缓存', 'success', '已保存数据到缓存')
         except Exception as e:
             self.logger('数据缓存', 'error', f'保存缓存失败: {e}')
-    
+    def get_yf_data(self, ticker, period="3mo", interval='1d'):
+        """
+        获取yfinance数据
+        :param ticker: 股票代码
+        :param period: 周期
+        :param interval: 间隔
+        :return: DataFrame with columns: [Open, High, Low, Close, Volume]
+        """
+        try:
+            data = yf.download(
+                ticker, period=period, interval=interval, auto_adjust=True, 
+                progress=False, timeout=YF_TIMEOUT
+            )
+            
+            if data.empty:
+                self.logger('YFinance', 'warning', f'{ticker} 返回空数据')
+                return pd.DataFrame()
+            
+            # 处理多列情况 - 扁平化列索引
+            if isinstance(data.columns, pd.MultiIndex):
+                # 单个 ticker 时，yfinance 返回的 MultiIndex 有 ticker 层
+                data.columns = data.columns.droplevel(1)
+            
+            # 确保返回的 DataFrame 有正确的列名
+            expected_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
+            if not all(col in data.columns for col in expected_cols):
+                # 如果只有 Close 列（某些指数数据）
+                if len(data.columns) == 1:
+                    data.columns = ['Close']
+            
+            return data
+            
+        except Exception as e:
+            self.logger('YFinance', 'error', f'{ticker}: {str(e)}')
+            return pd.DataFrame()
+
+
     def fetch_all_data(self, force_refresh=False):
         """一次性获取所有需要的数据"""
         if not force_refresh and self._load_cache():
@@ -100,7 +136,6 @@ class DataFetcher:
             self.logger('数据获取', 'warning', f'融资余额: {str(e)[:100]}')
             self.all_data['融资余额'] = pd.Series(dtype=float)
         
-        # 2. 美元汇率
         
         
         # 3. Shibor 1M
@@ -197,63 +232,18 @@ class DataFetcher:
             self.all_data['上证50滚动市盈率'] = pd.Series(dtype=float)
         
         # 10. Yf数据 - 补充更多全球指数和ETF
-        indices = [
-            # 主要市场指数
-            '^HSI',      # 恒生指数
-            '^RUT',      # 罗素2000
-            '^IXIC',     # 纳斯达克
-            '^GSPC',     # 标普500
-            '^N225',     # 日经225
-            '^VIX',      # 波动率指数
-            # 主要ETF
-            'SPY',       # 标普500 ETF
-            'QQQ',       # 纳斯达克100 ETF
-            'DIA',       # 道琼斯ETF
-            'IWM',       # 罗素2000 ETF
-            'VTI',       # 全市场ETF
-            'TLT',       # 长期国债ETF
-            'GLD',       # 黄金ETF
-            'SLV',       # 白银ETF
-            'USO',       # 原油ETF
-            # 货币对
+        indices = list(INDICES.values())
+        sector_tickers = list(SECTOR_ETFS.values())
 
-            'CNY=X'      # 美元/人民币
-        ]
         self.logger('数据获取', 'info', '获取指数数据...')
-        for idx in indices:
+        for idx in indices+sector_tickers:
             if idx not in self.all_data:
                 try:
                     # 直接使用yfinance下载数据，不通过get_yf_data方法
-                    idx_data = yf.download(
-                        idx, period="360d", interval='1d', auto_adjust=True, 
-                        progress=False, timeout=YF_TIMEOUT
-                    )
-                    if not idx_data.empty and 'Close' in idx_data.columns:
-                        # 确保索引是DatetimeIndex
-                        idx_data.index = pd.to_datetime(idx_data.index, errors='coerce')
-                        idx_data = idx_data.dropna()
-                        # 统一数据长度为300，保存完整的OHLC数据
-                        self.all_data[idx] = idx_data.iloc[-300:] if len(idx_data) >= 300 else idx_data
-                    else:
-                        self.all_data[idx] = pd.Series(dtype=float, index=pd.DatetimeIndex([]))
+                    idx_data = self.get_yf_data(idx, period="300d")
                 except Exception as e:
                     self.logger('数据获取', 'warning', f'{idx}: {str(e)[:100]}')
-                    self.all_data[idx] = pd.Series(dtype=float, index=pd.DatetimeIndex([]))
-        
-        # 11. 行业ETF数据
-        sector_tickers = list(SECTOR_ETFS.values())
-        if sector_tickers:
-            self.logger('数据获取', 'info', '获取行业ETF数据...')
-            try:
-                # 直接使用yfinance下载行业ETF数据
-                sector_data = yf.download(
-                    sector_tickers, period="1mo", interval='1d', auto_adjust=True, 
-                    progress=False, timeout=YF_TIMEOUT
-                )
-                self.all_data['行业ETF'] = sector_data
-            except Exception as e:
-                self.logger('数据获取', 'warning', f'行业ETF: {str(e)[:100]}')
-                self.all_data['行业ETF'] = pd.DataFrame()
+                    self.all_data[idx] = pd.Series(dtype=float)
         
         self.logger('数据获取', 'success', f'已获取所有数据，共{len(self.all_data)}种数据类型')
         
@@ -277,40 +267,6 @@ class DataFetcher:
                 self.all_data[symbol] = pd.Series(dtype=float)
             return self.all_data[symbol]
     
-    def get_yf_data(self, ticker, period="3mo", interval='1d'):
-        """
-        获取yfinance数据
-        :param ticker: 股票代码
-        :param period: 周期
-        :param interval: 间隔
-        :return: DataFrame with columns: [Open, High, Low, Close, Volume]
-        """
-        try:
-            data = yf.download(
-                ticker, period=period, interval=interval, auto_adjust=True, 
-                progress=False, timeout=YF_TIMEOUT
-            )
-            
-            if data.empty:
-                self.logger('YFinance', 'warning', f'{ticker} 返回空数据')
-                return pd.DataFrame()
-            
-            # 处理多列情况 - 扁平化列索引
-            if isinstance(data.columns, pd.MultiIndex):
-                # 单个 ticker 时，yfinance 返回的 MultiIndex 有 ticker 层
-                data.columns = data.columns.droplevel(1)
-            
-            # 确保返回的 DataFrame 有正确的列名
-            expected_cols = ['Open', 'High', 'Low', 'Close', 'Volume']
-            if not all(col in data.columns for col in expected_cols):
-                # 如果只有 Close 列（某些指数数据）
-                if len(data.columns) == 1:
-                    data.columns = ['Close']
-            
-            return data
-            
-        except Exception as e:
-            self.logger('YFinance', 'error', f'{ticker}: {str(e)}')
-            return pd.DataFrame()
+    
     
     
