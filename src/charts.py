@@ -63,7 +63,7 @@ class ChartGenerator:
         try:
                      
             # 从缓存获取数据
-            ohlc_data = self.get_cached_data(ticker)
+            ohlc_data = self.get_cached_data(ticker).iloc[-20:]
             
             # 检查数据是否为空
             if ohlc_data.empty:
