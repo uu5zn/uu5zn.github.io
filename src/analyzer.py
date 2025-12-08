@@ -94,11 +94,13 @@ class MarketAnalyzer:
             russell_vol = float(russell_series.pct_change().rolling(20).std().iloc[-1] * np.sqrt(252) * 100)
             
             # 相关性
-            df = pd.concat([
-                nasdaq_close.pct_change().dropna(),
-                sp500_close.pct_change().dropna(),
-                russell_close.pct_change().dropna()
-            ], axis=1, keys=['纳指', '标普', '罗素']).dropna()
+            # 先提取Series
+            nasdaq_pct = nasdaq_series.pct_change().dropna()
+            sp500_pct = sp500_series.pct_change().dropna()
+            russell_pct = russell_series.pct_change().dropna()
+            
+            # 确保数据对齐
+            df = pd.concat([nasdaq_pct, sp500_pct, russell_pct], axis=1, keys=['纳指', '标普', '罗素']).dropna()
             
             corr_nasdaq_sp500 = float(df['纳指'].corr(df['标普']))
             corr_nasdaq_russell = float(df['纳指'].corr(df['罗素']))
@@ -335,11 +337,13 @@ class MarketAnalyzer:
             print(f"\n🎯 汇率信号: {cny_signal}")
             
             # 计算相关性
-            df = pd.concat([
-                hsi.pct_change().dropna(),
-                usdcny.pct_change().dropna(),
-                sp500.pct_change().dropna()
-            ], axis=1, keys=['恒指', '人民币', '标普']).dropna()
+            # 先提取Series并计算收益率
+            hsi_pct = hsi_series.pct_change().dropna()
+            usdcny_pct = usdcny_series.pct_change().dropna()
+            sp500_pct = sp500_series.pct_change().dropna()
+            
+            # 确保数据对齐
+            df = pd.concat([hsi_pct, usdcny_pct, sp500_pct], axis=1, keys=['恒指', '人民币', '标普']).dropna()
             
             corr_hsi_sp500 = float(df['恒指'].corr(df['标普']))
             corr_hsi_cny = float(df['恒指'].corr(-df['人民币']))
@@ -419,7 +423,10 @@ class MarketAnalyzer:
                 return None
             
             # 提取Series
-            margin_series = margin_data['value'] if 'value' in margin_data.columns else margin_data.iloc[:, 0]
+            if isinstance(margin_data, pd.DataFrame):
+                margin_series = margin_data['value'] if 'value' in margin_data.columns else margin_data.iloc[:, 0]
+            else:
+                margin_series = margin_data
             
             # 计算标量值
             current_margin = float(margin_series.iloc[-1] / 100000000)
