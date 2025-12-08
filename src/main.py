@@ -72,18 +72,21 @@ def task_margin_analysis(fetcher, analyzer, chart_gen):
         start_date_str = start_date.strftime('%Y%m%d')
         end_date_str = end_date.strftime('%Y%m%d')
         
-        margin_data = fetcher.get_data('融资余额', start_date_str, end_date_str)
+        margin_data = fetcher.get_cached_data('融资余额')
         
-        if len(margin_data) < 50:
+        if margin_data.empty or len(margin_data) < 50:
             print("⚠️ 融资余额数据不足")
             return False
         
+        # 获取value列的数据
+        margin_values = margin_data['value'] if 'value' in margin_data.columns else margin_data['Close']
+        
         # 计算均线
-        margin_ma10 = margin_data.rolling(10).mean()
+        margin_ma10 = margin_values.rolling(10).mean()
         
         # 绘图
         chart_gen.plot_line(
-            {'融资余额': margin_data.iloc[-50:], 'ma10': margin_ma10.iloc[-50:]},
+            {'融资余额': margin_values.iloc[-50:], 'ma10': margin_ma10.iloc[-50:]},
             '融资余额与MA10', ['融资余额', 'MA10'], ['r', 'b'],
             save_path='rongziyue_ma.png'
         )
@@ -113,20 +116,29 @@ def task_multi_indicator(fetcher, analyzer, chart_gen):
         end_date_str = end_date.strftime('%Y%m%d')
         
         # 获取数据
-        margin_data = fetcher.get_data('融资余额', start_date_str, end_date_str)
-        exchange_rate = fetcher.get_data('美元', start_date_str, end_date_str)
-        shibor_data = fetcher.get_data('Shibor 1M', start_date_str, end_date_str)
-        bond_data = fetcher.get_data('中美国债收益率', start_date_str, end_date_str)
-        etf_300 = fetcher.get_data('ETF_510300', start_date_str, end_date_str)
-        etf_1000 = fetcher.get_data('ETF_159845', start_date_str, end_date_str)
-        etf_500 = fetcher.get_data('ETF_510500', start_date_str, end_date_str)
+        margin_data = fetcher.get_cached_data('融资余额')
+        exchange_rate = fetcher.get_cached_data('美元')
+        shibor_data = fetcher.get_cached_data('Shibor 1M')
+        bond_data = fetcher.get_cached_data('中美国债收益率')
+        etf_300 = fetcher.get_cached_data('ETF_510300')
+        etf_1000 = fetcher.get_cached_data('ETF_159845')
+        etf_500 = fetcher.get_cached_data('ETF_510500')
+        
+        # 提取需要的数据列
+        margin_values = margin_data['value'] if not margin_data.empty and 'value' in margin_data.columns else pd.Series()
+        exchange_rate_values = exchange_rate['value'] if not exchange_rate.empty and 'value' in exchange_rate.columns else pd.Series()
+        shibor_values = shibor_data['value'] if not shibor_data.empty and 'value' in shibor_data.columns else pd.Series()
+        bond_values = bond_data['value'] if not bond_data.empty and 'value' in bond_data.columns else pd.Series()
+        etf_300_values = etf_300['Close'] if not etf_300.empty and 'Close' in etf_300.columns else pd.Series()
+        etf_1000_values = etf_1000['Close'] if not etf_1000.empty and 'Close' in etf_1000.columns else pd.Series()
+        etf_500_values = etf_500['Close'] if not etf_500.empty and 'Close' in etf_500.columns else pd.Series()
         
         # 归一化绘图
         chart_gen.plot_line(
             {
-                '融资余额': normalize(margin_data),
-                '汇率': normalize(-exchange_rate),
-                '中美利差': normalize(bond_data.iloc[-180:]),
+                '融资余额': normalize(margin_values),
+                '汇率': normalize(-exchange_rate_values),
+                '中美利差': normalize(bond_values),
                 '500ETF': normalize(etf_500)
             },
             '归一化指标对比', ['融资余额', '汇率', '中美利差', '500ETF'],
@@ -331,11 +343,16 @@ def main():
         start_date_str = start_date.strftime('%Y%m%d')
         end_date_str = end_date.strftime('%Y%m%d')
         
-        margin_data = fetcher.get_data('融资余额', start_date_str, end_date_str)
-        shibor_data = fetcher.get_data('Shibor 1M', start_date_str, end_date_str)
-        bond_data = fetcher.get_data('中美国债收益率', start_date_str, end_date_str)
+        margin_data = fetcher.get_cached_data('融资余额')
+        shibor_data = fetcher.get_cached_data('Shibor 1M')
+        bond_data = fetcher.get_cached_data('中美国债收益率')
         
-        success, liquidity_result, liquidity_output = capture_print(analyzer.analyze_liquidity_conditions, margin_data, shibor_data, bond_data)
+        # 提取需要的数据列
+        margin_values = margin_data['value'] if not margin_data.empty and 'value' in margin_data.columns else pd.Series()
+        shibor_values = shibor_data['value'] if not shibor_data.empty and 'value' in shibor_data.columns else pd.Series()
+        bond_values = bond_data['value'] if not bond_data.empty and 'value' in bond_data.columns else pd.Series()
+        
+        success, liquidity_result, liquidity_output = capture_print(analyzer.analyze_liquidity_conditions, margin_values, shibor_values, bond_values)
         log['detailed_output']['liquidity_conditions'] = liquidity_output
         if liquidity_result:
             log['insights'].append(('流动性', f"融资{liquidity_result['margin']:.0f}亿 Shibor{liquidity_result['shibor']:.2f}% {liquidity_result['liquidity_env']}"))

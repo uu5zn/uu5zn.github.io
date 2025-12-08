@@ -137,7 +137,6 @@ class ChartGenerator:
                     gridcolor='#666666',
                     gridstyle='--',
                     gridaxis='both',
-                    gridalpha=0.3,
                     rc={'font.size': 8, 'font.sans-serif': ['SimHei']}
                 )
                 
