@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 import json
-from .config import HEADERS, YF_TIMEOUT, OUTPUT_DIR
+from config import HEADERS, YF_TIMEOUT, OUTPUT_DIR
 import warnings
 warnings.filterwarnings('ignore', category=FutureWarning, module='yfinance')
 
