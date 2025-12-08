@@ -526,31 +526,23 @@ class MarketAnalyzer:
         
         try:
             # 从缓存获取数据
-            bond_yield = self.get_cached_data('中国国债收益率10年')
+            bond_yield = self.get_cached_data('股债利差')
             pe_50 = self.get_cached_data('上证50滚动市盈率')
+            spread = self.get_cached_data('股债利差')
             
             if bond_yield.empty or pe_50.empty:
                 self.logger('股债性价比', 'warning', '数据获取失败')
                 return None
             
-            # 对齐日期
-            combined = pd.DataFrame({'中国国债收益率10年': bond_yield, '滚动市盈率': pe_50}).dropna()
             
-            # 计算股债利差
-            combined['股债利差'] = combined['中国国债收益率10年'] - 100 / combined['滚动市盈率']
-            combined['股债利差'] = combined['股债利差'].ffill().dropna()
-            
-            if not validate_data(combined['股债利差'], 50):
-                self.logger('股债性价比', 'warning', '数据不足')
-                return None
             
             # 最新数据
-            current_bond = float(combined['中国国债收益率10年'].iloc[-1])
-            current_pe = float(combined['滚动市盈率'].iloc[-1])
-            current_spread = float(combined['股债利差'].iloc[-1])
+            current_bond = float(bond_yield.iloc[-1])
+            current_pe = float(pe_50.iloc[-1])
+            current_spread = float(spread.iloc[-1])
             
             # 历史百分位
-            spread_percentile = calculate_percentile(combined['股债利差'], current_spread)
+            spread_percentile = calculate_percentile(spread, current_spread)
             
             # 解读
             if current_spread > -2.6:
@@ -622,7 +614,8 @@ class MarketAnalyzer:
             margin_ma10 = margin_values.rolling(10).mean()
             
             # 打印最新值
-            last_margin = margin_data.iloc[-1] / 1000000
+            # 确保获取的是标量值，从margin_values获取最新值
+            last_margin = margin_values.iloc[-1] / 1000000
             last_ma10 = margin_ma10.iloc[-1]
             
             return {
@@ -630,9 +623,9 @@ class MarketAnalyzer:
                 'margin_data': margin_data,
                 'margin_values': margin_values,
                 'margin_ma10': margin_ma10,
-                'last_margin': last_margin,
-                'last_ma10': last_ma10,
-                'below_ma10': margin_data.iloc[-1] < last_ma10
+                'last_margin': float(last_margin),  # 确保是标量
+                'last_ma10': float(last_ma10),      # 确保是标量
+                'below_ma10': last_margin < last_ma10  # 使用标量比较
             }
             
         except Exception as e:

@@ -51,25 +51,35 @@ class DataFetcher:
         return False
     
     def _save_cache(self):
-        """保存数据到缓存"""
-        try:
-            if self.all_data is not None:
-                # 保存数据
-                data_file = os.path.join(self.cache_dir, 'all_data.pkl')
-                pd.to_pickle(self.all_data, data_file)
-                
-                # 保存元数据
-                meta = {
-                    'cache_time': datetime.now().timestamp(),
-                    'data_types': list(self.all_data.keys()),
-                    'last_update': datetime.now().isoformat()
-                }
-                with open(self.cache_meta_file, 'w') as f:
-                    json.dump(meta, f, ensure_ascii=False, indent=2)
-                
-                self.logger('数据缓存', 'success', '已保存数据到缓存')
-        except Exception as e:
-            self.logger('数据缓存', 'error', f'保存缓存失败: {e}')
+            """保存数据到缓存，确保所有数据都是DataFrame格式"""
+            try:
+                if self.all_data is not None:
+                    # 检查并确保所有数据是DataFrame
+                    for key, value in self.all_data.items():
+                        if not isinstance(value, pd.DataFrame):
+                            if isinstance(value, pd.Series):
+                                # 将Series转换为DataFrame
+                                self.all_data[key] = pd.DataFrame({'value': value})
+                            else:
+                                # 其他类型转换为空DataFrame
+                                self.all_data[key] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                                self.logger('数据缓存', 'warning', f'{key} 不是DataFrame格式，已转换为空DataFrame')
+                    # 保存数据
+                    data_file = os.path.join(self.cache_dir, 'all_data.pkl')
+                    pd.to_pickle(self.all_data, data_file)
+                    
+                    # 保存元数据
+                    meta = {
+                        'cache_time': datetime.now().timestamp(),
+                        'data_types': list(self.all_data.keys()),
+                        'last_update': datetime.now().isoformat()
+                    }
+                    with open(self.cache_meta_file, 'w') as f:
+                        json.dump(meta, f, ensure_ascii=False, indent=2)
+                    
+                    self.logger('数据缓存', 'success', '已保存数据到缓存')
+            except Exception as e:
+                self.logger('数据缓存', 'error', f'保存缓存失败: {e}')
     def get_yf_data(self, ticker, period="3mo", interval='1d'):
         """
         获取yfinance数据
@@ -145,16 +155,12 @@ class DataFetcher:
         # 3. Shibor 1M
         self.logger('数据获取', 'info', '获取Shibor数据...')
         try:
-            data = ak.macro_china_shibor_all()
-            if not data.empty and '日期' in data.columns and '1M-定价' in data.columns:
-                data['日期'] = pd.to_datetime(data['日期'], errors='coerce', format='%Y%m%d')
-                # 统一长度为300
-                series_data = data.dropna().set_index('日期')['1M-定价'].iloc[-300:]
-                self.all_data['Shibor 1M'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-                print(f"  ✅ Shibor 1M: {len(series_data)} 条记录")
-            else:
-                self.all_data['Shibor 1M'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-                print(f"  ⚠️  Shibor 1M: 空数据")
+            data = ak.macro_china_shibor_all()[['日期','1M-定价']]
+            data['日期'] = pd.to_datetime(data['日期'], errors='coerce', format='%Y%m%d')
+            series_data = data.set_index('日期').iloc[-300:]
+            self.all_data['Shibor 1M'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ✅ Shibor 1M: {len(series_data)} 条记录")
+            
         except Exception as e:
             self.logger('数据获取', 'warning', f'Shibor: {str(e)[:100]}')
             self.all_data['Shibor 1M'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
@@ -255,7 +261,14 @@ class DataFetcher:
             self.logger('数据获取', 'warning', f'上证50滚动市盈率: {str(e)[:100]}')
             self.all_data['上证50滚动市盈率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             print(f"  ❌ 上证50滚动市盈率: 获取失败 - {str(e)[:50]}")
-        
+
+        self.logger('数据获取', 'info', '获取股债喜茶数据...')
+        series_data2 = combined['中国国债收益率10年'] - 100 / combined['滚动市盈率']
+        self.all_data['股债利差'] = pd.DataFrame({'value': series_data2}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+        print(f"  ✅ 股债息差: {len(series_data2)} 条记录")
+            
+            
+            
         # 10. Yf数据 - 补充更多全球指数和ETF
         # INDICES是一个列表，每个元素是(代码, 文件名, [周期])，提取第一个元素作为代码
         indices = [idx[0] for idx in INDICES]
@@ -269,9 +282,11 @@ class DataFetcher:
                 try:
                     idx_data = self.get_yf_data(idx, period="300d")
                     if not idx_data.empty:
-                        self.all_data[idx] = idx_data  # 保存完整OHLC数据
-                        print(f"  ✅ {idx}: {idx_data.shape} 记录")
-                        success_count += 1
+                            self.all_data[idx] = idx_data  # 保存完整OHLC数据
+                            # 修复tuple格式化错误：将shape转换为字符串
+                            shape_str = f"({idx_data.shape[0]}, {idx_data.shape[1]})"
+                            print(f"  ✅ {idx}: {shape_str} 记录")
+                            success_count += 1
                     else:
                         # 返回带OHLC列的空DataFrame
                         self.all_data[idx] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['Open', 'High', 'Low', 'Close', 'Volume'])
