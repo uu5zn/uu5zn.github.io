@@ -452,18 +452,39 @@ class MarketAnalyzer:
             print(f"  Shibor 1M: {current_shibor:.2f}%")
             print(f"    └─日变化: {shibor_change:+.2f}%")
             
-            # 处理bond_data
+            # 处理bond_data（统一处理，避免重复）
             current_spread = 0.0
             spread_change_5d = 0.0
+            spread_signal = ""
+            spread_desc = ""
             if validate_data(bond_data, 10):
                 # 确保bond_data是Series
                 if isinstance(bond_data, pd.DataFrame):
                     bond_series = bond_data['value'] if 'value' in bond_data.columns else bond_data.iloc[:, 0]
                 else:
                     bond_series = bond_data
-                current_spread = float(bond_series.iloc[-1] * 100)  # 转换为基点
+                
+                # 计算中美利差（基点）
+                current_spread = float(bond_series.iloc[-1])
+                current_spread_bp = current_spread * 100  # 转换为基点
                 spread_change_5d = float(bond_series.diff(5).iloc[-1] * 100) if len(bond_series) > 5 else 0  # 转换为基点
-                print(f"  中美利差: {current_spread:.2f}bp (5日变化: {spread_change_5d:+.0f}bp)")
+                
+                print(f"  中美利差: {current_spread_bp:.2f}bp (5日变化: {spread_change_5d:+.0f}bp)")
+                
+                # 中美利差解读
+                # 注意：current_spread 已经是基点单位
+                if current_spread > 50:
+                    spread_signal = "🔼 利差走阔"
+                    spread_desc = "中国相对吸引力下降，资本外流压力"
+                elif current_spread < 0:
+                    spread_signal = "🔽 利差收窄"
+                    spread_desc = "中国相对吸引力上升，资金流入"
+                else:
+                    spread_signal = "🔄 利差正常"
+                    spread_desc = "相对吸引力中性"
+                
+                print(f"\n🎯 中美利差: {spread_signal}")
+                print(f"💡 解读: {spread_desc}")
             
             # 融资余额解读
             if margin_change_5d > 2:
@@ -499,27 +520,6 @@ class MarketAnalyzer:
             print(f"\n🎯 Shibor: {shibor_signal}")
             print(f"💡 解读: {shibor_desc}")
             
-            # 处理bond_data
-            current_spread = 0.0
-            if validate_data(bond_data, 10):
-                bond_series = bond_data['value'] if 'value' in bond_data.columns else bond_data.iloc[:, 0]
-                current_spread = float(bond_series.iloc[-1])
-                
-                # 中美利差解读
-                # 注意：current_spread 已经是基点单位
-                if current_spread > 50:
-                    spread_signal = "🔼 利差走阔"
-                    spread_desc = "中国相对吸引力下降，资本外流压力"
-                elif current_spread < 0:
-                    spread_signal = "🔽 利差收窄"
-                    spread_desc = "中国相对吸引力上升，资金流入"
-                else:
-                    spread_signal = "🔄 利差正常"
-                    spread_desc = "相对吸引力中性"
-                
-                print(f"\n🎯 中美利差: {spread_signal}")
-                print(f"💡 解读: {spread_desc}")
-            
             # 流动性评分
             liquidity_score = 0
             if margin_change_5d > 1: liquidity_score += 1
@@ -529,7 +529,11 @@ class MarketAnalyzer:
             elif current_shibor > 3.0: liquidity_score -= 1
             
             if validate_data(bond_data, 10):
-                bond_series = bond_data['value'] if 'value' in bond_data.columns else bond_data.iloc[:, 0]
+                # 确保bond_data是Series
+                if isinstance(bond_data, pd.DataFrame):
+                    bond_series = bond_data['value'] if 'value' in bond_data.columns else bond_data.iloc[:, 0]
+                else:
+                    bond_series = bond_data
                 spread_value = float(bond_series.iloc[-1]) * 100  # 转换为基点
                 if spread_value > 50: liquidity_score -= 1
             
