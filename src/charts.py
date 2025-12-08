@@ -61,8 +61,7 @@ class ChartGenerator:
     def plot_kline(self, ticker, filename, period="1mo"):
         """生成K线图 - 使用mplfinance库绘制真正的K线图"""
         try:
-            print(f"\n🔍 开始处理 {ticker} K线图")
-            
+                     
             # 从缓存获取数据
             ohlc_data = self.get_cached_data(ticker)
             
@@ -75,7 +74,7 @@ class ChartGenerator:
             filepath = os.path.join(OUTPUT_DIR, filename)
             
             # 使用mplfinance绘制K线图
-            print(f"   5. 使用mplfinance绘制K线图")
+            
             try:
                 # 设置K线图样式
                 mc = mpf.make_marketcolors(
@@ -153,17 +152,7 @@ class ChartGenerator:
                 plt.tight_layout()
                 plt.savefig(filepath, dpi=150, bbox_inches='tight', facecolor='black')
                 plt.close(fig)
-            
-            # 验证文件是否生成成功
-            if os.path.exists(filepath):
-                file_size = os.path.getsize(filepath)
-                print(f"✅ K线图: {filename} (路径: {filepath}, 大小: {file_size} 字节)")
-                self.logger('K线图', 'success', f'{ticker} -> {filename}', chart_path=filename)
-                return True
-            else:
-                print(f"❌ K线图: {filename} 生成失败，文件不存在")
-                self.logger('K线图', 'error', f'{ticker}: 生成失败，文件不存在')
-                return False
+          
             
         except Exception as e:
             import traceback
