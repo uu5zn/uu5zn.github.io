@@ -6,8 +6,8 @@ import numpy as np
 import os
 import json
 from datetime import datetime
-from .config import OUTPUT_DIR, MPL_STYLE
-from .utils import validate_data
+from config import OUTPUT_DIR, MPL_STYLE
+from utils import validate_data
 import matplotlib.pyplot as plt
 import mplfinance as mpf
 
