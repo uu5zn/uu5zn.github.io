@@ -198,7 +198,7 @@ def main():
     # 第一步：获取所有数据并生成缓存
     print("\n【数据获取】开始获取所有数据并生成缓存...")
     try:
-        data_fetcher.fetch_all_data()
+        data_fetcher.fetch_all_data(force_refresh=True)  # 强制刷新所有数据
         print(f"✅ 数据获取完成: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         log_execution(log, "数据获取", "success", "所有数据已成功获取并缓存")
     except Exception as e:

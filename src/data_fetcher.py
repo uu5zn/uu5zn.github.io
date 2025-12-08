@@ -131,11 +131,14 @@ class DataFetcher:
                 # 统一长度为300
                 series_data = data.dropna().set_index('信用交易日期')['融资余额'].iloc[-300:]
                 self.all_data['融资余额'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ✅ 融资余额: {len(series_data)} 条记录")
             else:
                 self.all_data['融资余额'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ⚠️  融资余额: 空数据")
         except Exception as e:
             self.logger('数据获取', 'warning', f'融资余额: {str(e)[:100]}')
             self.all_data['融资余额'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 融资余额: 获取失败 - {str(e)[:50]}")
         
         
         
@@ -148,11 +151,14 @@ class DataFetcher:
                 # 统一长度为300
                 series_data = data.dropna().set_index('日期')['1M-定价'].iloc[-300:]
                 self.all_data['Shibor 1M'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ✅ Shibor 1M: {len(series_data)} 条记录")
             else:
                 self.all_data['Shibor 1M'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ⚠️  Shibor 1M: 空数据")
         except Exception as e:
             self.logger('数据获取', 'warning', f'Shibor: {str(e)[:100]}')
             self.all_data['Shibor 1M'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ Shibor 1M: 获取失败 - {str(e)[:50]}")
         
         # 4. 中美国债收益率及相关数据
         self.logger('数据获取', 'info', '获取中美国债收益率数据...')
@@ -168,11 +174,13 @@ class DataFetcher:
             self.all_data['US_BOND'] = pd.DataFrame({'value': data['美国国债收益率10年'].iloc[-300:]}) if not data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             # 保存中国国债收益率10年
             self.all_data['中国国债收益率10年'] = pd.DataFrame({'value': data['中国国债收益率10年'].iloc[-300:]}) if not data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ✅ 中美国债收益率: {len(data.iloc[-300:])} 条记录")
         except Exception as e:
             self.logger('数据获取', 'warning', f'中美国债收益率: {str(e)[:100]}')
             self.all_data['中美国债收益率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             self.all_data['US_BOND'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             self.all_data['中国国债收益率10年'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 中美国债收益率: 获取失败 - {str(e)[:50]}")
         
         # 5. ETF数据
         etf_list = {'ETF_510300': '510300', 'ETF_159845': '159845', 'ETF_510500': '510500'}
@@ -185,11 +193,14 @@ class DataFetcher:
                     # 统一长度为300
                     series_data = data.dropna().set_index('日期')['收盘'].iloc[-300:]
                     self.all_data[etf_key] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                    print(f"  ✅ {etf_key}: {len(series_data)} 条记录")
                 else:
                     self.all_data[etf_key] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                    print(f"  ⚠️  {etf_key}: 空数据")
             except Exception as e:
                 self.logger('数据获取', 'warning', f'{etf_key}: {str(e)[:100]}')
                 self.all_data[etf_key] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ❌ {etf_key}: 获取失败 - {str(e)[:50]}")
         
         # 6. 原油价格
         self.logger('数据获取', 'info', '获取原油价格数据...')
@@ -201,11 +212,14 @@ class DataFetcher:
                 # 统一长度为300
                 series_data = data_copy.dropna().sort_values('date').set_index('date')['close'].iloc[-300:]
                 self.all_data['CL'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ✅ 原油价格(CL): {len(series_data)} 条记录")
             else:
                 self.all_data['CL'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ⚠️  原油价格(CL): 空数据")
         except Exception as e:
             self.logger('数据获取', 'warning', f'原油价格: {str(e)[:100]}')
             self.all_data['CL'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 原油价格(CL): 获取失败 - {str(e)[:50]}")
         
         # 7. 黄金价格
         self.logger('数据获取', 'info', '获取黄金价格数据...')
@@ -217,11 +231,14 @@ class DataFetcher:
                 # 统一长度为300
                 series_data = data_copy.dropna().sort_values('date').set_index('date')['close'].iloc[-300:]
                 self.all_data['GC'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ✅ 黄金价格(GC): {len(series_data)} 条记录")
             else:
                 self.all_data['GC'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+                print(f"  ⚠️  黄金价格(GC): 空数据")
         except Exception as e:
             self.logger('数据获取', 'warning', f'黄金价格: {str(e)[:100]}')
             self.all_data['GC'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 黄金价格(GC): 获取失败 - {str(e)[:50]}")
         
         # 8. 股债利差相关数据
         self.logger('数据获取', 'info', '获取股债利差相关数据...')
@@ -233,9 +250,11 @@ class DataFetcher:
             # 统一长度为300
             series_data = pe_df['滚动市盈率'].iloc[-300:]
             self.all_data['上证50滚动市盈率'] = pd.DataFrame({'value': series_data}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ✅ 上证50滚动市盈率: {len(series_data)} 条记录")
         except Exception as e:
             self.logger('数据获取', 'warning', f'上证50滚动市盈率: {str(e)[:100]}')
             self.all_data['上证50滚动市盈率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 上证50滚动市盈率: 获取失败 - {str(e)[:50]}")
         
         # 10. Yf数据 - 补充更多全球指数和ETF
         # INDICES是一个列表，每个元素是(代码, 文件名, [周期])，提取第一个元素作为代码
@@ -244,42 +263,56 @@ class DataFetcher:
         sector_tickers = list(SECTOR_ETFS.values())
 
         self.logger('数据获取', 'info', '获取指数数据...')
+        success_count = 0
         for idx in indices+sector_tickers:
             if idx not in self.all_data:
                 try:
                     idx_data = self.get_yf_data(idx, period="300d")
                     if not idx_data.empty:
                         self.all_data[idx] = idx_data  # 保存完整OHLC数据
+                        print(f"  ✅ {idx}: {idx_data.shape} 记录")
+                        success_count += 1
                     else:
                         # 返回带OHLC列的空DataFrame
                         self.all_data[idx] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['Open', 'High', 'Low', 'Close', 'Volume'])
+                        print(f"  ⚠️  {idx}: 空数据")
                 except Exception as e:
                     self.logger('数据获取', 'warning', f'{idx}: {str(e)[:100]}')
                     # 返回带OHLC列的空DataFrame
                     self.all_data[idx] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['Open', 'High', 'Low', 'Close', 'Volume'])
+                    print(f"  ❌ {idx}: 获取失败 - {str(e)[:50]}")
+        print(f"  📊 指数数据获取完成: {success_count}/{len(indices+sector_tickers)} 成功")
         
         self.logger('数据获取', 'success', f'已获取所有数据，共{len(self.all_data)}种数据类型')
         
-        # 打印数据统计信息
+        # 打印详细数据统计信息
         print(f"\n📊 数据统计信息:")
-        print(f"{'-'*60}")
-        print(f"{'数据类型':<25} {'记录数':<10} {'状态':<10} {'最新日期':<15}")
-        print(f"{'-'*60}")
+        print(f"{'-'*100}")
+        print(f"{'数据类型':<25} {'格式':<10} {'Shape':<15} {'状态':<10} {'最新日期':<15}")
+        print(f"{'-'*100}")
+        
+        total_records = 0
+        valid_data_count = 0
         
         for key, data in self.all_data.items():
             if isinstance(data, pd.DataFrame):
-                row_count = len(data)
+                row_count, col_count = data.shape
+                data_format = "DataFrame"
                 status = "正常" if row_count > 0 else "空"
                 # 获取最新日期
                 if row_count > 0 and isinstance(data.index, pd.DatetimeIndex):
                     latest_date = data.index[-1].strftime('%Y-%m-%d')
                 else:
                     latest_date = "N/A"
-                print(f"{key:<25} {row_count:<10} {status:<10} {latest_date:<15}")
+                print(f"{key:<25} {data_format:<10} {(row_count, col_count):<15} {status:<10} {latest_date:<15}")
+                total_records += row_count
+                if row_count > 0:
+                    valid_data_count += 1
             else:
-                print(f"{key:<25} {'-':<10} {'异常':<10} {'-':<15}")
+                print(f"{key:<25} {'异常':<10} {'-':<15} {'异常':<10} {'-':<15}")
         
-        print(f"{'-'*60}")
+        print(f"{'-'*100}")
+        print(f"统计摘要: 共{len(self.all_data)}种数据类型，{valid_data_count}种有效数据，总记录数{total_records}")
         print(f"数据缓存路径: {os.path.abspath(self.cache_dir)}")
         
         # 保存到缓存
