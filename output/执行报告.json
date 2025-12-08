@@ -1,94 +1,161 @@
 {
-  "start_time": "2025-12-08T12:42:09.906913",
-  "end_time": "2025-12-08T12:42:12.965088",
+  "start_time": "2025-12-08T12:52:19.466681",
+  "end_time": "2025-12-08T12:52:52.565705",
   "tasks": [
     {
-      "timestamp": "2025-12-08T12:42:09.909533",
-      "category": "数据缓存",
-      "status": "success",
-      "message": "已加载缓存数据"
+      "timestamp": "2025-12-08T12:52:19.466758",
+      "category": "数据获取",
+      "status": "info",
+      "message": "开始获取所有数据..."
     },
     {
-      "timestamp": "2025-12-08T12:42:09.909550",
+      "timestamp": "2025-12-08T12:52:19.466773",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取融资余额数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:21.955202",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取Shibor数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:23.073337",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取中美国债收益率数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:32.135131",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取ETF_510300数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:33.765673",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取ETF_159845数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:34.634344",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取ETF_510500数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:35.716299",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取原油价格数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:38.608981",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取黄金价格数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:40.968583",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取股债利差相关数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:44.255570",
+      "category": "数据获取",
+      "status": "info",
+      "message": "获取指数数据..."
+    },
+    {
+      "timestamp": "2025-12-08T12:52:49.497311",
       "category": "数据获取",
       "status": "success",
-      "message": "所有数据已成功获取并缓存"
+      "message": "已获取所有数据，共26种数据类型"
     },
     {
-      "timestamp": "2025-12-08T12:42:11.150734",
+      "timestamp": "2025-12-08T12:52:49.497380",
+      "category": "数据获取",
+      "status": "error",
+      "message": "unsupported format string passed to tuple.__format__"
+    },
+    {
+      "timestamp": "2025-12-08T12:52:50.747014",
       "category": "K线图生成",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:42:11.153125",
+      "timestamp": "2025-12-08T12:52:50.749688",
       "category": "融资余额分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:42:11.168029",
+      "timestamp": "2025-12-08T12:52:50.764389",
       "category": "多指标对比",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:42:11.725910",
+      "timestamp": "2025-12-08T12:52:51.325860",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:42:12.167152",
+      "timestamp": "2025-12-08T12:52:51.768491",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2025-12-08T12:42:12.167272",
+      "timestamp": "2025-12-08T12:52:51.768607",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:42:12.608212",
+      "timestamp": "2025-12-08T12:52:52.207924",
       "category": "股债利差",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:42:12.907093",
+      "timestamp": "2025-12-08T12:52:52.508020",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:42:12.938036",
+      "timestamp": "2025-12-08T12:52:52.539450",
       "category": "指数差异分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T12:42:12.945692",
+      "timestamp": "2025-12-08T12:52:52.546848",
       "category": "风险环境分析",
       "status": "error",
       "message": "unsupported format string passed to Series.__format__"
     },
     {
-      "timestamp": "2025-12-08T12:42:12.958902",
+      "timestamp": "2025-12-08T12:52:52.559642",
       "category": "中美联动分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T12:42:12.965059",
+      "timestamp": "2025-12-08T12:52:52.565678",
       "category": "市场解读",
       "status": "error",
       "message": "'Series' object has no attribute 'columns'"
     }
   ],
   "errors": [
+    "数据获取: unsupported format string passed to tuple.__format__",
     "指数差异分析: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
     "风险环境分析: unsupported format string passed to Series.__format__",
     "中美联动分析: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().",
@@ -107,5 +174,5 @@
     ]
   ],
   "market_signals": {},
-  "duration": "3.06秒"
+  "duration": "3.07秒"
 }
