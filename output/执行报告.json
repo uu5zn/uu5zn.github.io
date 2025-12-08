@@ -1,76 +1,88 @@
 {
-  "start_time": "2025-12-08T12:24:18.605779",
-  "end_time": "2025-12-08T12:24:21.656421",
+  "start_time": "2025-12-08T12:35:17.725022",
+  "end_time": "2025-12-08T12:35:20.812506",
   "tasks": [
     {
-      "timestamp": "2025-12-08T12:24:19.835450",
+      "timestamp": "2025-12-08T12:35:17.727685",
+      "category": "数据缓存",
+      "status": "success",
+      "message": "已加载缓存数据"
+    },
+    {
+      "timestamp": "2025-12-08T12:35:17.727704",
+      "category": "数据获取",
+      "status": "success",
+      "message": "所有数据已成功获取并缓存"
+    },
+    {
+      "timestamp": "2025-12-08T12:35:19.007330",
       "category": "K线图生成",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:24:19.838083",
+      "timestamp": "2025-12-08T12:35:19.009814",
       "category": "融资余额分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:24:19.852271",
+      "timestamp": "2025-12-08T12:35:19.024517",
       "category": "多指标对比",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2025-12-08T12:24:20.411476",
+      "timestamp": "2025-12-08T12:35:19.581000",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:24:20.850620",
+      "timestamp": "2025-12-08T12:35:20.019499",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2025-12-08T12:24:20.850734",
+      "timestamp": "2025-12-08T12:35:20.019655",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:24:21.300218",
+      "timestamp": "2025-12-08T12:35:20.458625",
       "category": "股债利差",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:24:21.598329",
+      "timestamp": "2025-12-08T12:35:20.754835",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2025-12-08T12:24:21.629988",
+      "timestamp": "2025-12-08T12:35:20.785869",
       "category": "指数差异分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T12:24:21.637446",
+      "timestamp": "2025-12-08T12:35:20.793363",
       "category": "风险环境分析",
       "status": "error",
       "message": "unsupported format string passed to Series.__format__"
     },
     {
-      "timestamp": "2025-12-08T12:24:21.650329",
+      "timestamp": "2025-12-08T12:35:20.806334",
       "category": "中美联动分析",
       "status": "error",
       "message": "The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all()."
     },
     {
-      "timestamp": "2025-12-08T12:24:21.656393",
+      "timestamp": "2025-12-08T12:35:20.812477",
       "category": "市场解读",
       "status": "error",
       "message": "'Series' object has no attribute 'columns'"
@@ -95,5 +107,5 @@
     ]
   ],
   "market_signals": {},
-  "duration": "3.05秒"
+  "duration": "3.08秒"
 }
