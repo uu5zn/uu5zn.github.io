@@ -8,7 +8,7 @@ from contextlib import redirect_stdout
 from io import StringIO
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
-from .config import OUTPUT_DIR, FONT_CANDIDATES, MPL_STYLE
+from config import OUTPUT_DIR, FONT_CANDIDATES, MPL_STYLE
 
 def setup_logging():
     """初始化执行日志"""
