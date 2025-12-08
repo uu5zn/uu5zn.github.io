@@ -13,6 +13,7 @@ from utils import setup_logging, log_execution, setup_matplotlib_fonts, check_av
 from analyzer import MarketAnalyzer
 from charts import ChartGenerator
 from reporter import ReportGenerator
+from data_fetcher import DataFetcher
 
 def initialize():
     """初始化系统"""
@@ -36,12 +37,13 @@ def initialize():
         """
         log_execution(log, category, status, message, **kwargs)
     
-    # 创建核心组件 - 移除DataFetcher，只使用缓存数据
+    # 创建核心组件
+    data_fetcher = DataFetcher(logger_func)
     analyzer = MarketAnalyzer(logger_func)
     chart_gen = ChartGenerator(logger_func)
     
     print(f"初始化完成: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    return log, analyzer, chart_gen
+    return log, data_fetcher, analyzer, chart_gen
 
 def task_kline_charts(chart_gen):
     """任务1: 生成指数K线图"""
@@ -191,9 +193,19 @@ def task_sector_rotation(analyzer, chart_gen):
 def main():
     """主函数"""
     # 初始化
-    log, analyzer, chart_gen = initialize()
+    log, data_fetcher, analyzer, chart_gen = initialize()
     
-    # 任务调度 - 移除外部API数据获取相关任务，只保留基于缓存数据的任务
+    # 第一步：获取所有数据并生成缓存
+    print("\n【数据获取】开始获取所有数据并生成缓存...")
+    try:
+        data_fetcher.fetch_all_data()
+        print(f"✅ 数据获取完成: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        log_execution(log, "数据获取", "success", "所有数据已成功获取并缓存")
+    except Exception as e:
+        print(f"❌ 数据获取失败: {e}")
+        log_execution(log, "数据获取", "error", str(e))
+    
+    # 任务调度 - 基于缓存数据执行后续任务
     tasks = [
         ("K线图生成", lambda: task_kline_charts(chart_gen)),
         ("融资余额分析", lambda: task_margin_analysis(analyzer, chart_gen)),
