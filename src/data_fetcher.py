@@ -264,7 +264,7 @@ class DataFetcher:
             print(f"  ❌ 上证50滚动市盈率: 获取失败 - {str(e)[:50]}")
 
         self.logger('数据获取', 'info', '获取股债喜茶数据...')
-        series_data2 = elf.all_data['中国国债收益率10年'] - 100 / elf.all_data['滚动市盈率']
+        series_data2 = self.all_data['中国国债收益率10年'] - 100 / self.all_data['滚动市盈率']
         self.all_data['股债利差'] = pd.DataFrame({'value': series_data2}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
         print(f"  ✅ 股债息差: {len(series_data2)} 条记录")
             
