@@ -282,10 +282,30 @@ class DataFetcher:
                 self.all_data['上证50滚动市盈率'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
             print(f"  ❌ 上证50滚动市盈率: 获取失败，使用旧缓存 - {str(e)[:50]}")
 
-        self.logger('数据获取', 'info', '获取股债喜茶数据...')
-        series_data2 = self.all_data['中国国债收益率10年'] - 100 / self.all_data['滚动市盈率']
-        self.all_data['股债利差'] = pd.DataFrame({'value': series_data2}) if not series_data.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
-        print(f"  ✅ 股债息差: {len(series_data2)} 条记录")
+        # 计算股债利差
+        self.logger('数据获取', 'info', '计算股债利差数据...')
+        try:
+            # 从DataFrame中提取value列作为Series
+            bond_yield_series = self.all_data['中国国债收益率10年']['value'] if 'value' in self.all_data['中国国债收益率10年'].columns else self.all_data['中国国债收益率10年'].iloc[:, 0]
+            pe_series = self.all_data['上证50滚动市盈率']['value'] if 'value' in self.all_data['上证50滚动市盈率'].columns else self.all_data['上证50滚动市盈率'].iloc[:, 0]
+            
+            # 计算股债利差并对齐日期
+            bond_yield_series = bond_yield_series.rename('bond_yield')
+            pe_series = pe_series.rename('pe')
+            
+            # 合并数据并计算利差
+            combined = pd.concat([bond_yield_series, pe_series], axis=1).dropna()
+            combined['股债利差'] = combined['bond_yield'] - 100 / combined['pe']
+            
+            # 统一长度为300
+            series_data2 = combined['股债利差'].iloc[-300:]
+            self.all_data['股债利差'] = pd.DataFrame({'value': series_data2}) if not series_data2.empty else pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ✅ 股债利差: {len(series_data2)} 条记录")
+        except Exception as e:
+            self.logger('数据获取', 'warning', f'股债利差计算失败: {str(e)[:100]}')
+            if '股债利差' not in self.all_data:
+                self.all_data['股债利差'] = pd.DataFrame(index=pd.DatetimeIndex([]), columns=['value'])
+            print(f"  ❌ 股债利差: 计算失败，使用旧缓存 - {str(e)[:50]}")
             
             
             
