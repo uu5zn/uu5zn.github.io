@@ -140,7 +140,7 @@ class ReportGenerator:
                 # 行业轮动解读
                 if detailed_output.get('sector_rotation'):
                     f.write("""
-### 🔷 行业轮动解读
+### 🔶 行业轮动解读
 ```
 """)
                     f.write(detailed_output['sector_rotation'])
@@ -152,7 +152,7 @@ class ReportGenerator:
                 # 市场结构解读
                 if detailed_output.get('index_divergence'):
                     f.write("""
-### 🔷 市场结构解读
+### 📊 市场结构解读
 ```
 """)
                     f.write(detailed_output['index_divergence'])
@@ -164,7 +164,7 @@ class ReportGenerator:
                 # 风险环境解读
                 if detailed_output.get('risk_regime'):
                     f.write("""
-### 🔷 风险环境解读
+### ⚠️ 风险环境解读
 ```
 """)
                     f.write(detailed_output['risk_regime'])
@@ -176,7 +176,7 @@ class ReportGenerator:
                 # 中美市场联动解读
                 if detailed_output.get('china_us_linkage'):
                     f.write("""
-### 🔷 中美市场联动解读
+### 🌐 中美市场联动解读
 ```
 """)
                     f.write(detailed_output['china_us_linkage'])
@@ -188,7 +188,7 @@ class ReportGenerator:
                 # 流动性环境解读
                 if detailed_output.get('liquidity_conditions'):
                     f.write("""
-### 🔷 流动性环境解读
+### 💧 流动性环境解读
 ```
 """)
                     f.write(detailed_output['liquidity_conditions'])
@@ -200,7 +200,7 @@ class ReportGenerator:
                 # 股债性价比解读
                 if detailed_output.get('pe_bond_spread'):
                     f.write("""
-### 🔷 股债性价比解读
+### 📈 股债性价比解读
 ```
 """)
                     f.write(detailed_output['pe_bond_spread'])

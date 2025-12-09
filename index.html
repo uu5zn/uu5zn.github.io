@@ -124,8 +124,9 @@
         .refresh-btn:hover { background-color: var(--secondary-color); transform: translateY(-2px); }
         .refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .main-content { display: flex; flex: 1; max-width: 1600px; margin: 0 auto; width: 100%; gap: 20px; padding: 20px; }
-        .sidebar { width: 320px; background-color: var(--dark-sidebar); border-radius: 12px; padding: 20px; height: fit-content; position: sticky; top: 100px; border: 1px solid var(--border-color); }
+        .sidebar { width: 400px; background-color: var(--dark-sidebar); border-radius: 12px; padding: 20px; height: fit-content; position: sticky; top: 100px; border: 1px solid var(--border-color); }
         .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .sidebar pre { white-space: pre-wrap; word-wrap: break-word; }
         .sidebar-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
         .sidebar-item:last-child { border-bottom: none; }
         .sidebar-item .img-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
@@ -170,6 +171,9 @@
         .error-message { background-color: rgba(231, 76, 60, 0.1); border: 1px solid var(--accent-color); border-radius: 8px; padding: 20px; color: var(--accent-color); text-align: center; }
         .retry-btn { background-color: var(--accent-color); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-top: 15px; transition: all 0.3s ease; }
         .retry-btn:hover { background-color: #c0392b; }
+        @media (max-width: 1024px) {
+            .sidebar { width: 350px; }
+        }
         @media (max-width: 768px) {
             .main-content { flex-direction: column; padding: 10px; gap: 15px; }
             .sidebar { width: 100%; position: static; padding: 15px; margin-bottom: 0; border-right: none; border-bottom: 1px solid var(--border-color); }
@@ -206,6 +210,11 @@
                 <div class="img-title">波动率指数</div>
                 <img src="output/vix.png" alt="波动率指数走势" loading="lazy">
             </div>
+            <!-- 风险环境解读 -->
+            <div id="risk-environment" style="margin-top: 20px; padding: 15px; background-color: var(--dark-bg); border-radius: 8px; border: 1px solid var(--border-color);">
+                <h4 style="color: var(--secondary-color); margin-bottom: 10px;">风险环境解读</h4>
+                <pre style="background-color: var(--code-bg); padding: 10px; border-radius: 6px; font-size: 0.9rem;">正在加载...</pre>
+            </div>
             <div class="sidebar-item">
                 <div class="img-title">标普500指数</div>
                 <img src="output/sp500.png" alt="标普500指数走势" loading="lazy">
@@ -218,9 +227,23 @@
                 <div class="img-title">罗素2000指数</div>
                 <img src="output/rs2000.png" alt="罗素2000指数走势" loading="lazy">
             </div>
+            <!-- 市场结构解读 -->
+            <div id="market-structure" style="margin-top: 20px; padding: 15px; background-color: var(--dark-bg); border-radius: 8px; border: 1px solid var(--border-color);">
+                <h4 style="color: var(--secondary-color); margin-bottom: 10px;">市场结构解读</h4>
+                <pre style="background-color: var(--code-bg); padding: 10px; border-radius: 6px; font-size: 0.9rem;">正在加载...</pre>
+            </div>
             <div class="sidebar-item">
                 <div class="img-title">房地产信托</div>
                 <img src="output/vnq.png" alt="房地产信托走势" loading="lazy">
+            </div>
+             <div class="sidebar-item">
+                <div class="img-title">美股板块涨幅</div>
+                <img src="output/sector_rotation.png" alt="房股板块涨幅" loading="lazy">
+            </div>
+            <!-- 行业轮动解读 -->
+            <div id="sector-rotation" style="margin-top: 20px; padding: 15px; background-color: var(--dark-bg); border-radius: 8px; border: 1px solid var(--border-color);">
+                <h4 style="color: var(--secondary-color); margin-bottom: 10px;">🔄 行业轮动解读</h4>
+                <pre style="background-color: var(--code-bg); padding: 10px; border-radius: 6px; font-size: 0.9rem;">正在加载...</pre>
             </div>
             <div class="sidebar-item">
                 <div class="img-title">日经225指数</div>
@@ -244,13 +267,31 @@
                 </div>
             </div>
             
+            <!-- 核心市场洞察 -->
+            <section style="margin-top: 40px; background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">🔍 核心市场洞察</h2>
+                <div id="core-insights" style="background-color: var(--dark-card); padding: 15px; border-radius: 8px;">
+                    <p>正在加载核心市场洞察...</p>
+                </div>
+            </section>
+            
             <section style="margin-top: 40px;">
-                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📊 技术分析</h2>
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📊 国内市场分析</h2>
                 <div style="margin-bottom: 30px;">
-                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">择时</h3>
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">中美市场联动</h3>
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                        <p>🔻 A股全A等权与汇率变化、中美利差波动及融资余额变化的同步趋势</p>
-                        <img src="output/rongziyue_1.png" alt="融资余额1" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                        <p>🔻 恒生指数与美小盘股变化的同步趋势</p>
+                        <img src="output/hsi_rut_comparison.png" alt="融资余额1" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                        <!-- 中美市场联动解读 -->
+                        <div id="china-us-linkage" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                            <h4 style="color: var(--secondary-color); margin-bottom: 10px;">中美市场联动解读</h4>
+                            <pre style="background-color: var(--code-bg); padding: 10px; border-radius: 6px; font-size: 0.9rem;">正在加载...</pre>
+                        </div>
+                    </div>
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">融资余额</h3>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <p>🔻 融资余额变化与股汇变化同步趋势</p>
+                        <img src="output/rongziyue_1.png" alt="融资余额2" style="width: 100%; margin-top: 10px; border-radius: 4px;">
                     </div>
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
                         <p>🔻 融资余额变化与大市值股指（沪深300）和小市值股指（中证1000）的同步趋势</p>
@@ -260,10 +301,7 @@
                         <p>🔻 融资余额变化与10日均线关系</p>
                         <img src="output/rongziyue_ma.png" alt="融资余额MA" style="width: 100%; margin-top: 10px; border-radius: 4px;">
                     </div>
-                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
-                        <p>🔻 活跃股、杠杆资金参与走势分析</p>
-                        <img src="output/style.png" alt="资金风格" style="width: 100%; margin-top: 10px; border-radius: 4px;">
-                    </div>
+                    
                 </div>
                 
                 <div style="margin-bottom: 30px;">
@@ -271,10 +309,20 @@
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
                         <p>🔻 股债息差分析</p>
                         <img src="output/guzhaixicha.png" alt="股债利差" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                        <!-- 股债性价比解读 -->
+                        <div id="guzhai-xing性价比" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                            <h4 style="color: var(--secondary-color); margin-bottom: 10px;">股债性价比解读</h4>
+                            <pre style="background-color: var(--code-bg); padding: 10px; border-radius: 6px; font-size: 0.9rem;">正在加载...</pre>
+                        </div>
                     </div>
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
                         <p>🔻 流动性分析</p>
                         <img src="output/liudongxing.png" alt="流动性" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                        <!-- 流动性环境解读 -->
+                        <div id="liudongxing-environment" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                            <h4 style="color: var(--secondary-color); margin-bottom: 10px;">流动性环境解读</h4>
+                            <pre style="background-color: var(--code-bg); padding: 10px; border-radius: 6px; font-size: 0.9rem;">正在加载...</pre>
+                        </div>
                     </div>
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
                         <p>🔻 美国债走势</p>
@@ -285,8 +333,8 @@
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: var(--secondary-color); margin-bottom: 15px;">热点</h3>
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                        <p>🔻 近期活跃板块追溯</p>
-                        <img src="output/scale.png" alt="市值指数" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                        <p>🔻 近期每股活跃板块追溯</p>
+                        <img src="yuan.jpeg" alt="市值指数" style="width: 100%; margin-top: 10px; border-radius: 4px;">
                     </div>
                 </div>
                 
@@ -294,11 +342,11 @@
                     <h3 style="color: var(--secondary-color); margin-bottom: 15px;">高度</h3>
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
                         <p>🔻 按历史高度分位数查看</p>
-                        <img src="output/Outliers.png" alt="历史高度" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                        <img src="yuan.jpeg" alt="历史高度" style="width: 100%; margin-top: 10px; border-radius: 4px;">
                     </div>
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
                         <p>🔻 按近期高度查看</p>
-                        <img src="output/Inliers.png" alt="近期高度" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                        <img src="yuan.jpeg" alt="近期高度" style="width: 100%; margin-top: 10px; border-radius: 4px;">
                     </div>
                 </div>
             </section>
@@ -332,20 +380,21 @@
                 refreshBtn.disabled = true;
                 container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载市场分析报告...</p></div>';
                 
+                // 1. 加载远程README.md作为主要内容
                 const timestamp = new Date().getTime();
                 const urls = [
                     `https://raw.githubusercontent.com/uu5zn/rss/main/README.md?t=${timestamp}`,
                     `https://cdn.jsdelivr.net/gh/uu5zn/rss@main/README.md?t=${timestamp}`
                 ];
                 
-                let data = null;
+                let readmeData = null;
                 let lastError = null;
                 
                 for (const url of urls) {
                     try {
                         const response = await fetch(url);
                         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                        data = await response.text();
+                        readmeData = await response.text();
                         break;
                     } catch (err) {
                         lastError = err;
@@ -354,16 +403,16 @@
                     }
                 }
                 
-                if (!data) {
+                if (!readmeData) {
                     throw lastError || new Error('所有数据源都失败了');
                 }
                 
-                if (typeof data !== 'string') {
-                    throw new Error(`获取的数据格式错误: ${typeof data}`);
+                if (typeof readmeData !== 'string') {
+                    throw new Error(`获取的数据格式错误: ${typeof readmeData}`);
                 }
                 
                 // 使用新版 marked API
-                const html = marked.parse(data, {
+                const html = marked.parse(readmeData, {
                     gfm: true,
                     breaks: true,
                     pedantic: false,
@@ -420,6 +469,28 @@
                     }));
                 }
                 
+                // 2. 加载GitHub上的市场分析报告以获取核心市场洞察
+                try {
+                    // 使用GitHub Raw URL加载市场分析报告
+                    const reportUrl = `https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/output/%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A.md?${timestamp}`;
+                    const reportResponse = await fetch(reportUrl);
+                    if (reportResponse.ok) {
+                        const reportData = await reportResponse.text();
+                        // 从GitHub报告中提取并填充核心市场洞察
+                        extractCoreMarketInsights(reportData);
+                        // 从GitHub报告中提取并填充各解读内容
+                        extractAndFillInterpretations(reportData);
+                    } else {
+                        console.warn('无法加载GitHub市场分析报告，将使用远程数据');
+                        // 回退到使用远程数据
+                        extractAndFillInterpretations(readmeData);
+                    }
+                } catch (error) {
+                    console.warn('加载本地市场分析报告失败:', error);
+                    // 回退到使用远程数据
+                    extractAndFillInterpretations(readmeData);
+                }
+                
                 updateTimestamp();
                 
             } catch (error) {
@@ -436,6 +507,98 @@
                 refreshBtn.disabled = false;
             }
         }
+        
+        // 提取并填充解读内容
+        // 专门从本地报告提取核心市场洞察的函数
+            function extractCoreMarketInsights(reportData) {
+                // 精确匹配包含分隔符的核心市场洞察部分
+                const coreInsightsRegex = /---\s*\n## 💡 核心市场洞察[\s\S]*?---/;
+                const match = reportData.match(coreInsightsRegex);
+                
+                const coreInsights = document.getElementById('core-insights');
+                if (match) {
+                    let coreInsightsContent = match[0];
+                    // 移除重复标题，只保留内容部分
+                    coreInsightsContent = coreInsightsContent.replace(/---\s*\n## 💡 核心市场洞察[\s\S]*?1️⃣ /, '1️⃣ ');
+                    // 移除末尾的分隔符
+                    coreInsightsContent = coreInsightsContent.replace(/---$/, '');
+                    // 将markdown转换为HTML
+                    const html = marked.parse(coreInsightsContent, {
+                        gfm: true,
+                        breaks: true
+                    });
+                    const safeHtml = DOMPurify.sanitize(html);
+                    coreInsights.innerHTML = safeHtml;
+                } else {
+                    // 如果精确匹配失败，尝试匹配不带分隔符的版本
+                    const fallbackRegex = /## 💡 核心市场洞察[\s\S]*?(?=## |$)/;
+                    const fallbackMatch = reportData.match(fallbackRegex);
+                    if (fallbackMatch) {
+                        let coreInsightsContent = fallbackMatch[0];
+                        // 移除重复标题，只保留内容部分
+                        coreInsightsContent = coreInsightsContent.replace(/## 💡 核心市场洞察[\s\S]*?1️⃣ /, '1️⃣ ');
+                        const html = marked.parse(coreInsightsContent, {
+                            gfm: true,
+                            breaks: true
+                        });
+                        const safeHtml = DOMPurify.sanitize(html);
+                        coreInsights.innerHTML = safeHtml;
+                    } else {
+                        coreInsights.innerHTML = '<p>暂无核心市场洞察</p>';
+                    }
+                }
+            }
+            
+            function extractAndFillInterpretations(markdownContent) {
+            // 定义解读部分的正则表达式 - 匹配reporter.py生成的实际标题格式（使用🔷图标）
+            const interpretationRegexes = {
+                'sector-rotation': /### 🔷 行业轮动解读[\s\S]*?(?=### |$)/,
+                'market-structure': /### 🔷 市场结构解读[\s\S]*?(?=### |$)/,
+                'risk-environment': /### 🔷 风险环境解读[\s\S]*?(?=### |$)/,
+                'china-us-linkage': /### 🔷 中美市场联动解读[\s\S]*?(?=### |$)/,
+                'liudongxing-environment': /### 🔷 流动性环境解读[\s\S]*?(?=### |$)/,
+                'guzhai-xing价比': /### 🔷 股债性价比解读[\s\S]*?(?=### |$)/
+            };
+                
+                // 提取各解读内容
+                const interpretations = {};
+                for (const [key, regex] of Object.entries(interpretationRegexes)) {
+                    const match = markdownContent.match(regex);
+                    if (match) {
+                        // 提取内容，移除标题和代码块标记
+                        let content = match[0];
+                        content = content.replace(/^###.*?\n/, ''); // 移除标题
+                        content = content.replace(/^```\s*\n/, ''); // 移除开头代码块标记（允许空格）
+                        content = content.replace(/\s*```\s*$/, ''); // 移除结尾代码块标记（允许空格，不要求换行）
+                        
+                        // 移除装饰性分隔线和重复标题
+                        content = content.replace(/=+\s*\[.*?\]\s*=+/g, ''); // 移除如"=====【标题】====="的分隔线
+                        content = content.replace(/=+/g, ''); // 移除单独的"====="分隔线
+                        content = content.replace(/【.*?解读】/g, ''); // 移除如"【行业轮动解读】"的重复标题
+                        
+                        // 清理空行
+                        content = content.replace(/\n{3,}/g, '\n\n'); // 将连续3个以上空行替换为2个空行
+                        content = content.trim(); // 去除首尾空白
+                        
+                        interpretations[key] = content || '暂无相关解读';
+                    } else {
+                        interpretations[key] = '暂无相关解读';
+                    }
+                }
+                
+                // 填充各解读内容
+                for (const [key, content] of Object.entries(interpretations)) {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        const preElement = element.querySelector('pre');
+                        if (preElement) {
+                            preElement.textContent = content;
+                        }
+                    }
+                }
+                
+                // 行业轮动解读已移至侧边栏，无需动态添加到核心市场洞察
+            }
         
         function updateTimestamp() {
             const now = new Date();
