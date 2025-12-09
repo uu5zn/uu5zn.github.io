@@ -197,6 +197,18 @@ class ReportGenerator:
 
 """)
                 
+                # 股债性价比解读
+                if detailed_output.get('pe_bond_spread'):
+                    f.write("""
+### 🔷 股债性价比解读
+```
+""")
+                    f.write(detailed_output['pe_bond_spread'])
+                    f.write("""
+```
+
+""")
+                
                 f.write("\n---\n\n")
                 
                 # 图表展示

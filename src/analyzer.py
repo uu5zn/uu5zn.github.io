@@ -901,24 +901,28 @@ class MarketAnalyzer:
             # 行业轮动
             # 先检查analyze_sector_rotation方法是否存在
             if hasattr(self, 'analyze_sector_rotation'):
-                sector_result = self.analyze_sector_rotation()
+                success, sector_result, output = capture_print(self.analyze_sector_rotation)
                 if sector_result:
                     insights.append(('行业轮动', f"行业轮动强度{sector_result['rotation_strength']:.2f}% {sector_result['leading']}"))
+                    detailed_output['sector_rotation'] = output
             
             # 指数差异
-            index_result = self.analyze_index_divergence()
+            success, index_result, output = capture_print(self.analyze_index_divergence)
             if index_result:
                 insights.append(('指数差异', index_result['insight']))
+                detailed_output['index_divergence'] = output
             
             # 风险环境
-            risk_result = self.analyze_risk_regime()
+            success, risk_result, output = capture_print(self.analyze_risk_regime)
             if risk_result:
                 insights.append(('风险环境', f"VIX{risk_result['vix']:.2f} 国债{risk_result['bond_yield']:.2f}% {risk_result['risk_level']}"))
+                detailed_output['risk_regime'] = output
             
             # 中美联动
-            linkage_result = self.analyze_china_us_linkage()
+            success, linkage_result, output = capture_print(self.analyze_china_us_linkage)
             if linkage_result:
                 insights.append(('中美联动', f"恒指{linkage_result['hsi_ret']:+.2f}% 汇率{linkage_result['cny_change']:+.2f}% {linkage_result['linkage']}"))
+                detailed_output['china_us_linkage'] = output
             
             # 流动性 - 使用缓存数据
             margin_data = self.get_cached_data('融资余额')
@@ -930,14 +934,16 @@ class MarketAnalyzer:
             shibor_values = shibor_data['value'] if not shibor_data.empty and 'value' in shibor_data.columns else pd.Series()
             bond_values = bond_data['value'] if not bond_data.empty and 'value' in bond_data.columns else pd.Series()
             
-            liquidity_result = self.analyze_liquidity_conditions(margin_values, shibor_values, bond_values)
+            success, liquidity_result, output = capture_print(self.analyze_liquidity_conditions, margin_values, shibor_values, bond_values)
             if liquidity_result:
                 insights.append(('流动性', f"融资{liquidity_result['margin']:.0f}亿 Shibor{liquidity_result['shibor']:.2f}% {liquidity_result['liquidity_env']}"))
+                detailed_output['liquidity_conditions'] = output
             
             # 股债性价比
-            pe_bond_result = self.analyze_pe_bond_spread()
+            success, pe_bond_result, output = capture_print(self.analyze_pe_bond_spread)
             if pe_bond_result:
                 insights.append(('股债利差', pe_bond_result['股债利差']))
+                detailed_output['pe_bond_spread'] = output
             
             print("\n" + "📊 市场解读完成".center(70, "="))
             

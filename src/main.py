@@ -245,6 +245,10 @@ def main():
         for insight in market_result['insights']:
             log['insights'].append(insight)
     
+    # 添加详细解读到日志
+    if 'detailed_output' in market_result:
+        log['detailed_output'] = market_result['detailed_output']
+    
     # 生成报告
     log['duration'] = f"{time.time() - start_time:.2f}秒"
     
