@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 保留原有的 Google 标签和 AdSense -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FY82H0FVC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3FY82H0FVC');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7522766513341235" crossorigin="anonymous"></script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风向日报 - 动态市场分析</title>
+    
+    <!-- 核心库（保持不变） -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    
+    <!-- ✅ 修复1：改用 ES 模块方式引入 Mermaid 10.9.1 -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs';
+        
+        // ✅ 修复2：添加甘特图专用配置
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#3498db',
+                primaryTextColor: '#e0e0e0',
+                primaryBorderColor: '#3498db',
+                lineColor: '#b0b0b0',
+                secondaryColor: '#2ecc71',
+                tertiaryColor: '#121212',
+                // ✅ 甘特图专用变量
+                sectionTitleColor: '#e0e0e0',
+                taskTextColor: '#e0e0e0',
+                taskTextOutsideColor: '#b0b0b0',
+                gridColor: '#2d2d2d'
+            },
+            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' },
+            sequence: { useMaxWidth: true },
+            // ✅ 修复3：添加甘特图配置
+            gantt: {
+                useMaxWidth: true,
+                barHeight: 24,
+                barGap: 4,
+                topPadding: 50,
+                leftPadding: 75,
+                gridLineStartPadding: 35,
+                fontSize: 14,
+                sectionFontSize: 16,
+                numberSectionStyles: 4,
+                axisFormatter: [
+                    ['%Y-%m-%d', (d) => d.getDay() === 1], // 周一显示日期
+                    ['%m-%d', () => true] // 其他时间
+                ]
+            }
+        });
+        
+        // 将 mermaid 暴露为全局变量供其他脚本使用
+        window.mermaid = mermaid;
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-sidebar: #0d1117;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --border-color: #2d2d2d;
+            --code-bg: #2d2d2d;
+        }
+        
+        /* 保留原有样式，添加甘特图覆盖 */
+        .mermaid {
+            text-align: center;
+            background-color: var(--dark-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+            /* ✅ 修复4：确保甘特图容器宽度自适应 */
+            width: 100%;
+            overflow-x: auto;
+        }
+        
+        /* ✅ 修复5：覆盖 Mermaid 甘特图默认样式 */
+        .mermaid .sectionTitle,
+        .mermaid .taskText,
+        .mermaid .taskTextOutside {
+            fill: var(--text-primary) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        .mermaid .grid .tick {
+            stroke: var(--border-color) !important;
+        }
+        
+        /* 其余原有样式保持不变... */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header { background-color: var(--dark-card); padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; }
+        .header-content { max-width: 1600px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { color: var(--primary-color); font-size: 1.8rem; font-weight: 700; }
+        .refresh-info { display: flex; align-items: center; gap: 15px; font-size: 0.85rem; }
+        .refresh-btn { background-color: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; }
+        .refresh-btn:hover { background-color: var(--secondary-color); transform: translateY(-2px); }
+        .refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .main-content { display: flex; flex: 1; max-width: 1600px; margin: 0 auto; width: 100%; gap: 20px; padding: 20px; }
+        .sidebar { width: 320px; background-color: var(--dark-sidebar); border-radius: 12px; padding: 20px; height: fit-content; position: sticky; top: 100px; border: 1px solid var(--border-color); }
+        .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .sidebar-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+        .sidebar-item:last-child { border-bottom: none; }
+        .sidebar-item .img-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .sidebar-item img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border-color); transition: transform 0.3s ease; }
+        .sidebar-item img:hover { transform: scale(1.02); }
+        .content { flex: 1; background-color: var(--dark-card); border-radius: 12px; padding: 30px; border: 1px solid var(--border-color); }
+        .markdown-content { animation: fadeIn 0.5s ease-out; }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 { margin: 25px 0 15px 0; color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; position: relative; }
+        .markdown-content h1 { font-size: 2rem; border-bottom: 2px solid var(--primary-color); }
+        .markdown-content h2 { font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .markdown-content h3 { font-size: 1.2rem; color: var(--secondary-color); }
+        .markdown-content h4 { font-size: 1.1rem; color: var(--accent-color); border-bottom: none; }
+        .markdown-content h5, .markdown-content h6 { font-size: 1rem; border-bottom: none; }
+        .markdown-content ul, .markdown-content ol { margin: 15px 0; padding-left: 20px; }
+        .markdown-content li { margin-bottom: 8px; position: relative; }
+        .markdown-content li > ul, .markdown-content li > ol { margin-top: 8px; margin-bottom: 8px; }
+        .markdown-content input[type="checkbox"] { margin-right: 8px; transform: scale(1.2); }
+        .markdown-content input[type="checkbox"]:checked + label { color: var(--secondary-color); text-decoration: line-through; opacity: 0.7; }
+        .markdown-content table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: var(--dark-bg); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        .markdown-content th, .markdown-content td { padding: 12px 15px; border: 1px solid var(--border-color); vertical-align: top; }
+        .markdown-content th { background-color: var(--dark-sidebar); color: var(--primary-color); font-weight: 600; }
+        .markdown-content td { word-wrap: break-word; word-break: break-all; }
+        .markdown-content td strong { color: var(--accent-color); }
+        .markdown-content tr:nth-child(even) { background-color: rgba(255,255,255,0.02); }
+        .markdown-content tr:hover { background-color: rgba(52, 152, 219, 0.1); }
+        .markdown-content pre { background-color: var(--code-bg); border-radius: 8px; padding: 20px; overflow-x: auto; margin: 20px 0; border: 1px solid var(--border-color); }
+        .markdown-content code { background-color: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.9rem; }
+        .markdown-content pre code { background-color: transparent; padding: 0; border: none; }
+        .markdown-content blockquote { border-left: 4px solid var(--primary-color); padding: 15px 20px; margin: 20px 0; background-color: rgba(52, 152, 219, 0.1); border-radius: 0 8px 8px 0; }
+        .markdown-content blockquote p { margin-bottom: 0; }
+        .markdown-content a { color: var(--primary-color); text-decoration: underline; transition: color 0.3s ease; }
+        .markdown-content a:hover { color: var(--secondary-color); }
+        .markdown-content strong { color: var(--accent-color); font-weight: 600; }
+        .markdown-content em { color: var(--accent-color); font-style: italic; }
+        .markdown-content del { color: var(--text-secondary); }
+        .markdown-content hr { height: 2px; background-color: var(--border-color); border: none; margin: 30px 0; }
+        .markdown-content .task-list-item { list-style-type: none; margin-left: -20px; }
+        .loading { text-align: center; padding: 40px; color: var(--text-secondary); }
+        .loading-spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid var(--border-color); border-top: 4px solid var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .error-message { background-color: rgba(231, 76, 60, 0.1); border: 1px solid var(--accent-color); border-radius: 8px; padding: 20px; color: var(--accent-color); text-align: center; }
+        .retry-btn { background-color: var(--accent-color); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-top: 15px; transition: all 0.3s ease; }
+        .retry-btn:hover { background-color: #c0392b; }
+        @media (max-width: 768px) {
+            .main-content { flex-direction: column; padding: 10px; gap: 15px; }
+            .sidebar { width: 100%; position: static; padding: 15px; margin-bottom: 0; border-right: none; border-bottom: 1px solid var(--border-color); }
+            .content { padding: 15px; }
+            .sidebar-item { margin-bottom: 15px; padding-bottom: 15px; }
+            .sidebar-item img { border: none; border-radius: 4px; max-height: 200px; object-fit: contain; }
+            .header h1 { font-size: 1.4rem; }
+            .markdown-content h1 { font-size: 1.5rem; }
+            .markdown-content h2 { font-size: 1.3rem; }
+            .refresh-btn { padding: 6px 12px; font-size: 0.85rem; }
+            footer img { width: 120px; height: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>风向日报 - 动态市场分析</h1>
+            <div class="refresh-info">
+                <span id="last-update">尚未加载</span>
+                <button class="refresh-btn" id="refresh-btn" onclick="loadReadme()">🔄 手动刷新</button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="main-content">
+        <aside class="sidebar">
+            <h2>📈 市场数据</h2>
+            <div class="sidebar-item">
+                <div class="img-title">十年期债券</div>
+                <img src="output/tenbond.png" alt="十年期债券走势" loading="lazy">
+            </div>
+            <div class="sidebar-item">
+                <div class="img-title">波动率指数</div>
+                <img src="output/vix.png" alt="波动率指数走势" loading="lazy">
+            </div>
+            <div class="sidebar-item">
+                <div class="img-title">标普500指数</div>
+                <img src="output/sp500.png" alt="标普500指数走势" loading="lazy">
+            </div>
+            <div class="sidebar-item">
+                <div class="img-title">纳斯达克指数</div>
+                <img src="output/nasdaq.png" alt="纳斯达克指数走势" loading="lazy">
+            </div>
+            <div class="sidebar-item">
+                <div class="img-title">罗素2000指数</div>
+                <img src="output/rs2000.png" alt="罗素2000指数走势" loading="lazy">
+            </div>
+            <div class="sidebar-item">
+                <div class="img-title">房地产信托</div>
+                <img src="output/vnq.png" alt="房地产信托走势" loading="lazy">
+            </div>
+            <div class="sidebar-item">
+                <div class="img-title">日经225指数</div>
+                <img src="output/nikkei225.png" alt="日经225指数走势" loading="lazy">
+            </div>
+            <div class="sidebar-item">
+                <div class="img-title">恒生指数</div>
+                <img src="output/hsi.png" alt="恒生指数走势" loading="lazy">
+            </div>
+            <div class="sidebar-item">
+                <div class="img-title">人民币</div>
+                <img src="output/rmb.png" alt="人民币走势" loading="lazy">
+            </div>
+        </aside>
+        
+        <main class="content">
+            <div id="readme-container">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>正在加载市场分析报告...</p>
+                </div>
+            </div>
+            
+            <section style="margin-top: 40px;">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📊 技术分析</h2>
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">择时</h3>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <p>🔻 A股全A等权与汇率变化、中美利差波动及融资余额变化的同步趋势</p>
+                        <img src="output/rongziyue_1.png" alt="融资余额1" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <p>🔻 融资余额变化与大市值股指（沪深300）和小市值股指（中证1000）的同步趋势</p>
+                        <img src="output/rongziyue_2.png" alt="融资余额2" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <p>🔻 融资余额变化与10日均线关系</p>
+                        <img src="output/rongziyue_ma.png" alt="融资余额MA" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
+                        <p>🔻 活跃股、杠杆资金参与走势分析</p>
+                        <img src="output/style.png" alt="资金风格" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">股债利差</h3>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
+                        <p>🔻 股债息差分析</p>
+                        <img src="output/guzhaixicha.png" alt="股债利差" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <p>🔻 流动性分析</p>
+                        <img src="output/liudongxing.png" alt="流动性" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
+                        <p>🔻 美国债走势</p>
+                        <img src="output/jyb_gz.png" alt="美国国债" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">热点</h3>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <p>🔻 近期活跃板块追溯</p>
+                        <img src="output/scale.png" alt="市值指数" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: var(--secondary-color); margin-bottom: 15px;">高度</h3>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <p>🔻 按历史高度分位数查看</p>
+                        <img src="output/Outliers.png" alt="历史高度" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
+                        <p>🔻 按近期高度查看</p>
+                        <img src="output/Inliers.png" alt="近期高度" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                    </div>
+                </div>
+            </section>
+            
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="refresh-btn" onclick="alert('本页已收藏！')">⭐ 收藏本页</button>
+            </div>
+            
+            <div style="text-align: center; padding: 20px; background-color: var(--dark-bg); border-radius: 8px;">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">关注微信公众号</h3>
+                <img src="wechat-qr.jpg" alt="微信二维码" style="width: 150px; height: 150px; border-radius: 8px; border: 2px solid var(--primary-color);">
+                <p style="margin-top: 10px; color: var(--text-secondary);">扫码获取实时更新</p>
+            </div>
+        </main>
+    </div>
+    
+    <footer style="background-color: var(--dark-sidebar); color: var(--text-secondary); text-align: center; padding: 20px; margin-top: auto;">
+        <a href="about.html" style="color: var(--primary-color); text-decoration: none; margin: 0 15px;">About Us</a>
+        <a href="privacy.html" style="color: var(--primary-color); text-decoration: none; margin: 0 15px;">Privacy Policy</a>
+        <a href="contact.html" style="color: var(--primary-color); text-decoration: none; margin: 0 15px;">Contact Us</a>
+        <p style="margin-top: 15px;">© 2024 风向日报</p>
+    </footer>
+    
+    <script>
+        // ✅ 修复6：将渲染逻辑改为基于 ES 模块
+        async function loadReadme() {
+            const container = document.getElementById('readme-container');
+            const refreshBtn = document.getElementById('refresh-btn');
+            
+            try {
+                refreshBtn.disabled = true;
+                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载市场分析报告...</p></div>';
+                
+                const timestamp = new Date().getTime();
+                const urls = [
+                    `https://raw.githubusercontent.com/uu5zn/rss/main/README.md?t=${timestamp}`,
+                    `https://cdn.jsdelivr.net/gh/uu5zn/rss@main/README.md?t=${timestamp}`
+                ];
+                
+                let data = null;
+                let lastError = null;
+                
+                for (const url of urls) {
+                    try {
+                        const response = await fetch(url);
+                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                        data = await response.text();
+                        break;
+                    } catch (err) {
+                        lastError = err;
+                        console.warn(`从 ${url} 加载失败:`, err);
+                        continue;
+                    }
+                }
+                
+                if (!data) {
+                    throw lastError || new Error('所有数据源都失败了');
+                }
+                
+                if (typeof data !== 'string') {
+                    throw new Error(`获取的数据格式错误: ${typeof data}`);
+                }
+                
+                // 使用新版 marked API
+                const html = marked.parse(data, {
+                    gfm: true,
+                    breaks: true,
+                    pedantic: false,
+                    smartLists: true,
+                    smartypants: true
+                });
+                
+                const safeHtml = DOMPurify.sanitize(html, {
+                    ADD_TAGS: ['iframe'],
+                    ADD_ATTR: ['target', 'rel', 'class', 'id']
+                });
+                
+                container.innerHTML = `<div class="markdown-content">${safeHtml}</div>`;
+                
+                // 高亮代码块
+                container.querySelectorAll('pre code').forEach(block => {
+                    hljs.highlightElement(block);
+                });
+                
+                // ✅ 修复7：使用全局 mermaid 对象渲染
+                const mermaidBlocks = container.querySelectorAll('.mermaid');
+                if (mermaidBlocks.length > 0) {
+                    await Promise.all(Array.from(mermaidBlocks).map(async (block) => {
+                        const graphDefinition = block.textContent.trim();
+                        if (!graphDefinition) return;
+                        
+                        // ✅ 修复8：检查是否包含甘特图并验证语法
+                        if (graphDefinition.startsWith('gantt')) {
+                            try {
+                                // 简单的语法验证：检查日期格式
+                                if (!graphDefinition.includes('dateFormat')) {
+                                    console.warn('甘特图缺少 dateFormat 定义');
+                                }
+                            } catch (e) {
+                                console.error('甘特图语法验证失败:', e);
+                            }
+                        }
+                        
+                        try {
+                            const { svg } = await window.mermaid.render(
+                                `mermaid-${Date.now()}-${Math.random()}`, 
+                                graphDefinition
+                            );
+                            block.innerHTML = svg;
+                        } catch (err) {
+                            console.warn('Mermaid 渲染失败:', err);
+                            // ✅ 修复9：渲染失败时显示友好提示
+                            block.innerHTML = `<div class="error-message" style="padding: 20px; color: var(--accent-color);">
+                                <strong>图表渲染失败</strong><br>
+                                <small>${err.message}</small><br>
+                                <pre style="margin-top: 10px; font-size: 0.8rem; overflow-x: auto;">${graphDefinition.substring(0, 200)}...</pre>
+                            </div>`;
+                        }
+                    }));
+                }
+                
+                updateTimestamp();
+                
+            } catch (error) {
+                console.error('加载失败:', error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        <h3>📡 加载失败</h3>
+                        <p>无法获取最新的市场分析报告: ${error.message}</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">请检查网络连接或稍后重试。</p>
+                        <button class="retry-btn" onclick="loadReadme()">重新加载</button>
+                    </div>
+                `;
+            } finally {
+                refreshBtn.disabled = false;
+            }
+        }
+        
+        function updateTimestamp() {
+            const now = new Date();
+            const timeString = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('last-update').textContent = `最后更新: ${timeString}`;
+        }
+        
+        window.addEventListener('DOMContentLoaded', loadReadme);
+    </script>
+</body>
+</html>
+
