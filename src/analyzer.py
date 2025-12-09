@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import os
 import json
 from config import MIN_DATA_POINTS, VIX_HIGH, VIX_EXTREME, VIX_LOW, SECTOR_ETFS, OUTPUT_DIR
-from utils import validate_data, normalize, calculate_percentile
+from utils import validate_data, normalize, calculate_percentile, capture_print, capture_print
 
 class MarketAnalyzer:
     def __init__(self, logger_callback):
