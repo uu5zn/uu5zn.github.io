@@ -1,0 +1,61 @@
+name: 同步两个私有仓库内容
+
+on:
+  schedule:
+    # 每 24 小时同步一次
+    - cron: '0 */24 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-repositories:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出 Pages 仓库
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.PAT_TOKEN }}
+    
+    - name: 克隆第一个私有仓库 rss
+      env:
+        PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      run: |
+        git clone --depth 1 https://x-access-token:${PAT_TOKEN}@github.com/uu5zn/rss.git /tmp/repo1
+    
+    - name: 克隆第二个私有仓库 analyse
+      env:
+        PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+      run: |
+        git clone --depth 1 https://x-access-token:${PAT_TOKEN}@github.com/uu5zn/analyse.git /tmp/repo2
+    
+    - name: 同步 rss/README.md 到 Pages 根目录
+      run: |
+        cp /tmp/repo1/README.md ./README.md
+    
+    - name: 同步 analyse/output 到 Pages/output 目录
+      run: |
+        mkdir -p ./output
+        cp -r /tmp/repo2/output/* ./output/
+    
+    - name: 检测文件变更
+      id: check-changes
+      run: |
+        if [[ -n $(git status --porcelain) ]]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+          git status --porcelain > changes.txt
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: 提交并推送变更
+      if: steps.check-changes.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git commit -m "chore: 同步私有仓库更新" -m "$(cat changes.txt)"
+        git push origin main
+    
+    - name: 清理临时目录
+      if: always()
+      run: rm -rf /tmp/repo1 /tmp/repo2
