@@ -170,32 +170,6 @@
         .error-message { background-color: rgba(231, 76, 60, 0.1); border: 1px solid var(--accent-color); border-radius: 8px; padding: 20px; color: var(--accent-color); text-align: center; }
         .retry-btn { background-color: var(--accent-color); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-top: 15px; transition: all 0.3s ease; }
         .retry-btn:hover { background-color: #c0392b; }
-        
-        /* 图片分析内容样式 */
-        .image-analysis {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: var(--dark-bg);
-            border-radius: 8px;
-            font-size: 0.85rem;
-            border: 1px solid var(--border-color);
-        }
-        .image-analysis .analysis-title {
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        .image-analysis .analysis-content {
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-        .image-analysis .core-insight {
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px solid var(--border-color);
-            color: var(--secondary-color);
-        }
-        
         @media (max-width: 768px) {
             .main-content { flex-direction: column; padding: 10px; gap: 15px; }
             .sidebar { width: 100%; position: static; padding: 15px; margin-bottom: 0; border-right: none; border-bottom: 1px solid var(--border-color); }
@@ -207,10 +181,6 @@
             .markdown-content h2 { font-size: 1.3rem; }
             .refresh-btn { padding: 6px 12px; font-size: 0.85rem; }
             footer img { width: 120px; height: 120px; }
-            .image-analysis {
-                font-size: 0.8rem;
-                padding: 8px;
-            }
         }
     </style>
 </head>
@@ -480,135 +450,7 @@
             document.getElementById('last-update').textContent = `最后更新: ${timeString}`;
         }
         
-        // 加载并插入市场分析报告内容
-        async function loadMarketAnalysis() {
-            try {
-                // 加载市场分析报告.md文件
-                const timestamp = new Date().getTime();
-                const response = await fetch(`output/市场分析报告.md?t=${timestamp}`);
-                if (!response.ok) {
-                    console.warn('无法加载市场分析报告.md:', response.status);
-                    return;
-                }
-                const marketReportText = await response.text();
-                parseAndInsertMarketAnalysis(marketReportText);
-            } catch (error) {
-                console.error('加载市场分析报告失败:', error);
-            }
-        }
-
-        // 解析市场分析报告并提取图片分析内容
-        function parseAndInsertMarketAnalysis(marketReportText) {
-            const imageSections = {};
-            const lines = marketReportText.split('\n');
-            
-            // 提取核心市场洞察
-            const coreInsights = extractCoreInsights(marketReportText);
-            
-            // 解析图片及其分析内容
-            for (let i = 0; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if (line.startsWith('### ') || line.startsWith('#### ')) {
-                    const title = line.replace(/^###+ /, '');
-                    let nextLine = lines[i + 1]?.trim();
-                    if (nextLine && nextLine.startsWith('![') && nextLine.includes('](./')) {
-                        const imageMatch = nextLine.match(/!\[.*?\]\(\.\/(.*?)\)/);
-                        if (imageMatch) {
-                            const imageFilename = imageMatch[1];
-                            let analysisContent = '';
-                            for (let j = i + 2; j < lines.length; j++) {
-                                const contentLine = lines[j].trim();
-                                if (contentLine.startsWith('### ')) break;
-                                if (contentLine) analysisContent += contentLine + '\n';
-                            }
-                            imageSections[imageFilename] = { title, analysis: analysisContent.trim() };
-                        }
-                    }
-                }
-            }
-            
-            // 将分析内容插入到对应图片下方
-            insertAnalysisBelowImages(imageSections, coreInsights);
-        }
-
-        // 提取核心市场洞察
-        function extractCoreInsights(marketReportText) {
-            const lines = marketReportText.split('\n');
-            let coreInsights = '';
-            let inCoreInsights = false;
-            
-            for (const line of lines) {
-                if (line.trim() === '## 💡 核心市场洞察') {
-                    inCoreInsights = true;
-                    continue;
-                }
-                if (inCoreInsights && line.trim().startsWith('## ')) {
-                    break;
-                }
-                if (inCoreInsights && line.trim()) {
-                    coreInsights += line + '\n';
-                }
-            }
-            
-            return coreInsights.trim();
-        }
-
-        // 将分析内容插入到对应图片下方
-        function insertAnalysisBelowImages(imageSections, coreInsights) {
-            // 遍历所有图片元素
-            const images = document.querySelectorAll('img');
-            
-            images.forEach(img => {
-                // 提取图片文件名
-                const src = img.getAttribute('src');
-                if (!src) return;
-                
-                // 获取图片文件名（去掉路径）
-                const imageFilename = src.split('/').pop();
-                
-                // 检查是否有对应的分析内容
-                if (imageSections[imageFilename]) {
-                    const { title, analysis } = imageSections[imageFilename];
-                    
-                    // 检查是否已经添加过分析内容
-                    if (img.nextElementSibling && img.nextElementSibling.classList.contains('image-analysis')) {
-                        return; // 已添加，跳过
-                    }
-                    
-                    // 创建分析内容容器
-                    const analysisDiv = document.createElement('div');
-                    analysisDiv.className = 'image-analysis';
-                    
-                    // 创建HTML内容
-                    let htmlContent = `<div class="analysis-title">${title}</div>`;
-                    if (analysis) {
-                        // 使用marked将Markdown转换为HTML
-                        const analysisHtml = marked.parse(analysis);
-                        const safeHtml = DOMPurify.sanitize(analysisHtml);
-                        htmlContent += `<div class="analysis-content">${safeHtml}</div>`;
-                    }
-                    
-                    // 添加核心洞察（仅在主要图片下方添加）
-                    if (coreInsights && ['sp500.png', 'nasdaq.png', 'hsi.png'].includes(imageFilename)) {
-                        const coreInsightsHtml = marked.parse(coreInsights);
-                        const safeCoreInsights = DOMPurify.sanitize(coreInsightsHtml);
-                        htmlContent += `<div class="core-insight">💡 核心洞察：${safeCoreInsights}</div>`;
-                    }
-                    
-                    analysisDiv.innerHTML = htmlContent;
-                    
-                    // 将分析内容插入到图片下方
-                    img.parentNode.insertBefore(analysisDiv, img.nextSibling);
-                }
-            });
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            loadReadme();
-            // 延迟加载市场分析报告，确保主要内容先加载完成
-            setTimeout(loadMarketAnalysis, 1000);
-        });
+        window.addEventListener('DOMContentLoaded', loadReadme);
     </script>
 </body>
 </html>
-
