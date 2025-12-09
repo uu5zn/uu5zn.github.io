@@ -411,7 +411,31 @@
                     throw new Error(`获取的数据格式错误: ${typeof readmeData}`);
                 }
                 
-                // 使用新版 marked API
+                // 使用新版 marked API，并添加 mermaid 代码块处理扩展
+                // 定义 mermaid 扩展
+                const mermaidExtension = {
+                    name: 'mermaid',
+                    level: 'block',
+                    start(src) { return src.match(/```mermaid/)?.index; },
+                    tokenizer(src, tokens) {
+                        const rule = /^```mermaid\s*\n([\s\S]*?)\n```/;
+                        const match = rule.exec(src);
+                        if (match) {
+                            return {
+                                type: 'mermaid',
+                                raw: match[0],
+                                code: match[1].trim()
+                            };
+                        }
+                    },
+                    renderer(token) {
+                        return `<div class="mermaid">${token.code}</div>`;
+                    }
+                };
+                
+                // 注册扩展并解析
+                marked.use({ extensions: [mermaidExtension] });
+                
                 const html = marked.parse(readmeData, {
                     gfm: true,
                     breaks: true,
@@ -432,41 +456,11 @@
                     hljs.highlightElement(block);
                 });
                 
-                // ✅ 修复7：使用全局 mermaid 对象渲染
-                const mermaidBlocks = container.querySelectorAll('.mermaid');
-                if (mermaidBlocks.length > 0) {
-                    await Promise.all(Array.from(mermaidBlocks).map(async (block) => {
-                        const graphDefinition = block.textContent.trim();
-                        if (!graphDefinition) return;
-                        
-                        // ✅ 修复8：检查是否包含甘特图并验证语法
-                        if (graphDefinition.startsWith('gantt')) {
-                            try {
-                                // 简单的语法验证：检查日期格式
-                                if (!graphDefinition.includes('dateFormat')) {
-                                    console.warn('甘特图缺少 dateFormat 定义');
-                                }
-                            } catch (e) {
-                                console.error('甘特图语法验证失败:', e);
-                            }
-                        }
-                        
-                        try {
-                            const { svg } = await window.mermaid.render(
-                                `mermaid-${Date.now()}-${Math.random()}`, 
-                                graphDefinition
-                            );
-                            block.innerHTML = svg;
-                        } catch (err) {
-                            console.warn('Mermaid 渲染失败:', err);
-                            // ✅ 修复9：渲染失败时显示友好提示
-                            block.innerHTML = `<div class="error-message" style="padding: 20px; color: var(--accent-color);">
-                                <strong>图表渲染失败</strong><br>
-                                <small>${err.message}</small><br>
-                                <pre style="margin-top: 10px; font-size: 0.8rem; overflow-x: auto;">${graphDefinition.substring(0, 200)}...</pre>
-                            </div>`;
-                        }
-                    }));
+                // ✅ 使用 mermaid.run() 渲染所有 Mermaid 图表（包括甘特图）
+                if (window.mermaid) {
+                    await window.mermaid.run().catch(err => {
+                        console.error('Mermaid 渲染失败:', err);
+                    });
                 }
                 
                 // 2. 加载GitHub上的市场分析报告以获取核心市场洞察

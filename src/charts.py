@@ -124,7 +124,7 @@ class ChartGenerator:
                 
                 fig, ax = plt.subplots(figsize=(6, 4), facecolor='black')
                 ax.set_facecolor('black')
-                ax.plot(close_data.index, close_data, color='#2ecc71', linewidth=1.5)
+                ax.plot(close_data.index, close_data, color='#2ecc71', linewidth=2.5)
                 
                 # 设置标题和标签
                 current_font = plt.rcParams['font.sans-serif'][0]
@@ -180,7 +180,7 @@ class ChartGenerator:
             ax.set_title(title, fontsize=13, fontweight='heavy', pad=8, fontname=title_font)
             
             for i, (key, values) in enumerate(valid_data.items()):
-                linewidth = linewidths[i] if linewidths else 1.5
+                linewidth = linewidths[i] if linewidths else 2.5
                 ax.plot(values.index, values, color=colors[i], 
                        label=labels[i], linewidth=linewidth)
             
@@ -309,10 +309,10 @@ class ChartGenerator:
             # 设置字体
             title_font = plt.rcParams['font.sans-serif'][0]
             
-            line1 = ax1.plot(oil_gold_ratio, 'r-', label='Oil/Gold Ratio', linewidth=1.5)
+            line1 = ax1.plot(oil_gold_ratio, 'r-', label='Oil/Gold Ratio', linewidth=2.5)
             ax1.set_ylabel('Oil/Gold Ratio', color='r', fontsize=10, fontname=title_font)
             
-            line2 = ax2.plot(us_bond, 'b-', label='US 10Y Yield', linewidth=1.5)
+            line2 = ax2.plot(us_bond, 'b-', label='US 10Y Yield', linewidth=2.5)
             ax2.set_ylabel('US 10Y Yield (%)', color='b', fontsize=10, fontname=title_font)
             
             plt.title('Oil/Gold Ratio vs US 10Y Treasury Yield Trend', 
@@ -378,7 +378,7 @@ class ChartGenerator:
             
             # 绘图
             fig, ax = plt.subplots(figsize=(20, 12), facecolor='black')
-            spread.plot(ax=ax, color='white', linewidth=1.5)
+            spread.plot(ax=ax, color='white', linewidth=2.5)
             ax.set_title('股债利差', fontsize=13, fontweight='heavy', pad=8, fontname=title_font)
             
             # 参考线
