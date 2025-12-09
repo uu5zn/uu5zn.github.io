@@ -383,8 +383,8 @@
                 // 1. 加载远程README.md作为主要内容
                 const timestamp = new Date().getTime();
                 const urls = [
-                    `https://raw.githubusercontent.com/uu5zn/rss/main/README.md?t=${timestamp}`,
-                    `https://cdn.jsdelivr.net/gh/uu5zn/rss@main/README.md?t=${timestamp}`
+                    `https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/README.md?t=${timestamp}`,
+                    `https://cdn.jsdelivr.net/gh/uu5zn/uu5zn.github.io@main/README.md?t=${timestamp}`
                 ];
                 
                 let readmeData = null;
@@ -465,41 +465,65 @@
                 
                 // 2. 加载GitHub上的市场分析报告以获取核心市场洞察
                 try {
-                    // 使用GitHub Raw URL加载市场分析报告
-                    const reportUrl = `https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/output/%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A.md?${timestamp}`;
-                    const reportResponse = await fetch(reportUrl);
-                    if (reportResponse.ok) {
-                        const reportData = await reportResponse.text();
-                        // 从GitHub报告中提取并填充核心市场洞察
-                        extractCoreMarketInsights(reportData);
-                        // 从GitHub报告中提取并填充各解读内容
-                        extractAndFillInterpretations(reportData);
-                    } else {
-                        console.warn('无法加载GitHub市场分析报告，将使用远程数据');
-                        // 回退到使用远程数据
-                        extractAndFillInterpretations(readmeData);
-                    }
-                } catch (error) {
-                    console.warn('加载本地市场分析报告失败:', error);
-                    // 回退到使用远程数据
-                    extractAndFillInterpretations(readmeData);
-                }
-                
-                updateTimestamp();
-                
-            } catch (error) {
-                console.error('加载失败:', error);
-                container.innerHTML = `
-                    <div class="error-message">
-                        <h3>📡 加载失败</h3>
-                        <p>无法获取最新的市场分析报告: ${error.message}</p>
-                        <p style="margin-top: 10px; font-size: 0.9rem;">请检查网络连接或稍后重试。</p>
-                        <button class="retry-btn" onclick="loadReadme()">重新加载</button>
-                    </div>
-                `;
-            } finally {
-                refreshBtn.disabled = false;
+    // 配置：定义两个备用 URL（CDN 优先）
+    const filename = '%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A.md';
+    const urls = [
+        `https://cdn.jsdelivr.net/gh/uu5zn/uu5zn.github.io@main/output/${filename}?t=${timestamp}`,
+        `https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/output/${filename}?t=${timestamp}`
+    ];
+    
+    let reportData = null;
+    
+    // 依次尝试加载，直到成功或全部失败
+    for (const url of urls) {
+        try {
+            console.log(`尝试从 ${url.includes('jsdelivr') ? 'CDN' : 'GitHub'} 加载...`);
+            const reportResponse = await fetch(url);
+            
+            if (reportResponse.ok) {
+                reportData = await reportResponse.text();
+                console.log(`✅ 成功从 ${url.includes('jsdelivr') ? 'CDN' : 'GitHub'} 加载报告`);
+                break; // 成功后跳出循环
+            } else {
+                console.warn(`${url.includes('jsdelivr') ? 'CDN' : 'GitHub'} 响应异常: ${reportResponse.status}`);
             }
+        } catch (e) {
+            console.warn(`${url.includes('jsdelivr') ? 'CDN' : 'GitHub'} 加载失败:`, e.message);
+            continue; // 失败则尝试下一个
+        }
+    }
+    
+    // 如果成功获取数据，则处理
+    if (reportData) {
+        extractCoreMarketInsights(reportData);
+        extractAndFillInterpretations(reportData);
+    } else {
+        // 所有源都失败，回退到远程数据
+        console.warn('❌ 所有源均失败，回退到远程数据');
+        extractAndFillInterpretations(readmeData);
+    }
+                
+} catch (error) {
+    console.warn('加载市场分析报告时发生致命错误:', error);
+    // 回退到使用远程数据
+    extractAndFillInterpretations(readmeData);
+}
+                
+updateTimestamp();
+                
+} catch (error) {
+    console.error('加载失败:', error);
+    container.innerHTML = `
+        <div class="error-message">
+            <h3>📡 加载失败</h3>
+            <p>无法获取最新的市场分析报告: ${error.message}</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">请检查网络连接或稍后重试。</p>
+            <button class="retry-btn" onclick="loadReadme()">重新加载</button>
+        </div>
+    `;
+} finally {
+    refreshBtn.disabled = false;
+}
         }
         
         // 提取并填充解读内容
@@ -610,4 +634,5 @@
         window.addEventListener('DOMContentLoaded', loadReadme);
     </script>
 </body>
+
 </html>
