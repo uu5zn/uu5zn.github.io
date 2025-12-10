@@ -371,47 +371,78 @@
     </footer>
     
     <script>
-        // ✅ 修复6：将渲染逻辑改为基于 ES 模块
-        async function loadReadme() {
-            const container = document.getElementById('readme-container');
-            const refreshBtn = document.getElementById('refresh-btn');
-            
-            try {
-                refreshBtn.disabled = true;
-                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载市场分析报告...</p></div>';
-                
-                // 1. 加载远程README.md作为主要内容
-                const timestamp = new Date().getTime();
-                const urls = [
-                    `https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/README.md?t=${timestamp}`,
-                    `https://cdn.jsdelivr.net/gh/uu5zn/uu5zn.github.io@main/README.md?t=${timestamp}`
-                ];
-                
-                let readmeData = null;
-                let lastError = null;
-                
-                for (const url of urls) {
+        // 配置常量：集中管理所有配置参数
+        const CONFIG = {
+            // 主要内容文件（README.md）
+            mainContent: {
+                filename: 'README.md',
+                sources: [
+                    { name: 'GitHub', url: 'https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/README.md' },
+                    { name: 'JSdelivr CDN', url: 'https://cdn.jsdelivr.net/gh/uu5zn/uu5zn.github.io@main/README.md' }
+                ]
+            },
+            // 市场分析报告文件
+            marketReport: {
+                filename: '市场分析报告.md',
+                encodedFilename: '%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A.md',
+                outputDir: 'output',
+                sources: [
+                    { name: 'GitHub', url: 'https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/output/%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A.md' },
+                    { name: 'JSdelivr CDN', url: 'https://cdn.jsdelivr.net/gh/uu5zn/uu5zn.github.io@main/output/%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A.md' }
+                ]
+            },
+            // Marked配置
+            markedOptions: {
+                gfm: true,
+                breaks: true,
+                pedantic: false,
+                smartLists: true,
+                smartypants: true
+            },
+            // DOMPurify配置
+            domPurifyOptions: {
+                ADD_TAGS: ['iframe'],
+                ADD_ATTR: ['target', 'rel', 'class', 'id']
+            }
+        };
+        
+        // 通用的fetch函数，支持重试和备用URL
+        async function fetchWithRetry(urls, maxRetries = 1) {
+            for (const urlConfig of urls) {
+                for (let attempt = 0; attempt <= maxRetries; attempt++) {
                     try {
-                        const response = await fetch(url);
-                        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                        readmeData = await response.text();
-                        break;
-                    } catch (err) {
-                        lastError = err;
-                        console.warn(`从 ${url} 加载失败:`, err);
-                        continue;
+                        const timestamp = new Date().getTime();
+                        const urlWithCacheBust = `${urlConfig.url}?t=${timestamp}`;
+                        console.log(`尝试从 ${urlConfig.name} 加载 (尝试 ${attempt + 1}/${maxRetries + 1}): ${urlWithCacheBust}`);
+                        
+                        const response = await fetch(urlWithCacheBust);
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status} - ${urlConfig.name}`);
+                        }
+                        
+                        const data = await response.text();
+                        console.log(`✅ 成功从 ${urlConfig.name} 加载数据`);
+                        return { data, source: urlConfig.name };
+                    } catch (error) {
+                        console.warn(`❌ 从 ${urlConfig.name} 加载失败 (尝试 ${attempt + 1}/${maxRetries + 1}):`, error.message);
+                        
+                        // 如果是最后一次尝试，继续下一个URL
+                        if (attempt >= maxRetries) {
+                            break;
+                        }
+                        
+                        // 短暂延迟后重试
+                        await new Promise(resolve => setTimeout(resolve, 500 * (attempt + 1)));
                     }
                 }
-                
-                if (!readmeData) {
-                    throw lastError || new Error('所有数据源都失败了');
-                }
-                
-                if (typeof readmeData !== 'string') {
-                    throw new Error(`获取的数据格式错误: ${typeof readmeData}`);
-                }
-                
-                // 使用新版 marked API，并添加 mermaid 代码块处理扩展
+            }
+            
+            throw new Error('所有数据源都失败了');
+        }
+        
+        // 渲染Markdown内容到指定容器
+        async function renderMarkdown(content, container) {
+            try {
                 // 定义 mermaid 扩展
                 const mermaidExtension = {
                     name: 'mermaid',
@@ -436,18 +467,8 @@
                 // 注册扩展并解析
                 marked.use({ extensions: [mermaidExtension] });
                 
-                const html = marked.parse(readmeData, {
-                    gfm: true,
-                    breaks: true,
-                    pedantic: false,
-                    smartLists: true,
-                    smartypants: true
-                });
-                
-                const safeHtml = DOMPurify.sanitize(html, {
-                    ADD_TAGS: ['iframe'],
-                    ADD_ATTR: ['target', 'rel', 'class', 'id']
-                });
+                const html = marked.parse(content, CONFIG.markedOptions);
+                const safeHtml = DOMPurify.sanitize(html, CONFIG.domPurifyOptions);
                 
                 container.innerHTML = `<div class="markdown-content">${safeHtml}</div>`;
                 
@@ -456,166 +477,189 @@
                     hljs.highlightElement(block);
                 });
                 
-                // ✅ 使用 mermaid.run() 渲染所有 Mermaid 图表（包括甘特图）
+                // 渲染所有 Mermaid 图表
                 if (window.mermaid) {
                     await window.mermaid.run().catch(err => {
                         console.error('Mermaid 渲染失败:', err);
                     });
                 }
                 
-                // 2. 加载GitHub上的市场分析报告以获取核心市场洞察
-                try {
-    // 配置：定义两个备用 URL（CDN 优先）
-    const filename = '%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A.md';
-    const urls = [
-        `https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/output/${filename}?t=${timestamp}`,
-        `https://cdn.jsdelivr.net/gh/uu5zn/uu5zn.github.io@main/output/${filename}?t=${timestamp}`
-    ];
-    
-    let reportData = null;
-    
-    // 依次尝试加载，直到成功或全部失败
-    for (const url of urls) {
-        try {
-            console.log(`尝试从 ${url.includes('jsdelivr') ? 'CDN' : 'GitHub'} 加载...`);
-            const reportResponse = await fetch(url);
-            
-            if (reportResponse.ok) {
-                reportData = await reportResponse.text();
-                console.log(`✅ 成功从 ${url.includes('jsdelivr') ? 'CDN' : 'GitHub'} 加载报告`);
-                break; // 成功后跳出循环
-            } else {
-                console.warn(`${url.includes('jsdelivr') ? 'CDN' : 'GitHub'} 响应异常: ${reportResponse.status}`);
+                return true;
+            } catch (error) {
+                console.error('Markdown渲染失败:', error);
+                throw new Error(`Markdown渲染失败: ${error.message}`);
             }
-        } catch (e) {
-            console.warn(`${url.includes('jsdelivr') ? 'CDN' : 'GitHub'} 加载失败:`, e.message);
-            continue; // 失败则尝试下一个
         }
-    }
-    
-    // 如果成功获取数据，则处理
-    if (reportData) {
-        extractCoreMarketInsights(reportData);
-        extractAndFillInterpretations(reportData);
-    } else {
-        // 所有源都失败，回退到远程数据
-        console.warn('❌ 所有源均失败，回退到远程数据');
-        extractAndFillInterpretations(readmeData);
-    }
+        
+        // 更新最后更新时间
+
+        
+        // 主加载函数
+        async function loadReadme() {
+            const container = document.getElementById('readme-container');
+            const refreshBtn = document.getElementById('refresh-btn');
+            
+            try {
+                refreshBtn.disabled = true;
+                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载市场分析报告...</p></div>';
                 
-} catch (error) {
-    console.warn('加载市场分析报告时发生致命错误:', error);
-    // 回退到使用远程数据
-    extractAndFillInterpretations(readmeData);
-}
+                // 1. 加载主要内容（README.md）
+                console.log('📥 开始加载主要内容...');
+                const { data: readmeData, source: readmeSource } = await fetchWithRetry(CONFIG.mainContent.sources);
+                console.log(`📄 主要内容加载成功，来源: ${readmeSource}`);
                 
-updateTimestamp();
+                // 2. 渲染主要内容
+                console.log('🎨 开始渲染主要内容...');
+                await renderMarkdown(readmeData, container);
+                console.log('✅ 主要内容渲染完成');
                 
-} catch (error) {
-    console.error('加载失败:', error);
-    container.innerHTML = `
-        <div class="error-message">
-            <h3>📡 加载失败</h3>
-            <p>无法获取最新的市场分析报告: ${error.message}</p>
-            <p style="margin-top: 10px; font-size: 0.9rem;">请检查网络连接或稍后重试。</p>
-            <button class="retry-btn" onclick="loadReadme()">重新加载</button>
-        </div>
-    `;
-} finally {
-    refreshBtn.disabled = false;
-}
+                // 3. 加载并处理市场分析报告
+                console.log('📊 开始加载市场分析报告...');
+                let reportData = null;
+                let reportSource = null;
+                
+                try {
+                    const result = await fetchWithRetry(CONFIG.marketReport.sources);
+                    reportData = result.data;
+                    reportSource = result.source;
+                    console.log(`📈 市场分析报告加载成功，来源: ${reportSource}`);
+                } catch (error) {
+                    console.warn('⚠️ 市场分析报告加载失败，回退到使用主要内容:', error.message);
+                    // 回退到使用主要内容
+                    reportData = readmeData;
+                    reportSource = '回退 - ' + readmeSource;
+                }
+                
+                // 4. 提取并填充数据
+                console.log('🔍 开始提取核心市场洞察...');
+                extractCoreMarketInsights(reportData);
+                console.log('✅ 核心市场洞察提取完成');
+                
+                console.log('📋 开始提取解读内容...');
+                extractAndFillInterpretations(reportData);
+                console.log('✅ 解读内容提取完成');
+                
+                // 5. 更新时间戳
+                updateTimestamp();
+                console.log('⏰ 时间戳更新完成');
+                
+            } catch (error) {
+                console.error('💥 加载过程中发生严重错误:', error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        <h3>📡 加载失败</h3>
+                        <p>无法获取最新的市场分析报告: ${error.message}</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">请检查网络连接或稍后重试。</p>
+                        <button class="retry-btn" onclick="loadReadme()">重新加载</button>
+                    </div>
+                `;
+            } finally {
+                refreshBtn.disabled = false;
+                console.log('🔄 加载流程结束');
+            }
         }
         
         // 提取并填充解读内容
-        // 专门从本地报告提取核心市场洞察的函数
+        // 优化：专门从报告提取核心市场洞察的函数
+        // 优化：统一的Markdown解析和净化函数
+        function parseAndSanitizeMarkdown(content, options = {}) {
+            try {
+                const html = marked.parse(content, {
+                    gfm: true,
+                    breaks: true,
+                    ...options
+                });
+                return DOMPurify.sanitize(html);
+            } catch (error) {
+                console.error('Markdown解析失败:', error);
+                throw new Error(`Markdown解析失败: ${error.message}`);
+            }
+        }
+        
+        // 优化：增强的核心市场洞察提取函数
             function extractCoreMarketInsights(reportData) {
-                // 精确匹配包含分隔符的核心市场洞察部分
-                const coreInsightsRegex = /---\s*\n## 💡 核心市场洞察[\s\S]*?---/;
-                const match = reportData.match(coreInsightsRegex);
-                
                 const coreInsights = document.getElementById('core-insights');
-                if (match) {
-                    let coreInsightsContent = match[0];
-                    // 移除重复标题，只保留内容部分
-                    coreInsightsContent = coreInsightsContent.replace(/---\s*\n## 💡 核心市场洞察[\s\S]*?1️⃣ /, '1️⃣ ');
-                    // 移除末尾的分隔符
-                    coreInsightsContent = coreInsightsContent.replace(/---$/, '');
-                    // 将markdown转换为HTML
-                    const html = marked.parse(coreInsightsContent, {
-                        gfm: true,
-                        breaks: true
-                    });
-                    const safeHtml = DOMPurify.sanitize(html);
-                    coreInsights.innerHTML = safeHtml;
-                } else {
-                    // 如果精确匹配失败，尝试匹配不带分隔符的版本
-                    const fallbackRegex = /## 💡 核心市场洞察[\s\S]*?(?=## |$)/;
-                    const fallbackMatch = reportData.match(fallbackRegex);
-                    if (fallbackMatch) {
-                        let coreInsightsContent = fallbackMatch[0];
-                        // 移除重复标题，只保留内容部分
-                        coreInsightsContent = coreInsightsContent.replace(/## 💡 核心市场洞察[\s\S]*?1️⃣ /, '1️⃣ ');
-                        const html = marked.parse(coreInsightsContent, {
-                            gfm: true,
-                            breaks: true
-                        });
-                        const safeHtml = DOMPurify.sanitize(html);
+                
+                try {
+                    // 进一步简化正则表达式，提高匹配效率
+                    const coreInsightsRegex = /## 💡 核心市场洞察\s*\n([\s\S]*?)(?=\n---|\n## |$)/;
+                    const match = reportData.match(coreInsightsRegex);
+                    
+                    if (match && match[1]) {
+                        const coreInsightsContent = match[1].trim();
+                        const safeHtml = parseAndSanitizeMarkdown(coreInsightsContent);
                         coreInsights.innerHTML = safeHtml;
                     } else {
                         coreInsights.innerHTML = '<p>暂无核心市场洞察</p>';
                     }
+                } catch (error) {
+                    console.error('解析核心市场洞察失败:', error);
+                    coreInsights.innerHTML = '<p>解析核心市场洞察失败，请稍后重试</p>';
                 }
             }
             
+            // 优化：提取并填充解读内容的函数
             function extractAndFillInterpretations(markdownContent) {
-            // 定义解读部分的正则表达式 - 匹配reporter.py生成的实际标题格式（使用🔷图标）
-            const interpretationRegexes = {
-                'sector-rotation': /### 🔷 行业轮动解读[\s\S]*?(?=### |$)/,
-                'market-structure': /### 🔷 市场结构解读[\s\S]*?(?=### |$)/,
-                'risk-environment': /### 🔷 风险环境解读[\s\S]*?(?=### |$)/,
-                'china-us-linkage': /### 🔷 中美市场联动解读[\s\S]*?(?=### |$)/,
-                'liudongxing-environment': /### 🔷 流动性环境解读[\s\S]*?(?=### |$)/,
-                'guzhai-xing价比': /### 🔷 股债性价比解读[\s\S]*?(?=### |$)/
-            };
+                // 定义解读部分的正则表达式 - 匹配统一格式的标题
+                const interpretationConfigs = {
+                    'sector-rotation': '行业轮动解读',
+                    'market-structure': '市场结构解读',
+                    'risk-environment': '风险环境解读',
+                    'china-us-linkage': '中美市场联动解读',
+                    'liudongxing-environment': '流动性环境解读',
+                    'guzhai-xing价比': '股债性价比解读'
+                };
                 
-                // 提取各解读内容
-                const interpretations = {};
-                for (const [key, regex] of Object.entries(interpretationRegexes)) {
-                    const match = markdownContent.match(regex);
-                    if (match) {
-                        // 提取内容，移除标题和代码块标记
-                        let content = match[0];
-                        content = content.replace(/^###.*?\n/, ''); // 移除标题
-                        content = content.replace(/^```\s*\n/, ''); // 移除开头代码块标记（允许空格）
-                        content = content.replace(/\s*```\s*$/, ''); // 移除结尾代码块标记（允许空格，不要求换行）
-                        
-                        // 移除装饰性分隔线和重复标题
-                        content = content.replace(/=+\s*\[.*?\]\s*=+/g, ''); // 移除如"=====【标题】====="的分隔线
-                        content = content.replace(/=+/g, ''); // 移除单独的"====="分隔线
-                        content = content.replace(/【.*?解读】/g, ''); // 移除如"【行业轮动解读】"的重复标题
-                        
-                        // 清理空行
-                        content = content.replace(/\n{3,}/g, '\n\n'); // 将连续3个以上空行替换为2个空行
-                        content = content.trim(); // 去除首尾空白
-                        
-                        interpretations[key] = content || '暂无相关解读';
-                    } else {
-                        interpretations[key] = '暂无相关解读';
-                    }
-                }
+                // 优化：使用模板生成正则表达式，提高可维护性
+                const getInterpretationRegex = (title) => {
+                    return new RegExp(`### 🔷 ${title}[\\s\\S]*?(?=\\n### |$)`, 'i');
+                };
                 
-                // 填充各解读内容
-                for (const [key, content] of Object.entries(interpretations)) {
-                    const element = document.getElementById(key);
-                    if (element) {
-                        const preElement = element.querySelector('pre');
-                        if (preElement) {
-                            preElement.textContent = content;
+                // 优化：内容清理函数，提高代码复用性
+                const cleanContent = (rawContent, title) => {
+                    let content = rawContent;
+                    // 移除标题行
+                    content = content.replace(new RegExp(`^### 🔷 ${title}\\s*\\n`), '');
+                    // 移除代码块标记
+                    content = content.replace(/^```\\s*\\n/, '');
+                    content = content.replace(/\\s*```\\s*$/, '');
+                    // 移除装饰性分隔线和重复标题
+                    content = content.replace(/=+\\s*\\[.*?\\]\\s*=+/g, '');
+                    content = content.replace(/=+/g, '');
+                    content = content.replace(/【.*?解读】/g, '');
+                    // 清理空行
+                    content = content.replace(/\\n{3,}/g, '\\n\\n');
+                    return content.trim() || '暂无相关解读';
+                };
+                
+                // 提取并填充各解读内容
+                for (const [key, title] of Object.entries(interpretationConfigs)) {
+                    try {
+                        const regex = getInterpretationRegex(title);
+                        const match = markdownContent.match(regex);
+                        const element = document.getElementById(key);
+                        
+                        if (element) {
+                            const preElement = element.querySelector('pre');
+                            if (preElement) {
+                                const content = match 
+                                    ? cleanContent(match[0], title)
+                                    : '暂无相关解读';
+                                preElement.textContent = content;
+                            }
+                        }
+                    } catch (error) {
+                        console.error(`处理${title}失败:`, error);
+                        // 确保元素有内容，避免显示异常
+                        const element = document.getElementById(key);
+                        if (element) {
+                            const preElement = element.querySelector('pre');
+                            if (preElement) {
+                                preElement.textContent = '解析失败，请稍后重试';
+                            }
                         }
                     }
                 }
-                
-                // 行业轮动解读已移至侧边栏，无需动态添加到核心市场洞察
             }
         
         function updateTimestamp() {
