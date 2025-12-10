@@ -124,7 +124,7 @@
         .refresh-btn:hover { background-color: var(--secondary-color); transform: translateY(-2px); }
         .refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .main-content { display: flex; flex: 1; max-width: 1600px; margin: 0 auto; width: 100%; gap: 20px; padding: 20px; }
-        .sidebar { width: 400px; background-color: var(--dark-sidebar); border-radius: 12px; padding: 20px; height: fit-content; position: sticky; top: 100px; border: 1px solid var(--border-color); }
+        .sidebar { width: 400px; background-color: var(--dark-sidebar); border-radius: 12px; padding: 20px; height: 80vh; overflow-y: auto; position: static; border: 1px solid var(--border-color); }
         .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         .sidebar pre { white-space: pre-wrap; word-wrap: break-word; }
         .sidebar-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
@@ -468,8 +468,8 @@
     // 配置：定义两个备用 URL（CDN 优先）
     const filename = '%E5%B8%82%E5%9C%BA%E5%88%86%E6%9E%90%E6%8A%A5%E5%91%8A.md';
     const urls = [
-        `https://cdn.jsdelivr.net/gh/uu5zn/uu5zn.github.io@main/output/${filename}?t=${timestamp}`,
-        `https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/output/${filename}?t=${timestamp}`
+        `https://raw.githubusercontent.com/uu5zn/uu5zn.github.io/refs/heads/main/output/${filename}?t=${timestamp}`,
+        `https://cdn.jsdelivr.net/gh/uu5zn/uu5zn.github.io@main/output/${filename}?t=${timestamp}`
     ];
     
     let reportData = null;
