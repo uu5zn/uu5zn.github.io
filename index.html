@@ -616,8 +616,14 @@
             // 优化：内容清理函数，提高代码复用性
             const cleanContent = (codeContent) => {
                 if (!codeContent) return '暂无相关解读';
-                // 清理内容，移除多余空行
-                const cleaned = codeContent.replace(/\\n{3,}/g, '\\n\\n').trim();
+                // 清理内容，移除多余空行和重复的标题/分隔线
+                let cleaned = codeContent
+                    // 移除重复的标题和分隔线
+                    .replace(/=+\s*\n?/g, '')
+                    .replace(/【[\s\S]*?】\s*\n?/g, '')
+                    // 移除多余空行
+                    .replace(/\\n{3,}/g, '\\n\\n')
+                    .trim();
                 return cleaned || '暂无相关解读';
             };
             
@@ -669,3 +675,4 @@
 </body>
 
 </html>
+
