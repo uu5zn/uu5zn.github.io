@@ -581,9 +581,10 @@
                 const coreInsights = document.getElementById('core-insights');
                 
                 try {
-                    // 进一步简化正则表达式，提高匹配效率
-                    const coreInsightsRegex = /## 💡 核心市场洞察\s*\n([\s\S]*?)(?=\n---|\n## |$)/;
-                    const match = reportData.match(coreInsightsRegex);
+                // 确保与reporter.py生成的格式完全匹配：## 💡 核心市场洞察
+                // 匹配到下一个 --- 分隔线或下一个 ## 标题
+                const coreInsightsRegex = /## 💡 核心市场洞察\s*\n([\s\S]*?)(?=\n---|\n## |$)/;
+                const match = reportData.match(coreInsightsRegex);
                     
                     if (match && match[1]) {
                         const coreInsightsContent = match[1].trim();
@@ -611,8 +612,10 @@
                 };
                 
                 // 优化：使用模板生成正则表达式，提高可维护性
+                // 确保与reporter.py生成的格式完全匹配：### 🔷 解读模块名称
+                // 匹配到下一个 --- 分隔线、下一个解读模块或文件末尾
                 const getInterpretationRegex = (title) => {
-                    return new RegExp(`### 🔷 ${title}[\\s\\S]*?(?=\\n### |$)`, 'i');
+                    return new RegExp(`### 🔷 ${title}[\\s\\S]*?(?=\\n---|\\n### 🔷 |$)`, 'i');
                 };
                 
                 // 优化：内容清理函数，提高代码复用性
