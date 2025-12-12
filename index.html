@@ -124,7 +124,7 @@
         .refresh-btn:hover { background-color: var(--secondary-color); transform: translateY(-2px); }
         .refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .main-content { display: flex; flex: 1; max-width: 1600px; margin: 0 auto; width: 100%; gap: 20px; padding: 20px; }
-        .sidebar { width: 400px; background-color: var(--dark-sidebar); border-radius: 12px; padding: 20px; height: 80vh; overflow-y: hidden; position: static; border: 1px solid var(--border-color); }
+        .sidebar { width: 400px; background-color: var(--dark-sidebar); border-radius: 12px; padding: 20px; height: auto; overflow-y: auto; position: static; border: 1px solid var(--border-color); }
         .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         .sidebar pre { white-space: pre-wrap; word-wrap: break-word; }
         .sidebar-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
@@ -176,7 +176,7 @@
         }
         @media (max-width: 768px) {
             .main-content { flex-direction: column; padding: 10px; gap: 15px; }
-            .sidebar { width: 100%; position: static; padding: 15px; margin-bottom: 0; border-right: none; border-bottom: 1px solid var(--border-color); overflow-y: hidden; height: auto; }
+            .sidebar { width: 100%; position: static; padding: 15px; margin-bottom: 0; border-right: none; border-bottom: 1px solid var(--border-color); overflow-y: auto; height: auto; }
             .content { padding: 15px; }
             .sidebar-item { margin-bottom: 15px; padding-bottom: 15px; }
             .sidebar-item img { border: none; border-radius: 4px; max-height: 200px; object-fit: contain; }
@@ -357,7 +357,7 @@
                     </div>
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
                         <p>🔻 按近期涨幅查看</p>
-                        <img src="output/all_indicators_subplots.png" alt="近期高度" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                        <img src="output/all.png" alt="近期高度" style="width: 100%; margin-top: 10px; border-radius: 4px;">
                     </div>
                     <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
                         <p>🔻 按近期涨幅查看</p>
@@ -690,63 +690,8 @@
             document.getElementById('last-update').textContent = `最后更新: ${timeString}`;
         }
         
-        // 实现侧边栏与主栏同步滚动功能
-        function setupSynchronizedScrolling() {
-            const sidebar = document.querySelector('.sidebar');
-            const content = document.querySelector('.content');
-            
-            if (!sidebar || !content) return;
-            
-            // 仅在大屏幕上启用同步滚动（侧边栏和主内容区水平排列时）
-            const mediaQuery = window.matchMedia('(min-width: 769px)');
-            
-            // 滚动事件处理函数
-            const handleScroll = () => {
-                // 计算主内容区的滚动比例
-                const contentScrollTop = content.scrollTop;
-                const contentScrollHeight = content.scrollHeight;
-                const contentClientHeight = content.clientHeight;
-                const contentScrollRatio = contentScrollTop / (contentScrollHeight - contentClientHeight);
-                
-                // 计算侧边栏可以滚动的最大距离
-                const sidebarScrollHeight = sidebar.scrollHeight;
-                const sidebarClientHeight = sidebar.clientHeight;
-                const sidebarMaxScroll = sidebarScrollHeight - sidebarClientHeight;
-                
-                // 计算侧边栏应该滚动的距离
-                const sidebarScrollTop = Math.min(contentScrollRatio * sidebarMaxScroll, sidebarMaxScroll);
-                
-                // 设置侧边栏的滚动位置
-                sidebar.scrollTop = sidebarScrollTop;
-            };
-            
-            // 根据媒体查询结果添加或移除事件监听器
-            const updateScrollBehavior = () => {
-                if (mediaQuery.matches) {
-                    // 在大屏幕上，内容区需要滚动，侧边栏需要同步滚动
-                    content.style.overflowY = 'auto';
-                    content.style.maxHeight = '80vh';
-                    sidebar.style.overflowY = 'hidden'; // 去除侧边栏滚动条
-                    content.addEventListener('scroll', handleScroll);
-                } else {
-                    // 在移动设备上，内容区和侧边栏都是全屏宽度，不需要固定高度和同步滚动
-                    content.style.overflowY = 'visible';
-                    content.style.maxHeight = 'none';
-                    sidebar.style.overflowY = 'auto'; // 移动端重新启用侧边栏滚动
-                    content.removeEventListener('scroll', handleScroll);
-                }
-            };
-            
-            // 初始化滚动行为
-            updateScrollBehavior();
-            
-            // 监听媒体查询变化
-            mediaQuery.addEventListener('change', updateScrollBehavior);
-        }
-        
         window.addEventListener('DOMContentLoaded', () => {
             loadReadme();
-            setupSynchronizedScrolling();
         });
     </script>
 </body>
