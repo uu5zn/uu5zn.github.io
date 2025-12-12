@@ -626,10 +626,30 @@
             
             // 优化：使用灵活的正则表达式，匹配任意emoji前缀
             // 匹配格式：### [任意emoji] 解读标题\n```\n内容\n```
+/*
             const getInterpretationRegex = (title) => {
                 return new RegExp(`###\\s*[\\p{Emoji}]\\s*${title}\\s*\\n\`\`\`\\s*\\n([\\s\\S]*?)\\n\`\`\``, 'u');
             };
-            
+            */
+// 忽略 emoji、兼容“【标题】”分区格式的万能正则
+const getInterpretationRegex = (title) => {
+  // 先去掉 title 里可能自带的 emoji，再trim
+  const cleanTitle = title.replace(/[\p{Emoji}\p{Emoji_Modifier}\p{Emoji_Component}]/gu, '').trim();
+  return new RegExp(
+    `###\\s*(?:[\\p{Emoji}\\p{Emoji_Modifier}\\p{Emoji_Component}]\\s*)?${cleanTitle}\\s*\\n` +   // 标题行（emoji 可有可无）
+    `[\\s\\S]*?======================================================================\\n` +        // 任意前缀直到分隔线
+    `【${cleanTitle}】\\n` +                                                                    // 【标题】
+    `======================================================================\\n` +
+    `([\\s\\S]*?)` +                                                                           // 真正要抓的内容
+    `(?=\\n===|\\n###|$)`,                                                                    // 结束标志：下一条分隔线 或 下一个 ### 或 文末
+    'gu'                                                                                      // 全局+多行
+  );
+};
+
+
+
+
+
             // 优化：内容清理函数，提高代码复用性
             const cleanContent = (codeContent) => {
                 if (!codeContent) return '暂无相关解读';
