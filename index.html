@@ -631,25 +631,63 @@
                 return new RegExp(`###\\s*[\\p{Emoji}]\\s*${title}\\s*\\n\`\`\`\\s*\\n([\\s\\S]*?)\\n\`\`\``, 'u');
             };
             */
-// 忽略 emoji、兼容“【标题】”分区格式的万能正则
-const getInterpretationRegex = (title) => {
-  // 先去掉 title 里可能自带的 emoji，再trim
-  const cleanTitle = title.replace(/[\p{Emoji}\p{Emoji_Modifier}\p{Emoji_Component}]/gu, '').trim();
+                                          
+
+// 把标题里的 emoji 统统扔掉，再剪掉前后空格
+function cleanTitle(rawTitle) {
+  return rawTitle
+    .replace(/[\p{Emoji}\p{Emoji_Modifier}\p{Emoji_Component}]/gu, '')
+    .trim();
+}
+function makeLooseRegex(chineseTitle) {
+  const t = cleanTitle(chineseTitle);          // 先“洗个澡”
   return new RegExp(
-    `###\\s*(?:[\\p{Emoji}\\p{Emoji_Modifier}\\p{Emoji_Component}]\\s*)?${cleanTitle}\\s*\\n` +   // 标题行（emoji 可有可无）
-    `[\\s\\S]*?======================================================================\\n` +        // 任意前缀直到分隔线
-    `【${cleanTitle}】\\n` +                                                                    // 【标题】
-    `======================================================================\\n` +
-    `([\\s\\S]*?)` +                                                                           // 真正要抓的内容
-    `(?=\\n===|\\n###|$)`,                                                                    // 结束标志：下一条分隔线 或 下一个 ### 或 文末
-    'gu'                                                                                      // 全局+多行
+    `^#{3}\\s*.*?${t}.*\\n` +   // 第1行：### 开头，中间随便什么，只要包含标题即可
+    `[\\s\\S]*?\\n={60,}\\n` +   // 第2行：任意内容 + 一条至少60个“=”的横线
+    `【${t}】\\n` +             // 第3行：【标题】
+    `={60,}\\n` +               // 第4行：又一条横线
+    `([\\s\\S]*?)` +            // 第5行：真正想要的内容（捕获组1）
+    `(?=\\n={60,}|\\n#{3}|\\n$)`,// 结束：遇到下一条横线 或 下一个### 或 文末
+    'gum'                       // g=全局  u=支持中文  m=多行
   );
-};
+}
 
+function tidyText(raw) {
+  if (!raw) return '暂无相关解读';
 
+  return raw
+    .replace(/^\s*【[\s\S]*?】\s*\n*/gm, '') // 去掉任何【xxx】整行
+    .replace(/^=+\s*\n/gm, '')              // 去掉任何只有“=”的行
+    .replace(/\n{3,}/g, '\n\n')             // 三个以上空行 → 只留一行
+    .trim();                                // 剪掉首尾空白
+}
 
+function extractAndFillInterpretations(md) {
+  // 还是那张翻译表
+  const map = {
+    'sector-rotation': '行业轮动解读',
+    'market-structure': '市场结构解读',
+    'risk-environment': '风险环境解读',
+    'china-us-linkage': '中美市场联动解读',
+    'liudongxing-environment': '流动性环境解读',
+    'guzhai': '股债性价比解读',
+    'oil': '油金比解读'
+  };
 
+  for (const [id, chineseTitle] of Object.entries(map)) {
+    const regex = makeLooseRegex(chineseTitle);
+    const match = regex.exec(md);          // 尝试抓内容
+    const text = match ? tidyText(match[1]) : '暂无相关解读';
 
+    // 填网页
+    const box = document.getElementById(id);
+    if (box && box.querySelector('pre')) {
+      box.querySelector('pre').textContent = text;
+    }
+  }
+}
+
+/*
             // 优化：内容清理函数，提高代码复用性
             const cleanContent = (codeContent) => {
                 if (!codeContent) return '暂无相关解读';
@@ -693,7 +731,7 @@ const getInterpretationRegex = (title) => {
                 }
             }
         }
-        
+   */     
         function updateTimestamp() {
             const now = new Date();
             const timeString = now.toLocaleString('zh-CN', {
