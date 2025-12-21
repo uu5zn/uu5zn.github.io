@@ -1,0 +1,27 @@
+{
+  "name": "风向日报 - 动态市场分析",
+  "short_name": "风向日报",
+  "description": "实时市场分析和数据可视化平台",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#3498db",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "logo/s-192.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo/l-512.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "finance", "news"],
+  "lang": "zh-CN",
+  "dir": "ltr"
+}
