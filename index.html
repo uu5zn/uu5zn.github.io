@@ -15,6 +15,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>风向日报 - 动态市场分析</title>
     
+    <!-- PWA相关标签 -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#3498db">
+    <meta name="description" content="实时市场分析和数据可视化平台">
+    
+    <!-- Apple设备特定标签 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="风向日报">
+    <link rel="apple-touch-icon" href="/logo/s-192.jpg">
+    <link rel="apple-touch-icon" sizes="192x192" href="/logo/s-192.jpg">
+    <link rel="apple-touch-icon" sizes="512x512" href="/logo/l-512.jpg">
+    
+    <!-- Windows设备特定标签 -->
+    <meta name="msapplication-TileColor" content="#3498db">
+    <meta name="msapplication-TileImage" content="/logo/s-192.jpg">
+    
     <!-- 核心库（保持不变） -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
@@ -669,6 +686,19 @@
         window.addEventListener('DOMContentLoaded', () => {
             loadReadme();
         });
+        
+        // 注册Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker 注册成功:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('Service Worker 注册失败:', error);
+                    });
+            });
+        }
     </script>
 </body>
 
