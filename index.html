@@ -406,11 +406,18 @@
     <script>
         // 配置常量：集中管理所有配置参数
         const CONFIG = {
-            // 主要内容文件（README.md）
+            // 主要内容文件（5天报告）
             mainContent: {
-                filename: 'README.md',
+                filename: '5day_report.md',
                 sources: [
-                    { name: '本地文件', url: 'README.md' }
+                    { name: '本地文件', url: '5day_report.md' }
+                ]
+            },
+            // 今日报告文件
+            todayReport: {
+                filename: 'today_report.md',
+                sources: [
+                    { name: '本地文件', url: 'today_report.md' }
                 ]
             },
             // 市场分析报告文件
@@ -531,17 +538,47 @@
                 refreshBtn.disabled = true;
                 container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载市场分析报告...</p></div>';
                 
-                // 1. 加载主要内容（README.md）
-                console.log('📥 开始加载主要内容...');
-                const { data: readmeData, source: readmeSource } = await fetchWithRetry(CONFIG.mainContent.sources);
-                console.log(`📄 主要内容加载成功，来源: ${readmeSource}`);
+                // 1. 加载主要内容（5天报告）
+                console.log('📥 开始加载5天报告...');
+                const { data: fiveDayData, source: fiveDaySource } = await fetchWithRetry(CONFIG.mainContent.sources);
+                console.log(`📄 5天报告加载成功，来源: ${fiveDaySource}`);
                 
-                // 2. 渲染主要内容
-                console.log('🎨 开始渲染主要内容...');
-                await renderMarkdown(readmeData, container);
-                console.log('✅ 主要内容渲染完成');
+                // 2. 加载今日报告
+                console.log('📥 开始加载今日报告...');
+                const { data: todayData, source: todaySource } = await fetchWithRetry(CONFIG.todayReport.sources);
+                console.log(`📄 今日报告加载成功，来源: ${todaySource}`);
                 
-                // 3. 加载并处理市场分析报告 (JSON格式)
+                // 3. 合并并渲染两个报告的内容
+                console.log('🎨 开始渲染报告内容...');
+                
+                // 创建一个临时容器来渲染Markdown
+                const tempContainer = document.createElement('div');
+                
+                // 渲染今日报告
+                await renderMarkdown(todayData, tempContainer);
+                const todayHtml = tempContainer.innerHTML;
+                
+                // 清空临时容器并渲染5天报告
+                tempContainer.innerHTML = '';
+                await renderMarkdown(fiveDayData, tempContainer);
+                const fiveDayHtml = tempContainer.innerHTML;
+                
+                // 合并内容：今日报告在上，5天报告在下
+                container.innerHTML = `
+                    <div class="report-section">
+                        <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 30px;">📅 今日报告</h2>
+                        ${todayHtml}
+                    </div>
+                    <hr style="margin: 50px 0; border: none; height: 2px; background-color: var(--border-color);">
+                    <div class="report-section">
+                        <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 30px;">📊 5天报告</h2>
+                        ${fiveDayHtml}
+                    </div>
+                `;
+                
+                console.log('✅ 报告内容渲染完成');
+                
+                // 4. 加载并处理市场分析报告 (JSON格式)
                 console.log('📊 开始加载市场分析报告...');
                 let jsonData = null;
                 let reportSource = null;
@@ -555,10 +592,10 @@
                     console.warn('⚠️ 市场分析报告加载失败，回退到使用主要内容:', error.message);
                     // 回退到使用主要内容
                     jsonData = null;
-                    reportSource = '回退 - ' + readmeSource;
+                    reportSource = '回退 - ' + fiveDaySource;
                 }
                 
-                // 4. 提取并填充数据
+                // 5. 提取并填充数据
                 console.log('🔍 开始提取核心市场洞察...');
                 extractCoreMarketInsightsFromJSON(jsonData);
                 console.log('✅ 核心市场洞察提取完成');
@@ -567,7 +604,7 @@
                 extractAndFillInterpretationsFromJSON(jsonData);
                 console.log('✅ 解读内容提取完成');
                 
-                // 5. 更新时间戳
+                // 6. 更新时间戳
                 updateTimestamp();
                 console.log('⏰ 时间戳更新完成');
                 
