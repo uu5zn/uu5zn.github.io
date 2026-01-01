@@ -33,7 +33,7 @@ jobs:
     
     - name: 同步 rss/README.md 到 Pages 根目录
       run: |
-        cp /tmp/repo1/README.md ./README.md
+        cp /tmp/repo1/*.md ./*.md
     
     - name: 同步 analyse/output 到 Pages/output 目录
       run: |
