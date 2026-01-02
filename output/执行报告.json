@@ -1,230 +1,230 @@
 {
-  "start_time": "2026-01-01T21:39:49.629231",
-  "end_time": "2026-01-01T21:40:23.952883",
+  "start_time": "2026-01-02T08:37:08.250714",
+  "end_time": "2026-01-02T08:37:39.989289",
   "tasks": [
     {
-      "timestamp": "2026-01-01T21:39:49.632269",
+      "timestamp": "2026-01-02T08:37:08.253978",
       "category": "数据缓存",
       "status": "success",
       "message": "已加载缓存数据"
     },
     {
-      "timestamp": "2026-01-01T21:39:49.632276",
+      "timestamp": "2026-01-02T08:37:08.254004",
       "category": "数据获取",
       "status": "info",
       "message": "开始获取所有数据..."
     },
     {
-      "timestamp": "2026-01-01T21:39:49.632292",
+      "timestamp": "2026-01-02T08:37:08.254025",
       "category": "数据获取",
       "status": "info",
       "message": "获取融资余额数据..."
     },
     {
-      "timestamp": "2026-01-01T21:39:52.007552",
+      "timestamp": "2026-01-02T08:37:10.388622",
       "category": "数据获取",
       "status": "info",
       "message": "获取Shibor数据..."
     },
     {
-      "timestamp": "2026-01-01T21:39:53.093223",
+      "timestamp": "2026-01-02T08:37:11.740281",
       "category": "数据获取",
       "status": "info",
       "message": "获取中美国债收益率数据..."
     },
     {
-      "timestamp": "2026-01-01T21:40:04.290058",
+      "timestamp": "2026-01-02T08:37:21.272052",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510300数据..."
     },
     {
-      "timestamp": "2026-01-01T21:40:05.973856",
+      "timestamp": "2026-01-02T08:37:22.769879",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_159845数据..."
     },
     {
-      "timestamp": "2026-01-01T21:40:06.800855",
+      "timestamp": "2026-01-02T08:37:23.655836",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510500数据..."
     },
     {
-      "timestamp": "2026-01-01T21:40:08.003617",
+      "timestamp": "2026-01-02T08:37:24.687971",
       "category": "数据获取",
       "status": "info",
       "message": "获取原油价格数据..."
     },
     {
-      "timestamp": "2026-01-01T21:40:10.710137",
+      "timestamp": "2026-01-02T08:37:26.490567",
       "category": "数据获取",
       "status": "info",
       "message": "获取黄金价格数据..."
     },
     {
-      "timestamp": "2026-01-01T21:40:12.525606",
+      "timestamp": "2026-01-02T08:37:27.772022",
       "category": "数据获取",
       "status": "info",
       "message": "获取股债利差相关数据..."
     },
     {
-      "timestamp": "2026-01-01T21:40:16.281920",
+      "timestamp": "2026-01-02T08:37:30.743157",
       "category": "数据获取",
       "status": "info",
       "message": "计算股债利差数据..."
     },
     {
-      "timestamp": "2026-01-01T21:40:16.284765",
+      "timestamp": "2026-01-02T08:37:30.746040",
       "category": "数据获取",
       "status": "info",
       "message": "获取指数数据..."
     },
     {
-      "timestamp": "2026-01-01T21:40:18.963361",
+      "timestamp": "2026-01-02T08:37:34.819603",
       "category": "数据获取",
       "status": "success",
       "message": "已获取所有数据，共27种数据类型"
     },
     {
-      "timestamp": "2026-01-01T21:40:18.965552",
+      "timestamp": "2026-01-02T08:37:34.821866",
       "category": "数据缓存",
       "status": "success",
       "message": "已保存数据到缓存"
     },
     {
-      "timestamp": "2026-01-01T21:40:18.965629",
+      "timestamp": "2026-01-02T08:37:34.821946",
       "category": "数据获取",
       "status": "success",
       "message": "所有数据已成功获取并缓存"
     },
     {
-      "timestamp": "2026-01-01T21:40:21.261352",
+      "timestamp": "2026-01-02T08:37:37.219417",
       "category": "K线图生成",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2026-01-01T21:40:21.549705",
+      "timestamp": "2026-01-02T08:37:37.514975",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与MA10 -> rongziyue_ma.png",
       "chart_path": "rongziyue_ma.png"
     },
     {
-      "timestamp": "2026-01-01T21:40:21.549916",
+      "timestamp": "2026-01-02T08:37:37.515217",
       "category": "绘图",
       "status": "error",
       "message": "融资余额与MA10: 'axes.spines.color is not a valid rc parameter (see rcParams.keys() for a list of valid parameters)'"
     },
     {
-      "timestamp": "2026-01-01T21:40:21.550641",
+      "timestamp": "2026-01-02T08:37:37.515921",
       "category": "融资余额分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-01-01T21:40:21.880401",
+      "timestamp": "2026-01-02T08:37:37.850397",
       "category": "绘图",
       "status": "success",
       "message": "归一化指标对比 -> rongziyue_1.png",
       "chart_path": "rongziyue_1.png"
     },
     {
-      "timestamp": "2026-01-01T21:40:21.880595",
+      "timestamp": "2026-01-02T08:37:37.850598",
       "category": "绘图",
       "status": "error",
       "message": "归一化指标对比: 'axes.spines.color is not a valid rc parameter (see rcParams.keys() for a list of valid parameters)'"
     },
     {
-      "timestamp": "2026-01-01T21:40:22.194729",
+      "timestamp": "2026-01-02T08:37:38.166955",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与ETF对比 -> rongziyue_2.png",
       "chart_path": "rongziyue_2.png"
     },
     {
-      "timestamp": "2026-01-01T21:40:22.194911",
+      "timestamp": "2026-01-02T08:37:38.167194",
       "category": "绘图",
       "status": "error",
       "message": "融资余额与ETF对比: 'axes.spines.color is not a valid rc parameter (see rcParams.keys() for a list of valid parameters)'"
     },
     {
-      "timestamp": "2026-01-01T21:40:22.502921",
+      "timestamp": "2026-01-02T08:37:38.479641",
       "category": "绘图",
       "status": "success",
       "message": "流动性指标 -> liudongxing.png",
       "chart_path": "liudongxing.png"
     },
     {
-      "timestamp": "2026-01-01T21:40:22.503108",
+      "timestamp": "2026-01-02T08:37:38.479842",
       "category": "绘图",
       "status": "error",
       "message": "流动性指标: 'axes.spines.color is not a valid rc parameter (see rcParams.keys() for a list of valid parameters)'"
     },
     {
-      "timestamp": "2026-01-01T21:40:22.503884",
+      "timestamp": "2026-01-02T08:37:38.480642",
       "category": "多指标对比",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-01-01T21:40:22.965433",
+      "timestamp": "2026-01-02T08:37:38.978571",
       "category": "油金比",
       "status": "error",
       "message": "'axes.spines.color is not a valid rc parameter (see rcParams.keys() for a list of valid parameters)'"
     },
     {
-      "timestamp": "2026-01-01T21:40:22.966660",
+      "timestamp": "2026-01-02T08:37:38.979746",
       "category": "油金比分析",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2026-01-01T21:40:23.271785",
+      "timestamp": "2026-01-02T08:37:39.295051",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2026-01-01T21:40:23.271971",
+      "timestamp": "2026-01-02T08:37:39.295253",
       "category": "绘图",
       "status": "error",
       "message": "恒生指数与Russell 2000走势对比(归一化): 'axes.spines.color is not a valid rc parameter (see rcParams.keys() for a list of valid parameters)'"
     },
     {
-      "timestamp": "2026-01-01T21:40:23.272697",
+      "timestamp": "2026-01-02T08:37:39.296008",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-01-01T21:40:23.571699",
+      "timestamp": "2026-01-02T08:37:39.602553",
       "category": "股债利差",
       "status": "error",
       "message": "'axes.spines.color is not a valid rc parameter (see rcParams.keys() for a list of valid parameters)'"
     },
     {
-      "timestamp": "2026-01-01T21:40:23.572394",
+      "timestamp": "2026-01-02T08:37:39.603268",
       "category": "股债利差",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2026-01-01T21:40:23.878878",
+      "timestamp": "2026-01-02T08:37:39.913606",
       "category": "行业轮动图",
       "status": "error",
       "message": "'axes.spines.color is not a valid rc parameter (see rcParams.keys() for a list of valid parameters)'"
     },
     {
-      "timestamp": "2026-01-01T21:40:23.879582",
+      "timestamp": "2026-01-02T08:37:39.914334",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-01-01T21:40:23.952852",
+      "timestamp": "2026-01-02T08:37:39.989250",
       "category": "市场分析",
       "status": "success",
       "message": "分析结果已保存到: /home/runner/work/analyse/analyse/output/市场分析结果.json"
@@ -257,11 +257,11 @@
     ],
     [
       "风险环境",
-      "VIX14.95 美国债4.16% 🟢 低风险"
+      "VIX14.83 美国债4.16% 🟢 低风险"
     ],
     [
       "中美联动",
-      "恒指-1.15% 汇率-0.50% 🔓 弱联动"
+      "恒指+1.97% 汇率-0.58% 🔓 弱联动"
     ],
     [
       "流动性",
@@ -280,11 +280,11 @@
   "detailed_output": {
     "sector_rotation": "\n📊 近1月行业表现:\n  1. 美股科技: +24.83%\n  2. 美股消费: +21.91%\n  3. 美股金融: +18.05%\n  4. 美股工业: +13.88%\n  5. 美股医药: +4.56%\n  6. 美股能源: +3.46%\n\n🏆 领涨: 美股科技, 美股消费\n📉 落后: 美股医药, 美股能源\n\n🔄 轮动强度: 14.30%\n🎯 🔥 剧烈轮动: 板块分化严重，追高风险大\n",
     "index_divergence": "\n📊 近30日涨跌幅:\n  纳斯达克100: +3.61% (波动率: 12.6%)\n  标普500:     +3.45% (波动率: 9.0%)\n  罗素2000:    +5.67% (波动率: 14.9%)\n\n🔗 日收益率相关性:\n  纳指-标普:   0.970\n  纳指-罗素:   0.821\n  标普-罗素:   0.869\n\n📈 近期趋势:\n  纳指: 下跌趋势\n  标普: 上涨趋势\n  罗素: 下跌趋势\n\n💡 风格解读: 🔄 风格轮动，结构分化 → 关注行业/个股机会\n",
-    "risk_regime": "\n📊 当前风险指标:\n  VIX:        14.95 (15分位) 5日变化: +10.99%\n  10Y国债:    4.16% (27分位) 5日变化: +0.65%\n\n🎯 VIX解读: 😌 恐慌低迷区，市场过度乐观\n🎯 国债解读: 📊 高利率区，不利长久期资产\n\n📈 近期趋势:\n  VIX: 五日下降 (+10.99%)\n  国债: 五日下降 (+0.65%)\n\n🔗 股债30日相关性: -0.305\n💡 相关性解读: 负相关 → 分散化有效，对冲功能正常\n\n🌡️  综合风险评分: -1/4\n🎯 风险等级: 🟢 低风险\n💼 建议操作: 增加风险敞口，卖出看跌期权，加杠杆\n",
-    "china_us_linkage": "\n📊 市场表现 (30日):\n  恒生指数:    -1.15%\n  标普500:     +3.45%\n  人民币汇率:  6.9926 (5日: -0.50%, 30日: -1.62%)\n\n🎯 汇率信号: 📈 快速升值 → 外资流入，港股受益\n\n🔗 相关性分析:\n  恒指-标普:   0.093 🔓弱联动\n  恒指-人民币: 0.060 (✅正常)\n  标普-人民币: -0.012\n\n🎯 联动强度: 🔓 弱联动\n💡 解读: 港股独立行情，受A股或政策影响更大\n\n📈 相对强弱: 🤝 基本同步 (差值: -4.60%)\n💡 原因推断: 港股与美股相关性主导\n",
+    "risk_regime": "\n📊 当前风险指标:\n  VIX:        14.83 (13分位) 5日变化: +9.04%\n  10Y国债:    4.16% (27分位) 5日变化: +0.65%\n\n🎯 VIX解读: 😌 恐慌低迷区，市场过度乐观\n🎯 国债解读: 📊 高利率区，不利长久期资产\n\n📈 近期趋势:\n  VIX: 五日下降 (+9.04%)\n  国债: 五日下降 (+0.65%)\n\n🔗 股债30日相关性: -0.305\n💡 相关性解读: 负相关 → 分散化有效，对冲功能正常\n\n🌡️  综合风险评分: -1/4\n🎯 风险等级: 🟢 低风险\n💼 建议操作: 增加风险敞口，卖出看跌期权，加杠杆\n",
+    "china_us_linkage": "\n📊 市场表现 (30日):\n  恒生指数:    +1.97%\n  标普500:     +3.45%\n  人民币汇率:  6.9875 (5日: -0.58%, 30日: -1.69%)\n\n🎯 汇率信号: 📈 快速升值 → 外资流入，港股受益\n\n🔗 相关性分析:\n  恒指-标普:   0.093 🔓弱联动\n  恒指-人民币: 0.050 (✅正常)\n  标普-人民币: -0.013\n\n🎯 联动强度: 🔓 弱联动\n💡 解读: 港股独立行情，受A股或政策影响更大\n\n📈 相对强弱: 🤝 基本同步 (差值: -1.48%)\n💡 原因推断: 港股与美股相关性主导\n",
     "liquidity_conditions": "\n📊 流动性指标:\n  融资余额: 12688亿\n    ├─5日变化: -0.53%\n    └─30日变化: +0.94%\n  Shibor 1M: 1.59%\n    └─日变化: +0.19%\n  中美利差: -233.27bp (5日变化: -2bp)\n\n🎯 中美利差: 🔽 利差收窄\n💡 解读: 中国相对吸引力上升，资金流入\n\n🎯 融资余额: 🔄 平稳波动\n💡 解读: 杠杆资金保持平稳，市场情绪中性\n\n🎯 Shibor: 📉 利率低位\n💡 解读: 银行间流动性充裕，政策宽松\n\n💧 流动性评分: 1/2\n🎯 综合环境: 🟢 宽松环境\n💡 资产影响: 流动性充裕，利好风险资产\n",
     "pe_bond_spread": "\n📊 股债性价比指标:\n  中国10年期国债收益率: 1.85%\n  上证50滚动市盈率:     11.54\n  股债利差:             -6.82\n  历史百分位:           86%\n\n🎯 解读: 🟢 股债利差处于历史低位，股票吸引力显著增强，债券相对昂贵\n💡 信号: 股票占优\n💼 建议: 增加股票配置比例，减少债券持仓\n",
-    "oil_gold_ratio": "\n📊 油金比指标:\n  当前值: 0.013 (4分位)\n  5日变化: +2.23%\n  30日变化: -9.05%\n\n🎯 油金比信号: 🔽 油金比低位\n💡 解读: 通缩预期，经济衰退风险，利好黄金避险\n\n🔗 美国10Y国债收益率: 4.18%\n"
+    "oil_gold_ratio": "\n📊 油金比指标:\n  当前值: 0.013 (4分位)\n  5日变化: +5.21%\n  30日变化: -8.92%\n\n🎯 油金比信号: 🔽 油金比低位\n💡 解读: 通缩预期，经济衰退风险，利好黄金避险\n\n🔗 美国10Y国债收益率: 4.18%\n"
   },
-  "duration": "4.99秒"
+  "duration": "5.17秒"
 }
