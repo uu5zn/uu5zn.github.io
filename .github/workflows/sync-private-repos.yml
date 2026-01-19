@@ -3,10 +3,8 @@ name: 同步两个私有仓库内容
 on:
   schedule:
     # 每 24 小时同步一次
-    - cron: '0 */24 * * *'
-    - cron: '00 22 * * 1-5'  # 冬令时（EST）：UTC 21:30 → ET 16:30（收市后半小时）
-    # 2. 北京时间下午4点（CST 16:00 → UTC 08:00）
-    - cron: '30 8 * * 1-5'
+     - cron: '0 22 * * 1-5' 
+     - cron: '0 9 * * *'
   workflow_dispatch:
 
 jobs:
