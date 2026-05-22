@@ -1,200 +1,200 @@
 {
-  "start_time": "2026-05-21T22:48:30.987002",
-  "end_time": "2026-05-21T22:49:17.187740",
+  "start_time": "2026-05-22T10:55:56.507188",
+  "end_time": "2026-05-22T10:56:42.536726",
   "tasks": [
     {
-      "timestamp": "2026-05-21T22:48:30.993690",
+      "timestamp": "2026-05-22T10:55:56.514683",
       "category": "数据缓存",
       "status": "success",
       "message": "已加载缓存数据"
     },
     {
-      "timestamp": "2026-05-21T22:48:30.993701",
+      "timestamp": "2026-05-22T10:55:56.514698",
       "category": "数据获取",
       "status": "info",
       "message": "开始获取所有数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:30.993722",
+      "timestamp": "2026-05-22T10:55:56.514725",
       "category": "数据获取",
       "status": "info",
       "message": "获取融资余额数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:33.624233",
+      "timestamp": "2026-05-22T10:56:04.906004",
       "category": "数据获取",
       "status": "info",
       "message": "获取Shibor数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:35.018946",
+      "timestamp": "2026-05-22T10:56:06.019739",
       "category": "数据获取",
       "status": "info",
       "message": "获取中美国债收益率数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:42.848992",
+      "timestamp": "2026-05-22T10:56:14.558087",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510300数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:43.835172",
+      "timestamp": "2026-05-22T10:56:15.654170",
       "category": "数据获取",
       "status": "warning",
       "message": "ETF_510300: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
     },
     {
-      "timestamp": "2026-05-21T22:48:43.835196",
+      "timestamp": "2026-05-22T10:56:15.654194",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_159845数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:44.533424",
+      "timestamp": "2026-05-22T10:56:17.429672",
       "category": "数据获取",
       "status": "warning",
       "message": "ETF_159845: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
     },
     {
-      "timestamp": "2026-05-21T22:48:44.533448",
+      "timestamp": "2026-05-22T10:56:17.429695",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510500数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:45.258455",
+      "timestamp": "2026-05-22T10:56:18.245621",
       "category": "数据获取",
       "status": "warning",
       "message": "ETF_510500: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
     },
     {
-      "timestamp": "2026-05-21T22:48:45.258478",
+      "timestamp": "2026-05-22T10:56:18.245645",
       "category": "数据获取",
       "status": "info",
       "message": "获取原油价格数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:48.557412",
+      "timestamp": "2026-05-22T10:56:20.499109",
       "category": "数据获取",
       "status": "info",
       "message": "获取黄金价格数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:50.294854",
+      "timestamp": "2026-05-22T10:56:21.866632",
       "category": "数据获取",
       "status": "info",
       "message": "获取股债利差相关数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:53.953698",
+      "timestamp": "2026-05-22T10:56:25.696972",
       "category": "数据获取",
       "status": "info",
       "message": "计算股债利差数据..."
     },
     {
-      "timestamp": "2026-05-21T22:48:53.956117",
+      "timestamp": "2026-05-22T10:56:25.699478",
       "category": "数据获取",
       "status": "info",
       "message": "获取指数数据..."
     },
     {
-      "timestamp": "2026-05-21T22:49:05.694601",
+      "timestamp": "2026-05-22T10:56:31.295622",
       "category": "数据获取",
       "status": "success",
       "message": "已获取所有数据，共27种数据类型"
     },
     {
-      "timestamp": "2026-05-21T22:49:05.699999",
+      "timestamp": "2026-05-22T10:56:31.301476",
       "category": "数据缓存",
       "status": "success",
       "message": "已保存数据到缓存"
     },
     {
-      "timestamp": "2026-05-21T22:49:05.700083",
+      "timestamp": "2026-05-22T10:56:31.301567",
       "category": "数据获取",
       "status": "success",
       "message": "所有数据已成功获取并缓存"
     },
     {
-      "timestamp": "2026-05-21T22:49:08.300888",
+      "timestamp": "2026-05-22T10:56:33.943508",
       "category": "K线图生成",
       "status": "warning",
       "message": "执行失败"
     },
     {
-      "timestamp": "2026-05-21T22:49:08.575348",
+      "timestamp": "2026-05-22T10:56:34.220944",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与MA10 -> rongziyue_ma.png",
       "chart_path": "rongziyue_ma.png"
     },
     {
-      "timestamp": "2026-05-21T22:49:09.315895",
+      "timestamp": "2026-05-22T10:56:34.959587",
       "category": "融资余额分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-05-21T22:49:09.612677",
+      "timestamp": "2026-05-22T10:56:35.260329",
       "category": "绘图",
       "status": "success",
       "message": "归一化指标对比 -> rongziyue_1.png",
       "chart_path": "rongziyue_1.png"
     },
     {
-      "timestamp": "2026-05-21T22:49:10.621509",
+      "timestamp": "2026-05-22T10:56:36.277752",
       "category": "绘图",
       "status": "success",
       "message": "融资余额与ETF对比 -> rongziyue_2.png",
       "chart_path": "rongziyue_2.png"
     },
     {
-      "timestamp": "2026-05-21T22:49:11.639350",
+      "timestamp": "2026-05-22T10:56:37.302421",
       "category": "绘图",
       "status": "success",
       "message": "流动性指标 -> liudongxing.png",
       "chart_path": "liudongxing.png"
     },
     {
-      "timestamp": "2026-05-21T22:49:12.480539",
+      "timestamp": "2026-05-22T10:56:38.139736",
       "category": "多指标对比",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-05-21T22:49:13.748449",
+      "timestamp": "2026-05-22T10:56:39.407026",
       "category": "油金比分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-05-21T22:49:14.083377",
+      "timestamp": "2026-05-22T10:56:39.742708",
       "category": "绘图",
       "status": "success",
       "message": "恒生指数与Russell 2000走势对比(归一化) -> hsi_rut_comparison.png",
       "chart_path": "hsi_rut_comparison.png"
     },
     {
-      "timestamp": "2026-05-21T22:49:14.902967",
+      "timestamp": "2026-05-22T10:56:40.568548",
       "category": "相关性分析",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-05-21T22:49:16.195559",
+      "timestamp": "2026-05-22T10:56:41.506494",
       "category": "股债利差",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-05-21T22:49:17.012534",
+      "timestamp": "2026-05-22T10:56:42.336701",
       "category": "行业轮动",
       "status": "success",
       "message": "任务执行成功"
     },
     {
-      "timestamp": "2026-05-21T22:49:17.187718",
+      "timestamp": "2026-05-22T10:56:42.536703",
       "category": "市场分析",
       "status": "success",
       "message": "分析结果已保存到: /home/runner/work/analyse/analyse/output/市场分析结果.json"
@@ -219,15 +219,15 @@
     ],
     [
       "风险环境",
-      "VIX16.76 美国债4.59% 🟡 中风险"
+      "VIX17.14 美国债4.59% 🟡 中风险"
     ],
     [
       "中美联动",
-      "恒指-0.93% 汇率+0.25% 😞 港股显著跑输 HSI-RS2000(30d:0.701)"
+      "恒指-1.11% 汇率-0.22% 😞 港股显著跑输 HSI-RS2000(30d:0.699)"
     ],
     [
       "流动性",
-      "融资14703亿 Shibor1.39% 🟢 宽松环境"
+      "融资14675亿 Shibor1.39% 🟢 宽松环境"
     ],
     [
       "股债利差",
@@ -235,21 +235,21 @@
     ],
     [
       "油金比",
-      "当前值0.022(90分位) 当日-0.20% 偏离度1.727(显著偏离)"
+      "当前值0.022(92分位) 当日+0.79% 偏离度1.794(显著偏离)"
     ]
   ],
   "market_signals": {},
   "detailed_output": {
     "sector_rotation": "\n📊 近1月行业表现:\n  1. 美股科技: +1558.78% (当日: +0.19%)\n  2. 美股消费: +1165.53% (当日: +0.64%)\n  3. 美股工业: +1081.60% (当日: -0.12%)\n  4. 美股能源: +930.74% (当日: -1.12%)\n  5. 美股医药: +782.38% (当日: +0.69%)\n  6. 美股金融: +363.39% (当日: +0.14%)\n\n🏆 领涨: 美股科技, 美股消费\n📉 落后: 美股医药, 美股金融\n",
     "index_divergence": "\n📊 近30日涨跌幅:\n  纳斯达克100: +14.80% (当日: +0.09%, 波动率: 15.8%)\n  标普500:     +9.22% (当日: +0.17%, 波动率: 10.9%)\n  罗素2000:    +8.09% (当日: +0.93%, 波动率: 20.5%)\n\n🔗 日收益率相关性:\n  纳指-标普:   0.877\n  纳指-罗素:   0.860\n  标普-罗素:   0.850\n\n📈 近期趋势:\n  纳指: 上涨趋势\n  标普: 上涨趋势\n  罗素: 上涨趋势\n",
-    "risk_regime": "\n📊 当前风险指标:\n  VIX:        16.76 (45分位) 当日: -3.90% 5日变化: -9.06%\n  10Y国债:    4.59% (41分位) 当日: +0.31% 5日变化: -0.20%\n\n📈 近期趋势:\n  VIX: 五日下降 (-9.06%)\n  国债: 五日上升 (-0.20%)\n\n� 股债30日相关性(5日平滑): -0.867\n\n�️  综合风险评分: 1/4\n🎯 风险等级: 🟡 中风险\n",
-    "china_us_linkage": "\n📊 市场表现 (30日):\n  恒生指数:    -0.93% (当日: -0.57%)\n  标普500:     +9.22% (当日: +0.17%)\n  人民币汇率:  6.8020 (当日: -0.18% 5日: +0.25%, 30日: -0.43%)\n\n📊 罗素2000表现:\n  罗素2000:    +8.09% (当日: +0.93%)\n\n🔗 HSI与RS2000相关性分析(5日平滑):\n  30日相关性:  0.701\n  60日相关性:  0.494\n  90日相关性:  0.375\n\n📈 相对强弱: 😞 港股显著跑输 (差值: -10.16%)\n",
-    "liquidity_conditions": "\n📊 流动性指标:\n  融资余额: 14703亿\n    ├─当日: +0.34%\n    ├─5日变化: +1.24%\n    └─30日变化: +12.14%\n  Shibor 1M: 1.39%\n    └─日变化: +0.00%\n  中美国债利差: -282.52bp (当日: +1bp 5日变化: -11bp)\n",
-    "pe_bond_spread": "\n📊 股债性价比指标:\n  中国10年期国债收益率: 1.74% (当日: +0.38% 5日变化: -0.80%)\n  上证50滚动市盈率:     11.17 (当日: -0.98% 5日变化: -2.02%)\n  股债利差:             -7.21 (当日: +0.01 5日变化: +0.03)\n",
-    "oil_gold_ratio": "\n📊 油金比指标:\n  当前值: 0.022 (90分位)\n  当日变化: -0.20%\n  5日变化: -4.02%\n  30日变化: +4.71%\n\n📏 标准化处理:\n  油金比Z-score: +1.314 (均值: 0.0173, 标准差: 0.0032)\n  美债Z-score: -0.413\n\n📐 偏离度分析:\n  偏离度: 1.727\n  偏离档次: 显著偏离\n"
+    "risk_regime": "\n📊 当前风险指标:\n  VIX:        17.14 (47分位) 当日: +2.27% 5日变化: -3.82%\n  10Y国债:    4.59% (41分位) 当日: +0.31% 5日变化: -0.20%\n\n📈 近期趋势:\n  VIX: 五日上升 (-3.82%)\n  国债: 五日上升 (-0.20%)\n\n� 股债30日相关性(5日平滑): -0.867\n\n�️  综合风险评分: 2/4\n🎯 风险等级: 🟡 中风险\n",
+    "china_us_linkage": "\n📊 市场表现 (30日):\n  恒生指数:    -1.11% (当日: +0.86%)\n  标普500:     +9.22% (当日: +0.17%)\n  人民币汇率:  6.7942 (当日: -0.09% 5日: -0.22%, 30日: -0.49%)\n\n📊 罗素2000表现:\n  罗素2000:    +8.09% (当日: +0.93%)\n\n🔗 HSI与RS2000相关性分析(5日平滑):\n  30日相关性:  0.699\n  60日相关性:  0.493\n  90日相关性:  0.377\n\n📈 相对强弱: 😞 港股显著跑输 (差值: -10.33%)\n",
+    "liquidity_conditions": "\n📊 流动性指标:\n  融资余额: 14675亿\n    ├─当日: -0.19%\n    ├─5日变化: +0.78%\n    └─30日变化: +12.64%\n  Shibor 1M: 1.39%\n    └─日变化: +0.18%\n  中美国债利差: -282.52bp (当日: +0bp 5日变化: -0bp)\n",
+    "pe_bond_spread": "\n📊 股债性价比指标:\n  中国10年期国债收益率: 1.75% (当日: +0.41% 5日变化: -0.79%)\n  上证50滚动市盈率:     11.16 (当日: -0.09% 5日变化: -1.33%)\n  股债利差:             -7.21 (当日: +0.00 5日变化: +0.02)\n",
+    "oil_gold_ratio": "\n📊 油金比指标:\n  当前值: 0.022 (92分位)\n  当日变化: +0.79%\n  5日变化: -3.06%\n  30日变化: +5.75%\n\n📏 标准化处理:\n  油金比Z-score: +1.381 (均值: 0.0173, 标准差: 0.0032)\n  美债Z-score: -0.413\n\n📐 偏离度分析:\n  偏离度: 1.794\n  偏离档次: 显著偏离\n"
   },
   "ai_insights": {
-    "timestamp": "2026-05-21T22:49:17.187276",
+    "timestamp": "2026-05-22T10:56:42.536203",
     "cross_indicator_analysis": {
       "correlations": [],
       "conflicts": [],
@@ -285,5 +285,5 @@
       "summary": "综合评分: 60.8/100, 市场状态: 乐观"
     }
   },
-  "duration": "11.49秒"
+  "duration": "11.24秒"
 }
