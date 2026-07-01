@@ -43,8 +43,33 @@ logs/
 *.log.*
 
 # Output files
-output/
-*.png
-*.md
-*.json
+output/data_cache/
 src/import akshare as ak.py
+
+# Generated images - 所有图片不同步
+*.png
+*.svg
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.ico
+
+# Markdown files - exclude test files but keep report files
+*.md
+!5day_report.md
+!today_report.md
+!output/*.md
+
+# JSON files - exclude cache but keep config
+*.json
+!package.json
+!manifest.json
+!output/*.json
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Obsidian editor config
+.obsidian/

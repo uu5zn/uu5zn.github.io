@@ -1,0 +1,12 @@
+{
+  "name": "uu5zn-daily-report",
+  "version": "1.0.0",
+  "description": "风向日报 - 动态市场分析",
+  "main": "index.html",
+  "scripts": {
+    "prerender": "node scripts/prerender.js"
+  },
+  "dependencies": {
+    "marked": "^14.1.0"
+  }
+}

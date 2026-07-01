@@ -2,9 +2,8 @@ name: 同步两个私有仓库内容
 
 on:
   schedule:
-    # 每 24 小时同步一次
-     - cron: '0 22 * * 1-5' 
-     - cron: '0 9 * * *'
+    - cron: '0 22 * * 1-5' 
+    - cron: '0 9 * * *'
   workflow_dispatch:
 
 jobs:
@@ -38,6 +37,16 @@ jobs:
       run: |
         mkdir -p ./output
         cp -r /tmp/repo2/output/* ./output/
+    
+    - name: 设置 Node.js 环境
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: 安装依赖并预渲染页面
+      run: |
+        npm install
+        npm run prerender
     
     - name: 检测文件变更
       id: check-changes
