@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -13,25 +13,25 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>风向日报 - 国际市场下的A股市场全景看板 | 融资余额、两融轮动与宏观风向标</title>
-    <link rel="canonical" href="https://uu5zn.github.io/">
-    <meta name="description" content="风向日报为国内A股投资者提供每日动态市场分析。聚合融资余额走势、两融轮动、中美市场联动、股债利差及风险环境解读，助您精准捕捉A股行业轮动与宏观趋势。">
-    <meta name="keywords" content="风向日报, A股看板, 融资余额查询, 两融轮动, 股债利差, 市场风险环境, 中美股市联动">
+    <title id="page-title">风向日报 - 国际市场下的A股市场全景看板 | 融资余额、两融轮动与宏观风向标</title>
+    <link rel="canonical" id="page-canonical" href="https://uu5zn.github.io/">
+    <meta name="description" id="page-description" content="风向日报为国内A股投资者提供每日动态市场分析。聚合融资余额走势、两融轮动、中美市场联动、股债利差及风险环境解读，助您精准捕捉A股行业轮动与宏观趋势。">
+    <meta name="keywords" id="page-keywords" content="风向日报, A股看板, 融资余额查询, 两融轮动, 股债利差, 市场风险环境, 中美股市联动">
     
     <!-- Open Graph标签 -->
-    <meta property="og:title" content="风向日报 - 国际市场下的A股市场全景看板 | 融资余额、两融轮动与宏观风向标">
-    <meta property="og:description" content="风向日报为国内A股投资者提供每日动态市场分析。聚合融资余额走势、两融轮动、中美市场联动、股债利差及风险环境解读，助您精准捕捉A股行业轮动与宏观趋势。">
-    <meta property="og:url" content="https://uu5zn.github.io/">
+    <meta property="og:title" id="og-title" content="风向日报 - 国际市场下的A股市场全景看板 | 融资余额、两融轮动与宏观风向标">
+    <meta property="og:description" id="og-description" content="风向日报为国内A股投资者提供每日动态市场分析。聚合融资余额走势、两融轮动、中美市场联动、股债利差及风险环境解读，助您精准捕捉A股行业轮动与宏观趋势。">
+    <meta property="og:url" id="og-url" content="https://uu5zn.github.io/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="风向日报">
     
     <!-- Twitter卡片标签 -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="风向日报 - 国际市场下的A股市场全景看板">
-    <meta name="twitter:description" content="风向日报为国内A股投资者提供每日动态市场分析。">
+    <meta name="twitter:title" id="twitter-title" content="风向日报 - 国际市场下的A股市场全景看板">
+    <meta name="twitter:description" id="twitter-description" content="风向日报为国内A股投资者提供每日动态市场分析。">
     
     <!-- 面包屑结构化数据 -->
-    <script type="application/ld+json">
+    <script type="application/ld+json" id="breadcrumb-schema">
     {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
@@ -47,7 +47,7 @@
     </script>
     
     <!-- 金融专属结构化数据 - AI搜索优化 -->
-    <script type="application/ld+json">
+    <script type="application/ld+json" id="document-schema">
     {
         "@context": "https://schema.org",
         "@type": "DigitalDocument",
@@ -437,6 +437,7 @@
                 <a href="/stock-bond-spread" class="nav-item" data-route="stock-bond-spread">📉 股债利差</a>
                 <a href="/liquidity" class="nav-item" data-route="liquidity">💧 流动性</a>
                 <a href="/oil-gold-ratio" class="nav-item" data-route="oil-gold-ratio">🛢️ 油金比</a>
+                <a href="/market-analysis" class="nav-item" data-route="market-analysis">📈 市场分析</a>
                 <a href="/risk-environment" class="nav-item" data-route="risk-environment">⚠️ 风险环境</a>
             </div>
         </div>
@@ -835,11 +836,146 @@
             '/stock-bond-spread': 'stock-bond-spread',
             '/liquidity': 'liquidity',
             '/oil-gold-ratio': 'oil-gold-ratio',
+            '/market-analysis': 'market-analysis',
             '/risk-environment': 'risk-environment'
         };
         
+        const PAGE_META = {
+            home: {
+                title: '资讯热点 | 风向日报 - A股市场情绪分析',
+                description: '风向日报为国内A股投资者提供每日动态市场分析。聚合融资余额走势、两融轮动、中美市场联动、股债利差及风险环境解读。',
+                keywords: '风向日报, A股看板, 市场情绪分析, 融资余额, 两融轮动, 股债利差',
+                canonical: 'https://uu5zn.github.io/'
+            },
+            'financing-balance': {
+                title: '融资余额 | 风向日报 - A股杠杆水平分析',
+                description: '分析融资余额变化与股汇变化、大盘指数的同步趋势，识别市场杠杆水平和资金流向。',
+                keywords: '融资余额, A股杠杆, 两融余额, 资金流向, 市场杠杆',
+                canonical: 'https://uu5zn.github.io/financing-balance'
+            },
+            'china-us-linkage': {
+                title: '中美联动 | 风向日报 - 跨市场相关性分析',
+                description: '分析中美股市联动关系，追踪美股对A股的影响，识别跨市场风险传导路径。',
+                keywords: '中美联动, 跨市场分析, 美股影响, A股, 恒生指数',
+                canonical: 'https://uu5zn.github.io/china-us-linkage'
+            },
+            'stock-bond-spread': {
+                title: '股债利差 | 风向日报 - 大类资产配置信号',
+                description: '追踪股债利差变化，识别大类资产配置信号，判断市场风险偏好和估值水平。',
+                keywords: '股债利差, 大类资产配置, 风险偏好, 估值水平, 债券收益率',
+                canonical: 'https://uu5zn.github.io/stock-bond-spread'
+            },
+            'liquidity': {
+                title: '流动性 | 风向日报 - 市场资金环境分析',
+                description: '分析市场流动性环境，追踪融资余额、Shibor等关键指标，判断资金松紧程度。',
+                keywords: '流动性, 融资余额, Shibor, 资金环境, 市场资金',
+                canonical: 'https://uu5zn.github.io/liquidity'
+            },
+            'oil-gold-ratio': {
+                title: '油金比 | 风向日报 - 商品市场分析',
+                description: '分析原油与黄金价格比值变化，识别通胀预期和地缘风险对商品市场的影响。',
+                keywords: '油金比, 原油, 黄金, 商品市场, 通胀预期',
+                canonical: 'https://uu5zn.github.io/oil-gold-ratio'
+            },
+            'risk-environment': {
+                title: '风险环境 | 风向日报 - 市场风险评估',
+                description: '综合评估市场风险环境，基于VIX指数、债券收益率和波动率提供风险警示和防御建议。',
+                keywords: '风险环境, VIX指数, 波动率, 风险评估, 市场风险',
+                canonical: 'https://uu5zn.github.io/risk-environment'
+            }
+        };
+        
+        function updatePageMeta(route) {
+            const meta = PAGE_META[route] || PAGE_META.home;
+            
+            const titleEl = document.getElementById('page-title');
+            const descEl = document.getElementById('page-description');
+            const kwEl = document.getElementById('page-keywords');
+            const canonicalEl = document.getElementById('page-canonical');
+            const ogTitleEl = document.getElementById('og-title');
+            const ogDescEl = document.getElementById('og-description');
+            const ogUrlEl = document.getElementById('og-url');
+            const twitterTitleEl = document.getElementById('twitter-title');
+            const twitterDescEl = document.getElementById('twitter-description');
+            
+            if (titleEl) titleEl.textContent = meta.title;
+            if (descEl) descEl.setAttribute('content', meta.description);
+            if (kwEl) kwEl.setAttribute('content', meta.keywords);
+            if (canonicalEl) canonicalEl.setAttribute('href', meta.canonical);
+            if (ogTitleEl) ogTitleEl.setAttribute('content', meta.title);
+            if (ogDescEl) ogDescEl.setAttribute('content', meta.description);
+            if (ogUrlEl) ogUrlEl.setAttribute('content', meta.canonical);
+            if (twitterTitleEl) twitterTitleEl.setAttribute('content', meta.title);
+            if (twitterDescEl) twitterDescEl.setAttribute('content', meta.description);
+            
+            updateSchema(route, meta);
+        }
+        
+        function updateSchema(route, meta) {
+            const breadcrumbEl = document.getElementById('breadcrumb-schema');
+            const documentEl = document.getElementById('document-schema');
+            
+            if (breadcrumbEl) {
+                const breadcrumbData = {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "风向日报",
+                            "item": "https://uu5zn.github.io/"
+                        }
+                    ]
+                };
+                
+                if (route !== 'home') {
+                    const pageNames = {
+                        'financing-balance': '融资余额',
+                        'china-us-linkage': '中美联动',
+                        'stock-bond-spread': '股债利差',
+                        'liquidity': '流动性',
+                        'oil-gold-ratio': '油金比',
+                        'risk-environment': '风险环境'
+                    };
+                    breadcrumbData.itemListElement.push({
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": pageNames[route] || route,
+                        "item": meta.canonical
+                    });
+                }
+                
+                breadcrumbEl.textContent = JSON.stringify(breadcrumbData);
+            }
+            
+            if (documentEl) {
+                const documentData = {
+                    "@context": "https://schema.org",
+                    "@type": "DigitalDocument",
+                    "name": meta.title,
+                    "description": meta.description,
+                    "url": meta.canonical,
+                    "genre": "Finance",
+                    "educationalUse": "A股市场宏观量化分析",
+                    "keywords": meta.keywords,
+                    "creator": {
+                        "@type": "Organization",
+                        "name": "UU5ZN",
+                        "url": "https://uu5zn.github.io/"
+                    },
+                    "dateModified": new Date().toISOString().split('T')[0],
+                    "encodingFormat": "text/html"
+                };
+                
+                documentEl.textContent = JSON.stringify(documentData);
+            }
+        }
+        
         function navigateTo(path) {
             const route = ROUTES[path] || 'home';
+            
+            updatePageMeta(route);
             
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
