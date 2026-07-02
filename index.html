@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -289,21 +289,36 @@
         .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         
         .nav-menu {
+            position: sticky;
+            top: 73px;
+            z-index: 99;
+            background-color: var(--dark-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            margin-bottom: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .nav-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 5px;
-            margin-bottom: 25px;
-            padding: 15px 20px;
-            background-color: var(--dark-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            gap: 15px;
         }
         
         .nav-menu h2 {
-            margin: 0 15px 0 0;
+            margin: 0;
             font-size: 1.1rem;
             color: var(--primary-color);
+        }
+        
+        .nav-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
         }
         
         .nav-item {
@@ -385,7 +400,8 @@
             .main-content { flex-direction: column; padding: 10px; gap: 15px; }
             .sidebar { width: 100%; position: static; padding: 15px; margin-bottom: 0; border-right: none; border-bottom: 1px solid var(--border-color); overflow-y: auto; height: auto; }
             .content { padding: 15px; }
-            .nav-menu { padding: 12px 15px; gap: 8px; }
+            .nav-menu { top: 60px; padding: 10px 0; }
+            .nav-container { padding: 0 15px; gap: 8px; }
             .nav-menu h2 { width: 100%; margin: 0 0 8px 0; font-size: 1rem; }
             .nav-item { padding: 6px 10px; font-size: 0.85rem; }
             .sidebar-item { margin-bottom: 15px; padding-bottom: 15px; }
@@ -410,6 +426,21 @@
             </div>
         </div>
     </header>
+    
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <h2>📊 看板导航</h2>
+            <div class="nav-items">
+                <a href="/" class="nav-item active" data-route="home">🏠 资讯热点</a>
+                <a href="/financing-balance" class="nav-item" data-route="financing-balance">💰 融资余额</a>
+                <a href="/china-us-linkage" class="nav-item" data-route="china-us-linkage">🌍 中美联动</a>
+                <a href="/stock-bond-spread" class="nav-item" data-route="stock-bond-spread">📉 股债利差</a>
+                <a href="/liquidity" class="nav-item" data-route="liquidity">💧 流动性</a>
+                <a href="/oil-gold-ratio" class="nav-item" data-route="oil-gold-ratio">🛢️ 油金比</a>
+                <a href="/risk-environment" class="nav-item" data-route="risk-environment">⚠️ 风险环境</a>
+            </div>
+        </div>
+    </nav>
     
     <div class="main-content">
         <aside class="sidebar">
@@ -478,16 +509,6 @@
         </aside>
         
         <main class="content">
-            <nav class="nav-menu">
-                <h2>📊 看板导航</h2>
-                <a href="/" class="nav-item active" data-route="home">🏠 资讯热点</a>
-                <a href="/financing-balance" class="nav-item" data-route="financing-balance">💰 融资余额</a>
-                <a href="/china-us-linkage" class="nav-item" data-route="china-us-linkage">🌍 中美联动</a>
-                <a href="/stock-bond-spread" class="nav-item" data-route="stock-bond-spread">📉 股债利差</a>
-                <a href="/liquidity" class="nav-item" data-route="liquidity">💧 流动性</a>
-                <a href="/oil-gold-ratio" class="nav-item" data-route="oil-gold-ratio">🛢️ 油金比</a>
-                <a href="/risk-environment" class="nav-item" data-route="risk-environment">⚠️ 风险环境</a>
-            </nav>
             <section id="page-home" class="page-section active">
                 <div id="readme-container">
                     <!-- PRERENDER:README:START -->
