@@ -8,22 +8,15 @@
     <meta name="keywords" content="风向日报, A股看板, 融资余额查询, 两融轮动, 股债利差, 市场风险环境, 中美股市联动">
     <link rel="canonical" href="https://uu5zn.github.io/">
     <script>
-        var path = window.location.pathname;
-        if (path !== '/404.html') {
-            window.location.replace('/#' + path);
-        }
+        (function() {
+            var path = window.location.pathname + window.location.search;
+            if (path !== '/404.html') {
+                window.location.replace('/?path=' + encodeURIComponent(path));
+            }
+        })();
     </script>
 </head>
 <body>
-    <script>
-        setTimeout(function() {
-            var hash = window.location.hash;
-            if (hash && hash.length > 1) {
-                window.location.replace(hash.substring(1));
-            } else {
-                window.location.replace('/');
-            }
-        }, 50);
-    </script>
+    <p>正在跳转...</p>
 </body>
 </html>

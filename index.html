@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -826,18 +826,17 @@
         }
         
         function handleRouteChange() {
-            let path = window.location.pathname;
+            const urlParams = new URLSearchParams(window.location.search);
+            const pathParam = urlParams.get('path');
             
-            if (path === '/') {
-                const hash = window.location.hash;
-                if (hash && hash.length > 1) {
-                    path = hash.substring(1);
-                    window.location.replace(path);
-                    return;
-                }
+            if (pathParam) {
+                const decodedPath = decodeURIComponent(pathParam);
+                history.replaceState({}, '', decodedPath);
+                navigateTo(decodedPath);
+                return;
             }
             
-            navigateTo(path);
+            navigateTo(window.location.pathname);
         }
         
         document.addEventListener('DOMContentLoaded', () => {
