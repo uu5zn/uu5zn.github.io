@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -4986,46 +4986,139 @@ Value: &quot;【地缘】\n## 聚类概览\n共分析50条新闻，形成5个主
             
             <section id="page-market-analysis" class="page-section">
                 <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 30px;">📈 市场分析</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 20px;">追踪A股热点行业、概念变化、价格分位数分布及市场情绪指标，提供全面的市场分析视角。</p>
-                
-                <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <p>🔻 当前热点行业</p>
-                    <img src="output/current_hot_industries.png" alt="当前热点行业" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+                <p style="color: var(--text-secondary); margin-bottom: 30px;">基于多维度市场数据的综合分析，包括核心指标、偏离预警、行业轮动和AI评分。</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px;">
+                    <div style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(46, 204, 113, 0.1)); border: 1px solid rgba(52, 152, 219, 0.3); border-radius: 12px; padding: 18px;">
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">🏢 行业轮动</p>
+                        <p style="font-size: 1rem; color: var(--text-primary); font-weight: 600;">强度 10.70%</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">领涨: 美股医药, 美股金融</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(230, 126, 34, 0.1), rgba(243, 156, 18, 0.1)); border: 1px solid rgba(230, 126, 34, 0.3); border-radius: 12px; padding: 18px;">
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">📊 指数差异</p>
+                        <p style="font-size: 1rem; color: var(--text-primary); font-weight: 600;">纳指-1.67%</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">标普+0.68% 罗素+6.34%</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(142, 68, 173, 0.1), rgba(155, 89, 182, 0.1)); border: 1px solid rgba(142, 68, 173, 0.3); border-radius: 12px; padding: 18px;">
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">⚠️ 风险环境</p>
+                        <p style="font-size: 1rem; color: var(--text-primary); font-weight: 600;">VIX 15.93</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">美国债4.37% 中等风险</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(234, 153, 153, 0.1)); border: 1px solid rgba(231, 76, 60, 0.3); border-radius: 12px; padding: 18px;">
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">🌏 中美联动</p>
+                        <p style="font-size: 1rem; color: var(--text-primary); font-weight: 600;">恒指-8.97%</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">汇率-0.40% 港股显著跑输</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(52, 152, 219, 0.1)); border: 1px solid rgba(46, 204, 113, 0.3); border-radius: 12px; padding: 18px;">
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">💧 流动性</p>
+                        <p style="font-size: 1rem; color: var(--text-primary); font-weight: 600;">融资 15150亿</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Shibor 1.42% 宽松环境</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, rgba(52, 73, 94, 0.2), rgba(44, 62, 80, 0.2)); border: 1px solid rgba(52, 73, 94, 0.4); border-radius: 12px; padding: 18px;">
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">📈 股债利差</p>
+                        <p style="font-size: 1rem; color: var(--text-primary); font-weight: 600;">-7.30</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">17分位</p>
+                    </div>
                 </div>
-                
-                <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <p>🔻 市场指标图表</p>
-                    <img src="output/市场指标图表.svg" alt="市场指标图表" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+
+                <div style="background-color: var(--dark-bg); border-radius: 12px; padding: 20px; margin-bottom: 30px; border: 1px solid var(--border-color);">
+                    <h3 style="color: var(--primary-color); margin-bottom: 20px; font-size: 1.2rem;">🚨 偏离预警信号</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px; background-color: rgba(231, 76, 60, 0.1); border-radius: 8px; border-left: 3px solid rgba(231, 76, 60, 0.8);">
+                            <span style="font-size: 1.2rem;">📉</span>
+                            <div>
+                                <p style="color: var(--text-primary); font-weight: 500; font-size: 0.95rem;">罗素2000(小盘)偏高于基准</p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">残差83.62（阈值44.91）</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px; background-color: rgba(231, 76, 60, 0.1); border-radius: 8px; border-left: 3px solid rgba(231, 76, 60, 0.8);">
+                            <span style="font-size: 1.2rem;">📉</span>
+                            <div>
+                                <p style="color: var(--text-primary); font-weight: 500; font-size: 0.95rem;">纳斯达克100(科技)偏低于基准</p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">残差-13.02（阈值6.10）</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 12px; padding: 12px; background-color: rgba(231, 76, 60, 0.1); border-radius: 8px; border-left: 3px solid rgba(231, 76, 60, 0.8);">
+                            <span style="font-size: 1.2rem;">🔗</span>
+                            <div>
+                                <p style="color: var(--text-primary); font-weight: 500; font-size: 0.95rem;">REITs(房地产)相关性断裂</p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">历史平均相关0.65，近期-0.17，漂移-0.82</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <p>🔻 价格分位数分布</p>
-                    <img src="output/价格分位数分布.svg" alt="价格分位数分布" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+
+                <div style="background-color: var(--dark-bg); border-radius: 12px; padding: 20px; margin-bottom: 30px; border: 1px solid var(--border-color);">
+                    <h3 style="color: var(--primary-color); margin-bottom: 20px; font-size: 1.2rem;">📊 AI综合评分</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
+                        <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05)); border-radius: 10px;">
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">综合评分</p>
+                            <p style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color);">53.8</p>
+                            <p style="font-size: 0.9rem; color: var(--text-primary); margin-top: 5px;">市场状态: 中性</p>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, rgba(142, 68, 173, 0.1), rgba(142, 68, 173, 0.05)); border-radius: 10px;">
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">风险评分</p>
+                            <p style="font-size: 2rem; font-weight: 700; color: rgba(142, 68, 173, 0.9);">50</p>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.05)); border-radius: 10px;">
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">流动性</p>
+                            <p style="font-size: 2rem; font-weight: 700; color: rgba(46, 204, 113, 0.9);">65</p>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: linear-gradient(135deg, rgba(230, 126, 34, 0.1), rgba(230, 126, 34, 0.05)); border-radius: 10px;">
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">资产配置建议</p>
+                            <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px;">
+                                <p style="font-size: 0.85rem; color: var(--text-primary);">📈 股票: 50%</p>
+                                <p style="font-size: 0.85rem; color: var(--text-primary);">📊 债券: 30%</p>
+                                <p style="font-size: 0.85rem; color: var(--text-primary);">🥇 黄金: 10%</p>
+                                <p style="font-size: 0.85rem; color: var(--text-primary);">💰 现金: 10%</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <p>🔻 60日涨幅区间分布</p>
-                    <img src="output/60日涨幅区间分布.svg" alt="60日涨幅区间分布" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 20px; font-size: 1.2rem;">📈 市场指标图表</h3>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <img src="output/市场指标图表.svg" alt="市场指标图表" style="width: 100%; border-radius: 8px;">
+                    </div>
                 </div>
-                
-                <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <p>🔻 热点概念变化甘特图</p>
-                    <img src="output/hot_concepts_gantt_chart.svg" alt="热点概念变化甘特图" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95rem;">🔻 价格分位数分布</p>
+                        <img src="output/价格分位数分布.svg" alt="价格分位数分布" style="width: 100%; border-radius: 8px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95rem;">🔻 60日涨幅区间分布</p>
+                        <img src="output/60日涨幅区间分布.svg" alt="60日涨幅区间分布" style="width: 100%; border-radius: 8px;">
+                    </div>
                 </div>
-                
-                <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <p>🔻 市场情绪图表</p>
-                    <img src="output/market_sentiment_chart.svg" alt="市场情绪图表" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95rem;">🔻 当前热点行业</p>
+                        <img src="output/current_hot_industries.png" alt="当前热点行业" style="width: 100%; border-radius: 8px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95rem;">🔻 热点概念变化甘特图</p>
+                        <img src="output/hot_concepts_gantt_chart.svg" alt="热点概念变化甘特图" style="width: 100%; border-radius: 8px;">
+                    </div>
                 </div>
-                
-                <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <p>🔻 Inliers分布</p>
-                    <img src="output/Inliers.svg" alt="Inliers分布" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95rem;">🔻 市场情绪图表</p>
+                        <img src="output/market_sentiment_chart.svg" alt="市场情绪图表" style="width: 100%; border-radius: 8px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95rem;">🔻 偏离分布 - Inliers</p>
+                        <img src="output/Inliers.svg" alt="Inliers分布" style="width: 100%; border-radius: 8px;">
+                    </div>
                 </div>
-                
-                <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 8px;">
-                    <p>🔻 Outliers分布</p>
-                    <img src="output/outliers.svg" alt="Outliers分布" style="width: 100%; margin-top: 10px; border-radius: 4px;">
+
+                <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <p style="color: var(--text-secondary); margin-bottom: 10px; font-size: 0.95rem;">🔻 偏离分布 - Outliers</p>
+                    <img src="output/outliers.svg" alt="Outliers分布" style="width: 100%; border-radius: 8px;">
                 </div>
             </section>
             
