@@ -276,8 +276,9 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
-        .header { background-color: var(--dark-card); padding: 12px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; }
+        .header { background-color: var(--dark-card); padding: 12px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.3); position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
         .header-content { max-width: 1600px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .header h1 { color: var(--primary-color); font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .header-right { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
@@ -293,7 +294,7 @@
         .refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .menu-toggle { display: none; background-color: transparent; border: none; color: var(--primary-color); font-size: 1.5rem; cursor: pointer; padding: 5px 10px; border-radius: 6px; transition: all 0.3s ease; }
         .menu-toggle:hover { background-color: rgba(52, 152, 219, 0.1); }
-        .main-content { display: flex; flex: 1; max-width: 1600px; margin: 0 auto; width: 100%; gap: 20px; padding: 20px; }
+        .main-content { display: flex; flex: 1; max-width: 1600px; margin: 0 auto; width: 100%; gap: 20px; padding: 20px; padding-top: 70px; overflow-y: auto; }
         .sidebar { width: 400px; background: linear-gradient(180deg, var(--dark-sidebar), var(--dark-card)); border-radius: 16px; padding: 20px; height: auto; overflow-y: auto; position: static; border: 1px solid var(--border-color); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
         .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-weight: 600; }
         
