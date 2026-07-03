@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -277,26 +277,40 @@
             display: flex;
             flex-direction: column;
         }
-        .header { background-color: var(--dark-card); padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; }
+        .header { background-color: var(--dark-card); padding: 16px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; }
         .header-content { max-width: 1600px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { color: var(--primary-color); font-size: 1.8rem; font-weight: 700; }
+        .header h1 { color: var(--primary-color); font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header-right { display: flex; align-items: center; gap: 15px; }
         .refresh-info { display: flex; align-items: center; gap: 15px; font-size: 0.85rem; }
-        .refresh-btn { background-color: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; }
-        .refresh-btn:hover { background-color: var(--secondary-color); transform: translateY(-2px); }
+        .refresh-btn { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3); }
+        .refresh-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(52, 152, 219, 0.5); }
         .refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .menu-toggle { display: none; background-color: transparent; border: none; color: var(--primary-color); font-size: 1.5rem; cursor: pointer; padding: 5px 10px; border-radius: 6px; transition: all 0.3s ease; }
+        .menu-toggle:hover { background-color: rgba(52, 152, 219, 0.1); }
         .main-content { display: flex; flex: 1; max-width: 1600px; margin: 0 auto; width: 100%; gap: 20px; padding: 20px; }
-        .sidebar { width: 400px; background-color: var(--dark-sidebar); border-radius: 12px; padding: 20px; height: auto; overflow-y: auto; position: static; border: 1px solid var(--border-color); }
-        .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .sidebar { width: 400px; background: linear-gradient(180deg, var(--dark-sidebar), var(--dark-card)); border-radius: 16px; padding: 20px; height: auto; overflow-y: auto; position: static; border: 1px solid var(--border-color); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+        .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-weight: 600; }
         
         .nav-menu {
             position: sticky;
-            top: 73px;
+            top: 68px;
             z-index: 99;
             background-color: var(--dark-card);
             border-bottom: 1px solid var(--border-color);
-            padding: 12px 0;
+            padding: 10px 0;
             margin-bottom: 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-menu.mobile-open {
+            position: fixed;
+            top: 68px;
+            left: 0;
+            right: 0;
+            padding: 20px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border-radius: 0 0 12px 12px;
         }
         
         .nav-container {
@@ -313,32 +327,39 @@
             margin: 0;
             font-size: 1.1rem;
             color: var(--primary-color);
+            font-weight: 600;
         }
         
         .nav-items {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 8px;
         }
         
         .nav-item {
             display: block;
-            padding: 8px 14px;
+            padding: 10px 16px;
             color: var(--text-secondary);
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: all 0.3s ease;
             font-size: 0.9rem;
+            font-weight: 500;
+            background-color: rgba(255,255,255,0.02);
+            border: 1px solid transparent;
         }
         
         .nav-item:hover {
-            background-color: var(--dark-bg);
+            background-color: rgba(52, 152, 219, 0.15);
             color: var(--text-primary);
+            transform: translateY(-2px);
+            border-color: rgba(52, 152, 219, 0.3);
         }
         
         .nav-item.active {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
         }
         
         .page-section {
@@ -354,7 +375,7 @@
         .sidebar-item h3 { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
         .sidebar-item img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border-color); transition: transform 0.3s ease; }
         .sidebar-item img:hover { transform: scale(1.02); }
-        .content { flex: 1; background-color: var(--dark-card); border-radius: 12px; padding: 30px; border: 1px solid var(--border-color); }
+        .content { flex: 1; background: linear-gradient(135deg, var(--dark-card), rgba(52, 152, 219, 0.03)); border-radius: 16px; padding: 30px; border: 1px solid var(--border-color); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
         .markdown-content { animation: fadeIn 0.5s ease-out; }
         .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 { margin: 25px 0 15px 0; color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; position: relative; }
         .markdown-content h1 { font-size: 2rem; border-bottom: 2px solid var(--primary-color); }
@@ -400,18 +421,23 @@
             .main-content { flex-direction: column; padding: 10px; gap: 15px; }
             .sidebar { width: 100%; position: static; padding: 15px; margin-bottom: 0; border-right: none; border-bottom: 1px solid var(--border-color); overflow-y: auto; height: auto; }
             .content { padding: 15px; }
-            .nav-menu { top: 60px; padding: 10px 0; }
-            .nav-container { padding: 0 15px; gap: 8px; }
-            .nav-menu h2 { width: 100%; margin: 0 0 8px 0; font-size: 1rem; }
-            .nav-item { padding: 6px 10px; font-size: 0.85rem; }
+            .menu-toggle { display: block; }
+            .nav-menu { position: fixed; top: 60px; left: -100%; right: 0; padding: 20px 0; background-color: var(--dark-card); box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-radius: 0 0 12px 12px; transition: left 0.3s ease; z-index: 1000; }
+            .nav-menu.mobile-open { left: 0; }
+            .nav-container { padding: 0 20px; gap: 10px; flex-direction: column; align-items: flex-start; }
+            .nav-menu h2 { width: 100%; margin: 0 0 15px 0; font-size: 1.2rem; }
+            .nav-items { flex-direction: column; width: 100%; gap: 8px; }
+            .nav-item { padding: 12px 20px; font-size: 1rem; width: 100%; text-align: left; border-radius: 10px; }
+            .nav-item:hover { transform: none; }
             .sidebar-item { margin-bottom: 15px; padding-bottom: 15px; }
-            .sidebar-item img { border: none; border-radius: 4px; max-height: 200px; object-fit: contain; }
-            .header h1 { font-size: 1.4rem; }
+            .sidebar-item img { border: none; border-radius: 8px; max-height: 200px; object-fit: contain; }
+            .header h1 { font-size: 1.3rem; }
+            .header-content { padding: 0 15px; }
+            .refresh-info span { display: none; }
+            .refresh-btn { padding: 6px 12px; font-size: 0.85rem; }
             .markdown-content h1 { font-size: 1.5rem; }
             .markdown-content h2 { font-size: 1.3rem; }
-            .refresh-btn { padding: 6px 12px; font-size: 0.85rem; }
             footer img { width: 120px; height: 120px; }
-            /* 确保所有pre标签内容换行 */
             pre { white-space: pre-wrap; word-wrap: break-word; }
         }
     </style>
@@ -420,9 +446,12 @@
     <header class="header">
         <div class="header-content">
             <h1>风向日报 - 动态市场分析</h1>
-            <div class="refresh-info">
-                <span id="last-update">尚未加载</span>
-                <button class="refresh-btn" id="refresh-btn" onclick="loadReadme()">🔄 手动刷新</button>
+            <div class="header-right">
+                <div class="refresh-info">
+                    <span id="last-update">尚未加载</span>
+                    <button class="refresh-btn" id="refresh-btn" onclick="loadReadme()">🔄 手动刷新</button>
+                </div>
+                <button class="menu-toggle" id="menu-toggle" onclick="toggleMobileMenu()">☰</button>
             </div>
         </div>
     </header>
@@ -5244,7 +5273,40 @@ Value: &quot;【地缘】\n## 聚类概览\n共分析50条新闻，形成5个主
             }
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            closeMobileMenu();
         }
+        
+        function toggleMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const menuToggle = document.getElementById('menu-toggle');
+            if (navMenu) {
+                navMenu.classList.toggle('mobile-open');
+                if (menuToggle) {
+                    menuToggle.textContent = navMenu.classList.contains('mobile-open') ? '✕' : '☰';
+                }
+            }
+        }
+        
+        function closeMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const menuToggle = document.getElementById('menu-toggle');
+            if (navMenu && navMenu.classList.contains('mobile-open')) {
+                navMenu.classList.remove('mobile-open');
+                if (menuToggle) {
+                    menuToggle.textContent = '☰';
+                }
+            }
+        }
+        
+        document.addEventListener('click', function(event) {
+            const navMenu = document.querySelector('.nav-menu');
+            const menuToggle = document.getElementById('menu-toggle');
+            if (navMenu && navMenu.classList.contains('mobile-open') && 
+                !navMenu.contains(event.target) && 
+                event.target !== menuToggle) {
+                closeMobileMenu();
+            }
+        });
         
         function handleRouteChange() {
             const urlParams = new URLSearchParams(window.location.search);
