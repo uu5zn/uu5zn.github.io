@@ -277,12 +277,18 @@
             display: flex;
             flex-direction: column;
         }
-        .header { background-color: var(--dark-card); padding: 16px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; }
-        .header-content { max-width: 1600px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { color: var(--primary-color); font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .header-right { display: flex; align-items: center; gap: 15px; }
-        .refresh-info { display: flex; align-items: center; gap: 15px; font-size: 0.85rem; }
-        .refresh-btn { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3); }
+        .header { background-color: var(--dark-card); padding: 12px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; }
+        .header-content { max-width: 1600px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .header h1 { color: var(--primary-color); font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header-right { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+        .nav-container { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+        .nav-container h2 { margin: 0; font-size: 1rem; color: var(--primary-color); font-weight: 600; white-space: nowrap; }
+        .nav-items { display: flex; flex-wrap: wrap; gap: 6px; }
+        .nav-item { display: block; padding: 6px 12px; color: var(--text-secondary); text-decoration: none; border-radius: 8px; transition: all 0.3s ease; font-size: 0.85rem; font-weight: 500; background-color: rgba(255,255,255,0.02); border: 1px solid transparent; }
+        .nav-item:hover { background-color: rgba(52, 152, 219, 0.15); color: var(--text-primary); border-color: rgba(52, 152, 219, 0.3); }
+        .nav-item.active { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); }
+        .refresh-info { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; white-space: nowrap; }
+        .refresh-btn { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3); font-size: 0.85rem; }
         .refresh-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(52, 152, 219, 0.5); }
         .refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .menu-toggle { display: none; background-color: transparent; border: none; color: var(--primary-color); font-size: 1.5rem; cursor: pointer; padding: 5px 10px; border-radius: 6px; transition: all 0.3s ease; }
@@ -290,77 +296,6 @@
         .main-content { display: flex; flex: 1; max-width: 1600px; margin: 0 auto; width: 100%; gap: 20px; padding: 20px; }
         .sidebar { width: 400px; background: linear-gradient(180deg, var(--dark-sidebar), var(--dark-card)); border-radius: 16px; padding: 20px; height: auto; overflow-y: auto; position: static; border: 1px solid var(--border-color); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
         .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-weight: 600; }
-        
-        .nav-menu {
-            position: sticky;
-            top: 68px;
-            z-index: 99;
-            background-color: var(--dark-card);
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
-            margin-bottom: 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .nav-menu.mobile-open {
-            position: fixed;
-            top: 68px;
-            left: 0;
-            right: 0;
-            padding: 20px 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            border-radius: 0 0 12px 12px;
-        }
-        
-        .nav-container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .nav-menu h2 {
-            margin: 0;
-            font-size: 1.1rem;
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        .nav-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .nav-item {
-            display: block;
-            padding: 10px 16px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            font-weight: 500;
-            background-color: rgba(255,255,255,0.02);
-            border: 1px solid transparent;
-        }
-        
-        .nav-item:hover {
-            background-color: rgba(52, 152, 219, 0.15);
-            color: var(--text-primary);
-            transform: translateY(-2px);
-            border-color: rgba(52, 152, 219, 0.3);
-        }
-        
-        .nav-item.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
-        }
         
         .page-section {
             display: none;
@@ -422,13 +357,11 @@
             .sidebar { width: 100%; position: static; padding: 15px; margin-bottom: 0; border-right: none; border-bottom: 1px solid var(--border-color); overflow-y: auto; height: auto; }
             .content { padding: 15px; }
             .menu-toggle { display: block; }
-            .nav-menu { position: fixed; top: 60px; left: -100%; right: 0; padding: 20px 0; background-color: var(--dark-card); box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-radius: 0 0 12px 12px; transition: left 0.3s ease; z-index: 1000; }
-            .nav-menu.mobile-open { left: 0; }
-            .nav-container { padding: 0 20px; gap: 10px; flex-direction: column; align-items: flex-start; }
-            .nav-menu h2 { width: 100%; margin: 0 0 15px 0; font-size: 1.2rem; }
-            .nav-items { flex-direction: column; width: 100%; gap: 8px; }
-            .nav-item { padding: 12px 20px; font-size: 1rem; width: 100%; text-align: left; border-radius: 10px; }
-            .nav-item:hover { transform: none; }
+            .nav-container { display: none; }
+            .nav-container.mobile-open { display: flex; position: fixed; top: 56px; left: 0; right: 0; padding: 20px; background-color: var(--dark-card); box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-radius: 0 0 12px 12px; z-index: 1000; flex-direction: column; align-items: flex-start; gap: 15px; }
+            .nav-container.mobile-open h2 { font-size: 1.2rem; }
+            .nav-container.mobile-open .nav-items { flex-direction: column; width: 100%; gap: 8px; }
+            .nav-container.mobile-open .nav-item { padding: 12px 20px; font-size: 1rem; width: 100%; text-align: left; border-radius: 10px; }
             .sidebar-item { margin-bottom: 15px; padding-bottom: 15px; }
             .sidebar-item img { border: none; border-radius: 8px; max-height: 200px; object-fit: contain; }
             .header h1 { font-size: 1.3rem; }
@@ -447,6 +380,19 @@
         <div class="header-content">
             <h1>风向日报 - 动态市场分析</h1>
             <div class="header-right">
+                <div class="nav-container">
+                    <h2>📊 看板导航</h2>
+                    <div class="nav-items">
+                        <a href="/" class="nav-item active" data-route="home">🏠 资讯热点</a>
+                        <a href="/financing-balance" class="nav-item" data-route="financing-balance">💰 融资余额</a>
+                        <a href="/china-us-linkage" class="nav-item" data-route="china-us-linkage">🌍 中美联动</a>
+                        <a href="/stock-bond-spread" class="nav-item" data-route="stock-bond-spread">📉 股债利差</a>
+                        <a href="/liquidity" class="nav-item" data-route="liquidity">💧 流动性</a>
+                        <a href="/oil-gold-ratio" class="nav-item" data-route="oil-gold-ratio">🛢️ 油金比</a>
+                        <a href="/market-analysis" class="nav-item" data-route="market-analysis">📈 市场分析</a>
+                        <a href="/risk-environment" class="nav-item" data-route="risk-environment">⚠️ 风险环境</a>
+                    </div>
+                </div>
                 <div class="refresh-info">
                     <span id="last-update">尚未加载</span>
                     <button class="refresh-btn" id="refresh-btn" onclick="loadReadme()">🔄 手动刷新</button>
@@ -455,22 +401,6 @@
             </div>
         </div>
     </header>
-    
-    <nav class="nav-menu">
-        <div class="nav-container">
-            <h2>📊 看板导航</h2>
-            <div class="nav-items">
-                <a href="/" class="nav-item active" data-route="home">🏠 资讯热点</a>
-                <a href="/financing-balance" class="nav-item" data-route="financing-balance">💰 融资余额</a>
-                <a href="/china-us-linkage" class="nav-item" data-route="china-us-linkage">🌍 中美联动</a>
-                <a href="/stock-bond-spread" class="nav-item" data-route="stock-bond-spread">📉 股债利差</a>
-                <a href="/liquidity" class="nav-item" data-route="liquidity">💧 流动性</a>
-                <a href="/oil-gold-ratio" class="nav-item" data-route="oil-gold-ratio">🛢️ 油金比</a>
-                <a href="/market-analysis" class="nav-item" data-route="market-analysis">📈 市场分析</a>
-                <a href="/risk-environment" class="nav-item" data-route="risk-environment">⚠️ 风险环境</a>
-            </div>
-        </div>
-    </nav>
     
     <div class="main-content">
         <aside class="sidebar">
@@ -5370,21 +5300,21 @@ Value: &quot;【地缘】\n## 聚类概览\n共分析50条新闻，形成5个主
         }
         
         function toggleMobileMenu() {
-            const navMenu = document.querySelector('.nav-menu');
+            const navContainer = document.querySelector('.nav-container');
             const menuToggle = document.getElementById('menu-toggle');
-            if (navMenu) {
-                navMenu.classList.toggle('mobile-open');
+            if (navContainer) {
+                navContainer.classList.toggle('mobile-open');
                 if (menuToggle) {
-                    menuToggle.textContent = navMenu.classList.contains('mobile-open') ? '✕' : '☰';
+                    menuToggle.textContent = navContainer.classList.contains('mobile-open') ? '✕' : '☰';
                 }
             }
         }
         
         function closeMobileMenu() {
-            const navMenu = document.querySelector('.nav-menu');
+            const navContainer = document.querySelector('.nav-container');
             const menuToggle = document.getElementById('menu-toggle');
-            if (navMenu && navMenu.classList.contains('mobile-open')) {
-                navMenu.classList.remove('mobile-open');
+            if (navContainer && navContainer.classList.contains('mobile-open')) {
+                navContainer.classList.remove('mobile-open');
                 if (menuToggle) {
                     menuToggle.textContent = '☰';
                 }
@@ -5392,10 +5322,10 @@ Value: &quot;【地缘】\n## 聚类概览\n共分析50条新闻，形成5个主
         }
         
         document.addEventListener('click', function(event) {
-            const navMenu = document.querySelector('.nav-menu');
+            const navContainer = document.querySelector('.nav-container');
             const menuToggle = document.getElementById('menu-toggle');
-            if (navMenu && navMenu.classList.contains('mobile-open') && 
-                !navMenu.contains(event.target) && 
+            if (navContainer && navContainer.classList.contains('mobile-open') && 
+                !navContainer.contains(event.target) && 
                 event.target !== menuToggle) {
                 closeMobileMenu();
             }
