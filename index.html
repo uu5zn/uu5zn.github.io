@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -307,9 +307,14 @@
         .sidebar pre { white-space: pre-wrap; word-wrap: break-word; }
         .sidebar-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
         .sidebar-item:last-child { border-bottom: none; }
-        .sidebar-item h3 { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .sidebar-item img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border-color); transition: transform 0.3s ease; }
-        .sidebar-item img:hover { transform: scale(1.02); }
+        .sidebar-item h3 { font-size: 0.95rem; font-weight: 600; color: var(--primary-color); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sidebar-item img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border-color); transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .sidebar-item img:hover { transform: scale(1.02); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+        .sidebar-item p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6; margin-top: 8px; }
+        .sidebar-analysis { margin-top: 20px; padding: 18px; background-color: var(--dark-bg); border-radius: 12px; border: 1px solid var(--border-color); }
+        .sidebar-analysis h3 { font-size: 0.95rem; font-weight: 600; color: var(--secondary-color); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .sidebar-analysis p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.7; }
+        .sidebar-analysis pre { display: none; }
         .content { flex: 1; background: linear-gradient(135deg, var(--dark-card), rgba(52, 152, 219, 0.03)); border-radius: 16px; padding: 30px; border: 1px solid var(--border-color); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
         .markdown-content { animation: fadeIn 0.5s ease-out; }
         .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 { margin: 25px 0 15px 0; color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; position: relative; }
@@ -413,10 +418,10 @@
                 <img src="output/vix.png" alt="波动率指数走势">
             </div>
             <!-- 风险环境解读 -->
-            <section id="risk-environment" style="margin-top: 20px; padding: 15px; background-color: var(--dark-bg); border-radius: 8px; border: 1px solid var(--border-color);">
-                <h3 style="color: var(--secondary-color); margin-bottom: 10px;">风险环境解读</h3>
+            <section id="risk-environment" class="sidebar-analysis">
+                <h3>⚠️ 风险环境解读</h3>
                 <!-- PRERENDER:RISK_ENVIRONMENT:START -->
-                <pre style="background-color: var(--code-bg); padding: 10px; border-radius: 6px; font-size: 0.9rem;">风险环境：基于VIX指数、债券收益率和市场波动率的综合风险评估，为投资者提供风险警示和防御建议。</pre>
+                <p>基于VIX指数、债券收益率和市场波动率的综合风险评估，为投资者提供风险警示和防御建议。VIX当前15.93(38分位)，美国10Y国债收益率4.37%，综合风险评估为中等。</p>
                 <!-- PRERENDER:RISK_ENVIRONMENT:END -->
             </section>
             <div class="sidebar-item">
@@ -432,10 +437,10 @@
                 <img src="output/rs2000.png" alt="罗素2000指数走势">
             </div>
             <!-- 市场结构解读 -->
-            <section id="market-structure" style="margin-top: 20px; padding: 15px; background-color: var(--dark-bg); border-radius: 8px; border: 1px solid var(--border-color);">
-                <h3 style="color: var(--secondary-color); margin-bottom: 10px;">市场结构解读</h3>
+            <section id="market-structure" class="sidebar-analysis">
+                <h3>📊 市场结构解读</h3>
                 <!-- PRERENDER:MARKET_STRUCTURE:START -->
-                <pre style="background-color: var(--code-bg); padding: 10px; border-radius: 6px; font-size: 0.9rem;">市场结构：分析大盘股与小盘股、价值股与成长股的表现差异，识别市场资金流向和风格切换信号。</pre>
+                <p>分析大盘股与小盘股、价值股与成长股的表现差异，识别市场资金流向和风格切换信号。当前纳指-1.67%，标普+0.68%，罗素+6.34%，小盘股显著跑赢大盘。</p>
                 <!-- PRERENDER:MARKET_STRUCTURE:END -->
             </section>
             <div class="sidebar-item">
@@ -447,10 +452,10 @@
                 <img src="output/sector_rotation.png" alt="房股板块涨幅">
             </div>
             <!-- 行业轮动解读 -->
-            <section id="sector-rotation" style="margin-top: 20px; padding: 15px; background-color: var(--dark-bg); border-radius: 8px; border: 1px solid var(--border-color);">
-                <h3 style="color: var(--secondary-color); margin-bottom: 10px;">🔄 行业轮动解读</h3>
+            <section id="sector-rotation" class="sidebar-analysis">
+                <h3>🔄 行业轮动解读</h3>
                 <!-- PRERENDER:SECTOR_ROTATION:START -->
-                <pre style="background-color: var(--code-bg); padding: 10px; border-radius: 6px; font-size: 0.9rem;">行业轮动：跟踪各行业板块的涨跌幅排名，分析热点行业的持续性和切换规律，把握板块轮动机会。</pre>
+                <p>跟踪各行业板块的涨跌幅排名，分析热点行业的持续性和切换规律，把握板块轮动机会。近1月美股医药领涨(+8.14%)，美股金融紧随其后(+6.95%)，市场风格向价值股切换。</p>
                 <!-- PRERENDER:SECTOR_ROTATION:END -->
             </section>
             <div class="sidebar-item">
