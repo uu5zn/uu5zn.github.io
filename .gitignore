@@ -46,9 +46,8 @@ logs/
 output/data_cache/
 src/import akshare as ak.py
 
-# Generated images - 所有图片不同步
+# Generated images - 除SVG外不同步
 *.png
-*.svg
 *.jpg
 *.jpeg
 *.gif

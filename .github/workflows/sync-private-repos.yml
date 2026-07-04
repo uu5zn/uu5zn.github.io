@@ -33,10 +33,12 @@ jobs:
         cp /tmp/repo1/5day_report.md ./5day_report.md
         cp /tmp/repo1/today_report.md ./today_report.md
     
-    - name: 同步 analyse/output 到 Pages/output 目录
+    - name: 同步 analyse/output 到 Pages/output 目录（仅SVG图片）
       run: |
         mkdir -p ./output
-        cp -r /tmp/repo2/output/* ./output/
+        cp -r /tmp/repo2/output/*.svg ./output/ 2>/dev/null || true
+        cp -r /tmp/repo2/output/*.json ./output/ 2>/dev/null || true
+        cp -r /tmp/repo2/output/*.md ./output/ 2>/dev/null || true
     
     - name: 设置 Node.js 环境
       uses: actions/setup-node@v4
