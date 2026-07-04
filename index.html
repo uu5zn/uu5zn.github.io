@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -5064,6 +5064,32 @@ Value: &quot;【地缘】\n## 聚类概览\n共分析50条新闻，形成5个主
                     <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 偏离分布 - Outliers</h4>
                     <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">展示出现显著偏离的指标（Outliers），包括罗素2000偏高、纳斯达克100偏低、REITs相关性断裂等。共检测到32个信号，其中高严重性信号28个，需特别关注这些异常指标带来的市场风险。</p>
                     <img src="output/outliers.svg" alt="Outliers分布" style="width: 100%; border-radius: 8px;">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 热点概念波浪分布</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">展示热点概念的波浪分布特征，分析不同概念板块的持续性和周期性变化规律。</p>
+                        <img src="output/hot_concepts_wave_distribution.svg" alt="热点概念波浪分布" style="width: 100%; border-radius: 8px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 个股数量分布矩阵</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">展示不同板块和概念的个股数量分布情况，反映市场资金集中度和热点扩散程度。</p>
+                        <img src="output/个股数量分布矩阵.svg" alt="个股数量分布矩阵" style="width: 100%; border-radius: 8px;">
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 价格分位数95-100%细分</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">对处于价格分位数95-100%高位区间的股票进行细分分析，识别强势股特征和潜在回调风险。</p>
+                        <img src="output/价格分位数95-100%细分.svg" alt="价格分位数95-100%细分" style="width: 100%; border-radius: 8px;">
+                    </div>
+                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 成交额集中度与价格指数</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">分析成交额集中度与价格指数的关系，识别市场资金流向和权重股对指数的影响。</p>
+                        <img src="output/成交额集中度与价格指数.svg" alt="成交额集中度与价格指数" style="width: 100%; border-radius: 8px;">
+                    </div>
                 </div>
             </section>
             
