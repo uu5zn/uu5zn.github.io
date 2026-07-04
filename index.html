@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -298,11 +298,7 @@
         .sidebar h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-weight: 600; }
         
         .page-section {
-            display: none;
-        }
-        
-        .page-section.active {
-            display: block;
+            scroll-margin-top: 90px;
         }
         .sidebar pre { white-space: pre-wrap; word-wrap: break-word; }
         .sidebar-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
@@ -5323,16 +5319,11 @@ Value: &quot;【地缘】\n## 聚类概览\n共分析50条新闻，形成5个主
                 navItem.classList.add('active');
             }
             
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
             const pageSection = document.getElementById(`page-${route}`);
             if (pageSection) {
-                pageSection.classList.add('active');
+                pageSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
             
-            window.scrollTo({ top: 0, behavior: 'smooth' });
             closeMobileMenu();
         }
         
@@ -5395,6 +5386,33 @@ Value: &quot;【地缘】\n## 聚类概览\n共分析50条新闻，形成5个主
             window.addEventListener('popstate', handleRouteChange);
             
             handleRouteChange();
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id;
+                        const route = sectionId.replace('page-', '');
+                        
+                        document.querySelectorAll('.nav-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        
+                        const navItem = document.querySelector(`.nav-item[data-route="${route}"]`);
+                        if (navItem) {
+                            navItem.classList.add('active');
+                        }
+                        
+                        updatePageMeta(route);
+                    }
+                });
+            }, {
+                rootMargin: '-80px 0px -50% 0px',
+                threshold: 0.3
+            });
+            
+            document.querySelectorAll('.page-section').forEach(section => {
+                observer.observe(section);
+            });
         });
         
         // 通用的fetch函数，支持重试和备用URL
