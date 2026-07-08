@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -5598,35 +5598,36 @@ Value: &quot;【地缘】\n## 聚类概览\n共分析50条新闻，形成5个主
                     container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载市场分析报告...</p></div>';
                 }
                 
-                // 优先从内联Markdown数据读取（SEO优化）
+                // 优先从线上文件加载最新内容，加载失败才回退到内联兜底数据
                 let todayData = null;
                 let fiveDayData = null;
                 const inlineTodayReport = document.getElementById('markdown-today-report');
                 const inlineFiveDayReport = document.getElementById('markdown-5day-report');
                 
-                if (inlineTodayReport && inlineTodayReport.textContent) {
-                    console.log('📥 使用内联Markdown数据：今日报告');
-                    todayData = inlineTodayReport.textContent;
-                }
-                
-                if (inlineFiveDayReport && inlineFiveDayReport.textContent) {
-                    console.log('📥 使用内联Markdown数据：5天报告');
-                    fiveDayData = inlineFiveDayReport.textContent;
-                }
-                
-                // 如果内联数据不存在，使用fetch方式加载
-                if (!todayData) {
-                    console.log('📥 开始加载今日报告...');
+                // 今日报告：优先 fetch 线上文件
+                try {
+                    console.log('📥 开始加载今日报告(线上)...');
                     const { data, source } = await fetchWithRetry(CONFIG.todayReport.sources);
                     todayData = data;
                     console.log(`📄 今日报告加载成功，来源: ${source}`);
+                } catch (e) {
+                    if (inlineTodayReport && inlineTodayReport.textContent) {
+                        console.log('📥 线上加载失败，回退内联Markdown数据：今日报告');
+                        todayData = inlineTodayReport.textContent;
+                    }
                 }
-                
-                if (!fiveDayData) {
-                    console.log('📥 开始加载5天报告...');
+
+                // 5天报告：优先 fetch 线上文件
+                try {
+                    console.log('📥 开始加载5天报告(线上)...');
                     const { data, source } = await fetchWithRetry(CONFIG.mainContent.sources);
                     fiveDayData = data;
                     console.log(`📄 5天报告加载成功，来源: ${source}`);
+                } catch (e) {
+                    if (inlineFiveDayReport && inlineFiveDayReport.textContent) {
+                        console.log('📥 线上加载失败，回退内联Markdown数据：5天报告');
+                        fiveDayData = inlineFiveDayReport.textContent;
+                    }
                 }
                 
                 // 3. 合并并渲染两个报告的内容
