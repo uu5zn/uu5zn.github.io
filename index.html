@@ -1367,12 +1367,8 @@
                     hljs.highlightElement(block);
                 });
                 
-                // 渲染所有 Mermaid 图表
-                if (window.mermaid) {
-                    await window.mermaid.run().catch(err => {
-                        console.error('Mermaid 渲染失败:', err);
-                    });
-                }
+                // 注意：不在这里调用 mermaid.run()，因为传入的容器可能是未挂载到 DOM 的临时容器
+                // Mermaid 渲染统一在将内容插入真实 DOM 之后进行（见 loadReadme 中的 mermaid.run() 调用）
                 
                 return true;
             } catch (error) {
@@ -1458,6 +1454,20 @@
                 `;
                 
                 console.log('✅ 报告内容渲染完成');
+                
+                // ✅ 在内容插入真实 DOM 后渲染 Mermaid 图表（甘特图等）
+                // 注意：renderMarkdown 中的 mermaid.run() 作用在未挂载的临时容器上，无效
+                // 必须在这里（DOM 就绪后）重新调用
+                if (window.mermaid) {
+                    try {
+                        await window.mermaid.run({
+                            querySelector: '.mermaid'
+                        });
+                        console.log('✅ Mermaid 图表渲染完成（甘特图等）');
+                    } catch (err) {
+                        console.warn('⚠️ mermaid.run() 失败:', err);
+                    }
+                }
                 
                 // 4. 加载并处理市场分析报告 (JSON格式)
                 console.log('📊 开始加载市场分析报告...');
