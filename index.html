@@ -390,6 +390,12 @@
                         <a href="/liquidity" class="nav-item" data-route="liquidity">💧 流动性</a>
                         <a href="/oil-gold-ratio" class="nav-item" data-route="oil-gold-ratio">🛢️💱 油金比与国债</a>
                         <a href="/market-analysis" class="nav-item" data-route="market-analysis">📈 市场分析</a>
+                        <a href="/depth-zf" class="nav-item" data-route="depth-zf">📊 涨幅分布</a>
+                        <a href="/depth-zs" class="nav-item" data-route="depth-zs">🚀 主升概念</a>
+                        <a href="/depth-ai" class="nav-item" data-route="depth-ai">🤖 AI分析</a>
+                        <a href="/depth-zsai" class="nav-item" data-route="depth-zsai">📈 走势AI</a>
+                        <a href="/depth-hb" class="nav-item" data-route="depth-hb">🔗 合并解读</a>
+                        <a href="/depth-tdx" class="nav-item" data-route="depth-tdx">📋 TDX综合</a>
                         <a href="/risk-environment" class="nav-item" data-route="risk-environment">⚠️ 风险环境</a>
                     </div>
                 </div>
@@ -889,71 +895,13 @@
                     </div>
                 </div>
 
-                <div style="margin-bottom: 30px;">
-                    <h3 style="color: var(--primary-color); margin-bottom: 10px; font-size: 1.2rem;">📈 市场指标图表</h3>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 15px;">综合展示市场核心指标走势，包括连板高度、热点板块数量、主升浪股票数量等关键市场情绪指标。当前行业轮动强度10.70%，价值风格主导，小盘股显著跑赢大盘。</p>
-                    <div style="background-color: var(--dark-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <img src="output/市场指标图表.svg" alt="市场指标图表" style="width: 100%; border-radius: 8px;">
-                    </div>
+                <!-- ↓ 以下图片已迁移至对应的深度分析报告（涨幅分布/主升概念/走势AI分析），此处保留热点行业作为快速索引 -->
+                <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 当前热点行业</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">近1月行业表现分析：美股医药领涨(+8.14%)，美股金融紧随其后(+6.95%)，美股工业表现稳健(+4.66%)。美股科技(-3.68%)和能源(-8.76%)表现落后，显示市场风格向价值股切换。融资余额15018亿，流动性环境宽松。</p>
+                    <img src="output/global_sectors.svg" alt="全球行业分布" style="width: 100%; border-radius: 8px;">
                 </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 价格分位数分布</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">展示A股股票当前价格在历史区间中的分位分布情况，反映市场整体估值水平。结合市场分析数据，当前纳指-1.67%、标普+0.68%、罗素+6.34%，显示大盘股与小盘股表现分化明显，价值风格占优。</p>
-                        <img src="output/价格分位数分布.svg" alt="价格分位数分布" style="width: 100%; border-radius: 8px;">
-                    </div>
-                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 60日涨幅区间分布</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">统计A股股票近60日涨幅分布。与市场分析数据一致，美股医药(+8.14%)和金融(+6.95%)领涨，而科技(-3.68%)和能源(-8.76%)表现落后，显示行业轮动特征明显，市场风格向价值股切换。</p>
-                        <img src="output/60日涨幅区间分布.svg" alt="60日涨幅区间分布" style="width: 100%; border-radius: 8px;">
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 当前热点行业</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">近1月行业表现分析：美股医药领涨(+8.14%)，美股金融紧随其后(+6.95%)，美股工业表现稳健(+4.66%)。美股科技(-3.68%)和能源(-8.76%)表现落后，显示市场风格向价值股切换。融资余额15018亿，流动性环境宽松。</p>
-                        <img src="output/global_sectors.svg" alt="全球行业分布" style="width: 100%; border-radius: 8px;">
-                    </div>
-                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 热点概念变化甘特图</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">展示最近7天热点概念持续时间与变化趋势。结合偏离预警数据，金融板块与标普500相关性断裂(历史0.84→近期0.08)，能源板块相关性也出现明显漂移，反映市场板块轮动剧烈。</p>
-                        <img src="output/hot_concepts_gantt_chart.svg" alt="热点概念变化甘特图" style="width: 100%; border-radius: 8px;">
-                    </div>
-                </div>
-
-                <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 30px;">
-                    <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 市场情绪图表</h4>
-                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">包含市场情绪关键指标。VIX当前15.81(37分位)，美国10Y国债收益率4.37%(38分位)，综合风险评分为中等。股债30日相关性为-0.668，显示股债负相关。油金比0.016(38分位)，处于正常范围。</p>
-                    <img src="output/market_sentiment_chart.svg" alt="市场情绪图表" style="width: 100%; border-radius: 8px;">
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 30px;">
-                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 热点概念波浪分布</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">展示热点概念的波浪分布特征，分析不同概念板块的持续性和周期性变化规律。与行业轮动数据呼应，医药和金融板块处于上升浪，而科技和能源板块处于下降浪。</p>
-                        <img src="output/hot_concepts_wave_distribution.svg" alt="热点概念波浪分布" style="width: 100%; border-radius: 8px;">
-                    </div>
-                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 个股数量分布矩阵</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">展示不同板块和概念的个股数量分布情况，反映市场资金集中度和热点扩散程度。当前共检测到32个偏离信号，其中27个高严重性信号，显示市场存在较多异常偏离现象。</p>
-                        <img src="output/个股数量分布矩阵.svg" alt="个股数量分布矩阵" style="width: 100%; border-radius: 8px;">
-                    </div>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-top: 20px;">
-                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 价格分位数95-100%细分</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">对处于价格分位数95-100%高位区间的股票进行细分分析，识别强势股特征和潜在回调风险。结合偏离预警，罗素2000(小盘)当前水平偏高于基准(残差83.62)，需关注高位回调风险。</p>
-                        <img src="output/价格分位数95-100%细分.svg" alt="价格分位数95-100%细分" style="width: 100%; border-radius: 8px;">
-                    </div>
-                    <div style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
-                        <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1rem;">🔻 成交额集中度与价格指数</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">分析成交额集中度与价格指数的关系，识别市场资金流向和权重股对指数的影响。股债利差-7.30(17分位)，显示股市性价比偏低，建议关注债券配置机会。</p>
-                        <img src="output/成交额集中度与价格指数.svg" alt="成交额集中度与价格指数" style="width: 100%; border-radius: 8px;">
-                    </div>
-                </div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 15px;">📌 更多市场图表（价格分位数分布、60日涨幅分析、市场情绪、甘特图等）已整合到导航栏「涨幅分布」「主升概念」「走势AI分析」等深度报告中。</p>
             </section>
             
             <section id="page-risk-environment" class="page-section">
@@ -985,6 +933,44 @@
                         <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7;">基于VIX指数、债券收益率和市场波动率的综合风险评估，为投资者提供风险警示和防御建议。当前市场风险处于中等水平，建议保持谨慎配置，关注美联储政策动向和地缘政治风险。</p>
                         <!-- PRERENDER:RISK_ENVIRONMENT:END -->
                     </section>
+                </div>
+            </section>
+            
+            <!-- ====== 深度分析报告 ====== -->
+            <section id="page-depth-zf" class="page-section">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📊 涨幅分布报告</h2>
+                <div id="depth-zf-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
+                </div>
+            </section>
+            <section id="page-depth-zs" class="page-section">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">🚀 主升概念报告</h2>
+                <div id="depth-zs-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
+                </div>
+            </section>
+            <section id="page-depth-ai" class="page-section">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">🤖 AI分析摘要</h2>
+                <div id="depth-ai-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
+                </div>
+            </section>
+            <section id="page-depth-zsai" class="page-section">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📈 走势AI分析报告</h2>
+                <div id="depth-zsai-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
+                </div>
+            </section>
+            <section id="page-depth-hb" class="page-section">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">🔗 合并解读</h2>
+                <div id="depth-hb-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
+                </div>
+            </section>
+            <section id="page-depth-tdx" class="page-section">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📋 TDX综合分析报告</h2>
+                <div id="depth-tdx-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
             
@@ -1031,6 +1017,15 @@
                     { name: '本地文件', url: 'output/市场分析结果.json' }
                 ]
             },
+            // 深度分析报告（6份Markdown报告）
+            depthReports: {
+                'depth-zf': { name: '📊 涨幅分布', filename: 'output/1-涨幅分布报.md' },
+                'depth-zs': { name: '🚀 主升概念', filename: 'output/2-主升概念报.md' },
+                'depth-ai': { name: '🤖 AI分析摘要', filename: 'output/3-ai_analysis_summary.md' },
+                'depth-zsai': { name: '📈 走势AI分析', filename: 'output/3-走势AI分析报.md' },
+                'depth-hb': { name: '🔗 合并解读', filename: 'output/4-合并解读.md' },
+                'depth-tdx': { name: '📋 TDX综合', filename: 'output/5-TDX综合分析报.md' }
+            },
             // Marked配置
             markedOptions: {
                 gfm: true,
@@ -1055,6 +1050,12 @@
             '/liquidity': 'liquidity',
             '/oil-gold-ratio': 'oil-gold-ratio',
             '/market-analysis': 'market-analysis',
+            '/depth-zf': 'depth-zf',
+            '/depth-zs': 'depth-zs',
+            '/depth-ai': 'depth-ai',
+            '/depth-zsai': 'depth-zsai',
+            '/depth-hb': 'depth-hb',
+            '/depth-tdx': 'depth-tdx',
             '/risk-environment': 'risk-environment'
         };
         
@@ -1100,6 +1101,42 @@
                 description: '追踪A股热点行业、概念变化、价格分位数分布及市场情绪指标，提供全面的市场分析视角。',
                 keywords: '市场分析, 热点行业, 概念变化, 价格分位数, 市场情绪, A股',
                 canonical: 'https://uu5zn.github.io/market-analysis'
+            },
+            'depth-zf': {
+                title: '涨幅分布报告 | 风向日报 - 市场观察日报',
+                description: '市场观察日报：个股数量分布矩阵、60日涨幅分析、价格分位数分布、成交额集中度与价格指数。',
+                keywords: '涨幅分布, 价格分位数, 成交额集中度, 个股分布, 市场观察',
+                canonical: 'https://uu5zn.github.io/depth-zf'
+            },
+            'depth-zs': {
+                title: '主升概念报告 | 风向日报 - 市场主升浪概念日报',
+                description: '市场主升浪概念日报：市场情绪概况、行业-概念关联、概念热度排行、概念热度变迁。',
+                keywords: '主升浪, 概念热度, 行业概念, 市场情绪, 概念变迁',
+                canonical: 'https://uu5zn.github.io/depth-zs'
+            },
+            'depth-ai': {
+                title: 'AI分析摘要 | 风向日报 - 结构化分析结果',
+                description: 'AI结构化分析：最终判断、置信度、交易信号、关键转折点分析及相关指标推理。',
+                keywords: 'AI分析, 结构化分析, 转折点, 交易信号, 市场判断',
+                canonical: 'https://uu5zn.github.io/depth-ai'
+            },
+            'depth-zsai': {
+                title: '走势AI分析 | 风向日报 - 市场指标AI分析报告',
+                description: '市场指标AI分析：21个市场指标的趋势与转折点分析、指标相关性、AI深度分析。',
+                keywords: '走势AI, 指标分析, 趋势分析, 转折点, AI分析',
+                canonical: 'https://uu5zn.github.io/depth-zsai'
+            },
+            'depth-hb': {
+                title: '合并解读 | 风向日报 - 合并市场观点',
+                description: '合并市场观点：系统综合判决、交叉验证一致性、风险等级、关键证据。',
+                keywords: '合并解读, 市场观点, 综合判决, 风险等级, 交叉验证',
+                canonical: 'https://uu5zn.github.io/depth-hb'
+            },
+            'depth-tdx': {
+                title: 'TDX综合 | 风向日报 - TDX综合分析报告',
+                description: 'TDX综合分析：市场概览、行业概念热点、资金面分析、持续性与结构特征、资本行为质量。',
+                keywords: 'TDX, 综合分析, 行业热点, 资金面, 资本质量',
+                canonical: 'https://uu5zn.github.io/depth-tdx'
             },
             'risk-environment': {
                 title: '风险环境 | 风向日报 - 市场风险评估',
@@ -1160,6 +1197,12 @@
                         'stock-bond-spread': '股债利差',
                         'liquidity': '流动性',
                         'oil-gold-ratio': '油金比与国债',
+                        'depth-zf': '涨幅分布',
+                        'depth-zs': '主升概念',
+                        'depth-ai': 'AI分析',
+                        'depth-zsai': '走势AI分析',
+                        'depth-hb': '合并解读',
+                        'depth-tdx': 'TDX综合',
                         'risk-environment': '风险环境'
                     };
                     breadcrumbData.itemListElement.push({
@@ -1294,6 +1337,11 @@
                         }
                         
                         updatePageMeta(route);
+                        
+                        // 自动加载深度分析报告（首次可见时触发）
+                        if (route.startsWith('depth-')) {
+                            loadDepthReport(route, `depth-${route.replace('depth-', '')}-container`);
+                        }
                     }
                 });
             }, {
@@ -1522,6 +1570,71 @@
             } finally {
                 refreshBtn.disabled = false;
                 console.log('🔄 加载流程结束');
+            }
+        }
+        
+        // 加载深度分析报告
+        const depthReportLoaded = {}; // 防止重复加载
+        
+        async function loadDepthReport(route, containerId) {
+            if (depthReportLoaded[route]) return; // 已加载，跳过
+            depthReportLoaded[route] = true;
+            
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const reportConfig = CONFIG.depthReports[route];
+            if (!reportConfig) return;
+            
+            try {
+                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>';
+                
+                console.log(`📥 加载深度报告: ${reportConfig.name}`);
+                const timestamp = new Date().getTime();
+                const response = await fetch(`${reportConfig.filename}?t=${timestamp}`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                let mdContent = await response.text();
+                
+                // 修复图片路径：md中的相对路径需补output/前缀才能在浏览器中正确加载
+                // ![xxx](图片.svg) → ![xxx](output/图片.svg)
+                // ![xxx](./tdx_xxx.svg) → ![xxx](output/tdx_xxx.svg)
+                mdContent = mdContent.replace(
+                    /!\[([^\]]*)\]\(\.\/?([^)]+\.svg)\)/g,
+                    '![$1](output/$2)'
+                );
+                // 也处理没有./前缀的（但要排除http和output/开头的）
+                mdContent = mdContent.replace(
+                    /!\[([^\]]*)\]\((?!output\/|https?:\/\/)([^)]+\.svg)\)/g,
+                    '![$1](output/$2)'
+                );
+                
+                // 渲染 Markdown
+                const tempContainer = document.createElement('div');
+                await renderMarkdown(mdContent, tempContainer);
+                
+                container.innerHTML = `<div class="markdown-content">${tempContainer.innerHTML}</div>`;
+                
+                // 渲染 Mermaid 图表（如果有的话）
+                if (window.mermaid) {
+                    try {
+                        await window.mermaid.run({ querySelector: '.mermaid' });
+                    } catch (err) {
+                        console.warn('⚠️ 深度报告 Mermaid 渲染失败:', err);
+                    }
+                }
+                
+                console.log(`✅ 深度报告加载完成: ${reportConfig.name}`);
+            } catch (error) {
+                console.error(`❌ 深度报告加载失败: ${reportConfig.name}`, error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        <h3>📡 加载失败</h3>
+                        <p>${reportConfig.name} 加载出错: ${error.message}</p>
+                        <button class="retry-btn" onclick="depthReportLoaded['${route}'] = false; loadDepthReport('${route}', '${containerId}')">重新加载</button>
+                    </div>
+                `;
+                depthReportLoaded[route] = false; // 允许重试
             }
         }
         
