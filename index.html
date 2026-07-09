@@ -278,17 +278,17 @@
             flex-direction: column;
         }
         .header { background-color: var(--dark-card); padding: 12px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; }
-        .header-content { max-width: 1600px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .header h1 { color: var(--primary-color); font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .header-right { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-        .nav-container { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-        .nav-container h2 { margin: 0; font-size: 1rem; color: var(--primary-color); font-weight: 600; white-space: nowrap; }
-        .nav-items { display: flex; flex-wrap: wrap; gap: 6px; }
-        .nav-item { display: block; padding: 6px 12px; color: var(--text-secondary); text-decoration: none; border-radius: 8px; transition: all 0.3s ease; font-size: 0.85rem; font-weight: 500; background-color: rgba(255,255,255,0.02); border: 1px solid transparent; }
+        .header-content { max-width: 1600px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 10px; }
+        .header-left { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+        .header h1 { color: var(--primary-color); font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; white-space: nowrap; }
+        .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: nowrap; min-width: 0; }
+        .nav-container { display: flex; flex-wrap: nowrap; align-items: center; gap: 4px; min-width: 0; }
+        .nav-items { display: flex; flex-wrap: nowrap; gap: 3px; }
+        .nav-item { display: block; padding: 4px 8px; color: var(--text-secondary); text-decoration: none; border-radius: 6px; transition: all 0.3s ease; font-size: 0.75rem; font-weight: 500; background-color: rgba(255,255,255,0.02); border: 1px solid transparent; white-space: nowrap; }
         .nav-item:hover { background-color: rgba(52, 152, 219, 0.15); color: var(--text-primary); border-color: rgba(52, 152, 219, 0.3); }
         .nav-item.active { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); }
-        .refresh-info { display: flex; align-items: center; gap: 12px; font-size: 0.85rem; white-space: nowrap; }
-        .refresh-btn { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3); font-size: 0.85rem; }
+        .refresh-info { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; white-space: nowrap; flex-shrink: 0; }
+        .refresh-btn { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(52, 152, 219, 0.3); font-size: 0.78rem; white-space: nowrap; flex-shrink: 0; }
         .refresh-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(52, 152, 219, 0.5); }
         .refresh-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .menu-toggle { display: none; background-color: transparent; border: none; color: var(--primary-color); font-size: 1.5rem; cursor: pointer; padding: 5px 10px; border-radius: 6px; transition: all 0.3s ease; }
@@ -369,9 +369,11 @@
             .sidebar-item { margin-bottom: 15px; padding-bottom: 15px; }
             .sidebar-item img { border: none; border-radius: 8px; max-height: 200px; object-fit: contain; }
             .header h1 { font-size: 1.3rem; }
-            .header-content { padding: 0 15px; }
+            .header-content { padding: 0 15px; flex-wrap: wrap; }
+            .header-left { flex-wrap: wrap; }
             .refresh-info span { display: none; }
-            .refresh-btn { padding: 6px 12px; font-size: 0.85rem; }
+            .refresh-btn { padding: 4px 8px; font-size: 0.75rem; }
+            .nav-item { font-size: 0.7rem; padding: 3px 6px; }
             .markdown-content h1 { font-size: 1.5rem; }
             .markdown-content h2 { font-size: 1.3rem; }
             footer img { width: 120px; height: 120px; }
@@ -382,7 +384,13 @@
 <body>
     <header class="header">
         <div class="header-content">
-            <h1>风向日报 - 动态市场分析</h1>
+            <div class="header-left">
+                <h1>风向日报 - 动态市场分析</h1>
+                <div class="refresh-info">
+                    <span id="last-update">尚未加载</span>
+                    <button class="refresh-btn" id="refresh-btn" onclick="loadReadme()">🔄 手动刷新</button>
+                </div>
+            </div>
             <div class="header-right">
                 <div class="nav-container">
                     <div class="nav-items">
@@ -401,10 +409,6 @@
                         <a href="/depth-hb" class="nav-item" data-route="depth-hb">🔗 合并解读</a>
                         <a href="/risk-environment" class="nav-item" data-route="risk-environment">⚠️ 风险环境</a>
                     </div>
-                </div>
-                <div class="refresh-info">
-                    <span id="last-update">尚未加载</span>
-                    <button class="refresh-btn" id="refresh-btn" onclick="loadReadme()">🔄 手动刷新</button>
                 </div>
                 <button class="menu-toggle" id="menu-toggle" onclick="toggleMobileMenu()">☰</button>
             </div>
