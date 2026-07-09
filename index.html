@@ -324,7 +324,7 @@
         .markdown-content li > ul, .markdown-content li > ol { margin-top: 8px; margin-bottom: 8px; }
         .markdown-content input[type="checkbox"] { margin-right: 8px; transform: scale(1.2); }
         .markdown-content input[type="checkbox"]:checked + label { color: var(--secondary-color); text-decoration: line-through; opacity: 0.7; }
-        .markdown-content table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: var(--dark-bg); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        .markdown-content table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: var(--dark-bg); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); display: block; overflow-x: auto; white-space: nowrap; }
         .markdown-content th, .markdown-content td { padding: 12px 15px; border: 1px solid var(--border-color); vertical-align: top; }
         .markdown-content th { background-color: var(--dark-sidebar); color: var(--primary-color); font-weight: 600; }
         .markdown-content td { word-wrap: break-word; word-break: break-all; }
@@ -392,10 +392,10 @@
                         <a href="/market-analysis" class="nav-item" data-route="market-analysis">📈 市场分析</a>
                         <a href="/depth-zf" class="nav-item" data-route="depth-zf">📊 涨幅分布</a>
                         <a href="/depth-zs" class="nav-item" data-route="depth-zs">🚀 主升概念</a>
+                        <a href="/depth-tdx" class="nav-item" data-route="depth-tdx">📋 TDX综合</a>
                         <a href="/depth-ai" class="nav-item" data-route="depth-ai">🤖 AI分析</a>
                         <a href="/depth-zsai" class="nav-item" data-route="depth-zsai">📈 走势AI</a>
                         <a href="/depth-hb" class="nav-item" data-route="depth-hb">🔗 合并解读</a>
-                        <a href="/depth-tdx" class="nav-item" data-route="depth-tdx">📋 TDX综合</a>
                         <a href="/risk-environment" class="nav-item" data-route="risk-environment">⚠️ 风险环境</a>
                     </div>
                 </div>
@@ -942,6 +942,12 @@
                     <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
+            <section id="page-depth-tdx" class="page-section">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📋 TDX综合分析报告</h2>
+                <div id="depth-tdx-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
+                </div>
+            </section>
             <section id="page-depth-ai" class="page-section">
                 <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">🤖 AI分析摘要</h2>
                 <div id="depth-ai-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
@@ -957,12 +963,6 @@
             <section id="page-depth-hb" class="page-section">
                 <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">🔗 合并解读</h2>
                 <div id="depth-hb-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
-                    <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
-                </div>
-            </section>
-            <section id="page-depth-tdx" class="page-section">
-                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📋 TDX综合分析报告</h2>
-                <div id="depth-tdx-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
                     <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
