@@ -311,7 +311,9 @@
         .sidebar-analysis h3 { font-size: 0.95rem; font-weight: 600; color: var(--secondary-color); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .sidebar-analysis p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.7; }
         .sidebar-analysis pre { display: none; }
-        .content { flex: 1; min-width: 0; overflow-x: hidden; background: linear-gradient(135deg, var(--dark-card), rgba(52, 152, 219, 0.03)); border-radius: 16px; padding: 30px; border: 1px solid var(--border-color); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+        .content { flex: 1; background: linear-gradient(135deg, var(--dark-card), rgba(52, 152, 219, 0.03)); border-radius: 16px; padding: 30px; border: 1px solid var(--border-color); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+        .depth-report-container { max-width: 100%; overflow-x: auto; }
+        .depth-report-container .markdown-content table { display: block; overflow-x: auto; white-space: nowrap; }
         .markdown-content { animation: fadeIn 0.5s ease-out; }
         .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 { margin: 25px 0 15px 0; color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; position: relative; }
         .markdown-content h1 { font-size: 2rem; border-bottom: 2px solid var(--primary-color); }
@@ -324,7 +326,7 @@
         .markdown-content li > ul, .markdown-content li > ol { margin-top: 8px; margin-bottom: 8px; }
         .markdown-content input[type="checkbox"] { margin-right: 8px; transform: scale(1.2); }
         .markdown-content input[type="checkbox"]:checked + label { color: var(--secondary-color); text-decoration: line-through; opacity: 0.7; }
-        .markdown-content table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: var(--dark-bg); border-radius: 8px; border: 1px solid var(--border-color); overflow-x: auto; display: block; white-space: nowrap; }
+        .markdown-content table { width: 100%; border-collapse: collapse; margin: 20px 0; background-color: var(--dark-bg); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
         .markdown-content th, .markdown-content td { padding: 12px 15px; border: 1px solid var(--border-color); vertical-align: top; }
         .markdown-content th { background-color: var(--dark-sidebar); color: var(--primary-color); font-weight: 600; }
         .markdown-content td { word-wrap: break-word; word-break: break-all; }
@@ -932,37 +934,37 @@
             <!-- ====== 深度分析报告 ====== -->
             <section id="page-depth-zf" class="page-section">
                 <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📊 涨幅分布报告</h2>
-                <div id="depth-zf-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <div id="depth-zf-container" class="depth-report-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
                     <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
             <section id="page-depth-zs" class="page-section">
                 <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">🚀 主升概念报告</h2>
-                <div id="depth-zs-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <div id="depth-zs-container" class="depth-report-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
                     <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
             <section id="page-depth-tdx" class="page-section">
                 <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📋 TDX综合分析报告</h2>
-                <div id="depth-tdx-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <div id="depth-tdx-container" class="depth-report-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
                     <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
             <section id="page-depth-ai" class="page-section">
                 <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">🤖 AI分析摘要</h2>
-                <div id="depth-ai-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <div id="depth-ai-container" class="depth-report-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
                     <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
             <section id="page-depth-zsai" class="page-section">
                 <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">📈 走势AI分析报告</h2>
-                <div id="depth-zsai-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <div id="depth-zsai-container" class="depth-report-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
                     <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
             <section id="page-depth-hb" class="page-section">
                 <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">🔗 合并解读</h2>
-                <div id="depth-hb-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                <div id="depth-hb-container" class="depth-report-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
                     <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
