@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <!-- 保留原有的 Google 标签和 AdSense -->
@@ -411,6 +411,7 @@
                         <a href="/depth-ai" class="nav-item" data-route="depth-ai">🤖 AI分析</a>
                         <a href="/depth-zsai" class="nav-item" data-route="depth-zsai">📈 走势AI</a>
                         <a href="/depth-hb" class="nav-item" data-route="depth-hb">🔗 合并解读</a>
+                        <a href="/depth-etf" class="nav-item" data-route="depth-etf">💹 ETF申赎</a>
                         <a href="/risk-environment" class="nav-item" data-route="risk-environment">⚠️ 风险环境</a>
                     </div>
                 </div>
@@ -953,6 +954,12 @@
                     <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
                 </div>
             </section>
+            <section id="page-depth-etf" class="page-section">
+                <h2 style="color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 20px;">💹 ETF申赎与成交额占比分析报告</h2>
+                <div id="depth-etf-container" class="depth-report-container" style="background-color: var(--dark-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div class="loading"><div class="loading-spinner"></div><p>正在加载报告...</p></div>
+                </div>
+            </section>
             
             <div style="text-align: center; margin: 40px 0;">
                 <button class="refresh-btn" onclick="alert('本页已收藏！')">⭐ 收藏本页</button>
@@ -1004,7 +1011,8 @@
                 'depth-ai': { name: '🤖 AI分析摘要', filename: 'output/3-ai_analysis_summary.md' },
                 'depth-zsai': { name: '📈 走势AI分析', filename: 'output/3-走势AI分析报.md' },
                 'depth-hb': { name: '🔗 合并解读', filename: 'output/4-合并解读.md' },
-                'depth-tdx': { name: '📋 TDX综合', filename: 'output/5-TDX综合分析报.md' }
+                'depth-tdx': { name: '📋 TDX综合', filename: 'output/5-TDX综合分析报.md' },
+                'depth-etf': { name: '💹 ETF申赎', filename: 'output/etf_report.md' }
             },
             // Marked配置
             markedOptions: {
@@ -1036,6 +1044,7 @@
             '/depth-zsai': 'depth-zsai',
             '/depth-hb': 'depth-hb',
             '/depth-tdx': 'depth-tdx',
+            '/depth-etf': 'depth-etf',
             '/risk-environment': 'risk-environment'
         };
         
@@ -1118,6 +1127,12 @@
                 keywords: 'TDX, 综合分析, 行业热点, 资金面, 资本质量',
                 canonical: 'https://uu5zn.github.io/depth-tdx'
             },
+            'depth-etf': {
+                title: 'ETF申赎分析 | 风向日报 - ETF资金申赎与成交额占比',
+                description: 'ETF申赎与成交额占比分析：净申赎、总AUM按类型拆分、成交额占A股比、净申赎率时序及关键发现。',
+                keywords: 'ETF申赎, ETF份额, ETF成交额, 净申赎率, AUM, 资金流向',
+                canonical: 'https://uu5zn.github.io/depth-etf'
+            },
             'risk-environment': {
                 title: '风险环境 | 风向日报 - 市场风险评估',
                 description: '综合评估市场风险环境，基于VIX指数、债券收益率和波动率提供风险警示和防御建议。',
@@ -1183,6 +1198,7 @@
                         'depth-zsai': '走势AI分析',
                         'depth-hb': '合并解读',
                         'depth-tdx': 'TDX综合',
+                        'depth-etf': 'ETF申赎',
                         'risk-environment': '风险环境'
                     };
                     breadcrumbData.itemListElement.push({
