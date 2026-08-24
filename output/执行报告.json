@@ -1,278 +1,278 @@
 {
-  "start_time": "2026-08-21T21:48:04.284105",
-  "end_time": "2026-08-21T21:48:45.571701",
+  "start_time": "2026-08-24T08:54:12.989474",
+  "end_time": "2026-08-24T08:55:01.137359",
   "tasks": [
     {
-      "timestamp": "2026-08-21T21:48:04.284242",
+      "timestamp": "2026-08-24T08:54:12.989629",
       "category": "数据获取",
       "status": "info",
       "message": "开始获取所有数据（实时获取）..."
     },
     {
-      "timestamp": "2026-08-21T21:48:04.284254",
+      "timestamp": "2026-08-24T08:54:12.989669",
       "category": "数据获取",
       "status": "info",
       "message": "获取融资余额数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:06.801819",
+      "timestamp": "2026-08-24T08:54:16.483411",
       "category": "数据获取",
       "status": "info",
       "message": "获取Shibor数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:08.298022",
+      "timestamp": "2026-08-24T08:54:17.838196",
       "category": "数据获取",
       "status": "info",
       "message": "获取中美国债收益率数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:19.175358",
+      "timestamp": "2026-08-24T08:54:29.457547",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510300数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:19.908409",
+      "timestamp": "2026-08-24T08:54:29.767873",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_159845数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:20.438832",
+      "timestamp": "2026-08-24T08:54:29.889672",
       "category": "数据获取",
       "status": "info",
       "message": "获取ETF_510500数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:20.741987",
+      "timestamp": "2026-08-24T08:54:30.066931",
       "category": "数据获取",
       "status": "info",
       "message": "获取原油价格数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:23.138586",
+      "timestamp": "2026-08-24T08:54:32.986051",
       "category": "数据获取",
       "status": "info",
       "message": "获取黄金价格数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:24.533529",
+      "timestamp": "2026-08-24T08:54:34.536733",
       "category": "数据获取",
       "status": "info",
       "message": "获取股债利差相关数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:27.800942",
+      "timestamp": "2026-08-24T08:54:38.309200",
       "category": "数据获取",
       "status": "info",
       "message": "计算股债利差数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:27.802875",
+      "timestamp": "2026-08-24T08:54:38.311853",
       "category": "数据获取",
       "status": "info",
       "message": "并行获取指数数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:32.454948",
+      "timestamp": "2026-08-24T08:54:40.846136",
       "category": "数据获取",
       "status": "info",
       "message": "并行获取全球板块数据..."
     },
     {
-      "timestamp": "2026-08-21T21:48:35.758799",
+      "timestamp": "2026-08-24T08:54:42.244459",
       "category": "YFinance",
       "status": "warning",
       "message": "3108.T 返回空数据"
     },
     {
-      "timestamp": "2026-08-21T21:48:35.932871",
+      "timestamp": "2026-08-24T08:54:42.280887",
       "category": "数据获取",
       "status": "success",
       "message": "已获取所有数据，共42种数据类型"
     },
     {
-      "timestamp": "2026-08-21T21:48:35.938103",
+      "timestamp": "2026-08-24T08:54:42.287549",
       "category": "数据缓存",
       "status": "success",
       "message": "已保存数据到缓存"
     },
     {
-      "timestamp": "2026-08-21T21:48:35.938348",
+      "timestamp": "2026-08-24T08:54:42.287743",
       "category": "数据获取",
       "status": "success",
-      "message": "使用缓存数据（24小时内有效）"
+      "message": "所有数据已成功获取并缓存"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.301738",
+      "timestamp": "2026-08-24T08:54:42.887072",
       "category": "绘图",
       "status": "success",
       "message": "rongziyue_ma.svg",
       "chart_path": "rongziyue_ma.svg"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.301781",
+      "timestamp": "2026-08-24T08:54:42.887149",
       "category": "融资余额分析",
       "status": "success",
-      "message": "执行耗时0.36秒"
+      "message": "执行耗时0.60秒"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.334416",
+      "timestamp": "2026-08-24T08:54:42.944182",
       "category": "绘图",
       "status": "success",
       "message": "rongziyue_1.svg",
       "chart_path": "rongziyue_1.svg"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.390530",
+      "timestamp": "2026-08-24T08:54:43.040124",
       "category": "绘图",
       "status": "success",
       "message": "hsi_rut_comparison.svg",
       "chart_path": "hsi_rut_comparison.svg"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.390585",
+      "timestamp": "2026-08-24T08:54:43.040221",
       "category": "相关性分析",
       "status": "success",
-      "message": "执行耗时0.45秒"
+      "message": "执行耗时0.75秒"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.487117",
+      "timestamp": "2026-08-24T08:54:43.208695",
       "category": "绘图",
       "status": "success",
       "message": "rongziyue_2.svg",
       "chart_path": "rongziyue_2.svg"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.595018",
+      "timestamp": "2026-08-24T08:54:43.398325",
       "category": "绘图",
       "status": "success",
       "message": "liudongxing.svg",
       "chart_path": "liudongxing.svg"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.595057",
+      "timestamp": "2026-08-24T08:54:43.398399",
       "category": "多指标对比",
       "status": "success",
-      "message": "执行耗时0.66秒"
+      "message": "执行耗时1.11秒"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.907769",
+      "timestamp": "2026-08-24T08:54:44.068457",
       "category": "绘图",
       "status": "success",
       "message": "sector_rotation.svg",
       "chart_path": "sector_rotation.svg"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.907795",
+      "timestamp": "2026-08-24T08:54:44.068491",
       "category": "行业轮动",
       "status": "success",
-      "message": "执行耗时0.31秒"
+      "message": "执行耗时0.67秒"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.990957",
+      "timestamp": "2026-08-24T08:54:44.114881",
       "category": "绘图",
       "status": "success",
       "message": "global_sectors.svg",
       "chart_path": "global_sectors.svg"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.990980",
+      "timestamp": "2026-08-24T08:54:44.114912",
       "category": "全球板块轮动",
       "status": "success",
-      "message": "执行耗时0.38秒"
+      "message": "执行耗时0.71秒"
     },
     {
-      "timestamp": "2026-08-21T21:48:37.508138",
+      "timestamp": "2026-08-24T08:54:45.001571",
       "category": "K线图生成",
       "status": "success",
-      "message": "执行耗时0.91秒"
+      "message": "执行耗时1.60秒"
     },
     {
-      "timestamp": "2026-08-21T21:48:37.669131",
+      "timestamp": "2026-08-24T08:54:45.282072",
       "category": "绘图",
       "status": "success",
       "message": "jyb_gz.svg",
       "chart_path": "jyb_gz.svg"
     },
     {
-      "timestamp": "2026-08-21T21:48:37.669158",
+      "timestamp": "2026-08-24T08:54:45.282115",
       "category": "油金比分析",
       "status": "success",
-      "message": "执行耗时0.16秒"
+      "message": "执行耗时0.28秒"
     },
     {
-      "timestamp": "2026-08-21T21:48:37.782253",
+      "timestamp": "2026-08-24T08:54:45.472104",
       "category": "绘图",
       "status": "success",
       "message": "guzhaixicha.svg",
       "chart_path": "guzhaixicha.svg"
     },
     {
-      "timestamp": "2026-08-21T21:48:37.782277",
+      "timestamp": "2026-08-24T08:54:45.472144",
       "category": "股债利差",
       "status": "success",
-      "message": "执行耗时0.11秒"
+      "message": "执行耗时0.19秒"
     },
     {
-      "timestamp": "2026-08-21T21:48:36.301771",
+      "timestamp": "2026-08-24T08:54:42.887133",
       "category": "融资余额分析",
       "status": "success",
-      "message": "耗时0.36秒, 尝试1次",
+      "message": "耗时0.60秒, 尝试1次",
       "error": null
     },
     {
-      "timestamp": "2026-08-21T21:48:36.390573",
+      "timestamp": "2026-08-24T08:54:43.040203",
       "category": "相关性分析",
       "status": "success",
-      "message": "耗时0.45秒, 尝试1次",
+      "message": "耗时0.75秒, 尝试1次",
       "error": null
     },
     {
-      "timestamp": "2026-08-21T21:48:36.595045",
+      "timestamp": "2026-08-24T08:54:43.398383",
       "category": "多指标对比",
       "status": "success",
-      "message": "耗时0.66秒, 尝试1次",
+      "message": "耗时1.11秒, 尝试1次",
       "error": null
     },
     {
-      "timestamp": "2026-08-21T21:48:36.907780",
+      "timestamp": "2026-08-24T08:54:44.068475",
       "category": "行业轮动",
       "status": "success",
-      "message": "耗时0.31秒, 尝试1次",
+      "message": "耗时0.67秒, 尝试1次",
       "error": null
     },
     {
-      "timestamp": "2026-08-21T21:48:36.990969",
+      "timestamp": "2026-08-24T08:54:44.114897",
       "category": "全球板块轮动",
       "status": "success",
-      "message": "耗时0.38秒, 尝试1次",
+      "message": "耗时0.71秒, 尝试1次",
       "error": null
     },
     {
-      "timestamp": "2026-08-21T21:48:37.508125",
+      "timestamp": "2026-08-24T08:54:45.001539",
       "category": "K线图生成",
       "status": "success",
-      "message": "耗时0.91秒, 尝试1次",
+      "message": "耗时1.60秒, 尝试1次",
       "error": null
     },
     {
-      "timestamp": "2026-08-21T21:48:37.669147",
+      "timestamp": "2026-08-24T08:54:45.282099",
       "category": "油金比分析",
       "status": "success",
-      "message": "耗时0.16秒, 尝试1次",
+      "message": "耗时0.28秒, 尝试1次",
       "error": null
     },
     {
-      "timestamp": "2026-08-21T21:48:37.782266",
+      "timestamp": "2026-08-24T08:54:45.472129",
       "category": "股债利差",
       "status": "success",
-      "message": "耗时0.11秒, 尝试1次",
+      "message": "耗时0.19秒, 尝试1次",
       "error": null
     },
     {
-      "timestamp": "2026-08-21T21:48:45.571611",
+      "timestamp": "2026-08-24T08:55:01.137244",
       "category": "市场分析",
       "status": "success",
       "message": "分析结果已保存到: /home/runner/work/analyse/analyse/output/市场分析结果.json"
@@ -294,15 +294,15 @@
     ],
     [
       "风险环境",
-      "VIX15.13 美国债4.74% 🟡 中风险"
+      "VIX15.88 美国债4.74% 🟡 中风险"
     ],
     [
       "中美联动",
-      "恒指+6.30% 汇率-0.46% 🤝 基本同步 HSI-RS2000(30d:-0.385)"
+      "恒指+4.83% 汇率-0.26% 🤝 基本同步 HSI-RS2000(30d:-0.401)"
     ],
     [
       "流动性",
-      "融资13524亿 Shibor1.42% 🟢 宽松环境"
+      "融资13488亿 Shibor1.42% 🟢 宽松环境"
     ],
     [
       "股债利差",
@@ -310,33 +310,33 @@
     ],
     [
       "油金比",
-      "当前值0.019(60分位) 当日-1.35% 偏离度0.784(轻微偏离)"
+      "当前值0.018(52分位) 当日-2.55% 偏离度0.635(轻微偏离)"
     ],
     [
       "偏离预警",
-      "融资余额与沪深300的正相关关系正在断裂：历史平均相关0.44，近期0.78，漂移+0.33"
+      "融资余额与沪深300的正相关关系正在断裂：历史平均相关0.44，近期0.76，漂移+0.32"
     ],
     [
       "偏离预警",
-      "中美国债利差与沪深300的正相关关系正在断裂：历史平均相关0.05，近期0.35，漂移+0.30"
+      "中美国债利差与沪深300的正相关关系正在断裂：历史平均相关0.05，近期0.34，漂移+0.29"
     ],
     [
       "偏离预警",
-      "股债利差与沪深300的正相关关系正在断裂：历史平均相关-0.60，近期-0.03，漂移+0.58"
+      "股债利差与沪深300的正相关关系正在断裂：历史平均相关-0.60，近期0.04，漂移+0.64"
     ]
   ],
   "market_signals": {},
   "detailed_output": {
     "sector_rotation": "\n📊 近1月行业表现:\n  1. 美股能源: +9.05% (当日: -0.17%)\n  2. 美股医药: +6.87% (当日: +1.29%)\n  3. 美股消费: +6.48% (当日: +1.15%)\n  4. 美股科技: +4.59% (当日: +0.35%)\n  5. 美股金融: +1.05% (当日: +0.93%)\n  6. 美股工业: -1.61% (当日: +0.27%)\n\n🏆 领涨: 美股能源, 美股医药\n📉 落后: 美股金融, 美股工业\n",
     "index_divergence": "\n📊 近30日涨跌幅:\n  纳斯达克100: +1.19% (当日: +0.43%, 波动率: 19.6%)\n  标普500:     +2.12% (当日: +0.43%, 波动率: 13.2%)\n  罗素2000:    +2.19% (当日: +0.85%, 波动率: 15.7%)\n\n🔗 日收益率相关性:\n  纳指-标普:   0.877\n  纳指-罗素:   0.859\n  标普-罗素:   0.850\n\n📈 近期趋势:\n  纳指: 上涨趋势\n  标普: 上涨趋势\n  罗素: 上涨趋势\n",
-    "risk_regime": "\n📊 当前风险指标:\n  VIX:        15.13 (33分位) 当日: -5.50% 5日变化: -0.39%\n  10Y国债:    4.74% (44分位) 当日: +0.89% 5日变化: +0.30%\n\n📈 近期趋势:\n  VIX: 五日下降 (-0.39%)\n  国债: 五日上升 (+0.30%)\n\n� 股债30日相关性(5日平滑): -0.272\n\n�️  综合风险评分: 1/4\n🎯 风险等级: 🟡 中风险\n",
-    "china_us_linkage": "\n📊 市场表现 (30日):\n  恒生指数:    +6.30% (当日: +0.80%)\n  标普500:     +2.12% (当日: +0.43%)\n  人民币汇率:  6.7118 (当日: -0.26% 5日: -0.46%, 30日: -0.96%)\n\n📊 罗素2000表现:\n  罗素2000:    +2.19% (当日: +0.85%)\n\n🔗 HSI与RS2000相关性分析(5日平滑):\n  30日相关性:  -0.385\n  60日相关性:  -0.242\n  90日相关性:  -0.011\n\n📈 相对强弱: 🤝 基本同步 (差值: +4.19%)\n",
-    "liquidity_conditions": "\n📊 流动性指标:\n  融资余额: 13524亿\n    ├─当日: -0.09%\n    ├─5日变化: -0.29%\n    └─30日变化: -8.57%\n  Shibor 1M: 1.42%\n    └─日变化: -0.01%\n  中美国债利差: -305.61bp (当日: -5bp 5日变化: -7bp)\n",
+    "risk_regime": "\n📊 当前风险指标:\n  VIX:        15.88 (38分位) 当日: +4.96% 5日变化: +0.25%\n  10Y国债:    4.74% (44分位) 当日: +0.89% 5日变化: +0.30%\n\n📈 近期趋势:\n  VIX: 五日下降 (+0.25%)\n  国债: 五日上升 (+0.30%)\n\n� 股债30日相关性(5日平滑): -0.272\n\n�️  综合风险评分: 1/4\n🎯 风险等级: 🟡 中风险\n",
+    "china_us_linkage": "\n📊 市场表现 (30日):\n  恒生指数:    +4.83% (当日: -1.89%)\n  标普500:     +2.12% (当日: +0.43%)\n  人民币汇率:  6.7222 (当日: -0.00% 5日: -0.26%, 30日: -0.85%)\n\n📊 罗素2000表现:\n  罗素2000:    +2.19% (当日: +0.85%)\n\n🔗 HSI与RS2000相关性分析(5日平滑):\n  30日相关性:  -0.401\n  60日相关性:  -0.239\n  90日相关性:  -0.029\n\n📈 相对强弱: 🤝 基本同步 (差值: +2.72%)\n",
+    "liquidity_conditions": "\n📊 流动性指标:\n  融资余额: 13488亿\n    ├─当日: -0.27%\n    ├─5日变化: -0.46%\n    └─30日变化: -8.32%\n  Shibor 1M: 1.42%\n    └─日变化: +0.01%\n  中美国债利差: -305.61bp (当日: -5bp 5日变化: -7bp)\n",
     "pe_bond_spread": "\n📊 股债性价比指标:\n  中国10年期国债收益率: 1.68% (当日: +0.04% 5日变化: -0.74%)\n  上证50滚动市盈率:     11.21 (当日: -1.15% 5日变化: -1.41%)\n  股债利差:             -7.24 (当日: +0.01 5日变化: +0.02)\n",
-    "oil_gold_ratio": "\n📊 油金比指标:\n  当前值: 0.019 (60分位)\n  当日变化: -1.35%\n  5日变化: -1.13%\n  30日变化: -4.47%\n\n📏 标准化处理:\n  油金比Z-score: +0.424 (均值: 0.0173, 标准差: 0.0031)\n  美债Z-score: -0.360\n\n📐 偏离度分析:\n  偏离度: 0.784\n  偏离档次: 轻微偏离\n"
+    "oil_gold_ratio": "\n📊 油金比指标:\n  当前值: 0.018 (52分位)\n  当日变化: -2.55%\n  5日变化: -5.78%\n  30日变化: -7.90%\n\n📏 标准化处理:\n  油金比Z-score: +0.274 (均值: 0.0173, 标准差: 0.0031)\n  美债Z-score: -0.360\n\n📐 偏离度分析:\n  偏离度: 0.635\n  偏离档次: 轻微偏离\n"
   },
   "ai_insights": {
-    "timestamp": "2026-08-21T21:48:37.811178",
+    "timestamp": "2026-08-24T08:54:45.515941",
     "cross_indicator_analysis": {
       "correlations": [],
       "conflicts": [],
@@ -373,9 +373,9 @@
     }
   },
   "divergence_analysis": {
-    "total_signals": 23,
-    "high_severity": 21,
-    "medium_severity": 2,
+    "total_signals": 25,
+    "high_severity": 22,
+    "medium_severity": 3,
     "low_severity": 0,
     "by_group": {
       "中美联动": [
@@ -385,10 +385,10 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "negative",
-          "description": "恒生指数与罗素2000的正相关关系正在断裂：历史平均相关0.18，近期-0.28，漂移-0.45",
-          "current_value": -0.2776,
+          "description": "恒生指数与罗素2000的正相关关系正在断裂：历史平均相关0.18，近期-0.26，漂移-0.44",
+          "current_value": -0.263,
           "expected_value": 0.1763,
-          "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之上方（向上），MA60之上方（向下）；均线纠结。"
+          "detail": "当前值在MA5之下方（向上），MA10之下方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
         },
         {
           "indicator": "^HSI",
@@ -396,10 +396,10 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "negative",
-          "description": "恒生指数与标普500的正相关关系正在断裂：历史平均相关0.15，近期-0.27，漂移-0.42",
-          "current_value": -0.2741,
+          "description": "恒生指数与标普500的正相关关系正在断裂：历史平均相关0.15，近期-0.26，漂移-0.41",
+          "current_value": -0.2647,
           "expected_value": 0.1494,
-          "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之上方（向上），MA60之上方（向下）；均线纠结。"
+          "detail": "当前值在MA5之下方（向上），MA10之下方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
         },
         {
           "indicator": "CNY=X",
@@ -407,8 +407,8 @@
           "method": "zscore_divergence",
           "severity": 1.0,
           "direction": "negative",
-          "description": "人民币汇率的Z-score(-3.02)低于基准低于应有的水平(0.90)，分歧-3.92σ",
-          "current_value": -3.0159,
+          "description": "人民币汇率的Z-score(-2.51)低于基准低于应有的水平(0.90)，分歧-3.42σ",
+          "current_value": -2.5142,
           "expected_value": 0.9017,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（平缓）；短中期空头排列。"
         }
@@ -420,10 +420,10 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "positive",
-          "description": "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.36，近期0.62，漂移+0.26",
-          "current_value": 0.6174,
-          "expected_value": 0.3566,
-          "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
+          "description": "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.36，近期0.74，漂移+0.38",
+          "current_value": 0.7392,
+          "expected_value": 0.3559,
+          "detail": "当前值在MA5之上方（向下），MA10之下方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
         },
         {
           "indicator": "Europe_Financial",
@@ -431,21 +431,21 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "negative",
-          "description": "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.02，近期-0.67，漂移-0.65",
-          "current_value": -0.6696,
-          "expected_value": -0.0192,
-          "detail": "当前值在MA5之上方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；短中期多头排列。"
+          "description": "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.02，近期-0.70，漂移-0.68",
+          "current_value": -0.6994,
+          "expected_value": -0.0219,
+          "detail": "当前值在MA5之下方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
         },
         {
           "indicator": "Europe_Industrials",
           "benchmark": "US_Industrials",
           "method": "correlation_drift",
-          "severity": 0.78,
+          "severity": 0.73,
           "direction": "negative",
-          "description": "欧洲工业与美国工业的正相关关系正在断裂：历史平均相关0.42，近期0.17，漂移-0.25",
-          "current_value": 0.1676,
-          "expected_value": 0.4198,
-          "detail": "当前值在MA5之上方（向下），MA10之下方（向下），MA20之下方（向下），MA60之上方（向上）；均线纠结。"
+          "description": "欧洲工业与美国工业的正相关关系正在断裂：历史平均相关0.42，近期0.18，漂移-0.24",
+          "current_value": 0.1814,
+          "expected_value": 0.4187,
+          "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
         }
       ],
       "国内指标": [
@@ -455,9 +455,9 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "positive",
-          "description": "融资余额与沪深300的正相关关系正在断裂：历史平均相关0.44，近期0.78，漂移+0.33",
-          "current_value": 0.7754,
-          "expected_value": 0.4429,
+          "description": "融资余额与沪深300的正相关关系正在断裂：历史平均相关0.44，近期0.76，漂移+0.32",
+          "current_value": 0.7648,
+          "expected_value": 0.4433,
           "detail": "当前值在MA5之下方（向上），MA10之下方（向上），MA20之上方（向下），MA60之下方（向下）；均线纠结。"
         },
         {
@@ -466,9 +466,9 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "positive",
-          "description": "中美国债利差与沪深300的正相关关系正在断裂：历史平均相关0.05，近期0.35，漂移+0.30",
-          "current_value": 0.3522,
-          "expected_value": 0.0535,
+          "description": "中美国债利差与沪深300的正相关关系正在断裂：历史平均相关0.05，近期0.34，漂移+0.29",
+          "current_value": 0.3445,
+          "expected_value": 0.0536,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         },
         {
@@ -477,9 +477,9 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "positive",
-          "description": "股债利差与沪深300的正相关关系正在断裂：历史平均相关-0.60，近期-0.03，漂移+0.58",
-          "current_value": -0.0254,
-          "expected_value": -0.6028,
+          "description": "股债利差与沪深300的正相关关系正在断裂：历史平均相关-0.60，近期0.04，漂移+0.64",
+          "current_value": 0.0386,
+          "expected_value": -0.603,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
         },
         {
@@ -488,9 +488,9 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "negative",
-          "description": "上证50市盈率与沪深300的负相关关系正在断裂：历史平均相关0.61，近期0.02，漂移-0.59",
-          "current_value": 0.0225,
-          "expected_value": 0.6144,
+          "description": "上证50市盈率与沪深300的负相关关系正在断裂：历史平均相关0.61，近期-0.04，漂移-0.65",
+          "current_value": -0.0372,
+          "expected_value": 0.6146,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
         },
         {
@@ -499,20 +499,31 @@
           "method": "zscore_divergence",
           "severity": 1.0,
           "direction": "negative",
-          "description": "中国10Y国债收益率的Z-score(-2.61)低于基准低于应有的水平(-1.35)，分歧-3.96σ",
-          "current_value": -2.6134,
-          "expected_value": -1.3488,
+          "description": "中国10Y国债收益率的Z-score(-2.26)低于基准低于应有的水平(-1.05)，分歧-3.31σ",
+          "current_value": -2.259,
+          "expected_value": -1.0515,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（平缓）；短中期空头排列。"
         },
         {
-          "indicator": "股债利差",
+          "indicator": "Shibor 1M",
+          "benchmark": "ETF_510300",
+          "method": "correlation_drift",
+          "severity": 0.96,
+          "direction": "negative",
+          "description": "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.00，近期-0.30，漂移-0.30",
+          "current_value": -0.3009,
+          "expected_value": -0.0014,
+          "detail": "当前值在MA5之上方（平缓），MA10之上方（平缓），MA20之下方（平缓），MA60之上方（平缓）；均线纠结。"
+        },
+        {
+          "indicator": "上证50滚动市盈率",
           "benchmark": "ETF_510300",
           "method": "zscore_divergence",
-          "severity": 0.5,
-          "direction": "positive",
-          "description": "股债利差的Z-score(0.15)高于基准高于应有的水平(-1.35)，分歧+1.50σ",
-          "current_value": 0.1545,
-          "expected_value": -1.3488,
+          "severity": 0.56,
+          "direction": "negative",
+          "description": "上证50市盈率的Z-score(-0.62)低于基准低于应有的水平(-1.05)，分歧-1.68σ",
+          "current_value": -0.6249,
+          "expected_value": -1.0515,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
         }
       ],
@@ -523,8 +534,8 @@
           "method": "zscore_divergence",
           "severity": 1.0,
           "direction": "negative",
-          "description": "人民币汇率的Z-score(-3.02)低于基准低于应有的水平(1.07)，分歧-4.08σ",
-          "current_value": -3.0159,
+          "description": "人民币汇率的Z-score(-2.51)低于基准低于应有的水平(1.07)，分歧-3.58σ",
+          "current_value": -2.5142,
           "expected_value": 1.0683,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（平缓）；短中期空头排列。"
         },
@@ -562,6 +573,17 @@
           "current_value": 1.6821,
           "expected_value": 1.0683,
           "detail": "当前值在MA5之上方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；短中期多头排列。"
+        },
+        {
+          "indicator": "^N225",
+          "benchmark": "^GSPC",
+          "method": "zscore_divergence",
+          "severity": 0.5,
+          "direction": "negative",
+          "description": "日经225的Z-score(-0.39)低于基准低于应有的水平(1.11)，分歧-1.50σ",
+          "current_value": -0.3903,
+          "expected_value": 1.11,
+          "detail": "当前值在MA5之下方（向下），MA10之下方（向上），MA20之下方（向下），MA60之下方（向上）；均线纠结。"
         }
       ],
       "行业轮动": [
@@ -651,10 +673,10 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "positive",
-        "description": "融资余额与沪深300的正相关关系正在断裂：历史平均相关0.44，近期0.78，漂移+0.33",
+        "description": "融资余额与沪深300的正相关关系正在断裂：历史平均相关0.44，近期0.76，漂移+0.32",
         "group": "国内指标",
-        "current_value": 0.7754,
-        "expected_value": 0.4429,
+        "current_value": 0.7648,
+        "expected_value": 0.4433,
         "detail": "当前值在MA5之下方（向上），MA10之下方（向上），MA20之上方（向下），MA60之下方（向下）；均线纠结。"
       },
       {
@@ -663,10 +685,10 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "positive",
-        "description": "中美国债利差与沪深300的正相关关系正在断裂：历史平均相关0.05，近期0.35，漂移+0.30",
+        "description": "中美国债利差与沪深300的正相关关系正在断裂：历史平均相关0.05，近期0.34，漂移+0.29",
         "group": "国内指标",
-        "current_value": 0.3522,
-        "expected_value": 0.0535,
+        "current_value": 0.3445,
+        "expected_value": 0.0536,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
       },
       {
@@ -675,10 +697,10 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "positive",
-        "description": "股债利差与沪深300的正相关关系正在断裂：历史平均相关-0.60，近期-0.03，漂移+0.58",
+        "description": "股债利差与沪深300的正相关关系正在断裂：历史平均相关-0.60，近期0.04，漂移+0.64",
         "group": "国内指标",
-        "current_value": -0.0254,
-        "expected_value": -0.6028,
+        "current_value": 0.0386,
+        "expected_value": -0.603,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
       },
       {
@@ -687,10 +709,10 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "negative",
-        "description": "上证50市盈率与沪深300的负相关关系正在断裂：历史平均相关0.61，近期0.02，漂移-0.59",
+        "description": "上证50市盈率与沪深300的负相关关系正在断裂：历史平均相关0.61，近期-0.04，漂移-0.65",
         "group": "国内指标",
-        "current_value": 0.0225,
-        "expected_value": 0.6144,
+        "current_value": -0.0372,
+        "expected_value": 0.6146,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
       },
       {
@@ -699,10 +721,10 @@
         "method": "zscore_divergence",
         "severity": 1.0,
         "direction": "negative",
-        "description": "中国10Y国债收益率的Z-score(-2.61)低于基准低于应有的水平(-1.35)，分歧-3.96σ",
+        "description": "中国10Y国债收益率的Z-score(-2.26)低于基准低于应有的水平(-1.05)，分歧-3.31σ",
         "group": "国内指标",
-        "current_value": -2.6134,
-        "expected_value": -1.3488,
+        "current_value": -2.259,
+        "expected_value": -1.0515,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（平缓）；短中期空头排列。"
       },
       {
@@ -795,9 +817,9 @@
         "method": "zscore_divergence",
         "severity": 1.0,
         "direction": "negative",
-        "description": "人民币汇率的Z-score(-3.02)低于基准低于应有的水平(1.07)，分歧-4.08σ",
+        "description": "人民币汇率的Z-score(-2.51)低于基准低于应有的水平(1.07)，分歧-3.58σ",
         "group": "汇率商品",
-        "current_value": -3.0159,
+        "current_value": -2.5142,
         "expected_value": 1.0683,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（平缓）；短中期空头排列。"
       },
@@ -819,11 +841,11 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "negative",
-        "description": "恒生指数与罗素2000的正相关关系正在断裂：历史平均相关0.18，近期-0.28，漂移-0.45",
+        "description": "恒生指数与罗素2000的正相关关系正在断裂：历史平均相关0.18，近期-0.26，漂移-0.44",
         "group": "中美联动",
-        "current_value": -0.2776,
+        "current_value": -0.263,
         "expected_value": 0.1763,
-        "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之上方（向上），MA60之上方（向下）；均线纠结。"
+        "detail": "当前值在MA5之下方（向上），MA10之下方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
       },
       {
         "indicator": "^HSI",
@@ -831,11 +853,11 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "negative",
-        "description": "恒生指数与标普500的正相关关系正在断裂：历史平均相关0.15，近期-0.27，漂移-0.42",
+        "description": "恒生指数与标普500的正相关关系正在断裂：历史平均相关0.15，近期-0.26，漂移-0.41",
         "group": "中美联动",
-        "current_value": -0.2741,
+        "current_value": -0.2647,
         "expected_value": 0.1494,
-        "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之上方（向上），MA60之上方（向下）；均线纠结。"
+        "detail": "当前值在MA5之下方（向上），MA10之下方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
       },
       {
         "indicator": "CNY=X",
@@ -843,9 +865,9 @@
         "method": "zscore_divergence",
         "severity": 1.0,
         "direction": "negative",
-        "description": "人民币汇率的Z-score(-3.02)低于基准低于应有的水平(0.90)，分歧-3.92σ",
+        "description": "人民币汇率的Z-score(-2.51)低于基准低于应有的水平(0.90)，分歧-3.42σ",
         "group": "中美联动",
-        "current_value": -3.0159,
+        "current_value": -2.5142,
         "expected_value": 0.9017,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（平缓）；短中期空头排列。"
       },
@@ -855,11 +877,11 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "positive",
-        "description": "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.36，近期0.62，漂移+0.26",
+        "description": "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.36，近期0.74，漂移+0.38",
         "group": "全球板块",
-        "current_value": 0.6174,
-        "expected_value": 0.3566,
-        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
+        "current_value": 0.7392,
+        "expected_value": 0.3559,
+        "detail": "当前值在MA5之上方（向下），MA10之下方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
       },
       {
         "indicator": "Europe_Financial",
@@ -867,11 +889,23 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "negative",
-        "description": "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.02，近期-0.67，漂移-0.65",
+        "description": "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.02，近期-0.70，漂移-0.68",
         "group": "全球板块",
-        "current_value": -0.6696,
-        "expected_value": -0.0192,
-        "detail": "当前值在MA5之上方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；短中期多头排列。"
+        "current_value": -0.6994,
+        "expected_value": -0.0219,
+        "detail": "当前值在MA5之下方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
+      },
+      {
+        "indicator": "Shibor 1M",
+        "benchmark": "ETF_510300",
+        "method": "correlation_drift",
+        "severity": 0.96,
+        "direction": "negative",
+        "description": "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.00，近期-0.30，漂移-0.30",
+        "group": "国内指标",
+        "current_value": -0.3009,
+        "expected_value": -0.0014,
+        "detail": "当前值在MA5之上方（平缓），MA10之上方（平缓），MA20之下方（平缓），MA60之上方（平缓）；均线纠结。"
       },
       {
         "indicator": "^TNX",
@@ -889,13 +923,13 @@
         "indicator": "Europe_Industrials",
         "benchmark": "US_Industrials",
         "method": "correlation_drift",
-        "severity": 0.78,
+        "severity": 0.73,
         "direction": "negative",
-        "description": "欧洲工业与美国工业的正相关关系正在断裂：历史平均相关0.42，近期0.17，漂移-0.25",
+        "description": "欧洲工业与美国工业的正相关关系正在断裂：历史平均相关0.42，近期0.18，漂移-0.24",
         "group": "全球板块",
-        "current_value": 0.1676,
-        "expected_value": 0.4198,
-        "detail": "当前值在MA5之上方（向下），MA10之下方（向下），MA20之下方（向下），MA60之上方（向上）；均线纠结。"
+        "current_value": 0.1814,
+        "expected_value": 0.4187,
+        "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
       },
       {
         "indicator": "XLF",
@@ -910,24 +944,36 @@
         "detail": "当前值在MA5之上方（向下），MA10之下方（向下），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
       },
       {
-        "indicator": "股债利差",
+        "indicator": "上证50滚动市盈率",
         "benchmark": "ETF_510300",
         "method": "zscore_divergence",
-        "severity": 0.5,
-        "direction": "positive",
-        "description": "股债利差的Z-score(0.15)高于基准高于应有的水平(-1.35)，分歧+1.50σ",
+        "severity": 0.56,
+        "direction": "negative",
+        "description": "上证50市盈率的Z-score(-0.62)低于基准低于应有的水平(-1.05)，分歧-1.68σ",
         "group": "国内指标",
-        "current_value": 0.1545,
-        "expected_value": -1.3488,
+        "current_value": -0.6249,
+        "expected_value": -1.0515,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
+      },
+      {
+        "indicator": "^N225",
+        "benchmark": "^GSPC",
+        "method": "zscore_divergence",
+        "severity": 0.5,
+        "direction": "negative",
+        "description": "日经225的Z-score(-0.39)低于基准低于应有的水平(1.11)，分歧-1.50σ",
+        "group": "美股内部",
+        "current_value": -0.3903,
+        "expected_value": 1.11,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向上），MA20之下方（向下），MA60之下方（向上）；均线纠结。"
       }
     ],
     "top_divergences": [
-      "融资余额与沪深300的正相关关系正在断裂：历史平均相关0.44，近期0.78，漂移+0.33",
-      "中美国债利差与沪深300的正相关关系正在断裂：历史平均相关0.05，近期0.35，漂移+0.30",
-      "股债利差与沪深300的正相关关系正在断裂：历史平均相关-0.60，近期-0.03，漂移+0.58",
-      "上证50市盈率与沪深300的负相关关系正在断裂：历史平均相关0.61，近期0.02，漂移-0.59",
-      "中国10Y国债收益率的Z-score(-2.61)低于基准低于应有的水平(-1.35)，分歧-3.96σ",
+      "融资余额与沪深300的正相关关系正在断裂：历史平均相关0.44，近期0.76，漂移+0.32",
+      "中美国债利差与沪深300的正相关关系正在断裂：历史平均相关0.05，近期0.34，漂移+0.29",
+      "股债利差与沪深300的正相关关系正在断裂：历史平均相关-0.60，近期0.04，漂移+0.64",
+      "上证50市盈率与沪深300的负相关关系正在断裂：历史平均相关0.61，近期-0.04，漂移-0.65",
+      "中国10Y国债收益率的Z-score(-2.26)低于基准低于应有的水平(-1.05)，分歧-3.31σ",
       "REITs(房地产)与标普500的正相关关系正在断裂：历史平均相关0.64，近期0.10，漂移-0.54",
       "能源板块与标普500的正相关关系正在断裂：历史平均相关0.57，近期-0.36，漂移-0.93",
       "能源板块当前水平偏高于基准应有的预测值，残差4.32（阈值1.99）",
@@ -935,18 +981,20 @@
       "医药板块当前水平偏高于基准应有的预测值，残差8.93（阈值3.20）",
       "消费板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.54，漂移-0.32",
       "工业板块当前水平偏低于基准应有的预测值，残差-3.73（阈值2.39）",
-      "人民币汇率的Z-score(-3.02)低于基准低于应有的水平(1.07)，分歧-4.08σ",
+      "人民币汇率的Z-score(-2.51)低于基准低于应有的水平(1.07)，分歧-3.58σ",
       "黄金价格的Z-score(2.25)高于基准高于应有的水平(1.07)，分歧+3.32σ",
-      "恒生指数与罗素2000的正相关关系正在断裂：历史平均相关0.18，近期-0.28，漂移-0.45",
-      "恒生指数与标普500的正相关关系正在断裂：历史平均相关0.15，近期-0.27，漂移-0.42",
-      "人民币汇率的Z-score(-3.02)低于基准低于应有的水平(0.90)，分歧-3.92σ",
-      "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.36，近期0.62，漂移+0.26",
-      "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.02，近期-0.67，漂移-0.65",
+      "恒生指数与罗素2000的正相关关系正在断裂：历史平均相关0.18，近期-0.26，漂移-0.44",
+      "恒生指数与标普500的正相关关系正在断裂：历史平均相关0.15，近期-0.26，漂移-0.41",
+      "人民币汇率的Z-score(-2.51)低于基准低于应有的水平(0.90)，分歧-3.42σ",
+      "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.36，近期0.74，漂移+0.38",
+      "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.02，近期-0.70，漂移-0.68",
+      "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.00，近期-0.30，漂移-0.30",
       "美国10年期国债收益率的Z-score(1.68)高于基准高于应有的水平(1.07)，分歧+2.75σ",
-      "欧洲工业与美国工业的正相关关系正在断裂：历史平均相关0.42，近期0.17，漂移-0.25",
+      "欧洲工业与美国工业的正相关关系正在断裂：历史平均相关0.42，近期0.18，漂移-0.24",
       "金融板块与标普500的正相关关系正在断裂：历史平均相关0.83，近期0.62，漂移-0.21",
-      "股债利差的Z-score(0.15)高于基准高于应有的水平(-1.35)，分歧+1.50σ"
+      "上证50市盈率的Z-score(-0.62)低于基准低于应有的水平(-1.05)，分歧-1.68σ",
+      "日经225的Z-score(-0.39)低于基准低于应有的水平(1.11)，分歧-1.50σ"
     ]
   },
-  "duration": "9.63秒"
+  "duration": "18.85秒"
 }
