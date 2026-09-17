@@ -2,19 +2,19 @@
   "insights": [
     [
       "行业轮动",
-      "行业轮动强度5.10% 美股能源, 美股科技"
+      "行业轮动强度4.23% 美股能源, 美股科技"
     ],
     [
       "指数差异",
-      "纳指-1.46% 标普-2.22% 罗素-5.31% 成长风格"
+      "纳指+0.27% 标普-0.94% 罗素-4.23% 成长风格"
     ],
     [
       "风险环境",
-      "VIX15.41 美国债4.95% 🟡 中风险"
+      "VIX15.44 美国债4.95% 🟡 中风险"
     ],
     [
       "中美联动",
-      "恒指-4.14% 汇率-0.16% 🤝 基本同步 HSI-RS2000(30d:0.064)"
+      "恒指-3.20% 汇率-0.00% 🤝 基本同步 HSI-RS2000(30d:0.038)"
     ],
     [
       "股债利差",
@@ -22,32 +22,32 @@
     ],
     [
       "油金比",
-      "当前值0.022(92分位) 当日-4.34% 偏离度1.619(显著偏离)"
+      "当前值0.022(93分位) 当日-0.07% 偏离度1.732(显著偏离)"
     ],
     [
       "偏离预警",
-      "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期-0.39，漂移-0.38"
+      "罗素2000(小盘)当前水平偏低于基准应有的预测值，残差-99.23（阈值45.24）"
     ],
     [
       "偏离预警",
-      "罗素2000(小盘)当前水平偏低于基准应有的预测值，残差-95.50（阈值45.20）"
+      "日经225与标普500的正相关关系正在断裂：历史平均相关0.10，近期-0.38，漂移-0.48"
     ],
     [
       "偏离预警",
-      "REITs(房地产)当前水平偏低于基准应有的预测值，残差-4.85（阈值2.79）"
+      "金融板块当前水平偏低于基准应有的预测值，残差-1.57（阈值1.03）"
     ]
   ],
   "detailed_output": {
-    "sector_rotation": "\n📊 近1月行业表现:\n  1. 美股能源: +0.71% (当日: -2.88%)\n  2. 美股科技: -1.59% (当日: +0.03%)\n  3. 美股金融: -2.70% (当日: -1.62%)\n  4. 美股医药: -4.50% (当日: +0.07%)\n  5. 美股消费: -7.09% (当日: -0.63%)\n  6. 美股工业: -7.28% (当日: -0.08%)\n\n🏆 领涨: 美股能源, 美股科技\n📉 落后: 美股消费, 美股工业\n",
-    "index_divergence": "\n📊 近30日涨跌幅:\n  纳斯达克100: -1.46% (当日: -0.01%, 波动率: 12.1%)\n  标普500:     -2.22% (当日: -0.45%, 波动率: 8.9%)\n  罗素2000:    -5.31% (当日: -0.40%, 波动率: 12.5%)\n\n🔗 日收益率相关性:\n  纳指-标普:   0.877\n  纳指-罗素:   0.859\n  标普-罗素:   0.850\n\n📈 近期趋势:\n  纳指: 上涨趋势\n  标普: 下跌趋势\n  罗素: 下跌趋势\n",
-    "risk_regime": "\n📊 当前风险指标:\n  VIX:        15.41 (35分位) 当日: -12.99% 5日变化: -2.71%\n  10Y国债:    4.95% (46分位) 当日: -1.10% 5日变化: -0.48%\n\n📈 近期趋势:\n  VIX: 五日上升 (-2.71%)\n  国债: 五日上升 (-0.48%)\n\n� 股债30日相关性(5日平滑): -0.537\n\n�️  综合风险评分: 2/4\n🎯 风险等级: 🟡 中风险\n",
-    "china_us_linkage": "\n📊 市场表现 (30日):\n  恒生指数:    -4.14% (当日: -0.44%)\n  标普500:     -2.22% (当日: -0.45%)\n  人民币汇率:  6.6952 (当日: -0.24% 5日: -0.16%, 30日: -0.79%)\n\n📊 罗素2000表现:\n  罗素2000:    -5.31% (当日: -0.40%)\n\n🔗 HSI与RS2000相关性分析(5日平滑):\n  30日相关性:  0.064\n  60日相关性:  -0.140\n  90日相关性:  -0.072\n\n📈 相对强弱: 🤝 基本同步 (差值: -1.92%)\n",
+    "sector_rotation": "\n📊 近1月行业表现:\n  1. 美股能源: +1.15% (当日: +0.70%)\n  2. 美股科技: +0.84% (当日: +1.73%)\n  3. 美股金融: -1.88% (当日: -0.09%)\n  4. 美股医药: -2.08% (当日: +0.62%)\n  5. 美股消费: -4.53% (当日: +1.10%)\n  6. 美股工业: -5.99% (当日: +0.18%)\n\n🏆 领涨: 美股能源, 美股科技\n📉 落后: 美股消费, 美股工业\n",
+    "index_divergence": "\n📊 近30日涨跌幅:\n  纳斯达克100: +0.27% (当日: +1.69%, 波动率: 13.6%)\n  标普500:     -0.94% (当日: +1.14%, 波动率: 9.9%)\n  罗素2000:    -4.23% (当日: +0.55%, 波动率: 12.5%)\n\n🔗 日收益率相关性:\n  纳指-标普:   0.877\n  纳指-罗素:   0.859\n  标普-罗素:   0.850\n\n📈 近期趋势:\n  纳指: 上涨趋势\n  标普: 下跌趋势\n  罗素: 下跌趋势\n",
+    "risk_regime": "\n📊 当前风险指标:\n  VIX:        15.44 (35分位) 当日: -12.82% 5日变化: -2.53%\n  10Y国债:    4.95% (46分位) 当日: -1.18% 5日变化: -0.56%\n\n📈 近期趋势:\n  VIX: 五日上升 (-2.53%)\n  国债: 五日上升 (-0.56%)\n\n� 股债30日相关性(5日平滑): -0.541\n\n�️  综合风险评分: 2/4\n🎯 风险等级: 🟡 中风险\n",
+    "china_us_linkage": "\n📊 市场表现 (30日):\n  恒生指数:    -3.20% (当日: +0.19%)\n  标普500:     -0.94% (当日: +1.14%)\n  人民币汇率:  6.7060 (当日: -0.08% 5日: -0.00%, 30日: -0.63%)\n\n📊 罗素2000表现:\n  罗素2000:    -4.23% (当日: +0.55%)\n\n🔗 HSI与RS2000相关性分析(5日平滑):\n  30日相关性:  0.038\n  60日相关性:  -0.174\n  90日相关性:  -0.063\n\n📈 相对强弱: 🤝 基本同步 (差值: -2.26%)\n",
     "liquidity_conditions": "",
     "pe_bond_spread": "\n📊 股债性价比指标:\n  中国10年期国债收益率: 1.69% (当日: +0.02% 5日变化: +0.39%)\n  上证50滚动市盈率:     10.61 (当日: -2.57% 5日变化: -7.98%)\n  股债利差:             -7.74 (当日: +0.03 5日变化: +0.12)\n",
-    "oil_gold_ratio": "\n📊 油金比指标:\n  当前值: 0.022 (92分位)\n  当日变化: -4.34%\n  5日变化: -5.03%\n  30日变化: +23.50%\n\n📏 标准化处理:\n  油金比Z-score: +1.331 (均值: 0.0173, 标准差: 0.0032)\n  美债Z-score: -0.288\n\n📐 偏离度分析:\n  偏离度: 1.619\n  偏离档次: 显著偏离\n"
+    "oil_gold_ratio": "\n📊 油金比指标:\n  当前值: 0.022 (93分位)\n  当日变化: -0.07%\n  5日变化: -6.18%\n  30日变化: +19.06%\n\n📏 标准化处理:\n  油金比Z-score: +1.443 (均值: 0.0173, 标准差: 0.0033)\n  美债Z-score: -0.289\n\n📐 偏离度分析:\n  偏离度: 1.732\n  偏离档次: 显著偏离\n"
   },
   "ai_insights": {
-    "timestamp": "2026-09-17T13:16:16.111679",
+    "timestamp": "2026-09-17T23:36:45.030272",
     "cross_indicator_analysis": {
       "correlations": [],
       "conflicts": [],
@@ -84,8 +84,8 @@
     }
   },
   "divergence_analysis": {
-    "total_signals": 25,
-    "high_severity": 21,
+    "total_signals": 26,
+    "high_severity": 22,
     "medium_severity": 4,
     "low_severity": 0,
     "by_group": {
@@ -109,10 +109,10 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "negative",
-          "description": "美国科技与QQQ的正相关关系正在断裂：历史平均相关0.96，近期0.91，漂移-0.05",
-          "current_value": 0.9102,
+          "description": "美国科技与QQQ的正相关关系正在断裂：历史平均相关0.96，近期0.93，漂移-0.03",
+          "current_value": 0.9291,
           "expected_value": 0.9605,
-          "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之上方（向下）；均线纠结。"
+          "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之上方（向下），MA60之上方（向下）；均线纠结。"
         },
         {
           "indicator": "Europe_Tech",
@@ -120,21 +120,32 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "negative",
-          "description": "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.35，近期0.12，漂移-0.23",
-          "current_value": 0.1217,
-          "expected_value": 0.3549,
-          "detail": "当前值在MA5之上方（向下），MA10之上方（向上），MA20之上方（平缓），MA60之上方（向上）；均线纠结。"
+          "description": "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.36，近期0.02，漂移-0.33",
+          "current_value": 0.0218,
+          "expected_value": 0.3556,
+          "detail": "当前值在MA5之下方（向下），MA10之下方（向上），MA20之下方（向下），MA60之上方（向上）；均线纠结。"
+        },
+        {
+          "indicator": "Europe_Financial",
+          "benchmark": "US_Financial",
+          "method": "zscore_divergence",
+          "severity": 0.65,
+          "direction": "positive",
+          "description": "欧洲金融的Z-score(1.37)高于基准高于应有的水平(-0.57)，分歧+1.94σ",
+          "current_value": 1.3688,
+          "expected_value": -0.5729,
+          "detail": "当前值在MA5之上方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；短中期多头排列。"
         },
         {
           "indicator": "Europe_Financial",
           "benchmark": "US_Financial",
           "method": "correlation_drift",
-          "severity": 0.97,
+          "severity": 0.65,
           "direction": "negative",
-          "description": "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.07，近期-0.38，漂移-0.32",
-          "current_value": -0.3837,
-          "expected_value": -0.0652,
-          "detail": "当前值在MA5之下方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
+          "description": "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.07，近期-0.29，漂移-0.22",
+          "current_value": -0.2858,
+          "expected_value": -0.0685,
+          "detail": "当前值在MA5之上方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；短中期多头排列。"
         }
       ],
       "国内指标": [
@@ -142,10 +153,10 @@
           "indicator": "Shibor 1M",
           "benchmark": "ETF_510300",
           "method": "correlation_drift",
-          "severity": 1.0,
+          "severity": 0.87,
           "direction": "negative",
-          "description": "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期-0.39，漂移-0.38",
-          "current_value": -0.393,
+          "description": "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期-0.28，漂移-0.26",
+          "current_value": -0.2751,
           "expected_value": -0.0126,
           "detail": "当前值在MA5之上方（平缓），MA10之上方（平缓），MA20之上方（平缓），MA60之上方（平缓）；短中期多头排列。"
         },
@@ -153,36 +164,25 @@
           "indicator": "中国国债收益率10年",
           "benchmark": "ETF_510300",
           "method": "zscore_divergence",
-          "severity": 0.9,
+          "severity": 0.85,
           "direction": "negative",
-          "description": "中国10Y国债收益率的Z-score(-1.08)低于基准低于应有的水平(-1.61)，分歧-2.69σ",
-          "current_value": -1.0798,
-          "expected_value": -1.609,
-          "detail": "当前值在MA5之下方（向上），MA10之上方（平缓），MA20之上方（平缓），MA60之下方（平缓）；均线纠结。"
-        },
-        {
-          "indicator": "中国国债收益率10年",
-          "benchmark": "ETF_510300",
-          "method": "correlation_drift",
-          "severity": 0.65,
-          "direction": "positive",
-          "description": "中国10Y国债收益率与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期0.19，漂移+0.20",
-          "current_value": 0.1889,
-          "expected_value": -0.0119,
+          "description": "中国10Y国债收益率的Z-score(-1.10)低于基准低于应有的水平(-1.46)，分歧-2.56σ",
+          "current_value": -1.0957,
+          "expected_value": -1.4604,
           "detail": "当前值在MA5之下方（向上），MA10之上方（平缓），MA20之上方（平缓），MA60之下方（平缓）；均线纠结。"
         }
       ],
       "汇率商品": [
         {
-          "indicator": "CL",
+          "indicator": "CNY=X",
           "benchmark": "^GSPC",
           "method": "zscore_divergence",
-          "severity": 0.62,
-          "direction": "positive",
-          "description": "原油价格的Z-score(1.62)高于基准高于应有的水平(-0.24)，分歧+1.86σ",
-          "current_value": 1.6185,
-          "expected_value": -0.2394,
-          "detail": "当前值在MA5之下方（向上），MA10之下方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
+          "severity": 0.65,
+          "direction": "negative",
+          "description": "人民币汇率的Z-score(-1.55)低于基准低于应有的水平(0.39)，分歧-1.94σ",
+          "current_value": -1.5473,
+          "expected_value": 0.3936,
+          "detail": "当前值在MA5之下方（平缓），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         }
       ],
       "美股内部": [
@@ -192,20 +192,9 @@
           "method": "regression_residual",
           "severity": 1.0,
           "direction": "negative",
-          "description": "罗素2000(小盘)当前水平偏低于基准应有的预测值，残差-95.50（阈值45.20）",
-          "current_value": -96.979,
-          "expected_value": -1.4828,
-          "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
-        },
-        {
-          "indicator": "VNQ",
-          "benchmark": "^GSPC",
-          "method": "regression_residual",
-          "severity": 1.0,
-          "direction": "negative",
-          "description": "REITs(房地产)当前水平偏低于基准应有的预测值，残差-4.85（阈值2.79）",
-          "current_value": -4.8544,
-          "expected_value": -0.0047,
+          "description": "罗素2000(小盘)当前水平偏低于基准应有的预测值，残差-99.23（阈值45.24）",
+          "current_value": -100.7272,
+          "expected_value": -1.4929,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         },
         {
@@ -217,53 +206,75 @@
           "description": "日经225与标普500的正相关关系正在断裂：历史平均相关0.10，近期-0.38，漂移-0.48",
           "current_value": -0.3809,
           "expected_value": 0.0995,
-          "detail": "当前值在MA5之上方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；均线纠结。"
+          "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         },
         {
-          "indicator": "^RUT",
+          "indicator": "VNQ",
           "benchmark": "^GSPC",
-          "method": "zscore_divergence",
-          "severity": 0.78,
+          "method": "regression_residual",
+          "severity": 0.92,
           "direction": "negative",
-          "description": "罗素2000(小盘)的Z-score(-2.58)低于基准低于应有的水平(-0.24)，分歧-2.34σ",
-          "current_value": -2.5792,
-          "expected_value": -0.2394,
+          "description": "REITs(房地产)当前水平偏低于基准应有的预测值，残差-3.84（阈值2.79）",
+          "current_value": -3.8474,
+          "expected_value": -0.0054,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         },
         {
           "indicator": "VNQ",
           "benchmark": "^GSPC",
           "method": "zscore_divergence",
-          "severity": 0.76,
+          "severity": 0.86,
           "direction": "negative",
-          "description": "REITs(房地产)的Z-score(-2.51)低于基准低于应有的水平(-0.24)，分歧-2.27σ",
-          "current_value": -2.5063,
-          "expected_value": -0.2394,
+          "description": "REITs(房地产)的Z-score(-2.19)低于基准低于应有的水平(0.39)，分歧-2.58σ",
+          "current_value": -2.189,
+          "expected_value": 0.3936,
+          "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+        },
+        {
+          "indicator": "^RUT",
+          "benchmark": "^GSPC",
+          "method": "zscore_divergence",
+          "severity": 0.84,
+          "direction": "negative",
+          "description": "罗素2000(小盘)的Z-score(-2.11)低于基准低于应有的水平(0.39)，分歧-2.51σ",
+          "current_value": -2.1147,
+          "expected_value": 0.3936,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         },
         {
           "indicator": "^TNX",
           "benchmark": "^GSPC",
           "method": "zscore_divergence",
-          "severity": 0.72,
+          "severity": 0.76,
           "direction": "positive",
-          "description": "美国10年期国债收益率的Z-score(2.39)高于基准高于应有的水平(-0.24)，分歧+2.15σ",
-          "current_value": 2.3863,
-          "expected_value": -0.2394,
+          "description": "美国10年期国债收益率的Z-score(1.89)高于基准高于应有的水平(0.39)，分歧+2.28σ",
+          "current_value": 1.8903,
+          "expected_value": 0.3936,
           "detail": "当前值在MA5之下方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
+        },
+        {
+          "indicator": "QQQ",
+          "benchmark": "^GSPC",
+          "method": "regression_residual",
+          "severity": 0.71,
+          "direction": "positive",
+          "description": "纳斯达克100(科技)当前水平偏高于基准应有的预测值，残差7.05（阈值6.64）",
+          "current_value": 7.198,
+          "expected_value": 0.1437,
+          "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之上方（向下），MA60之上方（向下）；均线纠结。"
         }
       ],
       "行业轮动": [
         {
-          "indicator": "XLE",
+          "indicator": "XLF",
           "benchmark": "^GSPC",
-          "method": "correlation_drift",
+          "method": "regression_residual",
           "severity": 1.0,
           "direction": "negative",
-          "description": "能源板块与标普500的正相关关系正在断裂：历史平均相关0.57，近期-0.18，漂移-0.75",
-          "current_value": -0.1836,
-          "expected_value": 0.5712,
-          "detail": "当前值在MA5之下方（向上），MA10之下方（向上），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
+          "description": "金融板块当前水平偏低于基准应有的预测值，残差-1.57（阈值1.03）",
+          "current_value": -1.5674,
+          "expected_value": 0.0006,
+          "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
         },
         {
           "indicator": "XLV",
@@ -271,21 +282,10 @@
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "negative",
-          "description": "医药板块与标普500的正相关关系正在断裂：历史平均相关0.75，近期0.28，漂移-0.47",
-          "current_value": 0.2843,
-          "expected_value": 0.7542,
-          "detail": "当前值在MA5之上方（向下），MA10之下方（向下），MA20之下方（向下），MA60之上方（向上）；均线纠结。"
-        },
-        {
-          "indicator": "XLY",
-          "benchmark": "^GSPC",
-          "method": "correlation_drift",
-          "severity": 1.0,
-          "direction": "negative",
-          "description": "消费板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.62，漂移-0.24",
-          "current_value": 0.6243,
-          "expected_value": 0.8637,
-          "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+          "description": "医药板块与标普500的正相关关系正在断裂：历史平均相关0.75，近期0.32，漂移-0.43",
+          "current_value": 0.3229,
+          "expected_value": 0.7541,
+          "detail": "当前值在MA5之上方（向上），MA10之上方（向下），MA20之下方（向下），MA60之上方（向上）；均线纠结。"
         },
         {
           "indicator": "XLY",
@@ -293,125 +293,112 @@
           "method": "regression_residual",
           "severity": 1.0,
           "direction": "negative",
-          "description": "消费板块当前水平偏低于基准应有的预测值，残差-3.77（阈值1.90）",
-          "current_value": -3.8114,
-          "expected_value": -0.0441,
+          "description": "消费板块当前水平偏低于基准应有的预测值，残差-4.05（阈值1.90）",
+          "current_value": -4.097,
+          "expected_value": -0.0447,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         },
         {
           "indicator": "XLI",
           "benchmark": "^GSPC",
+          "method": "regression_residual",
+          "severity": 1.0,
+          "direction": "negative",
+          "description": "工业板块当前水平偏低于基准应有的预测值，残差-10.32（阈值2.53）",
+          "current_value": -10.2873,
+          "expected_value": 0.0339,
+          "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+        },
+        {
+          "indicator": "XLE",
+          "benchmark": "^GSPC",
           "method": "correlation_drift",
           "severity": 1.0,
           "direction": "negative",
-          "description": "工业板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.63，漂移-0.24",
-          "current_value": 0.6278,
+          "description": "能源板块与标普500的正相关关系正在断裂：历史平均相关0.57，近期-0.11，漂移-0.68",
+          "current_value": -0.1062,
+          "expected_value": 0.5711,
+          "detail": "当前值在MA5之下方（向下），MA10之下方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
+        },
+        {
+          "indicator": "XLI",
+          "benchmark": "^GSPC",
+          "method": "correlation_drift",
+          "severity": 0.93,
+          "direction": "negative",
+          "description": "工业板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.65，漂移-0.22",
+          "current_value": 0.6477,
           "expected_value": 0.864,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         },
         {
           "indicator": "XLI",
           "benchmark": "^GSPC",
-          "method": "regression_residual",
-          "severity": 1.0,
+          "method": "zscore_divergence",
+          "severity": 0.86,
           "direction": "negative",
-          "description": "工业板块当前水平偏低于基准应有的预测值，残差-10.12（阈值2.52）",
-          "current_value": -10.088,
-          "expected_value": 0.0354,
+          "description": "工业板块的Z-score(-2.19)低于基准低于应有的水平(0.39)，分歧-2.58σ",
+          "current_value": -2.186,
+          "expected_value": 0.3936,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         },
         {
           "indicator": "XLE",
           "benchmark": "^GSPC",
           "method": "regression_residual",
-          "severity": 0.97,
+          "severity": 0.85,
           "direction": "positive",
-          "description": "能源板块当前水平偏高于基准应有的预测值，残差2.92（阈值2.02）",
-          "current_value": 2.9697,
-          "expected_value": 0.0459,
-          "detail": "当前值在MA5之下方（向上），MA10之下方（向上），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
+          "description": "能源板块当前水平偏高于基准应有的预测值，残差2.58（阈值2.02）",
+          "current_value": 2.6243,
+          "expected_value": 0.0463,
+          "detail": "当前值在MA5之下方（向下），MA10之下方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
         },
         {
-          "indicator": "XLF",
+          "indicator": "XLY",
           "benchmark": "^GSPC",
-          "method": "regression_residual",
-          "severity": 0.76,
+          "method": "correlation_drift",
+          "severity": 0.79,
           "direction": "negative",
-          "description": "金融板块当前水平偏低于基准应有的预测值，残差-1.17（阈值1.03）",
-          "current_value": -1.1658,
-          "expected_value": 0.0008,
-          "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
-        },
-        {
-          "indicator": "XLI",
-          "benchmark": "^GSPC",
-          "method": "zscore_divergence",
-          "severity": 0.71,
-          "direction": "negative",
-          "description": "工业板块的Z-score(-2.37)低于基准低于应有的水平(-0.24)，分歧-2.13σ",
-          "current_value": -2.3744,
-          "expected_value": -0.2394,
+          "description": "消费板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.69，漂移-0.17",
+          "current_value": 0.6891,
+          "expected_value": 0.8636,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         },
         {
           "indicator": "XLF",
           "benchmark": "^GSPC",
           "method": "correlation_drift",
-          "severity": 0.63,
+          "severity": 0.75,
           "direction": "negative",
-          "description": "金融板块与标普500的正相关关系正在断裂：历史平均相关0.83，近期0.64，漂移-0.19",
-          "current_value": 0.6397,
-          "expected_value": 0.8319,
+          "description": "金融板块与标普500的正相关关系正在断裂：历史平均相关0.83，近期0.60，漂移-0.23",
+          "current_value": 0.6014,
+          "expected_value": 0.8318,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
         },
         {
           "indicator": "XLY",
           "benchmark": "^GSPC",
           "method": "zscore_divergence",
-          "severity": 0.61,
+          "severity": 0.65,
           "direction": "negative",
-          "description": "消费板块的Z-score(-2.06)低于基准低于应有的水平(-0.24)，分歧-1.82σ",
-          "current_value": -2.0574,
-          "expected_value": -0.2394,
+          "description": "消费板块的Z-score(-1.56)低于基准低于应有的水平(0.39)，分歧-1.96σ",
+          "current_value": -1.5618,
+          "expected_value": 0.3936,
           "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
         }
       ]
     },
     "signals": [
       {
-        "indicator": "Shibor 1M",
-        "benchmark": "ETF_510300",
-        "method": "correlation_drift",
-        "severity": 1.0,
-        "direction": "negative",
-        "description": "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期-0.39，漂移-0.38",
-        "group": "国内指标",
-        "current_value": -0.393,
-        "expected_value": -0.0126,
-        "detail": "当前值在MA5之上方（平缓），MA10之上方（平缓），MA20之上方（平缓），MA60之上方（平缓）；短中期多头排列。"
-      },
-      {
         "indicator": "^RUT",
         "benchmark": "^GSPC",
         "method": "regression_residual",
         "severity": 1.0,
         "direction": "negative",
-        "description": "罗素2000(小盘)当前水平偏低于基准应有的预测值，残差-95.50（阈值45.20）",
+        "description": "罗素2000(小盘)当前水平偏低于基准应有的预测值，残差-99.23（阈值45.24）",
         "group": "美股内部",
-        "current_value": -96.979,
-        "expected_value": -1.4828,
-        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
-      },
-      {
-        "indicator": "VNQ",
-        "benchmark": "^GSPC",
-        "method": "regression_residual",
-        "severity": 1.0,
-        "direction": "negative",
-        "description": "REITs(房地产)当前水平偏低于基准应有的预测值，残差-4.85（阈值2.79）",
-        "group": "美股内部",
-        "current_value": -4.8544,
-        "expected_value": -0.0047,
+        "current_value": -100.7272,
+        "expected_value": -1.4929,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
       },
       {
@@ -424,19 +411,19 @@
         "group": "美股内部",
         "current_value": -0.3809,
         "expected_value": 0.0995,
-        "detail": "当前值在MA5之上方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；均线纠结。"
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
       },
       {
-        "indicator": "XLE",
+        "indicator": "XLF",
         "benchmark": "^GSPC",
-        "method": "correlation_drift",
+        "method": "regression_residual",
         "severity": 1.0,
         "direction": "negative",
-        "description": "能源板块与标普500的正相关关系正在断裂：历史平均相关0.57，近期-0.18，漂移-0.75",
+        "description": "金融板块当前水平偏低于基准应有的预测值，残差-1.57（阈值1.03）",
         "group": "行业轮动",
-        "current_value": -0.1836,
-        "expected_value": 0.5712,
-        "detail": "当前值在MA5之下方（向上），MA10之下方（向上），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
+        "current_value": -1.5674,
+        "expected_value": 0.0006,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
       },
       {
         "indicator": "XLV",
@@ -444,23 +431,11 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "negative",
-        "description": "医药板块与标普500的正相关关系正在断裂：历史平均相关0.75，近期0.28，漂移-0.47",
+        "description": "医药板块与标普500的正相关关系正在断裂：历史平均相关0.75，近期0.32，漂移-0.43",
         "group": "行业轮动",
-        "current_value": 0.2843,
-        "expected_value": 0.7542,
-        "detail": "当前值在MA5之上方（向下），MA10之下方（向下），MA20之下方（向下），MA60之上方（向上）；均线纠结。"
-      },
-      {
-        "indicator": "XLY",
-        "benchmark": "^GSPC",
-        "method": "correlation_drift",
-        "severity": 1.0,
-        "direction": "negative",
-        "description": "消费板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.62，漂移-0.24",
-        "group": "行业轮动",
-        "current_value": 0.6243,
-        "expected_value": 0.8637,
-        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+        "current_value": 0.3229,
+        "expected_value": 0.7541,
+        "detail": "当前值在MA5之上方（向上），MA10之上方（向下），MA20之下方（向下），MA60之上方（向上）；均线纠结。"
       },
       {
         "indicator": "XLY",
@@ -468,22 +443,10 @@
         "method": "regression_residual",
         "severity": 1.0,
         "direction": "negative",
-        "description": "消费板块当前水平偏低于基准应有的预测值，残差-3.77（阈值1.90）",
+        "description": "消费板块当前水平偏低于基准应有的预测值，残差-4.05（阈值1.90）",
         "group": "行业轮动",
-        "current_value": -3.8114,
-        "expected_value": -0.0441,
-        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
-      },
-      {
-        "indicator": "XLI",
-        "benchmark": "^GSPC",
-        "method": "correlation_drift",
-        "severity": 1.0,
-        "direction": "negative",
-        "description": "工业板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.63，漂移-0.24",
-        "group": "行业轮动",
-        "current_value": 0.6278,
-        "expected_value": 0.864,
+        "current_value": -4.097,
+        "expected_value": -0.0447,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
       },
       {
@@ -492,10 +455,10 @@
         "method": "regression_residual",
         "severity": 1.0,
         "direction": "negative",
-        "description": "工业板块当前水平偏低于基准应有的预测值，残差-10.12（阈值2.52）",
+        "description": "工业板块当前水平偏低于基准应有的预测值，残差-10.32（阈值2.53）",
         "group": "行业轮动",
-        "current_value": -10.088,
-        "expected_value": 0.0354,
+        "current_value": -10.2873,
+        "expected_value": 0.0339,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
       },
       {
@@ -504,11 +467,11 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "negative",
-        "description": "美国科技与QQQ的正相关关系正在断裂：历史平均相关0.96，近期0.91，漂移-0.05",
+        "description": "美国科技与QQQ的正相关关系正在断裂：历史平均相关0.96，近期0.93，漂移-0.03",
         "group": "全球板块",
-        "current_value": 0.9102,
+        "current_value": 0.9291,
         "expected_value": 0.9605,
-        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之上方（向下）；均线纠结。"
+        "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之上方（向下），MA60之上方（向下）；均线纠结。"
       },
       {
         "indicator": "Europe_Tech",
@@ -516,47 +479,131 @@
         "method": "correlation_drift",
         "severity": 1.0,
         "direction": "negative",
-        "description": "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.35，近期0.12，漂移-0.23",
+        "description": "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.36，近期0.02，漂移-0.33",
         "group": "全球板块",
-        "current_value": 0.1217,
-        "expected_value": 0.3549,
-        "detail": "当前值在MA5之上方（向下），MA10之上方（向上），MA20之上方（平缓），MA60之上方（向上）；均线纠结。"
-      },
-      {
-        "indicator": "Europe_Financial",
-        "benchmark": "US_Financial",
-        "method": "correlation_drift",
-        "severity": 0.97,
-        "direction": "negative",
-        "description": "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.07，近期-0.38，漂移-0.32",
-        "group": "全球板块",
-        "current_value": -0.3837,
-        "expected_value": -0.0652,
-        "detail": "当前值在MA5之下方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
+        "current_value": 0.0218,
+        "expected_value": 0.3556,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向上），MA20之下方（向下），MA60之上方（向上）；均线纠结。"
       },
       {
         "indicator": "XLE",
         "benchmark": "^GSPC",
-        "method": "regression_residual",
-        "severity": 0.97,
-        "direction": "positive",
-        "description": "能源板块当前水平偏高于基准应有的预测值，残差2.92（阈值2.02）",
+        "method": "correlation_drift",
+        "severity": 1.0,
+        "direction": "negative",
+        "description": "能源板块与标普500的正相关关系正在断裂：历史平均相关0.57，近期-0.11，漂移-0.68",
         "group": "行业轮动",
-        "current_value": 2.9697,
-        "expected_value": 0.0459,
-        "detail": "当前值在MA5之下方（向上），MA10之下方（向上），MA20之下方（向上），MA60之上方（向上）；均线纠结。"
+        "current_value": -0.1062,
+        "expected_value": 0.5711,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
+      },
+      {
+        "indicator": "XLI",
+        "benchmark": "^GSPC",
+        "method": "correlation_drift",
+        "severity": 0.93,
+        "direction": "negative",
+        "description": "工业板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.65，漂移-0.22",
+        "group": "行业轮动",
+        "current_value": 0.6477,
+        "expected_value": 0.864,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+      },
+      {
+        "indicator": "VNQ",
+        "benchmark": "^GSPC",
+        "method": "regression_residual",
+        "severity": 0.92,
+        "direction": "negative",
+        "description": "REITs(房地产)当前水平偏低于基准应有的预测值，残差-3.84（阈值2.79）",
+        "group": "美股内部",
+        "current_value": -3.8474,
+        "expected_value": -0.0054,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+      },
+      {
+        "indicator": "Shibor 1M",
+        "benchmark": "ETF_510300",
+        "method": "correlation_drift",
+        "severity": 0.87,
+        "direction": "negative",
+        "description": "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期-0.28，漂移-0.26",
+        "group": "国内指标",
+        "current_value": -0.2751,
+        "expected_value": -0.0126,
+        "detail": "当前值在MA5之上方（平缓），MA10之上方（平缓），MA20之上方（平缓），MA60之上方（平缓）；短中期多头排列。"
+      },
+      {
+        "indicator": "VNQ",
+        "benchmark": "^GSPC",
+        "method": "zscore_divergence",
+        "severity": 0.86,
+        "direction": "negative",
+        "description": "REITs(房地产)的Z-score(-2.19)低于基准低于应有的水平(0.39)，分歧-2.58σ",
+        "group": "美股内部",
+        "current_value": -2.189,
+        "expected_value": 0.3936,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+      },
+      {
+        "indicator": "XLI",
+        "benchmark": "^GSPC",
+        "method": "zscore_divergence",
+        "severity": 0.86,
+        "direction": "negative",
+        "description": "工业板块的Z-score(-2.19)低于基准低于应有的水平(0.39)，分歧-2.58σ",
+        "group": "行业轮动",
+        "current_value": -2.186,
+        "expected_value": 0.3936,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
       },
       {
         "indicator": "中国国债收益率10年",
         "benchmark": "ETF_510300",
         "method": "zscore_divergence",
-        "severity": 0.9,
+        "severity": 0.85,
         "direction": "negative",
-        "description": "中国10Y国债收益率的Z-score(-1.08)低于基准低于应有的水平(-1.61)，分歧-2.69σ",
+        "description": "中国10Y国债收益率的Z-score(-1.10)低于基准低于应有的水平(-1.46)，分歧-2.56σ",
         "group": "国内指标",
-        "current_value": -1.0798,
-        "expected_value": -1.609,
+        "current_value": -1.0957,
+        "expected_value": -1.4604,
         "detail": "当前值在MA5之下方（向上），MA10之上方（平缓），MA20之上方（平缓），MA60之下方（平缓）；均线纠结。"
+      },
+      {
+        "indicator": "XLE",
+        "benchmark": "^GSPC",
+        "method": "regression_residual",
+        "severity": 0.85,
+        "direction": "positive",
+        "description": "能源板块当前水平偏高于基准应有的预测值，残差2.58（阈值2.02）",
+        "group": "行业轮动",
+        "current_value": 2.6243,
+        "expected_value": 0.0463,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
+      },
+      {
+        "indicator": "^RUT",
+        "benchmark": "^GSPC",
+        "method": "zscore_divergence",
+        "severity": 0.84,
+        "direction": "negative",
+        "description": "罗素2000(小盘)的Z-score(-2.11)低于基准低于应有的水平(0.39)，分歧-2.51σ",
+        "group": "美股内部",
+        "current_value": -2.1147,
+        "expected_value": 0.3936,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+      },
+      {
+        "indicator": "XLY",
+        "benchmark": "^GSPC",
+        "method": "correlation_drift",
+        "severity": 0.79,
+        "direction": "negative",
+        "description": "消费板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.69，漂移-0.17",
+        "group": "行业轮动",
+        "current_value": 0.6891,
+        "expected_value": 0.8636,
+        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
       },
       {
         "indicator": "^HSI",
@@ -571,139 +618,116 @@
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
       },
       {
-        "indicator": "^RUT",
-        "benchmark": "^GSPC",
-        "method": "zscore_divergence",
-        "severity": 0.78,
-        "direction": "negative",
-        "description": "罗素2000(小盘)的Z-score(-2.58)低于基准低于应有的水平(-0.24)，分歧-2.34σ",
-        "group": "美股内部",
-        "current_value": -2.5792,
-        "expected_value": -0.2394,
-        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
-      },
-      {
-        "indicator": "XLF",
-        "benchmark": "^GSPC",
-        "method": "regression_residual",
-        "severity": 0.76,
-        "direction": "negative",
-        "description": "金融板块当前水平偏低于基准应有的预测值，残差-1.17（阈值1.03）",
-        "group": "行业轮动",
-        "current_value": -1.1658,
-        "expected_value": 0.0008,
-        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
-      },
-      {
-        "indicator": "VNQ",
-        "benchmark": "^GSPC",
-        "method": "zscore_divergence",
-        "severity": 0.76,
-        "direction": "negative",
-        "description": "REITs(房地产)的Z-score(-2.51)低于基准低于应有的水平(-0.24)，分歧-2.27σ",
-        "group": "美股内部",
-        "current_value": -2.5063,
-        "expected_value": -0.2394,
-        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
-      },
-      {
         "indicator": "^TNX",
         "benchmark": "^GSPC",
         "method": "zscore_divergence",
-        "severity": 0.72,
+        "severity": 0.76,
         "direction": "positive",
-        "description": "美国10年期国债收益率的Z-score(2.39)高于基准高于应有的水平(-0.24)，分歧+2.15σ",
+        "description": "美国10年期国债收益率的Z-score(1.89)高于基准高于应有的水平(0.39)，分歧+2.28σ",
         "group": "美股内部",
-        "current_value": 2.3863,
-        "expected_value": -0.2394,
+        "current_value": 1.8903,
+        "expected_value": 0.3936,
         "detail": "当前值在MA5之下方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
-      },
-      {
-        "indicator": "XLI",
-        "benchmark": "^GSPC",
-        "method": "zscore_divergence",
-        "severity": 0.71,
-        "direction": "negative",
-        "description": "工业板块的Z-score(-2.37)低于基准低于应有的水平(-0.24)，分歧-2.13σ",
-        "group": "行业轮动",
-        "current_value": -2.3744,
-        "expected_value": -0.2394,
-        "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
-      },
-      {
-        "indicator": "中国国债收益率10年",
-        "benchmark": "ETF_510300",
-        "method": "correlation_drift",
-        "severity": 0.65,
-        "direction": "positive",
-        "description": "中国10Y国债收益率与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期0.19，漂移+0.20",
-        "group": "国内指标",
-        "current_value": 0.1889,
-        "expected_value": -0.0119,
-        "detail": "当前值在MA5之下方（向上），MA10之上方（平缓），MA20之上方（平缓），MA60之下方（平缓）；均线纠结。"
       },
       {
         "indicator": "XLF",
         "benchmark": "^GSPC",
         "method": "correlation_drift",
-        "severity": 0.63,
+        "severity": 0.75,
         "direction": "negative",
-        "description": "金融板块与标普500的正相关关系正在断裂：历史平均相关0.83，近期0.64，漂移-0.19",
+        "description": "金融板块与标普500的正相关关系正在断裂：历史平均相关0.83，近期0.60，漂移-0.23",
         "group": "行业轮动",
-        "current_value": 0.6397,
-        "expected_value": 0.8319,
+        "current_value": 0.6014,
+        "expected_value": 0.8318,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向上）；短中期空头排列。"
       },
       {
-        "indicator": "CL",
+        "indicator": "QQQ",
         "benchmark": "^GSPC",
-        "method": "zscore_divergence",
-        "severity": 0.62,
+        "method": "regression_residual",
+        "severity": 0.71,
         "direction": "positive",
-        "description": "原油价格的Z-score(1.62)高于基准高于应有的水平(-0.24)，分歧+1.86σ",
-        "group": "汇率商品",
-        "current_value": 1.6185,
-        "expected_value": -0.2394,
-        "detail": "当前值在MA5之下方（向上），MA10之下方（向上），MA20之上方（向上），MA60之上方（向上）；均线纠结。"
+        "description": "纳斯达克100(科技)当前水平偏高于基准应有的预测值，残差7.05（阈值6.64）",
+        "group": "美股内部",
+        "current_value": 7.198,
+        "expected_value": 0.1437,
+        "detail": "当前值在MA5之上方（向下），MA10之上方（向下），MA20之上方（向下），MA60之上方（向下）；均线纠结。"
       },
       {
         "indicator": "XLY",
         "benchmark": "^GSPC",
         "method": "zscore_divergence",
-        "severity": 0.61,
+        "severity": 0.65,
         "direction": "negative",
-        "description": "消费板块的Z-score(-2.06)低于基准低于应有的水平(-0.24)，分歧-1.82σ",
+        "description": "消费板块的Z-score(-1.56)低于基准低于应有的水平(0.39)，分歧-1.96σ",
         "group": "行业轮动",
-        "current_value": -2.0574,
-        "expected_value": -0.2394,
+        "current_value": -1.5618,
+        "expected_value": 0.3936,
         "detail": "当前值在MA5之下方（向下），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+      },
+      {
+        "indicator": "Europe_Financial",
+        "benchmark": "US_Financial",
+        "method": "zscore_divergence",
+        "severity": 0.65,
+        "direction": "positive",
+        "description": "欧洲金融的Z-score(1.37)高于基准高于应有的水平(-0.57)，分歧+1.94σ",
+        "group": "全球板块",
+        "current_value": 1.3688,
+        "expected_value": -0.5729,
+        "detail": "当前值在MA5之上方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；短中期多头排列。"
+      },
+      {
+        "indicator": "CNY=X",
+        "benchmark": "^GSPC",
+        "method": "zscore_divergence",
+        "severity": 0.65,
+        "direction": "negative",
+        "description": "人民币汇率的Z-score(-1.55)低于基准低于应有的水平(0.39)，分歧-1.94σ",
+        "group": "汇率商品",
+        "current_value": -1.5473,
+        "expected_value": 0.3936,
+        "detail": "当前值在MA5之下方（平缓），MA10之下方（向下），MA20之下方（向下），MA60之下方（向下）；短中期空头排列。"
+      },
+      {
+        "indicator": "Europe_Financial",
+        "benchmark": "US_Financial",
+        "method": "correlation_drift",
+        "severity": 0.65,
+        "direction": "negative",
+        "description": "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.07，近期-0.29，漂移-0.22",
+        "group": "全球板块",
+        "current_value": -0.2858,
+        "expected_value": -0.0685,
+        "detail": "当前值在MA5之上方（向上），MA10之上方（向上），MA20之上方（向上），MA60之上方（向上）；短中期多头排列。"
       }
     ],
     "top_divergences": [
-      "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期-0.39，漂移-0.38",
-      "罗素2000(小盘)当前水平偏低于基准应有的预测值，残差-95.50（阈值45.20）",
-      "REITs(房地产)当前水平偏低于基准应有的预测值，残差-4.85（阈值2.79）",
+      "罗素2000(小盘)当前水平偏低于基准应有的预测值，残差-99.23（阈值45.24）",
       "日经225与标普500的正相关关系正在断裂：历史平均相关0.10，近期-0.38，漂移-0.48",
-      "能源板块与标普500的正相关关系正在断裂：历史平均相关0.57，近期-0.18，漂移-0.75",
-      "医药板块与标普500的正相关关系正在断裂：历史平均相关0.75，近期0.28，漂移-0.47",
-      "消费板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.62，漂移-0.24",
-      "消费板块当前水平偏低于基准应有的预测值，残差-3.77（阈值1.90）",
-      "工业板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.63，漂移-0.24",
-      "工业板块当前水平偏低于基准应有的预测值，残差-10.12（阈值2.52）",
-      "美国科技与QQQ的正相关关系正在断裂：历史平均相关0.96，近期0.91，漂移-0.05",
-      "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.35，近期0.12，漂移-0.23",
-      "欧洲金融与美国金融的正相关关系正在断裂：历史平均相关-0.07，近期-0.38，漂移-0.32",
-      "能源板块当前水平偏高于基准应有的预测值，残差2.92（阈值2.02）",
-      "中国10Y国债收益率的Z-score(-1.08)低于基准低于应有的水平(-1.61)，分歧-2.69σ",
+      "金融板块当前水平偏低于基准应有的预测值，残差-1.57（阈值1.03）",
+      "医药板块与标普500的正相关关系正在断裂：历史平均相关0.75，近期0.32，漂移-0.43",
+      "消费板块当前水平偏低于基准应有的预测值，残差-4.05（阈值1.90）",
+      "工业板块当前水平偏低于基准应有的预测值，残差-10.32（阈值2.53）",
+      "美国科技与QQQ的正相关关系正在断裂：历史平均相关0.96，近期0.93，漂移-0.03",
+      "欧洲科技与美国科技的正相关关系正在断裂：历史平均相关0.36，近期0.02，漂移-0.33",
+      "能源板块与标普500的正相关关系正在断裂：历史平均相关0.57，近期-0.11，漂移-0.68",
+      "工业板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.65，漂移-0.22",
+      "REITs(房地产)当前水平偏低于基准应有的预测值，残差-3.84（阈值2.79）",
+      "Shibor 1M与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期-0.28，漂移-0.26",
+      "REITs(房地产)的Z-score(-2.19)低于基准低于应有的水平(0.39)，分歧-2.58σ",
+      "工业板块的Z-score(-2.19)低于基准低于应有的水平(0.39)，分歧-2.58σ",
+      "中国10Y国债收益率的Z-score(-1.10)低于基准低于应有的水平(-1.46)，分歧-2.56σ",
+      "能源板块当前水平偏高于基准应有的预测值，残差2.58（阈值2.02）",
+      "罗素2000(小盘)的Z-score(-2.11)低于基准低于应有的水平(0.39)，分歧-2.51σ",
+      "消费板块与标普500的正相关关系正在断裂：历史平均相关0.86，近期0.69，漂移-0.17",
       "恒生指数的Z-score(-0.23)高于基准高于应有的水平(-2.58)，分歧+2.35σ",
-      "罗素2000(小盘)的Z-score(-2.58)低于基准低于应有的水平(-0.24)，分歧-2.34σ",
-      "金融板块当前水平偏低于基准应有的预测值，残差-1.17（阈值1.03）",
-      "REITs(房地产)的Z-score(-2.51)低于基准低于应有的水平(-0.24)，分歧-2.27σ",
-      "美国10年期国债收益率的Z-score(2.39)高于基准高于应有的水平(-0.24)，分歧+2.15σ",
-      "工业板块的Z-score(-2.37)低于基准低于应有的水平(-0.24)，分歧-2.13σ",
-      "中国10Y国债收益率与沪深300的负相关关系正在断裂：历史平均相关-0.01，近期0.19，漂移+0.20",
-      "金融板块与标普500的正相关关系正在断裂：历史平均相关0.83，近期0.64，漂移-0.19",
-      "原油价格的Z-score(1.62)高于基准高于应有的水平(-0.24)，分歧+1.86σ"
+      "美国10年期国债收益率的Z-score(1.89)高于基准高于应有的水平(0.39)，分歧+2.28σ",
+      "金融板块与标普500的正相关关系正在断裂：历史平均相关0.83，近期0.60，漂移-0.23",
+      "纳斯达克100(科技)当前水平偏高于基准应有的预测值，残差7.05（阈值6.64）",
+      "消费板块的Z-score(-1.56)低于基准低于应有的水平(0.39)，分歧-1.96σ",
+      "欧洲金融的Z-score(1.37)高于基准高于应有的水平(-0.57)，分歧+1.94σ",
+      "人民币汇率的Z-score(-1.55)低于基准低于应有的水平(0.39)，分歧-1.94σ"
     ]
   }
 }
