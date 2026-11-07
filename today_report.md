@@ -1,49 +1,25 @@
 # 今日A股新闻分类摘要
 
-**数据时段**：2026-11-06  
-**生成时间**：2026-11-06T10:12:32.301306+08:00  
+**数据时段：** 2026-11-07  
+**生成时间：** 2026-11-07 01:16:28
 
 | 分类 | 事件摘要 |
 |---|---|
-| 地缘 | AI trading retreat causes global stock sell-off; Japanese index approaches bear market; US chip stocks sell-off intensifies; related news on US chip slump and Japanese index drop |
-| 美国得州当选州长 | Governor halts data center construction until safety measures found; Democratic win triggers biggest US stock drop in 1.5 years, Nasdaq correction; Samsung and SK Hynix fall; Google builds data center in Wyoming; AI hardware and communication stocks slump |
-| 伊朗核计划、中东局势 | Iran proposes nuclear plan via Qatar with seven conditions; Putin pledges to end war; related news on Iran nuclear review and Russia warnings |
-| 汇率波动 | Taiwan dollar breaks 33 vs USD, first since April 2025; Yen regains safe-haven appeal amid AI sell-off; USD fluctuates in NY; Yen rises 0.3% to 157.26 per USD |
-| 选举后市场广泛影响 | Democratic win causes major US stock drop and Nasdaq correction; AI hardware and communication stocks slump; Nvidia down 7.3%; Top five richest lose $150B |
-| 全球指数大跌、熔断事件 | Nikkei 225 falls 3.7% to 58,845.71; European stocks decline 0.4% due to tech and defense drops |
-| 流动性政策 | UK central bank hikes to 4% with hawkish stance; ECB official says December hike likely; Czech raises rate to 4%; Mexico cuts rate to 6.25%; US officials discuss rate path |
-| #英国 #央行 利率决议看点前瞻 | Key points of UK rate decision include inflation outlook; Market expects 50% chance of December hike; Cleveland Fed chief stresses restrictive rates |
-| 国际商品 | Nikkei futures down 7%; Oil prices rise 5 days, Brent up 3.67 to 98.29, WTI up 2.40 to 90.52; Gulf states plan new pipelines to reduce Hormuz Strait reliance; Domestic futures mixed |
-| #商务部 回应 #欧盟 对低价值进口商品叠加征收有 #关税 费 | Commerce Ministry responds to EU tariffs on low-value imports, affecting cross-border e-commerce; HiSilicon down 9%; Tian Shan shares CSRC filing |
-| 全球经济 | US Oct non-farm payrolls up 26k MoM; Initial jobless claims 189k, lowest since July; US Q3 productivity 3.6% vs 2.8% forecast; Oil prices fall after midterms; Aussie dollar down 1% to 10-month low |
-| 中国政策 | MIIT tightens smart device network management; Central committee exposes 3 formalism cases; Beijing to cancel school food delivery by Sep 1 2027 |
-| 调休减少 2027年放假安排来了！ | 2027 holiday schedule announced with 9-day Spring Festival but reduced调休 days affect consumption and tourism; related news on US election and consumer goods rotation |
-| A股股市 | A-share turnover over 2 trillion, up 107.6bn; Mixed indices, tech capital outflow; Blue chip valuation low; Goldman Sachs busy; Panic index spikes |
-| 国际股市 | US stocks plunge with Nasdaq correction; Semiconductor sector slump; KOSPI falls 8% and triggers circuit breaker; HK tech stocks rise; SoftBank down 16%; Nikkei 225 down 6% breaking 58,000 |
-| 周期行业 | Iran and Russia discuss natural gas supply; China expands Zhangjiaba mine capacity |
-| 其他行业 | Debt costs for super large tech firms rise slightly; Tesla and SpaceX stocks fall; Bank failures cause political crisis in Paraguay; Binance hack; etc. |
-| 中国经济 | Brazil's President Lula meets left-wing economists to discuss economic policy |
-| 数字资产 | Democratic win makes crypto industry cautious in Washington |
-| 科技行业 | Microsoft becomes cautious about new cloud services and tightens review of data center projects |
-| 市场动态 | Microsoft shows regret on cloud bets, strengthens review of data center projects |
-| Open #AI 推出GPT-6 Cyber，其网络安全评级为“关键”级 | OpenAI launches GPT-6 Cyber with critical security rating; Nvidia proposes AI memory full-stack design |
-| #英伟达 提出 #AI 内存全栈协同设计方案，Vera Rubin平台每GPU内存容量仅增约3%推理吞吐量提升最高30倍 | Nvidia proposes AI memory full-stack design, achieving up to 30x inference throughput increase |
-| 芯片与存储板块普遍下跌 | Micron, Western Digital, Seagate down over 11%; HighTuXin launches domestic Wi-Fi 7 chip |
-| 科技企业动态与市场反应 | Google initiates layoffs; Apple raises $7B via bond; SoftBank stock down 16% |
-| 中国财政 | European bond safe-haven pushes German bonds up; US Treasury yields stable with slight increases |
-| 其他 | Nomura info leak affects 2000 clients; Audio content released |
-| 债券付息与财务安排 | Ren Zhi 03 bond pays interest on Nov 7; Bai Xin International litigation postponed to Dec 16 |
-| 共和党选举后政治格局 | Republican midterm loss, Rubio speculation; Democratic victory signals 2028 presidential race |
-| 对冲基金与市场动荡 | Walleye hedge fund returns capital; Democrats may push wealth tax; Senate finance committee proposals; JPMorgan and Epstein investigation |
-| 超大规模企业债务与AI监管担忧 | Debt costs for super large firms rise slightly; Tesla and SpaceX stocks fall |
-| 银行危机与地缘政治风险 | Bank failures cause political crisis in Paraguay; President resigns; related news on Ueno bank |
-| AI建设与数据中心政策影响 | Democratic win raises concerns on AI construction and data center policy; SpaceX and Tesla stocks fall |
-| 监管事件与公司治理 | Binance hack prompts banking system regulation; Schumer outlines Democratic priorities on insider trading ban |
-| 其他行业动态 | Jiu Dian Pharma expands Pien Tzu Ning gel; Galaxy Entertainment Q3 profit 12.7bn HKD; Chinese International Holdings grants share options |
-| 巴西与全球经济政策 | Brazil's President Lula meets left-wing economists to discuss economic policy |
-| 加密行业在华盛顿转入守势 | Democratic win makes crypto industry cautious in Washington |
+| 中国政策 | 美国中期选举或致中东政策剧变；税收征收管理法修订征求意见；高校不再启用抬头率；博世中国CEO强调融入创新生态 |
+| 国际商品 | 郑州商品所葵花籽油期货期权获注册；全球黄金ETF连续四月净流入创新高；低空+物流探讨新质生产力；天山股份遭立案投资者可索赔 |
+| 其他行业 | 中金已在互换便利项下买入股票第三批；险资加仓3.45亿港元举牌中国神华H股；七部门鼓励航运保险使用人民币扩大供给；立方制药子公司获新药证书；东瑞股份10月生猪销量增长但价格下降；立华股份10月销售肉鸡收入15.68亿元；澳新车品牌激增经销商亏损行业协会呼吁限制；圆通副总裁叶锋：科技向善温暖小哥聚焦员工福祉 |
+| 中国经济 | 何立峰赴加拿大主持中加经财金战略对话；德国9月工业产出意外增长；华尔街警告AI投资冲击实体经济；消费趋势变化催生新商机；进博会汇报：汽车并购额同比增长48% |
+| A股股市 | 创业板指缩量跌近4全市场下跌超4700只；AI交易遭血洗亚太股市重挫；金发科技拟3-5亿元回购并注销；深圳多科技公司拟使用回购增持贷款；桂林三金7天5板酒业见底多机构调研 |
+| 地缘 | 韩国KOSPI跌近6%政府放宽保证金规定；胡塞称沙特空袭也门多人伤亡；外交部：中美相向而行经贸关系稳定向好；英伟达10亿美元投资Naver成为第三大股东 |
+| 中国财政 | 中国10年期国债收益率创历史新低 |
+| 国际股市 | 日经225跌幅扩大至7%亚太股市普遍暴跌；美股科技股崩盘引发避险需求日元回流；智谱AI Z计划 Z基金双管齐下聚焦AI基础设施；今日黄金跌破4050美元但周线上涨逾5%；汇丰银行回购股份耗资650万港元 |
+| 全球经济 | 市场预计美国10月非农就业人数回升但薪资增速降至近五年半最低；美国顾问业务模式从产品费转向服务费信任费；韩国紧急救市稳定金融市场 |
+| 周期行业 | 国内航线燃油附加费11月5日上调；七部门鼓励航运贸易金融船检加强数据共享；兴业银锡成立矿产资源公司；长江证券：快递产业研究旧秩序终点新均衡起点 |
+| 科技行业 | 光智科技子公司签署不低于6.01亿美元磷化铟衬底供货协议；中国移动2027年算力投资1000亿元投入7个吉瓦级数据中心；短剧持械入宋全网播放66亿54岁大哥自学AI制作；人形机器人数据路线互补递进；Thinking Machines Lab获50亿美元融资估值400亿美元 |
+| 其他 | 13岁少年性侵11岁女孩警方不立案检察院查明成年人参与；朱学东：荸荠往事饮食折射时代变迁；331个山里娃的第二个家平安守护30年 |
+| 全球产业政策 | 贸易战与奇异果改名反思贸易壁垒；AI话题卷入美中选论战数据中心争议打破蓝红分野 |
 
 ---
 
-*生成时间：2026-11-06 10:29:18 (UTC+8)*  
-*使用模型：openrouter:nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free*
+*生成时间：2026-11-07 01:21:34 (UTC+8)*  
+*使用模型：openrouter:nvidia/nemotron-3.5-lightning:free*
